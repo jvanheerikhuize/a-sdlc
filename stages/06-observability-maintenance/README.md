@@ -2,7 +2,7 @@
 
 The **only stage that never ends.** Provides continuous monitoring of operational health, security posture, risk evolution, and AI behaviour from the moment Stage 5 hands over to production.
 
-Stage 6 feeds back into the lifecycle through two defined re-entry paths when issues requiring code changes are detected. See [cross-cutting/feedback-loops.yaml](../../cross-cutting/feedback-loops.yaml).
+Stage 6 feeds back into the lifecycle through two defined re-entry paths when issues requiring code changes are detected. See [feedbackloops/feedback-loops.yaml](../../feedbackloops/feedback-loops.yaml).
 
 ## Key Tasks
 

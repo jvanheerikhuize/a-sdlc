@@ -73,7 +73,7 @@ framework:
 cross_cutting:
   description: Three governance controls that span all six stages.
   controls_track: controls/tracks/gc/
-  feedback_loops_file: cross-cutting/feedback-loops.yaml
+  feedback_loops_file: feedbackloops/feedback-loops.yaml
   controls:
     - id: GC-0A
       name: Audit Trail & Compliance Reporting

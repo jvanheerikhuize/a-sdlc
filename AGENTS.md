@@ -79,7 +79,7 @@ Load only the files relevant to the stage you are operating in. Cross-cutting co
 controls/tracks/gc/GC-0A.yaml      # Audit Trail & Compliance Reporting
 controls/tracks/gc/GC-0B.yaml      # End-to-End Traceability
 controls/tracks/gc/GC-0C.yaml      # Agent Provenance Registry
-cross-cutting/feedback-loops.yaml  # Re-entry paths for incidents and changes
+feedbackloops/feedback-loops.yaml  # Re-entry paths for incidents and changes
 ```
 
 ### Stage-Specific Files
@@ -131,7 +131,7 @@ controls/registry.yaml    # Flat index of all 38 controls — fast lookup by ID 
 
 ## Feedback Loops
 
-When Stage 6 detects an issue requiring code changes, re-entry occurs via one of two paths defined in `cross-cutting/feedback-loops.yaml`:
+When Stage 6 detects an issue requiring code changes, re-entry occurs via one of two paths defined in `feedbackloops/feedback-loops.yaml`:
 
 - **Path A — Incident → Autofix:** Low-risk, pre-approved patterns. Re-enters Stage 3.
 - **Path B — Bug/Change → Quickfix or Feature:** Quickfixes re-enter Stage 3 (full controls + RC-5A). Feature changes re-enter Stage 1.

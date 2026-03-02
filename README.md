@@ -117,7 +117,8 @@ a-sdlc/
 │   ├── 04-testing-documentation/     ← stage.yaml + README.md
 │   ├── 05-deployment-release/        ← stage.yaml + README.md
 │   └── 06-observability-maintenance/ ← stage.yaml + README.md
-├── cross-cutting/
+├── feedbackloops/
+│   ├── README.md                     ← Feedback process documentation and decision tree
 │   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions
 └── regulatory/
     ├── compliance-matrix.yaml        ← DORA / DNB / EU AI Act coverage map
