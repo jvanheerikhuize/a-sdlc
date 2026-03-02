@@ -64,34 +64,25 @@ For changes requiring new functionality, architectural modification, or that are
 
 ## Decision Tree
 
-```text
-Issue detected in Stage 6
-        │
-        ▼
-  Matches pre-approved autofix template exactly?
-  AND low risk + no architectural changes?
-        │
-   Yes ─┤─ No ──────────────────────────────► Path B
-        │
-        ▼
-     Path A (re-enter Stage 3, minimum control set)
-        │
-  Does issue deviate from template during execution?
-        │
-   Yes ─┴────────────────────────────────────► Upgrade to Path B immediately
-```
+```mermaid
+flowchart TD
+    START([Issue detected in Stage 6])
+    Q1{"Matches pre-approved autofix\ntemplate exactly?\nLow risk? No architectural changes?"}
+    PA["Path A — Autofix\nRe-enter at Stage 3\nMinimum control set"]
+    Q2{"Deviates from template\nduring execution?"}
+    DONE([Path A complete])
+    PB_SEL(["Path B selected"])
+    Q3{"New functionality or\narchitectural change?"}
+    PBF["Path B · Feature\nRe-enter at Stage 1\nFull lifecycle — all controls"]
+    PBQ["Path B · Quickfix\nRe-enter at Stage 3\nAll Stage 3–5 controls + RC-5A"]
 
-```text
-Path B selected
-        │
-        ▼
-  New functionality or architectural change required?
-        │
-   Yes ─┤─ No
-        │       │
-        ▼       ▼
-  Path B       Path B (Quickfix)
-  (Feature)    Stage 3 re-entry
-  Stage 1      All controls + RC-5A (CAB Approval)
-  re-entry
+    START --> Q1
+    Q1 -- Yes --> PA
+    Q1 -- No --> PB_SEL
+    PA --> Q2
+    Q2 -- No --> DONE
+    Q2 -- "Yes — upgrade immediately" --> PB_SEL
+    PB_SEL --> Q3
+    Q3 -- Yes --> PBF
+    Q3 -- No --> PBQ
 ```

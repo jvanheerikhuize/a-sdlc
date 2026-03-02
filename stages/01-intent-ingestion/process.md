@@ -24,10 +24,24 @@
 
 Steps 3, 4, and 5 are independent of each other and run in parallel after Step 2 completes.
 
-```text
-[1: SC-1A Screen] → [2: QC-1A Draft spec] → ┬─ [3: QC-1B Conflict analysis]  ────────────┐
-                                              ├─ [4: RC-1A risk classification] ─────────┤ → [6: QC-1A PO sign-off] → [7: GC-1A Audit]
-                                              └─ [5: AC-1A AI tier] (if AI component) ──────┘
+```mermaid
+flowchart LR
+    S1["Step 1 · SC-1A\nScreen Request"]
+    S2["Step 2 · QC-1A\nDraft Spec"]
+    S3["Step 3 · QC-1B\nConflict Analysis"]
+    S4["Step 4 · RC-1A\nRisk Classification"]
+    S5["Step 5 · AC-1A\nAI Tier\n(conditional)"]
+    S6["Step 6 · QC-1A\nPO Sign-off"]
+    S7["Step 7 · GC-1A\nAudit Log"]
+
+    S1 --> S2
+    S2 --> S3
+    S2 --> S4
+    S2 --> S5
+    S3 --> S6
+    S4 --> S6
+    S5 --> S6
+    S6 --> S7
 ```
 
 ---

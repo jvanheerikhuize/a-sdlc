@@ -27,18 +27,18 @@ The framework:
 
 ## The Six Stages
 
-```text
-  ┌─────────────────────────────────────────────────────────────┐
-  │                    A-SDLC Lifecycle                         │
-  │                                                             │
-  │  [1] Intent     [2] System    [3] Coding    [4] Testing     │
-  │   Ingestion  →   Design    →    & Impl    →    & Docs      │
-  │                                                             │
-  │                          [5] Deployment → [6] Observability │
-  │                              & Release       & Maintenance  │
-  │                                   ↑                ↓        │
-  │                         Feedback Loops (Path A / Path B)   │
-  └─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    S1["1 · Intent\nIngestion"]
+    S2["2 · System\nDesign"]
+    S3["3 · Coding &\nImplementation"]
+    S4["4 · Testing &\nDocumentation"]
+    S5["5 · Deployment &\nRelease"]
+    S6["6 · Observability &\nMaintenance"]
+
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    S6 -- "Path A / Path B Quickfix" --> S3
+    S6 -- "Path B Feature" --> S1
 ```
 
 | Stage | Name | Purpose |
