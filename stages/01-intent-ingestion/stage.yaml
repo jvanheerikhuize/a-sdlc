@@ -21,9 +21,17 @@ exit_criteria:
 - 'SC-1A: Pre-guardrails passed — no injection patterns detected in incoming request'
 - 'QC-1A: Feature specification approved by Product Owner'
 - 'QC-1B: All blocking conflicts resolved; non-blocking conflicts documented'
-- 'RC-1A: NF-RED risk tier assigned and logged'
+- 'RC-1A: Risk classification tier assigned and logged'
 - 'AC-1A: AI Act risk tier confirmed (or not-applicable documented)'
 - 'GC-1A: Intent audit record written to immutable log'
 next_stage: 2
-templates:
-- templates/feature-spec.yaml
+process: process.md
+artifacts:
+  inputs:
+    - artifacts/inputs/change-request.yaml
+  outputs:
+    - artifacts/outputs/feature-spec.yaml
+    - artifacts/outputs/conflict-resolution-record.yaml
+    - artifacts/outputs/risk-classification.yaml
+    - artifacts/outputs/ai-tier-classification.yaml
+    - artifacts/outputs/intent-audit-record.yaml

@@ -1,0 +1,57 @@
+# =============================================================================
+# Risk Classification Template
+# =============================================================================
+# Produced during Stage 1 Step 4 by control RC-1A.
+# Non-functional risk classification.
+# The resulting tier drives governance intensity for all subsequent stages.
+#
+# Methodology: controls/rc/RISK-CLASSIFICATION-METHODOLOGY.md
+#
+# Usage:
+#   Copy: cp risk-classification.yaml FEAT-XXXX-risk-classification.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 1
+control: RC-1A
+classified_at: ""                  # ISO 8601 datetime
+
+# Final tier — derived as the highest tier across all 6 criteria dimensions.
+tier: ""                           # low | medium | high | critical
+governance_intensity: ""           # standard | enhanced | full
+
+rationale: |
+  # Narrative justification for the assigned tier.
+
+# Each dimension is rated independently. Final tier = highest of all dimensions.
+criteria:
+  availability_impact:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+  data_scope:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+  system_criticality:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+  user_impact:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+  reversibility:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+  change_blast_radius:
+    rating: ""                     # low | medium | high | critical
+    justification: ""
+
+classification:
+  proposed_by_agent: ""            # Tier proposed by the agent
+  validated_by: ""                 # Risk Officer name
+  validated_at: ""                 # ISO 8601 datetime
+  override: null                   # true if Risk Officer changed the agent's proposed tier
+  override_rationale: ""           # Required if override is true

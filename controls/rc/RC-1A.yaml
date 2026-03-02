@@ -1,13 +1,13 @@
 # =============================================================================
-# Control: RC-1A — Risk Classification (NF-RED)
+# Control: RC-1A — Risk Classification
 # Track:   RC (Risk Controls)
 # Owner:   Risk Management / Risk Officer
 # Schema:  ../../../schema/control.schema.json
 # =============================================================================
 
 id: RC-1A
-name: Risk Classification (NF-RED)
-description: 'Classify the non-functional risk exposure of the change using the NF-RED methodology. The resulting risk tier
+name: Risk Classification
+description: 'Classify the non-functional risk exposure of the change using the risk classification criteria. The resulting risk tier
   determines governance intensity for all subsequent stages: which controls require enhanced scrutiny, what approval authority
   is needed, and what testing depth is required.'
 required_in_stages:
@@ -20,7 +20,7 @@ track:
 delegation:
   pattern: agent_classifies_human_validates
   human_display: Agent classifies, human validates
-  agent_role: Apply NF-RED methodology to classify risk tier (low/medium/high/critical) and determine governance intensity.
+  agent_role: Apply risk classification criteria to classify risk tier (low/medium/high/critical) and determine governance intensity.
   human_role: Validate classification; escalate if classification appears inconsistent with known system context.
 owner:
   team: Risk Management
@@ -39,9 +39,9 @@ regulatory_mapping:
 inputs:
 - name: Validated feature specification
   source_control: QC-1A
-  description: Complete specification with NFRs, used as input to the NF-RED classification.
+  description: Complete specification with NFRs, used as input to the risk classification.
 outputs:
-- name: NF-RED risk classification
+- name: Risk classification
   type: decision
   description: Risk tier (low/medium/high/critical), governance intensity, and rationale.
   retention: 7 years (DORA)

@@ -11,7 +11,7 @@ During this stage, humans or agents interact with stakeholders to clarify nuance
 - Cross-reference all requirements to detect conflicts, contradictions, and competing priorities
 - Present conflict map to stakeholders with severity ratings and resolution options
 - Obtain stakeholder decisions on all blocking and significant conflicts
-- Classify non-functional risk exposure using the NF-RED methodology
+- Classify non-functional risk exposure 
 - If AI components are involved: classify the EU AI Act risk tier
 - Log all inputs, transformations, decisions, and outputs for traceability
 
@@ -21,7 +21,7 @@ During this stage, humans or agents interact with stakeholders to clarify nuance
 | -- | ---- | ------------ | ----------- | ------------------ |
 | QC-1A | Specification Validation | Confirms the request has been correctly captured with complete acceptance criteria and NFRs. | Agent drafts, human approves | DORA: Art. 8; DNB: IT change management |
 | QC-1B | Coherence & Conflict Resolution | Detects contradictions between requirements. Forces stakeholders to resolve trade-offs before design. | Agent analyses, human resolves | DORA: Art. 8; DNB: Risk assessment; AI Act: Art. 9 |
-| RC-1A | Risk Classification (NF-RED) | Classifies non-functional risk exposure and determines governance intensity for the entire change. | Agent classifies, human validates | DORA: Art. 8(1); DNB: Risk-based governance; AI Act: Art. 9(2) |
+| RC-1A | Risk Classification | Classifies non-functional risk exposure and determines governance intensity for the entire change. | Agent classifies, human validates | DORA: Art. 8(1); DNB: Risk-based governance; AI Act: Art. 9(2) |
 | SC-1A | Pre-Guardrails | Screens incoming requests for prompt injection attacks that could manipulate agent interpretation. | Fully automated | DORA: Art. 9(2); DNB: Integrity of IT processing; AI Act: Art. 15(4) |
 | AC-1A | AI Risk Tier Classification | For AI changes: classifies EU AI Act risk tier and triggers corresponding compliance requirements. | Agent proposes, human confirms | AI Act: Art. 6, Annex III |
 | GC-1A | Intent Traceability | Logs original request, all agent transformations, and validated output. First link in the audit chain. | Fully automated | DORA: Art. 8(6); DNB: Auditability; AI Act: Art. 12 |
@@ -41,11 +41,21 @@ All of the following must be true before progressing to Stage 2:
 
 - [ ] QC-1A passed: specification has complete acceptance criteria and NFRs
 - [ ] QC-1B passed: all blocking conflicts resolved by stakeholders
-- [ ] RC-1A completed: NF-RED risk tier assigned and validated
+- [ ] RC-1A completed: risk classification risk tier assigned and validated
 - [ ] SC-1A passed: no prompt injection detected in the incoming request
 - [ ] AC-1A completed (if AI component): EU AI Act risk tier classified and confirmed
 - [ ] GC-1A confirmed: intent traceability record created
 
-## Templates
+## Artifacts
 
-- [templates/feature-spec.yaml](templates/feature-spec.yaml) — Feature/change specification template (FEAT-XXXX)
+- **Process:** [process.md](process.md) — Step-by-step guide with roles, dependencies, and decision points
+
+**Inputs:**
+- [artifacts/inputs/change-request.yaml](artifacts/inputs/change-request.yaml) — Change request template (CR-XXXX)
+
+**Outputs:**
+- [artifacts/outputs/feature-spec.yaml](artifacts/outputs/feature-spec.yaml) — Feature specification (FEAT-XXXX)
+- [artifacts/outputs/conflict-resolution-record.yaml](artifacts/outputs/conflict-resolution-record.yaml) — QC-1B output
+- [artifacts/outputs/risk-classification.yaml](artifacts/outputs/risk-classification.yaml) — RC-1A output
+- [artifacts/outputs/ai-tier-classification.yaml](artifacts/outputs/ai-tier-classification.yaml) — AC-1A output (if AI component)
+- [artifacts/outputs/intent-audit-record.yaml](artifacts/outputs/intent-audit-record.yaml) — GC-1A output

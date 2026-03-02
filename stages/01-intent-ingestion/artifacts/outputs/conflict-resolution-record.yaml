@@ -1,0 +1,51 @@
+# =============================================================================
+# Conflict Resolution Record Template
+# =============================================================================
+# Produced during Stage 1 Step 3 by control QC-1B.
+# Records all conflicts identified in the feature specification, the resolution
+# options presented, and the binding decisions made by the Product Owner.
+#
+# Usage:
+#   Copy: cp conflict-resolution-record.yaml FEAT-XXXX-conflict-resolution.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 1
+control: QC-1B
+produced_at: ""                    # ISO 8601 datetime
+agent_run_at: ""                   # When the agent ran the analysis
+
+summary:
+  total_conflicts_found: 0
+  blocking: 0
+  significant: 0
+  minor: 0
+  all_blocking_resolved: null      # true | false — must be true before Stage 1 can exit
+
+conflicts:
+  - id: "CONF-001"
+    severity: blocking             # blocking | significant | minor
+    description: |
+      # What is the contradiction or inconsistency?
+    requirement_a: ""              # AC-XXX or description of first conflicting requirement
+    requirement_b: ""              # AC-XXX or description of second conflicting requirement
+
+    resolution_options:
+      - option: "A"
+        description: ""
+        impact: ""
+      - option: "B"
+        description: ""
+        impact: ""
+
+    decision:
+      option_chosen: ""            # "A", "B", or custom description
+      decided_by: ""               # Product Owner name
+      decided_at: ""               # ISO 8601 datetime
+      rationale: ""
+      accepted_risk: ""            # For significant/minor: document the risk being accepted
+
+review:
+  reviewed_by: ""                  # Product Owner name
+  reviewed_at: ""                  # ISO 8601 datetime
+  status: ""                       # complete | pending_resolution

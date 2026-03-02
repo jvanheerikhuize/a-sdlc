@@ -1,15 +1,15 @@
 # =============================================================================
-# Control: RC-2A — Design Approval (F-RED)
+# Control: RC-2A — Design Approval
 # Track:   RC (Risk Controls)
 # Owner:   Risk Management / Risk Officer
 # Schema:  ../../../schema/control.schema.json
 # =============================================================================
 
 id: RC-2A
-name: Design Approval (F-RED)
-description: 'Consolidated governance gate combining design approval with functional risk classification (F-RED). Determines
-  the appropriate sign-off authority based on the functional risk tier: high-risk requires senior architecture board approval;
-  medium requires lead architect; low may be pre-approved. This control cannot be delegated to an agent.'
+name: Design Approval
+description: 'Consolidated governance gate combining design approval with functional risk classification. Determines the appropriate
+  sign-off authority based on the functional risk tier: high-risk requires senior architecture board approval; medium requires
+  lead architect; low may be pre-approved. This control cannot be delegated to an agent.'
 required_in_stages:
 - number: 2
   name: System Design
@@ -20,7 +20,7 @@ track:
 delegation:
   pattern: human_required
   human_display: Human required
-  agent_role: Prepare design approval package with F-RED classification, risk summary, and supporting evidence.
+  agent_role: Prepare design approval package with functional risk classification, risk summary, and supporting evidence.
   human_role: Make the formal approval decision. This control cannot be delegated to an agent under any circumstances.
 owner:
   team: Risk Management
@@ -40,7 +40,7 @@ inputs:
 - name: Design validation report
   source_control: QC-2A
   description: Completed design validation confirming standards compliance.
-- name: NF-RED risk classification
+- name: Risk classification
   source_control: RC-1A
   description: Risk tier from Stage 1 informing approval authority requirements.
 outputs:

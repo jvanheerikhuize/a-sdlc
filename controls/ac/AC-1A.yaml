@@ -12,7 +12,8 @@ description: 'For changes that introduce, modify, or interact with AI components
 required_in_stages:
 - number: 1
   name: Intent Ingestion
-  mandatory: true
+  mandatory: false
+  note: Only applicable when the change introduces, modifies, or interacts with AI components.
 track:
   code: AC
   name: AI Controls

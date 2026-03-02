@@ -146,9 +146,9 @@
     "risk_classification": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Populated by RC-1A (NF-RED) and AC-1A (EU AI Act tier).",
+      "description": "Populated by RC-1A (risk classification) and AC-1A (EU AI Act tier).",
       "properties": {
-        "nf_red_tier": {
+        "risk_tier": {
           "type": "string",
           "enum": ["low", "medium", "high", "critical"],
           "description": "Non-functional risk exposure tier from RC-1A."

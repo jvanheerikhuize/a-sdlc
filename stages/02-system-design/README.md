@@ -20,7 +20,7 @@ Threat modelling, design completeness validation, and the injection of Core Secu
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
 | QC-2A | Design Completeness & Standards | Validates design addresses all requirements, follows architectural patterns, and meets standards. | Agent assists, human approves | DORA: Art. 8(4); DNB: Architecture review |
-| RC-2A | Design Approval (F-RED) | Consolidated governance gate: design approval with functional risk classification. Determines sign-off authority. | Human required | DORA: Art. 8(1); DNB: Approval authority; AI Act: Art. 9 |
+| RC-2A | Design Approval | Consolidated governance gate: design approval with functional risk classification. Determines sign-off authority. | Human required | DORA: Art. 8(1); DNB: Approval authority; AI Act: Art. 9 |
 | SC-2A | Threat Model Validation | STRIDE-based analysis verifying design doesn't introduce insecure patterns. | Agent generates, human validates | DORA: Art. 8(3); DNB: Threat analysis; AI Act: Art. 15(3) |
 | SC-2B | Directive Injection | Injects signed, immutable Core Security Directives into the agent before coding. Company policy cannot be overridden. | Fully automated (signed) | DORA: Art. 9(4)(c); DNB: Logical access management; AI Act: Art. 14(1) |
 | AC-2A | AI Component Design Review | For AI systems: validates model selection, data pipelines, explainability, and human oversight mechanisms. | Agent assists, human approves | AI Act: Art. 11, Annex IV; Art. 13; Art. 14 |

@@ -39,7 +39,7 @@ inputs:
 - name: Release readiness checklist
   source_control: QC-5A
   description: Completed checklist confirming all controls passed; forms the basis of the CAB submission.
-- name: NF-RED risk classification
+- name: Risk classification
   source_control: RC-1A
   description: Determines required approval authority (CAB vs. line management vs. pre-approved).
 outputs:

@@ -30,8 +30,8 @@ compliance_matrix:
 
   - area: ICT Risk Management
     controls:
-      - RC-1A   # Risk Classification (NF-RED)
-      - RC-2A   # Design Approval (F-RED)
+      - RC-1A   # Risk Classification
+      - RC-2A   # Design Approval
       - RC-4A   # Risk Threshold Evaluation
       - RC-6A   # Risk & Health Monitoring
     regulatory_coverage:

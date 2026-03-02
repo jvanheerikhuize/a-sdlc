@@ -7,7 +7,7 @@
 number: 2
 name: System Design
 description: Translate the approved specification into a complete, approved system design. Security directives are injected
-  before coding begins. No implementation may start without RC-2A (F-RED) approval and SC-2B directive injection confirmation.
+  before coding begins. No implementation may start without RC-2A (design approval) and SC-2B directive injection confirmation.
 required_controls:
 - id: QC-2A
 - id: RC-2A
@@ -19,7 +19,7 @@ required_controls:
   note: Applicable when the change involves an AI component
 exit_criteria:
 - 'QC-2A: Design validation report approved by Lead Architect'
-- 'RC-2A: F-RED design approval granted by Risk Officer'
+- 'RC-2A: design approval granted by Risk Officer'
 - 'SC-2A: STRIDE threat model validated and mitigations accepted'
 - 'SC-2B: Core Security Directives injected and acknowledged by agent'
 - 'AC-2A: AI component design review approved (or not-applicable documented)'

@@ -65,7 +65,7 @@ registry:
     owner_team: Product / Delivery
 
   - id: RC-1A
-    name: Risk Classification (NF-RED)
+    name: Risk Classification
     stage: 1
     stage_name: Intent Ingestion
     track: RC
@@ -114,7 +114,7 @@ registry:
     owner_team: Engineering
 
   - id: RC-2A
-    name: Design Approval (F-RED)
+    name: Design Approval
     stage: 2
     stage_name: System Design
     track: RC

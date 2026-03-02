@@ -92,8 +92,8 @@ stages:
     directory: stages/01-intent-ingestion
     stage_file: stages/01-intent-ingestion/stage.yaml
     readme: stages/01-intent-ingestion/README.md
-    templates:
-      - stages/01-intent-ingestion/templates/feature-spec.yaml
+    process: stages/01-intent-ingestion/process.md
+    artifacts_dir: stages/01-intent-ingestion/artifacts/
     description: >-
       High-level business goals are captured, disambiguated, and transformed
       into structured technical requirements. Establishes the source of truth
@@ -106,7 +106,7 @@ stages:
         name: Coherence & Conflict Resolution
         track: QC
       - id: RC-1A
-        name: Risk Classification (NF-RED)
+        name: Risk Classification
         track: RC
       - id: SC-1A
         name: Pre-Guardrails
@@ -135,7 +135,7 @@ stages:
         name: Design Completeness & Standards
         track: QC
       - id: RC-2A
-        name: Design Approval (F-RED)
+        name: Design Approval
         track: RC
       - id: SC-2A
         name: Threat Model Validation
