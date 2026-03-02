@@ -22,17 +22,17 @@
 
 ## Step Sequence
 
-Steps 3, 4, and 5 are independent of each other and run in parallel after Step 2 completes.
+Steps 1.3, 1.4, and 1.5 are independent of each other and run in parallel after Step 1.2 completes.
 
 ```mermaid
 flowchart LR
-    S1["Step 1 · SC-1A\nScreen Request"]
-    S2["Step 2 · QC-1A\nDraft Spec"]
-    S3["Step 3 · QC-1B\nConflict Analysis"]
-    S4["Step 4 · RC-1A\nRisk Classification"]
-    S5["Step 5 · AC-1A\nAI Tier\n(conditional)"]
-    S6["Step 6 · QC-1A\nPO Sign-off"]
-    S7["Step 7 · GC-1A\nAudit Log"]
+    S1["Step 1.1 · SC-1A\nScreen Request"]
+    S2["Step 1.2 · QC-1A\nDraft Spec"]
+    S3["Step 1.3 · QC-1B\nConflict Analysis"]
+    S4["Step 1.4 · RC-1A\nRisk Classification"]
+    S5["Step 1.5 · AC-1A\nAI Tier\n(conditional)"]
+    S6["Step 1.6 · QC-1A\nPO Sign-off"]
+    S7["Step 1.7 · GC-1A\nAudit Log"]
 
     S1 --> S2
     S2 --> S3
@@ -46,27 +46,27 @@ flowchart LR
 
 ---
 
-## Step 1 — Screen Incoming Request
+## Step 1.1 — Screen Incoming Request
 
 **Control:** [SC-1A](../../controls/sc/SC-1A.yaml) · **Delegation:** Fully automated · **Runs before all other steps**
 
 | Actor | Action |
 | ----- | ------ |
 | AGT | Scan raw change request for prompt injection patterns, adversarial framing, and manipulation attempts |
-| AGT | **Pass:** forward to Step 2. **Block:** log attempt; notify SA |
+| AGT | **Pass:** forward to Step 1.2. **Block:** log attempt; notify SA |
 | SA | Review blocked request; contact requester for resubmission |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Change Request (`CR-XXXX`) |
 | **Output** | Screened request (pass) or blocked log entry |
 | **On failure** | SA reviews flagged request; requester must resubmit a clean change request |
 
 ---
 
-## Step 2 — Draft Feature Specification
+## Step 1.2 — Draft Feature Specification
 
-**Control:** [QC-1A](../../controls/qc/QC-1A.yaml) (agent phase) · **Delegation:** Agent drafts → human approves at Step 6 · **Runs after:** Step 1
+**Control:** [QC-1A](../../controls/qc/QC-1A.yaml) (agent phase) · **Delegation:** Agent drafts → human approves at Step 1.6 · **Runs after:** Step 1.1
 
 | Actor | Action |
 | ----- | ------ |
@@ -75,20 +75,20 @@ flowchart LR
 | AGT | Flag gaps inline in the draft for Product Owner review |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Screened change request |
 | **Output** | Draft feature specification (`artifacts/outputs/feature-spec.yaml`) |
-| **Note** | Product Owner approval is at Step 6; this step only produces the draft |
+| **Note** | Product Owner approval is at Step 1.6; this step only produces the draft |
 
 ---
 
-## Steps 3, 4, 5 — Run in parallel after Step 2
+## Steps 1.3, 1.4, 1.5 — Run in parallel after Step 1.2
 
 ---
 
-## Step 3 — Conflict Analysis
+## Step 1.3 — Conflict Analysis
 
-**Control:** [QC-1B](../../controls/qc/QC-1B.yaml) · **Delegation:** Agent analyses, human resolves · **Runs after:** Step 2
+**Control:** [QC-1B](../../controls/qc/QC-1B.yaml) · **Delegation:** Agent analyses, human resolves · **Runs after:** Step 1.2
 
 | Actor | Action |
 | ----- | ------ |
@@ -98,16 +98,16 @@ flowchart LR
 | PO | Accept or document `significant` and `minor` conflicts with rationale |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Draft feature specification |
 | **Output** | Conflict resolution record (`artifacts/outputs/conflict-resolution-record.yaml`) |
 | **On failure** | Unresolved `blocking` conflicts halt Stage 1. PO must resolve before proceeding |
 
 ---
 
-## Step 4 — Risk Classification
+## Step 1.4 — Risk Classification
 
-**Control:** [RC-1A](../../controls/rc/RC-1A.yaml) · **Delegation:** Agent classifies, human validates · **Runs after:** Step 2 · **Parallel with:** Steps 3 and 5
+**Control:** [RC-1A](../../controls/rc/RC-1A.yaml) · **Delegation:** Agent classifies, human validates · **Runs after:** Step 1.2 · **Parallel with:** Steps 1.3 and 1.5
 
 | Actor | Action |
 | ----- | ------ |
@@ -116,16 +116,16 @@ flowchart LR
 | RO | Review proposed tier and rationale; validate or override with documented justification |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Draft feature specification |
 | **Output** | Risk classification record (`artifacts/outputs/risk-classification.yaml`) |
-| **On failure** | Escalate to Risk Officer for manual assessment; classification must resolve before Step 6 |
+| **On failure** | Escalate to Risk Officer for manual assessment; classification must resolve before Step 1.6 |
 
 ---
 
-## Step 5 — AI Tier Classification *(conditional)*
+## Step 1.5 — AI Tier Classification *(conditional)*
 
-**Control:** [AC-1A](../../controls/ac/AC-1A.yaml) · **Delegation:** Agent proposes, human confirms · **Runs after:** Step 2 · **Parallel with:** Steps 3 and 4
+**Control:** [AC-1A](../../controls/ac/AC-1A.yaml) · **Delegation:** Agent proposes, human confirms · **Runs after:** Step 1.2 · **Parallel with:** Steps 1.3 and 1.4
 
 **Condition:** Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document as `not_applicable` and skip human confirmation.
 
@@ -136,41 +136,41 @@ flowchart LR
 | AGL | Review proposed tier and rationale; confirm or override with documented justification |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Draft feature specification |
 | **Output** | AI tier classification (`artifacts/outputs/ai-tier-classification.yaml`) |
 | **On uncertainty** | Default to highest applicable tier pending AGL resolution |
 
 ---
 
-## Step 6 — Product Owner Sign-off
+## Step 1.6 — Product Owner Sign-off
 
-**Control:** [QC-1A](../../controls/qc/QC-1A.yaml) (approval phase) · **Delegation:** Human required · **Runs after:** Steps 3, 4, and 5 all complete
+**Control:** [QC-1A](../../controls/qc/QC-1A.yaml) (approval phase) · **Delegation:** Human required · **Runs after:** Steps 1.3, 1.4, and 1.5 all complete
 
 | Actor | Action |
 | ----- | ------ |
 | PO | Review final specification, conflict resolutions, risk tier, and AI tier (if applicable) |
 | PO | **Approve:** mark specification `status: approved`; Stage 1 may exit |
-| PO | **Reject:** return to Step 2 with documented gaps; requester addresses them |
+| PO | **Reject:** return to Step 1.2 with documented gaps; requester addresses them |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | Draft spec + conflict resolution record + risk classification + AI tier classification |
 | **Output** | Approved feature specification |
-| **On rejection** | Return to Step 2; document reason; requester and agent address gaps |
+| **On rejection** | Return to Step 1.2; document reason; requester and agent address gaps |
 
 ---
 
-## Step 7 — Traceability Log
+## Step 1.7 — Traceability Log
 
-**Control:** [GC-1A](../../controls/gc/GC-1A.yaml) · **Delegation:** Fully automated · **Runs after:** Step 6 (approval)
+**Control:** [GC-1A](../../controls/gc/GC-1A.yaml) · **Delegation:** Fully automated · **Runs after:** Step 1.6 (approval)
 
 | Actor | Action |
 | ----- | ------ |
 | AGT | Write immutable audit record: original request hash, all transformations, all human decisions, approved spec reference |
 
 | | |
-|---|---|
+| --- | --- |
 | **Input** | All Stage 1 events and outputs |
 | **Output** | Intent audit record (`artifacts/outputs/intent-audit-record.yaml`) |
 | **On failure** | Stage 1 completion is blocked until logging is restored |
@@ -181,8 +181,8 @@ flowchart LR
 
 | Artifact | Produced at | Control | Template |
 | -------- | ----------- | ------- | -------- |
-| Feature Specification | Step 2 / Step 6 | QC-1A | [artifacts/outputs/feature-spec.yaml](artifacts/outputs/feature-spec.yaml) |
-| Conflict Resolution Record | Step 3 | QC-1B | [artifacts/outputs/conflict-resolution-record.yaml](artifacts/outputs/conflict-resolution-record.yaml) |
-| Risk Classification | Step 4 | RC-1A | [artifacts/outputs/risk-classification.yaml](artifacts/outputs/risk-classification.yaml) |
-| AI Tier Classification | Step 5 | AC-1A | [artifacts/outputs/ai-tier-classification.yaml](artifacts/outputs/ai-tier-classification.yaml) |
-| Intent Audit Record | Step 7 | GC-1A | [artifacts/outputs/intent-audit-record.yaml](artifacts/outputs/intent-audit-record.yaml) |
+| Feature Specification | Step 1.2 / Step 1.6 | QC-1A | [artifacts/outputs/feature-spec.yaml](artifacts/outputs/feature-spec.yaml) |
+| Conflict Resolution Record | Step 1.3 | QC-1B | [artifacts/outputs/conflict-resolution-record.yaml](artifacts/outputs/conflict-resolution-record.yaml) |
+| Risk Classification | Step 1.4 | RC-1A | [artifacts/outputs/risk-classification.yaml](artifacts/outputs/risk-classification.yaml) |
+| AI Tier Classification | Step 1.5 | AC-1A | [artifacts/outputs/ai-tier-classification.yaml](artifacts/outputs/ai-tier-classification.yaml) |
+| Intent Audit Record | Step 1.7 | GC-1A | [artifacts/outputs/intent-audit-record.yaml](artifacts/outputs/intent-audit-record.yaml) |
