@@ -1,0 +1,872 @@
+# =============================================================================
+# Regulatory Sources — A-SDLC Framework Reference
+# =============================================================================
+# Single configurable source of truth for all regulatory frameworks that the
+# A-SDLC controls are built against. Controls in controls.yaml files cite
+# specific articles defined here.
+#
+# Frameworks:
+#   DORA      — Regulation (EU) 2022/2554  |  effective 17 January 2025
+#   EU AI Act — Regulation (EU) 2024/1689  |  effective 01 August 2024
+#   DNB       — De Nederlandsche Bank supervisory guidance
+#
+# How to reference from controls:
+#   regulatory_mapping:
+#     dora:
+#       - article: "Art. 8(5)"       ← matches sources.yaml dora.articles[id="Art. 8"].paragraphs[5]
+#         obligation: <short label>   ← human label; authoritative text is in this file
+#
+# Maintenance:
+#   Update articles when the European Commission issues delegated acts or
+#   when DNB publishes updated supervisory guidance. Bump `last_updated` and
+#   note the change in `changelog` at the bottom of this file.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# DORA — Digital Operational Resilience Act
+# ---------------------------------------------------------------------------
+
+dora:
+  name: Digital Operational Resilience Act
+  regulation: Regulation (EU) 2022/2554
+  celex: 32022R2554
+  oj_reference: "OJ L 333, 27.12.2022, p. 1–79"
+  date_adopted: "2022-12-14"
+  date_published: "2022-12-27"
+  effective_date: "2025-01-17"
+  scope: >
+    Applies to financial entities operating in the EU including credit institutions,
+    payment institutions, electronic money institutions, investment firms, crypto-asset
+    service providers (CASPs), central securities depositories, central counterparties,
+    trading venues, insurance and reinsurance undertakings, pension funds, credit rating
+    agencies, and ICT third-party service providers serving the above. Microenterprises
+    (fewer than 10 staff, ≤€2M turnover/balance sheet) benefit from a simplified regime.
+  official_url: https://eur-lex.europa.eu/eli/reg/2022/2554/oj/eng
+  reference_site: https://www.digital-operational-resilience-act.com/
+  wikipedia: https://en.wikipedia.org/wiki/Digital_Operational_Resilience_Act
+  structure:
+    chapters:
+      - number: I
+        title: General provisions (Arts. 1–4)
+      - number: II
+        title: ICT risk management (Arts. 5–16)
+      - number: III
+        title: ICT-related incident management, classification and reporting (Arts. 17–23)
+      - number: IV
+        title: Digital operational resilience testing (Arts. 24–27)
+      - number: V
+        title: Managing of ICT third-party risk (Arts. 28–44)
+      - number: VI
+        title: Information-sharing arrangements (Art. 45)
+      - number: VII
+        title: Competent authorities (Arts. 46–56)
+      - number: VIII
+        title: Delegated acts (Arts. 57–60)
+      - number: IX
+        title: Transitional and final provisions (Arts. 61–64)
+
+  articles:
+
+    - id: "Art. 5"
+      title: Governance and organisation
+      paragraph_summary:
+        "1": >
+          Financial entities shall maintain an internal governance and control framework
+          that ensures effective and prudent management of ICT risk to achieve digital
+          operational resilience.
+        "2": >
+          The management body bears ultimate responsibility for managing ICT risk,
+          including: defining ICT risk management framework; setting data availability,
+          authenticity, integrity, and confidentiality policies; approving the digital
+          operational resilience strategy and risk tolerance levels; overseeing ICT
+          business continuity and recovery plans; and establishing reporting channels
+          for third-party ICT service arrangements.
+        "3": >
+          Most financial entities must designate personnel responsible for monitoring
+          ICT third-party service provider arrangements and assessing related risks.
+        "4": >
+          Management body members must maintain current knowledge of ICT risk through
+          regular training appropriate to the organisation's risk profile.
+      controls_mapped: []
+
+    - id: "Art. 8"
+      title: Identification
+      paragraph_summary:
+        "1": >
+          Financial entities must identify, classify and adequately document all ICT
+          supported business functions, roles and responsibilities, the information
+          assets and ICT assets supporting those functions, and review this inventory
+          at least annually.
+        "2": >
+          Entities must continuously identify ICT risk sources and assess cyber threats
+          and ICT vulnerabilities relevant to their ICT-supported business functions.
+          Risk scenarios require annual review.
+        "3": >
+          Non-microenterprises must conduct risk assessments when major changes occur
+          in network infrastructure, systems, or procedures affecting ICT operations.
+        "4": >
+          Entities must identify all information assets and ICT assets including those
+          on remote sites, network resources, and hardware, and map those considered
+          critical including their configuration and interdependencies.
+        "5": >
+          Organisations must document all processes dependent on ICT third-party
+          providers and identify interconnections supporting critical or important
+          functions. Documented change management procedures requiring approval and
+          verification must be implemented.
+        "6": >
+          Financial entities must maintain relevant inventories and update them
+          periodically and every time any major change occurs.
+        "7": >
+          Non-microenterprises must conduct yearly ICT risk assessments on legacy
+          systems and before/after connecting new technologies.
+      controls_mapped:
+        - RC-1A   # Risk Classification
+        - GC-0B   # End-to-End Traceability
+
+    - id: "Art. 9"
+      title: Protection and prevention
+      paragraph_summary:
+        "1": >
+          Financial entities must continuously monitor ICT systems and minimise the
+          impact of ICT risk through deployment of appropriate ICT security tools,
+          policies and procedures.
+        "2": >
+          Entities shall establish security policies and procedures that ensure
+          resilience, continuity and availability of ICT systems while maintaining
+          high standards for data protection across all states (at rest, in transit,
+          in use).
+        "3": >
+          Entities must employ ICT solutions that: secure data transfer; reduce
+          data corruption/loss and unauthorised access risks; prevent unavailability
+          and confidentiality breaches; and protect against data management risks
+          including human error.
+        "4": >
+          As part of ICT risk management frameworks, entities shall: develop
+          documented information security policies; establish network management
+          with automated isolation mechanisms for cyber-attacks; implement access
+          controls; deploy strong authentication and cryptographic key management
+          based on data classification; implement documented ICT change management
+          procedures; and maintain comprehensive patch and update policies.
+          Network infrastructure must be instantaneously severable or segmentable
+          to minimise and prevent contagion.
+      controls_mapped:
+        - SC-2B   # Directive Injection
+        - SC-3A   # Permission Management
+        - SC-3B   # Post-Guardrails
+        - SC-1A   # Pre-Guardrails
+
+    - id: "Art. 10"
+      title: Detection
+      paragraph_summary:
+        "1": >
+          Financial entities must establish mechanisms to promptly detect anomalous
+          activities including ICT network issues and incidents, and identify potential
+          critical failure points. These detection systems require regular testing.
+        "2": >
+          Detection mechanisms must provide multiple layers of control, define alert
+          thresholds and criteria for triggering incident response, and include
+          automated alerts for relevant personnel.
+        "3": >
+          Entities must allocate sufficient resources and capabilities to monitor user
+          activity, the occurrence of ICT anomalies and ICT-related incidents,
+          particularly cyber-attacks.
+      controls_mapped:
+        - SC-6A   # Incident Scanning & Detection
+        - SC-6B   # Runtime Anomaly Detection
+        - QC-6A   # SLA/SLO Monitoring
+        - RC-6A   # Risk & Health Monitoring
+
+    - id: "Art. 11"
+      title: Response and recovery
+      paragraph_summary:
+        "1": >
+          Financial entities must implement a comprehensive ICT business continuity
+          policy ensuring continuity of critical functions and limiting damage through
+          activation of containment and recovery procedures.
+        "6": >
+          Entities must test ICT business continuity plans and ICT response and
+          recovery plans at least annually and after significant system changes.
+          Non-microenterprises must include cyber-attack scenarios and infrastructure
+          switchover testing.
+        additional: >
+          Entities must maintain a crisis management function (non-microenterprises),
+          keep accessible records of disruption events, conduct business impact
+          analysis of critical functions and third-party dependencies, and report
+          aggregated costs from major ICT incidents.
+      controls_mapped:
+        - RC-5B   # Rollback Plan Validation
+        - QC-6A   # SLA/SLO Monitoring
+        - RC-6A   # Risk & Health Monitoring
+
+    - id: "Art. 17"
+      title: ICT-related incident management process
+      paragraph_summary:
+        "1": >
+          Financial entities shall define, establish and implement an ICT-related
+          incident management process to detect, manage and notify ICT-related incidents.
+        "2": >
+          Financial entities must document all ICT incidents and significant cyber
+          threats, implementing procedures for consistent monitoring, handling and
+          follow-up. Organisations must identify root causes, document findings, and
+          take corrective action.
+        "3": >
+          The incident management framework must include: early warning indicators;
+          procedures to identify, track, log, categorise and classify ICT-related
+          incidents; defined roles and responsibilities; communication plans for staff,
+          stakeholders, media, and clients; reporting requirements for senior management
+          and the management body; and response procedures to restore operations and
+          security promptly.
+      controls_mapped:
+        - SC-6A   # Incident Scanning & Detection
+        - GC-0A   # Audit Trail & Compliance Reporting
+
+    - id: "Art. 18"
+      title: Classification of ICT-related incidents and cyber threats
+      paragraph_summary:
+        "1": >
+          Financial entities must categorise ICT incidents and determine their major
+          status by assessing impact through six criteria: (a) number and/or relevance
+          of clients or financial counterparts affected and reputational harm; (b)
+          duration of the ICT-related incident including service downtime; (c)
+          geographical spread of affected areas; (d) data losses with regard to
+          availability, authenticity, integrity or confidentiality; (e) criticality
+          of the services affected; and (f) economic impact.
+        "2": >
+          Entities must classify cyber threats as significant based on service
+          criticality, number and/or relevance of clients or financial counterparts
+          targeted, and geographical spread.
+        "3": >
+          The ESAs shall develop regulatory technical standards specifying: materiality
+          thresholds for major incidents subject to reporting; criteria for competent
+          authority assessment and cross-border information sharing; and materiality
+          thresholds for significant cyber threats.
+      controls_mapped:
+        - SC-6A   # Incident Scanning & Detection
+
+    - id: "Art. 19"
+      title: Reporting of major ICT-related incidents and voluntary notification of significant cyber threats
+      paragraph_summary:
+        general: >
+          Financial entities must report major ICT-related incidents to the relevant
+          competent authority following specific procedures. Three notifications are
+          required: (1) initial notification when a major incident is identified;
+          (2) intermediate report when incident status changes significantly or upon
+          request; (3) final report upon root cause analysis completion.
+          Entities must also inform clients without undue delay when a major incident
+          affects their financial interests. Competent authorities share incident
+          details with EBA, ESMA, EIOPA, ECB, CSIRTs, and other relevant agencies.
+        reporting_timelines:
+          initial: "4 hours from classification as major incident (within 24h of detection)"
+          intermediate: "72 hours from initial notification or upon significant status change"
+          final: "1 month from submission of intermediate report"
+        note: >
+          Specific timeline details are set out in RTS/ITS developed under
+          Article 20. While entities may outsource reporting to third parties,
+          they remain fully responsible for compliance.
+      controls_mapped:
+        - SC-6A   # Incident Scanning & Detection
+        - GC-0A   # Audit Trail & Compliance Reporting
+
+    - id: "Art. 24"
+      title: General requirements for the performance of digital operational resilience testing
+      paragraph_summary:
+        "1": >
+          Financial entities (excluding microenterprises) must create and maintain a
+          sound and comprehensive digital operational resilience testing programme as
+          an integral part of the ICT risk-management framework.
+        "2": >
+          The programme shall encompass a range of assessments, tests, methodologies,
+          practices and tools as per Articles 25 and 26.
+        "3": >
+          A risk-based approach must be applied considering evolving ICT threats,
+          entity-specific vulnerabilities, and criticality of assets and services.
+        "4": >
+          Tests must be performed by independent parties — internal or external.
+          Internal testers must have sufficient resources and avoid conflicts of
+          interest throughout design and execution phases.
+        "5": >
+          Entities must establish procedures and policies to prioritise, classify
+          and remedy all issues identified during testing, plus develop validation
+          methods confirming weaknesses are fully resolved.
+        "6": >
+          Entities must conduct appropriate tests at least yearly on all ICT systems
+          and applications supporting critical or important functions.
+      controls_mapped:
+        - SC-4A   # SAST
+        - SC-4B   # DAST
+        - SC-5A   # Infrastructure Security
+
+    - id: "Art. 25"
+      title: Testing of ICT tools and systems
+      paragraph_summary:
+        "1": >
+          Digital operational resilience testing must include appropriate tests such as:
+          vulnerability assessments and scans, open source analyses, network security
+          assessments, gap analyses, physical security reviews, questionnaires and
+          scanning software solutions, source code reviews where feasible, scenario-
+          based tests, compatibility testing, performance testing, end-to-end testing
+          and penetration testing.
+        "2": >
+          Central securities depositories and central counterparties must perform
+          vulnerability assessments before any deployment or redeployment of new or
+          existing applications and infrastructure components, and ICT services
+          supporting critical or important functions.
+        "3": >
+          Microenterprises may perform testing by combining a risk-based approach with
+          strategic planning of ICT testing, balancing resource allocation against risk
+          urgency, information asset criticality, and risk tolerance capacity.
+      controls_mapped:
+        - SC-4A   # SAST
+        - SC-4B   # DAST
+        - SC-5A   # Infrastructure Security
+
+    - id: "Art. 28"
+      title: General principles of sound management of ICT third-party risk
+      paragraph_summary:
+        "1": >
+          Financial entities must manage ICT third-party risk as part of their overall
+          ICT risk framework. Entities remain fully responsible for compliance with all
+          DORA obligations despite using external ICT services. Risk management must
+          follow proportionality principles considering the nature and criticality of
+          ICT dependencies.
+        "2": >
+          Most financial entities must adopt and regularly review a strategy addressing
+          ICT third-party risk, including policies for critical or important functions.
+          The management body must assess the overall risk profile and review
+          identified concentration risks.
+        "3": >
+          Entities must maintain registers of all ICT service contractual arrangements
+          at entity and consolidated levels, with yearly reporting to authorities on
+          new arrangements, provider categories, and services provided.
+        "4": >
+          Pre-contract due diligence must include: determining whether the arrangement
+          supports critical functions; evaluating supervisory compliance; identifying
+          ICT concentration risks; conducting due diligence on the provider; and
+          assessing conflicts of interest.
+        "5": >
+          ICT third-party service providers must comply with appropriate information
+          security standards. For arrangements supporting critical functions, heightened
+          expectations apply.
+        "7": >
+          Contract termination is permitted for significant breaches,
+          performance-altering circumstances, ICT risk management weaknesses,
+          or supervisory impediments.
+        "8": >
+          Comprehensive exit strategies are required for critical functions, ensuring
+          business continuity, regulatory compliance, and service quality during
+          transitions.
+      note: >
+        NOTE: The compliance-matrix.yaml references "Art. 28a" (supply chain security).
+        No Article 28a exists in the final text of Regulation (EU) 2022/2554 (64 articles).
+        Supply chain security provisions fall within Articles 28–44 of DORA. The reference
+        should likely read "Art. 28" or "Arts. 30–31" (key contractual provisions; ICT
+        concentration risk). This should be corrected in a future review of the
+        compliance-matrix.yaml.
+      controls_mapped:
+        - GC-0C   # Agent Provenance Registry
+        - SC-3A   # Permission Management
+        - GC-3A   # Code Provenance Tracking
+        - SC-5B   # Deployment Integrity
+
+
+# ---------------------------------------------------------------------------
+# EU AI Act — Artificial Intelligence Act
+# ---------------------------------------------------------------------------
+
+eu_ai_act:
+  name: Artificial Intelligence Act
+  regulation: Regulation (EU) 2024/1689
+  celex: 32024R1689
+  oj_reference: "OJ L 2024/1689, 12.7.2024"
+  date_adopted: "2024-06-13"
+  date_published: "2024-07-12"
+  effective_date: "2024-08-01"
+  scope: >
+    Applies to providers placing AI systems on the EU market, providers and deployers
+    of AI systems located in third countries where outputs are used in the EU, importers
+    and distributors, product manufacturers incorporating AI systems, and authorised
+    representatives of non-EU providers. Excludes AI systems used exclusively for
+    military, national security, and research/development purposes.
+  official_url: https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng
+  reference_site: https://artificialintelligenceact.eu/
+  ai_act_service_desk: https://ai-act-service-desk.ec.europa.eu/en
+  risk_classification:
+    unacceptable_risk: "Prohibited — Art. 5 (biometric categorisation, social scoring, etc.)"
+    high_risk: "Regulated — Annex III list (biometrics, critical infrastructure, employment, etc.)"
+    limited_risk: "Transparency obligations — Art. 50 (chatbots, synthetic content)"
+    minimal_risk: "No specific obligations"
+  structure:
+    chapters:
+      - number: I
+        title: General provisions (Arts. 1–4)
+      - number: II
+        title: Prohibited AI practices (Art. 5)
+      - number: III
+        title: High-risk AI systems (Arts. 6–49), including Section 2 requirements
+      - number: IV
+        title: Transparency obligations for certain AI systems (Art. 50)
+      - number: V
+        title: General-purpose AI models (Arts. 51–56)
+      - number: VI
+        title: Measures in support of innovation (Arts. 57–63)
+      - number: VII
+        title: Governance (Arts. 64–70)
+      - number: VIII
+        title: Post-market monitoring, information sharing, market surveillance (Arts. 71–80)
+      - number: IX
+        title: Codes of conduct and guidelines (Arts. 81–83)
+      - number: X
+        title: Confidentiality and penalties (Arts. 84–99)
+
+  articles:
+
+    - id: "Art. 6"
+      title: Classification rules for high-risk AI systems
+      paragraph_summary:
+        general: >
+          An AI system is classified as high-risk if it is a safety component of a
+          product covered by Union harmonisation legislation (Annex I), or if it falls
+          within the areas listed in Annex III. Annex III includes: biometric
+          identification and categorisation; management of critical infrastructure;
+          education and vocational training; employment, workers management, and access
+          to self-employment; access to and enjoyment of essential private services and
+          public services and benefits; law enforcement; migration, asylum, and border
+          control management; administration of justice and democratic processes.
+      controls_mapped:
+        - AC-1A   # AI Risk Tier Classification
+
+    - id: "Art. 9"
+      title: Risk management system
+      paragraph_summary:
+        "1": >
+          A risk management system shall be established, implemented, documented and
+          maintained in relation to high-risk AI systems. The system operates as a
+          continuous iterative process throughout the entire lifecycle of the AI system.
+        "2": >
+          The risk management system shall include four key steps: (a) identification
+          of known and reasonably foreseeable risks to health, safety, or fundamental
+          rights; (b) estimation and evaluation of risks that may emerge when the
+          system is used in accordance with its intended purpose and under conditions
+          of reasonably foreseeable misuse; (c) evaluation of other possibly arising
+          risks based on post-market monitoring data; (d) adoption of appropriate
+          and targeted risk management measures.
+        "7": >
+          Providers must ensure testing to identify appropriate risk management
+          measures. Testing ensures consistent performance and compliance throughout
+          development and before market placement, using predefined metrics and
+          probabilistic thresholds appropriate to the intended purpose.
+      controls_mapped:
+        - AC-1A   # AI Risk Tier Classification
+        - RC-4A   # Risk Threshold Evaluation
+        - AC-6A   # AI Post-Market Surveillance
+
+    - id: "Art. 10"
+      title: Data and data governance
+      paragraph_summary:
+        "1": >
+          High-risk AI systems using training techniques shall be developed using
+          training, validation and testing data sets meeting the quality criteria
+          in paragraphs 2 to 5.
+        "2": >
+          Data governance and management practices must address: design choices; data
+          collection processes and origins; data preparation operations (annotation,
+          labelling, cleaning, enrichment, aggregation); assumptions about what data
+          measures; assessment of data availability, quantity, and suitability;
+          examination of possible biases likely to affect health/safety or lead to
+          discrimination; measures to detect, prevent, and mitigate identified biases;
+          and identification of data gaps preventing regulatory compliance.
+        "5": >
+          Providers may exceptionally process special categories of personal data for
+          bias detection and correction under strict conditions including necessity,
+          technical limitations on reuse, security measures, access controls,
+          non-transmission restrictions, deletion requirements, and documented
+          processing justification.
+        "(2)(f)": >
+          Examination in view of possible biases that are likely to affect health and
+          safety of persons, have a negative impact on fundamental rights, or lead
+          to discrimination prohibited under Union or national law.
+      controls_mapped:
+        - AC-2A   # AI Component Design Review
+        - AC-4A   # Bias & Fairness Testing
+
+    - id: "Art. 11"
+      title: Technical documentation
+      paragraph_summary:
+        "1": >
+          Technical documentation for high-risk AI systems must be prepared before
+          market placement or service deployment and kept current. It must demonstrate
+          compliance with Chapter III Section 2 requirements and provide competent
+          authorities and notified bodies with all necessary information in clear and
+          comprehensive form to assess the AI system's compliance.
+          Minimum elements are specified in Annex IV.
+        "2": >
+          When a high-risk AI system relates to products under Union harmonisation
+          legislation, providers must prepare unified technical documentation
+          containing all paragraph 1 information.
+        "3": >
+          The Commission may adopt delegated acts to amend Annex IV as needed to
+          ensure technical progress does not impair documentation requirements.
+      controls_mapped:
+        - QC-4C   # Documentation Completeness
+        - AC-2A   # AI Component Design Review
+
+    - id: "Art. 12"
+      title: Record-keeping
+      paragraph_summary:
+        "1": >
+          High-risk AI systems shall technically allow for the automatic recording of
+          events (logs) over the lifetime of the system.
+        "2": >
+          Logging capabilities shall ensure a level of traceability of the AI
+          system's functioning throughout its lifecycle that is appropriate to the
+          intended purpose of the system, including at a minimum: (a) recording of
+          the period of each use; (b) the reference database against which the input
+          data has been checked; (c) input data or data summaries that can be used
+          to identify the inputs giving rise to the AI system's output.
+      controls_mapped:
+        - GC-0A   # Audit Trail & Compliance Reporting
+        - GC-0B   # End-to-End Traceability
+
+    - id: "Art. 13"
+      title: Transparency and provision of information to deployers
+      paragraph_summary:
+        general: >
+          An appropriate type and degree of transparency shall be ensured with a view
+          to achieving compliance with deployer and provider obligations. High-risk AI
+          systems shall be accompanied by instructions for use in an appropriate digital
+          format that include concise, complete, correct and clear information that is
+          relevant, accessible and comprehensible to deployers. Information must include:
+          provider contact details; system characteristics, capabilities and limitations
+          of performance; intended purpose; level of accuracy, robustness, and
+          cybersecurity; potential risks; and the human oversight measures referred
+          to in Article 14 including technical measures put in place to facilitate
+          interpretation of outputs.
+      controls_mapped:
+        - AC-2A   # AI Component Design Review
+
+    - id: "Art. 14"
+      title: Human oversight
+      paragraph_summary:
+        "1": >
+          High-risk AI systems shall be designed and developed in such a way, including
+          with appropriate human-machine interface tools, that they can be effectively
+          overseen by natural persons during the period in which they are in use.
+        general: >
+          Human oversight shall aim to prevent or minimise risks to health, safety or
+          fundamental rights that may emerge when a high-risk AI system is used in
+          accordance with its intended purpose or under conditions of reasonably
+          foreseeable misuse. Deployers shall assign human oversight to natural persons
+          who have the necessary competence, training and authority, as well as the
+          necessary support.
+      controls_mapped:
+        - SC-2B   # Directive Injection
+        - AC-2A   # AI Component Design Review
+
+    - id: "Art. 15"
+      title: Accuracy, robustness and cybersecurity
+      paragraph_summary:
+        "1": >
+          High-risk AI systems shall be designed and developed in such a way that they
+          achieve an appropriate level of accuracy, robustness, and cybersecurity, and
+          that they perform consistently in those respects throughout their lifecycle.
+        "3": >
+          Accuracy metrics of high-risk AI systems shall be declared in the
+          accompanying instructions for use.
+        "4": >
+          High-risk AI systems shall be resilient against attempts by unauthorised
+          third parties to alter their use, outputs or performance. Technical and
+          organisational measures must include backup or fail-safe plans. For systems
+          that continue to learn post-deployment, measures are required to eliminate
+          or reduce biased feedback loops.
+        "5": >
+          Protection against adversarial AI-specific vulnerabilities including:
+          data poisoning attacks; model poisoning of pre-trained components;
+          adversarial examples targeting model accuracy; confidentiality breaches;
+          and model flaws. Solutions must be appropriate to the relevant circumstances
+          and risks.
+      controls_mapped:
+        - AC-4A   # Bias & Fairness Testing
+        - SC-1A   # Pre-Guardrails
+        - SC-3B   # Post-Guardrails
+        - SC-5B   # Deployment Integrity
+
+    - id: "Art. 17"
+      title: Quality management system
+      paragraph_summary:
+        "1": >
+          Providers of high-risk AI systems shall implement a documented quality
+          management system ensuring regulatory compliance. The system must include:
+          (a) strategy for regulatory compliance including conformity assessment;
+          (b) design control and verification techniques; (c) development, quality
+          control and assurance procedures; (d) examination, testing and validation
+          procedures; (e) technical specifications and standards application;
+          (f) data management systems covering data acquisition, collection, analysis,
+          labelling, storage, filtration, mining, aggregation, and retention;
+          (g) the risk management system referenced in Article 9;
+          (h) post-market monitoring system per Article 72;
+          (i) procedures for reporting serious incidents per Article 73;
+          (j) communication protocols with authorities; (k) record-keeping systems;
+          (l) resource management including supply security measures;
+          (m) an accountability framework defining management responsibilities.
+        "(1)(d)": >
+          Examination, test and validation procedures to be carried out before,
+          during and after the development of the high-risk AI system, and the
+          frequency with which they are to be carried out.
+        "(1)(f)": >
+          Data management systems including data acquisition, data collection,
+          data analysis, data labelling, data storage, data filtration, data mining,
+          data aggregation, data retention and any other operation regarding the data
+          that is performed before and for the purpose of the placing on the market
+          or putting into service of high-risk AI systems.
+        "4": >
+          Financial institutions subject to Union financial services legislation are
+          exempt from certain requirements, allowing compliance through existing
+          internal governance rules already mandated under that legislation.
+      controls_mapped:
+        - GC-0C   # Agent Provenance Registry
+        - GC-3A   # Code Provenance Tracking
+
+    - id: "Art. 26"
+      title: Obligations of deployers of high-risk AI systems
+      paragraph_summary:
+        "1": >
+          Deployers must take appropriate technical and organisational measures to
+          ensure they use AI systems in accordance with the instructions for use.
+        "2": >
+          Organisations must assign oversight responsibilities to natural persons who
+          have the necessary competence, training and authority.
+        "4": >
+          Where deployers control input data, they must ensure that input data is
+          relevant and sufficiently representative in view of the intended purpose.
+        "5": >
+          Deployers must monitor the operation of the high-risk AI system on the basis
+          of the instructions for use and inform providers per Article 72 requirements.
+          If use may result in AI system presenting a risk, deployers must immediately
+          inform the provider or distributor and the relevant market surveillance
+          authority, and suspend use. Upon identifying serious incidents, deployers
+          must immediately inform first the provider, then the importer or distributor
+          and the relevant market surveillance authorities. Financial institutions
+          satisfy monitoring obligations through compliance with existing financial
+          services governance rules.
+      controls_mapped:
+        - GC-0C   # Agent Provenance Registry
+        - AC-6A   # AI Post-Market Surveillance
+
+    - id: "Art. 72"
+      title: Post-market monitoring by providers and post-market monitoring plan for high-risk AI systems
+      paragraph_summary:
+        general: >
+          Providers must actively collect and analyse data on the performance and
+          compliance of AI systems throughout their lifetime. A post-market monitoring
+          plan shall be part of the technical documentation referred to in Annex IV.
+          The plan must be proportionate to the nature of the AI technology and the
+          risks of the high-risk AI system as identified in the risk assessment.
+          Post-market monitoring data feeds back into the risk management system
+          (Article 9) and must be shared with relevant authorities upon request.
+      controls_mapped:
+        - AC-6A   # AI Post-Market Surveillance
+
+    - id: "Art. 73"
+      title: Reporting of serious incidents
+      paragraph_summary:
+        general: >
+          Providers of high-risk AI systems placed on the EU market must report any
+          serious incident to the market surveillance authorities of the Member States
+          where the incident occurred.
+        reporting_timelines:
+          general: "Without undue delay; in any event within 15 days of becoming aware of a serious incident"
+          with_death: "10 days if a death may have been caused or may be caused"
+          widespread: "2 days for widespread infringements or serious and irreversible disruption of critical infrastructure"
+          initial_incomplete: >
+            Providers may submit an initial, incomplete report with supplemental
+            information to follow (Art. 73(5)).
+        serious_incident_definition: >
+          A serious incident means any incident or malfunction of a high-risk AI system
+          that directly or indirectly leads to: death of a person or serious damage to
+          health; serious and irreversible disruption of the management and operation
+          of critical infrastructure; breach of obligations under Union law protecting
+          fundamental rights; or serious damage to property or the environment.
+      controls_mapped:
+        - AC-6A   # AI Post-Market Surveillance
+        - SC-6A   # Incident Scanning & Detection
+
+  annexes:
+
+    - id: "Annex III"
+      title: High-risk AI systems referred to in Article 6(2)
+      summary: >
+        Lists specific high-risk AI system categories including: biometric identification
+        and categorisation systems; AI systems for management and operation of critical
+        infrastructure; AI systems for education and vocational training; AI systems
+        for employment and workers management; AI systems for access to essential
+        private/public services and benefits; AI systems used in law enforcement;
+        AI systems for migration, asylum and border control management; AI systems
+        for administration of justice and democratic processes.
+      controls_mapped:
+        - AC-1A   # AI Risk Tier Classification
+
+    - id: "Annex IV"
+      title: Technical documentation referred to in Article 11(1)
+      summary: >
+        Specifies minimum elements of technical documentation for high-risk AI systems,
+        including: general description of the AI system; detailed description of
+        elements and development process; information on monitoring, functioning and
+        control; description of risk management system; description of changes made
+        to the system throughout its lifecycle; list of harmonised standards applied;
+        copy of the EU declaration of conformity.
+      controls_mapped:
+        - QC-4C   # Documentation Completeness
+        - AC-2A   # AI Component Design Review
+
+
+# ---------------------------------------------------------------------------
+# DNB — De Nederlandsche Bank Supervisory Guidance
+# ---------------------------------------------------------------------------
+
+dnb:
+  name: De Nederlandsche Bank — Supervisory Guidance
+  role: >
+    DNB is the Dutch prudential supervisor for financial institutions. As the
+    competent authority under DORA for Dutch financial entities, DNB enforces
+    DORA requirements and issues supplementary guidance on operational resilience,
+    information security, and ICT risk management.
+  official_url: https://www.dnb.nl/en/
+  dora_page: https://www.dnb.nl/en/sector-information/open-book-supervision/laws-and-eu-regulations/dora/
+  reporting_2025: https://www.dnb.nl/en/sector-news/supervision-2025/dora-reporting-dora-registers-of-information-in-april-2025/
+  tlpt_page: https://www.dnb.nl/en/sector-information/cash-and-payment-systems/dnb-oversees-cyber-resilience-tests/threat-led-penetration-testing-tlpt/
+
+  supervisory_frameworks:
+
+    - id: "DORA-Implementation"
+      title: DORA Implementation and Supervisory Expectations
+      effective_date: "2025-01-17"
+      status: current
+      summary: >
+        From 17 January 2025, DORA is the statutory framework for operational resilience
+        for in-scope financial entities. DNB's Good Practice Information Security (2023)
+        is no longer applicable to DORA-regulated entities; DORA supersedes it.
+        DNB implements DORA requirements proportionally and in a risk-based manner.
+      key_expectations:
+        - area: Gap analysis
+          requirement: >
+            Institutions must conduct a thorough gap analysis against both the DORA
+            regulation and the underlying RTS/ITS with appropriate urgency. DNB
+            monitors progress of compliance programmes.
+        - area: Information register reporting
+          requirement: >
+            Financial institutions must report the DORA information register (all
+            contractual arrangements for ICT services provided by third parties)
+            by 23 April 2025, in xBRL-CSV format. This supports the European
+            designation of critical third-party ICT service providers.
+        - area: Third-party management
+          requirement: >
+            DORA imposes stricter requirements for managing cyber risks in outsourcing
+            chains. Due diligence on ICT providers must be strengthened. European
+            supervisors may conduct inspections of critical third-party ICT providers
+            in tandem with national authorities.
+        - area: Threat-led penetration testing (TLPT)
+          requirement: >
+            Under DORA, threat-led penetration tests are mandatory for the largest
+            financial institutions. If a financial institution meets the DORA criteria,
+            it is required to conduct TLPT in which realistic cyber attacks are simulated
+            to strengthen detection and response capabilities.
+        - area: Management body responsibility
+          requirement: >
+            A compliance programme under the responsibility of management, with progress
+            monitored and periodically reported to the management body, is expected for
+            all in-scope institutions.
+
+    - id: "Information-Security"
+      title: Information Security Supervisory Requirements
+      status: superseded_for_dora_scope
+      note: >
+        The Good Practice Information Security document has been superseded by DORA
+        for entities in DORA's scope. The eight control domains below reflect the
+        enduring security expectations that carry through into DORA implementation.
+      control_domains:
+        - domain: "1. Information security policy"
+          requirement: >
+            Documented and board-approved information security policy defining objectives,
+            principles, and governance structure. Policy must be regularly reviewed.
+        - domain: "2. Organisation of information security"
+          requirement: >
+            Clear roles and responsibilities for information security. Security function
+            must be independent from operational ICT functions (segregation of duties).
+        - domain: "3. Human resource security"
+          requirement: >
+            Security awareness and training for all staff and contractors. Background
+            verification for sensitive roles. Clear procedures for staff onboarding
+            and offboarding including access revocation.
+        - domain: "4. Access management"
+          requirement: >
+            Least-privilege access control. Privileged access management (PAM) for
+            administrative accounts. Regular access reviews and prompt revocation.
+            Multi-factor authentication for remote access and privileged accounts.
+        - domain: "5. Cryptography"
+          requirement: >
+            Use of approved cryptographic standards for data at rest and in transit.
+            Robust key management procedures. Prohibition on deprecated algorithms.
+        - domain: "6. Physical and environmental security"
+          requirement: >
+            Physical access controls for data centres and server rooms. Environmental
+            monitoring and protection against physical threats.
+        - domain: "7. Operations security"
+          requirement: >
+            Change management with four-eyes principle. Vulnerability management and
+            patch management. Capacity management. Logging and monitoring of systems.
+            Protection against malware.
+        - domain: "8. Incident management"
+          requirement: >
+            Documented incident response process. Reporting to DNB within DORA
+            timelines for major incidents. Root cause analysis and lessons learned.
+            Testing of incident response procedures.
+
+    - id: "Change-Management"
+      title: Change Management Supervisory Expectations
+      summary: >
+        DNB expects robust change management as part of DORA Art. 8(5) compliance.
+        Key requirements are: four-eyes principle for all significant changes; approval
+        authority matrix defining who can authorise changes at each risk level;
+        documented rollback procedures tested before deployment; and end-to-end
+        traceability linking changes to approved design and business requirements.
+      key_requirements:
+        - control: Four-eyes principle
+          mapped_to: QC-3A   # Pull Request Creation & Review
+        - control: Approval authority matrix
+          mapped_to: RC-5A   # CAB Approval
+        - control: Rollback procedures
+          mapped_to: RC-5B   # Rollback Plan Validation
+        - control: End-to-end traceability
+          mapped_to: GC-0B   # End-to-End Traceability
+
+    - id: "Agent-Accountability"
+      title: Third-Party and Agent Accountability Expectations
+      summary: >
+        As AI agents and automated processes become part of software delivery pipelines,
+        DNB expects institutions to apply the same rigour to agent oversight as to
+        human third-party oversight. This includes maintaining an agent registry with
+        provenance information, defining and enforcing least-privilege access boundaries
+        for agents, and governing agent behaviour through documented directives that
+        cannot be overridden by user instruction.
+      key_requirements:
+        - control: Agent registry
+          mapped_to: GC-0C   # Agent Provenance Registry
+        - control: Agent access management
+          mapped_to: SC-3A   # Permission Management
+        - control: Agent governance via directives
+          mapped_to: SC-2B   # Directive Injection
+
+
+# ---------------------------------------------------------------------------
+# Changelog
+# ---------------------------------------------------------------------------
+
+changelog:
+  - date: "2026-03-02"
+    change: Initial creation — sourced from DORA (EU 2022/2554), EU AI Act (EU 2024/1689), and DNB DORA guidance page.
+    author: A-SDLC Framework Team
+    note: >
+      Art. 28a reference in compliance-matrix.yaml flagged as a probable error.
+      DORA Regulation EU 2022/2554 contains 64 articles; no Art. 28a exists.
+      Supply chain security provisions fall under Arts. 28–44.
+      Recommend correcting compliance-matrix.yaml in a future review.
