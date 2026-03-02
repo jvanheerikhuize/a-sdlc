@@ -1,11 +1,8 @@
 # =============================================================================
 # Risk Classification Template
 # =============================================================================
-# Produced during Stage 1 Step 4 by control RC-1A.
-# Non-functional risk classification.
+# Produced during Step 1.4 by control RC-1A.
 # The resulting tier drives governance intensity for all subsequent stages.
-#
-# Methodology: controls/rc/RISK-CLASSIFICATION-METHODOLOGY.md
 #
 # Usage:
 #   Copy: cp risk-classification.yaml FEAT-XXXX-risk-classification.yaml

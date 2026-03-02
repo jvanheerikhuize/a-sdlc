@@ -111,7 +111,7 @@ flowchart LR
 
 | Actor | Action |
 | ----- | ------ |
-| AGT | Apply risk classification criteria across 6 dimensions (see [Risk Classification Methodology](../../controls/rc/RISK-CLASSIFICATION-METHODOLOGY.md)) |
+| AGT | Apply risk classification criteria across 6 dimensions |
 | AGT | Propose tier (`low` / `medium` / `high` / `critical`) and governance intensity |
 | RO | Review proposed tier and rationale; validate or override with documented justification |
 
