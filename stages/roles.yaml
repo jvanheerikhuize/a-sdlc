@@ -1,0 +1,59 @@
+# =============================================================================
+# Roles Registry
+# =============================================================================
+# Canonical definitions for all roles that participate in A-SDLC stages.
+#
+# Usage:
+#   Stage process.md files reference this file and list only the roles active
+#   in that stage with their stage-specific responsibilities. New roles are
+#   added here first, then referenced from the relevant stage process.md.
+# =============================================================================
+
+roles:
+  REQ:
+    name: Requester
+    description: Submits change requests; the originator of intent.
+
+  AGT:
+    name: Agent
+    description: Automated AI agent performing processing, drafting, analysis, generation, and logging tasks.
+
+  PO:
+    name: Product Owner
+    description: Business decision authority; approves specifications and resolves requirement conflicts.
+
+  RO:
+    name: Risk Officer
+    description: Validates risk classifications; may override agent-proposed tiers with documented justification.
+
+  SA:
+    name: Security Architect
+    description: Reviews security-flagged items; owns security control escalations and security directive authorship.
+
+  AGL:
+    name: AI Governance Lead
+    description: Confirms EU AI Act risk tiers for changes involving AI components; owns AC-track controls.
+
+  LAD:
+    name: Lead Architect
+    description: Owns architectural decisions; formal approval authority for system design at Stage 2.
+
+  DEV:
+    name: Developer
+    description: Authors and reviews code at Stage 3; accountable for implementation quality and peer review.
+
+  QA:
+    name: QA Engineer
+    description: Owns test coverage and quality sign-off at Stage 4.
+
+  REL:
+    name: Release Manager
+    description: Manages the deployment pipeline and CAB coordination at Stage 5.
+
+  OPS:
+    name: Operations / SRE
+    description: Monitors production health; primary actor triggering feedback loops from Stage 6.
+
+  CO:
+    name: Compliance Officer
+    description: Reviews audit records and traceability evidence during regulatory audits; no stage-execution role.

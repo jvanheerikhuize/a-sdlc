@@ -2,15 +2,17 @@
 
 ## Roles
 
+Canonical role definitions: [../roles.yaml](../roles.yaml)
+
 | Role | Short | Stage 1 responsibilities |
 | ---- | ----- | ------------------------- |
 | Requester | REQ | Submits the change request |
-| Agent | AGT | Automated processing and drafting |
-| Product Owner | PO | Approves specification; resolves conflicts |
-| Risk Officer | RO | Validates risk classification |
-| Security Architect | SA | Reviews blocked or flagged requests |
+| Agent | AGT | Screens, parses, drafts, classifies, and logs |
+| Product Owner | PO | Approves specification; makes binding conflict decisions |
+| Risk Officer | RO | Validates risk classification; may override agent-proposed tier |
+| Security Architect | SA | Reviews blocked or flagged requests; contacts requester |
 | AI Governance Lead | AGL | Confirms EU AI Act tier (if AI component involved) |
-| Compliance Officer | CO | Reviews audit records during audits |
+| Compliance Officer | CO | Reviews audit records during regulatory audits |
 
 ## Input Artifacts
 
