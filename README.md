@@ -112,12 +112,12 @@ a-sdlc/
 │   ├── ac/                           ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
 │   └── gc/                           ← Governance Control definitions (GC-0A … GC-3A)
 ├── stages/
-│   ├── 01-intent-ingestion/          ← stage.yaml + README.md + process.md + artifacts/
-│   ├── 02-system-design/             ← stage.yaml + README.md + directives/
-│   ├── 03-coding-implementation/     ← stage.yaml + README.md
-│   ├── 04-testing-documentation/     ← stage.yaml + README.md
-│   ├── 05-deployment-release/        ← stage.yaml + README.md
-│   └── 06-observability-maintenance/ ← stage.yaml + README.md
+│   ├── 01-intent-ingestion/          ← 01-intent-ingestion.yaml + README.md + process.md + artifacts/
+│   ├── 02-system-design/             ← 02-system-design.yaml + README.md + directives/
+│   ├── 03-coding-implementation/          ← 03-coding-implementation.yaml + README.md
+│   ├── 04-testing-documentation/          ← 04-testing-documentation.yaml + README.md
+│   ├── 05-deployment-release/             ← 05-deployment-release.yaml + README.md
+│   └── 06-observability-maintenance/ ← 06-observability-maintenance.yaml + README.md
 ├── feedbackloops/
 │   ├── README.md                     ← Feedback process documentation and decision tree
 │   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions

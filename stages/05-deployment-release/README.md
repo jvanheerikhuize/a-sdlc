@@ -25,7 +25,7 @@ No deployment may proceed without a formal change approval (RC-5A) and cryptogra
 | SC-5A | Infrastructure Security | Validates production environment: patching, access controls, network segmentation, IaC compliance. | Fully automated | DORA: Art. 9(2); DNB: Production security baseline; AI Act: Art. 15(4) |
 | SC-5B | Deployment Integrity | Cryptographic verification that tested artefacts are exactly what gets deployed. No tampering. | Fully automated | DORA: Art. 9(2), Art. 28a; DNB: Supply chain controls; AI Act: Art. 15(3) |
 
-Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+Stage definition (required controls + exit criteria): [05-deployment-release.yaml](05-deployment-release.yaml)
 
 Individual control definitions by track:
   - [QC-5A](../../controls/qc/QC-5A.yaml)

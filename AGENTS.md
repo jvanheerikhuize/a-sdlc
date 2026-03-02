@@ -88,12 +88,12 @@ For each stage, load the lightweight stage definition and then the individual co
 
 | Stage | Stage definition | Controls |
 | --- | --- | --- |
-| 1 — Intent Ingestion | `stages/01-intent-ingestion/stage.yaml` | QC-1A, QC-1B, RC-1A, SC-1A, AC-1A, GC-1A |
-| 2 — System Design | `stages/02-system-design/stage.yaml` | QC-2A, RC-2A, SC-2A, SC-2B, AC-2A |
-| 3 — Coding & Implementation | `stages/03-coding-implementation/stage.yaml` | QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A |
-| 4 — Testing & Documentation | `stages/04-testing-documentation/stage.yaml` | QC-4A, QC-4B, QC-4C, RC-4A, SC-4A, SC-4B, AC-4A |
-| 5 — Deployment & Release | `stages/05-deployment-release/stage.yaml` | QC-5A, RC-5A, RC-5B, SC-5A, SC-5B |
-| 6 — Observability & Maintenance | `stages/06-observability-maintenance/stage.yaml` | QC-6A, RC-6A, SC-6A, SC-6B, AC-6A |
+| 1 — Intent Ingestion | `stages/01-intent-ingestion/01-intent-ingestion.yaml` | QC-1A, QC-1B, RC-1A, SC-1A, AC-1A, GC-1A |
+| 2 — System Design | `stages/02-system-design/02-system-design.yaml` | QC-2A, RC-2A, SC-2A, SC-2B, AC-2A |
+| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A |
+| 4 — Testing & Documentation | `stages/04-testing-documentation/04-testing-documentation.yaml` | QC-4A, QC-4B, QC-4C, RC-4A, SC-4A, SC-4B, AC-4A |
+| 5 — Deployment & Release | `stages/05-deployment-release/05-deployment-release.yaml` | QC-5A, RC-5A, RC-5B, SC-5A, SC-5B |
+| 6 — Observability & Maintenance | `stages/06-observability-maintenance/06-observability-maintenance.yaml` | QC-6A, RC-6A, SC-6A, SC-6B, AC-6A |
 
 Individual control definitions live in:
 
@@ -108,7 +108,7 @@ controls/gc/   # GC-0A through GC-3A  (Governance Controls)
 Each stage directory contains:
 
 - `README.md` — human-readable description, key tasks, and controls table
-- `stage.yaml` — lightweight stage definition: required control IDs and exit criteria
+- `NN-stage-name.yaml` — lightweight stage definition: required control IDs and exit criteria
 
 ### Full Control Registry
 

@@ -20,7 +20,7 @@ Full step-by-step process with roles and decision points: [process.md](process.m
 
 ## Controls
 
-Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+Stage definition (required controls + exit criteria): [01-intent-ingestion.yaml](01-intent-ingestion.yaml)
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |

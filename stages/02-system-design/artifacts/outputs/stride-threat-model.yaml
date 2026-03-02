@@ -1,0 +1,45 @@
+# =============================================================================
+# STRIDE Threat Model Template
+# =============================================================================
+# Produced during Step 2.3 by control SC-2A.
+# Agent generates; Security Architect validates.
+#
+# Usage:
+#   Copy: cp stride-threat-model.yaml FEAT-XXXX-stride-threat-model.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 2
+control: SC-2A
+modelled_at: ""                    # ISO 8601 datetime — when agent generated the model
+validated_by: ""                   # Security Architect name
+validated_at: ""                   # ISO 8601 datetime
+
+trust_boundaries: []
+# List of trust boundary IDs identified in the design, e.g.:
+# - id: TB-001
+#   description: ""   # e.g. "External user to API gateway"
+
+threats:
+  - id: "THREAT-001"
+    trust_boundary: ""             # TB-ID
+    category: ""                   # Spoofing | Tampering | Repudiation | Information Disclosure | Denial of Service | Elevation of Privilege
+    description: ""
+    severity: ""                   # critical | high | medium | low
+    mitigation: ""
+    mitigation_status: ""          # accepted | required | deferred
+    deferred_rationale: ""         # Required if mitigation_status is deferred
+
+summary:
+  total_threats: 0
+  by_severity:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+  unmitigated_critical: 0         # Must be 0 before Stage 2 can exit
+  unmitigated_high: 0
+
+validation:
+  status: ""                       # approved | requires_design_change
+  notes: ""                        # SA validation notes

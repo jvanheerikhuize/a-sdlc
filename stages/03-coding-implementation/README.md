@@ -29,7 +29,7 @@ No agent may begin work in this stage without first having received the signed C
 | SC-3C | Secrets & Credentials Scanning | Real-time scanning for hardcoded secrets. Blocks commits containing exposed credentials. | Fully automated | DORA: Art. 9(4)(c); DNB: Credential management |
 | GC-3A | Code Provenance Tracking | Records human-written vs. agent-generated code. Immutable records for DORA accountability. | Fully automated | DORA: Art. 8(6); DNB: Auditability; AI Act: Art. 12; Art. 17(1)(f) |
 
-Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+Stage definition (required controls + exit criteria): [03-coding-implementation.yaml](03-coding-implementation.yaml)
 
 Individual control definitions by track:
   - [GC-3A](../../controls/gc/GC-3A.yaml)

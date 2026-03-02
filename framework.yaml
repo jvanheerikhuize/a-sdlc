@@ -90,7 +90,7 @@ stages:
     name: Intent Ingestion
     slug: 01-intent-ingestion
     directory: stages/01-intent-ingestion
-    stage_file: stages/01-intent-ingestion/stage.yaml
+    stage_file: stages/01-intent-ingestion/01-intent-ingestion.yaml
     readme: stages/01-intent-ingestion/README.md
     process: stages/01-intent-ingestion/process.md
     artifacts_dir: stages/01-intent-ingestion/artifacts/
@@ -122,7 +122,7 @@ stages:
     name: System Design
     slug: 02-system-design
     directory: stages/02-system-design
-    stage_file: stages/02-system-design/stage.yaml
+    stage_file: stages/02-system-design/02-system-design.yaml
     readme: stages/02-system-design/README.md
     directives:
       - stages/02-system-design/directives/core-security-directives.xml
@@ -151,7 +151,7 @@ stages:
     name: Coding & Implementation
     slug: 03-coding-implementation
     directory: stages/03-coding-implementation
-    stage_file: stages/03-coding-implementation/stage.yaml
+    stage_file: stages/03-coding-implementation/03-coding-implementation.yaml
     readme: stages/03-coding-implementation/README.md
     description: >-
       Code is produced by human developers, AI agents, or both. The most
@@ -184,7 +184,7 @@ stages:
     name: Testing & Documentation
     slug: 04-testing-documentation
     directory: stages/04-testing-documentation
-    stage_file: stages/04-testing-documentation/stage.yaml
+    stage_file: stages/04-testing-documentation/04-testing-documentation.yaml
     readme: stages/04-testing-documentation/README.md
     description: >-
       The verification gate. Answers "does it work correctly?" and "is it safe
@@ -217,7 +217,7 @@ stages:
     name: Deployment & Release
     slug: 05-deployment-release
     directory: stages/05-deployment-release
-    stage_file: stages/05-deployment-release/stage.yaml
+    stage_file: stages/05-deployment-release/05-deployment-release.yaml
     readme: stages/05-deployment-release/README.md
     description: >-
       Promotion to production. Carries the strongest governance requirements.
@@ -244,7 +244,7 @@ stages:
     name: Observability & Maintenance
     slug: 06-observability-maintenance
     directory: stages/06-observability-maintenance
-    stage_file: stages/06-observability-maintenance/stage.yaml
+    stage_file: stages/06-observability-maintenance/06-observability-maintenance.yaml
     readme: stages/06-observability-maintenance/README.md
     description: >-
       The only stage that never ends. Continuous monitoring of operational

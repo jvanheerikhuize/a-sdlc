@@ -18,12 +18,21 @@ required_controls:
 - id: AC-2A
   note: Applicable when the change involves an AI component
 exit_criteria:
-- 'QC-2A: Design validation report approved by Lead Architect'
-- 'RC-2A: design approval granted by Risk Officer'
-- 'SC-2A: STRIDE threat model validated and mitigations accepted'
+- 'QC-2A: Design validated and approved by Lead Architect'
+- 'RC-2A: Design approval granted and logged'
+- 'SC-2A: STRIDE threat model validated and all critical threats mitigated'
 - 'SC-2B: Core Security Directives injected and acknowledged by agent'
 - 'AC-2A: AI component design review approved (or not-applicable documented)'
 next_stage: 3
-templates: []
+process: process.md
+artifacts:
+  inputs:
+    - ../01-intent-ingestion/artifacts/outputs/feature-spec.yaml
+  outputs:
+    - artifacts/outputs/design-document.yaml
+    - artifacts/outputs/stride-threat-model.yaml
+    - artifacts/outputs/design-approval-decision.yaml
+    - artifacts/outputs/directive-injection-confirmation.yaml
+    - artifacts/outputs/ai-component-design-review.yaml
 directives:
 - directives/core-security-directives.xml
