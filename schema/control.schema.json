@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/control.schema.json",
+  "title": "A-SDLC Control Definition",
+  "description": "Schema for Agentic SDLC control definitions. Regulatory scope: DORA · DNB · EU AI Act.",
+  "type": "object",
+  "required": ["id", "name", "description", "stage", "track", "delegation", "regulatory_mapping"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+      "description": "Unique control identifier. Format: [Track]-[Stage][Letter]. Track: QC|RC|SC|AC|GC. Stage: 0=cross-cutting, 1-6=lifecycle stage.",
+      "examples": ["QC-1A", "SC-2B", "GC-0A"]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Short, descriptive control title using action-oriented nouns."
+    },
+    "description": {
+      "type": "string",
+      "description": "Functional description starting with a verb. Answers: if this control didn't exist, what would go wrong?"
+    },
+    "stage": {
+      "type": "object",
+      "required": ["number", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6,
+          "description": "0 = cross-cutting, 1-6 = lifecycle stage number."
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "Cross-Cutting",
+            "Intent Ingestion",
+            "System Design",
+            "Coding & Implementation",
+            "Testing & Documentation",
+            "Deployment & Release",
+            "Observability & Maintenance"
+          ]
+        }
+      }
+    },
+    "track": {
+      "type": "object",
+      "required": ["code", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["QC", "RC", "SC", "AC", "GC"],
+          "description": "QC=Quality Controls, RC=Risk Controls, SC=Security Controls, AC=AI Controls, GC=Governance Controls"
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "Quality Controls",
+            "Risk Controls",
+            "Security Controls",
+            "AI Controls",
+            "Governance Controls"
+          ]
+        }
+      }
+    },
+    "delegation": {
+      "type": "object",
+      "required": ["pattern", "human_display"],
+      "additionalProperties": false,
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "enum": [
+            "fully_automated",
+            "agent_drafts_human_approves",
+            "agent_analyses_human_resolves",
+            "agent_executes_human_reviews",
+            "agent_classifies_human_validates",
+            "agent_proposes_human_confirms",
+            "agent_calculates_human_decides",
+            "agent_validates_human_approves",
+            "agent_monitors_human_reports",
+            "agent_creates_human_reviews",
+            "agent_logs_human_reviews",
+            "agent_compiles_human_approves",
+            "agent_checks_human_approves",
+            "automated_policy_enforced",
+            "automated_with_human_escalation",
+            "human_required"
+          ],
+          "description": "Delegation pattern defining who performs and who decides."
+        },
+        "human_display": {
+          "type": "string",
+          "description": "Human-readable label for the delegation pattern (e.g. 'Agent drafts, human approves')."
+        },
+        "agent_role": {
+          "type": "string",
+          "description": "What the AI agent does in this control."
+        },
+        "human_role": {
+          "type": "string",
+          "description": "What the human actor does in this control."
+        }
+      }
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Ownership metadata for this control.",
+      "properties": {
+        "team": {
+          "type": "string",
+          "description": "Team or function responsible for this control."
+        },
+        "role": {
+          "type": "string",
+          "description": "Role within the team that owns this control (e.g. Security Architect, Tech Lead)."
+        },
+        "contact": {
+          "type": "string",
+          "description": "Contact reference (e.g. email, Slack channel, or team alias)."
+        }
+      }
+    },
+    "regulatory_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "At least one framework must be populated.",
+      "properties": {
+        "dora": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["article", "obligation"],
+            "additionalProperties": false,
+            "properties": {
+              "article": { "type": "string" },
+              "obligation": { "type": "string" }
+            }
+          }
+        },
+        "dnb": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["area", "requirement"],
+            "additionalProperties": false,
+            "properties": {
+              "area": { "type": "string" },
+              "requirement": { "type": "string" }
+            }
+          }
+        },
+        "eu_ai_act": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["article", "requirement"],
+            "additionalProperties": false,
+            "properties": {
+              "article": { "type": "string" },
+              "requirement": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Artefacts or data this control consumes.",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "source_control": {
+            "type": "string",
+            "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+            "description": "Control ID that produces this input."
+          },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "description": "What this control produces, including audit evidence.",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["artefact", "evidence", "decision", "log_entry", "alert", "report", "registry_entry"]
+          },
+          "description": { "type": "string" },
+          "retention": { "type": "string" }
+        }
+      }
+    },
+    "failure_behaviour": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["block", "escalate", "conditional_pass", "log_and_continue"]
+        },
+        "escalation_target": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "automation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tooling": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered"]
+        },
+        "sla_minutes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Controls that must pass before this one can execute.",
+      "items": {
+        "type": "string",
+        "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$"
+      }
+    },
+    "feedback_loops": {
+      "type": "array",
+      "description": "Feedback loop re-entry paths that include this control.",
+      "items": {
+        "type": "object",
+        "required": ["path", "required_in_path"],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "enum": ["path_a_autofix", "path_b_quickfix", "path_b_feature_change"]
+          },
+          "required_in_path": { "type": "boolean" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "string" },
+        "last_updated": { "type": "string", "format": "date" },
+        "author": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "review", "approved", "deprecated"]
+        }
+      }
+    }
+  }
+}

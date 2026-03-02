@@ -1,0 +1,322 @@
+# =============================================================================
+# Stage 1: Intent Ingestion — Controls
+# =============================================================================
+# Schema: ../../schema/control.schema.json
+# =============================================================================
+
+controls:
+
+  - id: QC-1A
+    name: Specification Validation
+    description: >-
+      Confirm the incoming change request has been correctly captured with
+      complete acceptance criteria, non-functional requirements (NFRs), and
+      measurable success conditions. Reject incomplete specifications before
+      any design work begins.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: QC
+      name: Quality Controls
+    delegation:
+      pattern: agent_drafts_human_approves
+      human_display: Agent drafts, human approves
+      agent_role: Parse incoming request, generate structured specification, identify gaps in acceptance criteria or NFRs.
+      human_role: Review draft specification; approve or reject; resolve identified gaps before sign-off.
+    owner:
+      team: Product / Delivery
+      role: Product Owner
+      contact: ""
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8"
+          obligation: ICT risk management requires documented change procedures with complete specifications
+      dnb:
+        - area: IT change management
+          requirement: Complete specification required before change proceeds to design
+    inputs:
+      - name: Incoming change request
+        description: Raw change request from stakeholder (ticket, brief, or natural language intent).
+    outputs:
+      - name: Validated feature specification
+        type: artefact
+        description: Structured FEAT-XXXX specification file conforming to schema/feature-spec.schema.json.
+        retention: Lifecycle of the change + 7 years
+      - name: Specification validation evidence
+        type: evidence
+        description: Checklist confirming all required fields are present and complete.
+        retention: 7 years (DORA)
+    failure_behaviour:
+      action: block
+      escalation_target: Product Owner
+      description: Specification is returned to requester with identified gaps. Stage 1 cannot progress until all gaps are resolved.
+    automation:
+      frequency: per_change
+    dependencies: []
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved
+
+  - id: QC-1B
+    name: Coherence & Conflict Resolution
+    description: >-
+      Detect contradictions, competing priorities, and logical inconsistencies
+      between requirements. Surface all conflicts with severity ratings and
+      resolution options. Force stakeholders to resolve all blocking conflicts
+      before design begins.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: QC
+      name: Quality Controls
+    delegation:
+      pattern: agent_analyses_human_resolves
+      human_display: Agent analyses, human resolves
+      agent_role: Cross-reference all requirements; identify conflicts; generate conflict map with severity ratings and resolution options.
+      human_role: Review conflict map; make binding decisions on all blocking and significant conflicts.
+    owner:
+      team: Product / Delivery
+      role: Product Owner
+      contact: ""
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8"
+          obligation: Risk identification and assessment of ICT changes must include conflict analysis
+      dnb:
+        - area: Risk assessment of proposed changes
+          requirement: Contradictions and competing priorities must be resolved before design proceeds
+      eu_ai_act:
+        - article: "Art. 9"
+          requirement: Risk management system must identify foreseeable risks including specification conflicts
+    inputs:
+      - name: Validated feature specification
+        source_control: QC-1A
+        description: Complete specification produced by QC-1A.
+    outputs:
+      - name: Conflict resolution record
+        type: decision
+        description: Log of all conflicts identified, severity ratings, resolution options presented, and stakeholder decisions made.
+        retention: 7 years (DORA)
+    failure_behaviour:
+      action: block
+      escalation_target: Product Owner
+      description: Unresolved blocking conflicts prevent progression to Stage 2. Non-blocking conflicts are documented and accepted.
+    automation:
+      frequency: per_change
+    dependencies:
+      - QC-1A
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved
+
+  - id: RC-1A
+    name: Risk Classification (NF-RED)
+    description: >-
+      Classify the non-functional risk exposure of the change using the NF-RED
+      methodology. The resulting risk tier determines governance intensity for
+      all subsequent stages: which controls require enhanced scrutiny, what
+      approval authority is needed, and what testing depth is required.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: RC
+      name: Risk Controls
+    delegation:
+      pattern: agent_classifies_human_validates
+      human_display: Agent classifies, human validates
+      agent_role: Apply NF-RED methodology to classify risk tier (low/medium/high/critical) and determine governance intensity.
+      human_role: Validate classification; escalate if classification appears inconsistent with known system context.
+    owner:
+      team: Risk Management
+      role: Risk Officer
+      contact: ""
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8(1)"
+          obligation: Proportionate ICT risk management requires risk classification before change proceeds
+      dnb:
+        - area: Risk-based approach to change governance
+          requirement: Risk tier determines approval authority and governance intensity for the change
+      eu_ai_act:
+        - article: "Art. 9(2)"
+          requirement: Risk management must be applied proportionately throughout the AI system lifecycle
+    inputs:
+      - name: Validated feature specification
+        source_control: QC-1A
+        description: Complete specification with NFRs, used as input to the NF-RED classification.
+    outputs:
+      - name: NF-RED risk classification
+        type: decision
+        description: Risk tier (low/medium/high/critical), governance intensity, and rationale.
+        retention: 7 years (DORA)
+    failure_behaviour:
+      action: escalate
+      escalation_target: Risk Officer
+      description: If classification cannot be determined, escalate to Risk Officer for manual assessment.
+    automation:
+      frequency: per_change
+    dependencies:
+      - QC-1A
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved
+
+  - id: SC-1A
+    name: Pre-Guardrails
+    description: >-
+      Screen all incoming change requests for prompt injection attacks and
+      adversarial inputs that could manipulate agent interpretation of the
+      requirements. Block manipulated inputs before they influence any
+      downstream agent action.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: SC
+      name: Security Controls
+    delegation:
+      pattern: fully_automated
+      human_display: Fully automated
+      agent_role: Scan incoming request for injection patterns, adversarial framing, and manipulation attempts. Block and log any detected attempts.
+      human_role: Review blocked request reports; investigate and resolve with requester.
+    owner:
+      team: Security
+      role: Security Architect
+      contact: ""
+    regulatory_mapping:
+      dora:
+        - article: "Art. 9(2)"
+          obligation: Protection of ICT systems from unauthorised access and manipulation
+      dnb:
+        - area: Integrity of IT processing
+          requirement: Incoming requests must be screened for integrity before processing
+      eu_ai_act:
+        - article: "Art. 15(4)"
+          requirement: AI systems must be resilient against errors, faults, and manipulation attempts
+    inputs:
+      - name: Raw change request
+        description: Unprocessed incoming request before any agent parsing.
+    outputs:
+      - name: Guardrail scan result
+        type: evidence
+        description: Pass/fail result with details of any detected injection patterns.
+        retention: 7 years (DORA)
+    failure_behaviour:
+      action: block
+      escalation_target: Security Architect
+      description: Detected injection attempts block processing entirely. Attempt is logged and flagged to security team.
+    automation:
+      frequency: per_change
+    dependencies: []
+    feedback_loops:
+      - path: path_a_autofix
+        required_in_path: false
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved
+
+  - id: AC-1A
+    name: AI Risk Tier Classification
+    description: >-
+      For changes that introduce, modify, or interact with AI components:
+      classify the EU AI Act risk tier (minimal/limited/high/unacceptable) and
+      trigger the corresponding compliance requirements for all downstream stages.
+      Not applicable to changes with no AI component.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: AC
+      name: AI Controls
+    delegation:
+      pattern: agent_proposes_human_confirms
+      human_display: Agent proposes, human confirms
+      agent_role: Analyse the specification for AI component involvement; propose EU AI Act risk tier with rationale referencing Art. 6 and Annex III.
+      human_role: Review proposed tier and rationale; confirm or override with documented justification.
+    owner:
+      team: AI Governance
+      role: AI Governance Lead
+      contact: ""
+    regulatory_mapping:
+      eu_ai_act:
+        - article: "Art. 6"
+          requirement: Classification rules for high-risk AI systems
+        - article: "Annex III"
+          requirement: List of high-risk AI applications; determines applicable compliance obligations
+    inputs:
+      - name: Validated feature specification
+        source_control: QC-1A
+        description: Specification reviewed for AI component involvement.
+    outputs:
+      - name: AI Act risk tier classification
+        type: decision
+        description: Confirmed risk tier with rationale and list of triggered compliance obligations for downstream stages.
+        retention: 7 years (AI Act)
+    failure_behaviour:
+      action: escalate
+      escalation_target: AI Governance Lead
+      description: If tier cannot be determined, escalate to AI Governance Lead. Default to highest applicable tier pending resolution.
+    automation:
+      frequency: per_change
+    dependencies:
+      - QC-1A
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved
+
+  - id: GC-1A
+    name: Intent Traceability
+    description: >-
+      Log the original change request, all agent transformations applied during
+      Stage 1, intermediate states, stakeholder decisions, and the final
+      validated specification. This record forms the first link in the end-to-end
+      audit chain and must be immutable.
+    stage:
+      number: 1
+      name: Intent Ingestion
+    track:
+      code: GC
+      name: Governance Controls
+    delegation:
+      pattern: fully_automated
+      human_display: Fully automated
+      agent_role: Capture all Stage 1 events, transformations, and decisions automatically; write to immutable audit log.
+      human_role: None during execution; review during audits.
+    owner:
+      team: Governance & Compliance
+      role: Compliance Officer
+      contact: ""
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8(6)"
+          obligation: Documentation of ICT risk management activities including all change processing steps
+      dnb:
+        - area: Auditability of change management process
+          requirement: Full audit trail from original request to validated specification
+      eu_ai_act:
+        - article: "Art. 12"
+          requirement: Record-keeping and logging for high-risk AI systems throughout the lifecycle
+    outputs:
+      - name: Intent audit record
+        type: log_entry
+        description: Immutable record of original request, transformations, decisions, and final specification reference.
+        retention: 7 years (DORA)
+    failure_behaviour:
+      action: block
+      escalation_target: Compliance Officer
+      description: If traceability logging fails, Stage 1 processing is blocked until logging is restored.
+    automation:
+      frequency: per_change
+    dependencies: []
+    metadata:
+      version: "1.0"
+      last_updated: "2026-03-02"
+      status: approved

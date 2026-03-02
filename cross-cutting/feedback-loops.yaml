@@ -1,0 +1,111 @@
+# =============================================================================
+# Feedback Loops
+# =============================================================================
+# Defines the re-entry paths by which issues detected in Stage 6
+# (Observability & Maintenance) flow back into the lifecycle.
+# Each path specifies the minimum controls that must be re-executed.
+#
+# Regulatory basis:
+#   DORA Art. 8(1)  — ICT risk management framework must cover ALL changes.
+#                     No exception for urgency.
+#   DORA Art. 8(5)  — Even expedited changes must follow documented procedures.
+#   DORA Art. 17(3) — Incident response and recovery requirements.
+# =============================================================================
+
+feedback_loops:
+
+  - id: path_a
+    name: Path A — Incident → Autofix
+    trigger: >-
+      An incident is detected in Stage 6 that matches a pre-approved,
+      low-risk autofix template exactly.
+    re_entry_stage: 3
+    re_entry_stage_name: Coding & Implementation
+    eligibility:
+      - Issue must match a pre-approved autofix template exactly.
+      - Risk classification must be low.
+      - No new architectural changes are introduced.
+      - If any condition is not met, the path MUST be upgraded to Path B.
+    description: >-
+      For low-risk, pre-approved patterns only. Re-enters directly at Stage 3
+      without requiring Stages 1 or 2. If the issue does not match its template
+      exactly, it must be escalated to Path B — no exceptions.
+    minimum_controls:
+      - id: QC-3A
+        name: Pull Request Creation & Review
+        rationale: All code changes must be reviewed before merge.
+      - id: QC-3B
+        name: Code Quality Standards
+        rationale: Automated quality checks apply to autofix output.
+      - id: SC-3B
+        name: Post-Guardrails
+        rationale: Agent-generated fix must be scanned for malicious patterns.
+      - id: SC-3C
+        name: Secrets & Credentials Scanning
+        rationale: Fix must not introduce exposed credentials.
+      - id: GC-3A
+        name: Code Provenance Tracking
+        rationale: Autofix output must be attributed to the agent that produced it.
+      - id: QC-4A
+        name: Functional & Non-Functional Testing
+        rationale: Fix must be tested before deployment.
+      - id: SC-4A
+        name: SAST
+        rationale: Static security analysis is mandatory even for expedited paths.
+      - id: RC-4A
+        name: Risk Threshold Evaluation
+        rationale: Residual risk must be assessed before deployment.
+      - id: SC-5B
+        name: Deployment Integrity
+        rationale: Cryptographic verification that tested artefact matches deployed artefact.
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8(5)"
+          obligation: Even expedited changes must follow documented procedures.
+        - article: "Art. 17(3)"
+          obligation: Incident response and recovery must follow defined procedures.
+
+  - id: path_b_quickfix
+    name: Path B — Bug/Change → Quickfix
+    trigger: >-
+      A bug or change is identified that requires a targeted code fix but does
+      not introduce new features or architectural changes. Also the mandatory
+      upgrade path from Path A when the issue does not match its template.
+    re_entry_stage: 3
+    re_entry_stage_name: Coding & Implementation
+    description: >-
+      Re-enters Stage 3 with the full Stage 3 and Stage 4 control sets, plus
+      RC-5A (CAB Approval) which is mandatory for all quickfix deployments.
+    minimum_controls:
+      full_stage_controls:
+        - stage: 3
+          note: All Stage 3 controls must be executed (QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A).
+        - stage: 4
+          note: All Stage 4 controls must be executed (QC-4A, QC-4B if AI, QC-4C, RC-4A, SC-4A, SC-4B, AC-4A if AI).
+        - stage: 5
+          note: All Stage 5 controls must be executed.
+      additional:
+        - id: RC-5A
+          name: CAB Approval
+          rationale: Formal change approval is mandatory for all quickfix deployments regardless of risk level.
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8(1)"
+          obligation: ICT risk management framework must cover all changes. No exception for urgency.
+
+  - id: path_b_feature
+    name: Path B — Bug/Change → Feature Change
+    trigger: >-
+      A change identified in Stage 6 requires new functionality, architectural
+      modification, or is too complex to classify as a quickfix.
+    re_entry_stage: 1
+    re_entry_stage_name: Intent Ingestion
+    description: >-
+      Re-enters at Stage 1 for complete processing through all six stages.
+      No controls are skipped. The change is treated as a new feature request.
+    minimum_controls:
+      - note: All controls across all six stages (Stages 1–6) must be executed in sequence.
+    regulatory_mapping:
+      dora:
+        - article: "Art. 8(1)"
+          obligation: ICT risk management framework must cover all changes. No exception for urgency.

@@ -1,0 +1,275 @@
+# =============================================================================
+# A-SDLC Framework Manifest
+# =============================================================================
+# Machine-readable index of all stages, controls, and supporting artefacts.
+# Use this file to programmatically discover the full framework structure
+# without reading individual stage files.
+#
+# Schema: schema/control.schema.json
+# Agent entrypoint: AGENTS.md
+# =============================================================================
+
+framework:
+  name: Agentic Software Development Life Cycle
+  abbreviation: A-SDLC
+  version: "1.0"
+  status: approved
+  regulatory_scope:
+    - DORA
+    - DNB
+    - EU AI Act
+
+  control_tracks:
+    - code: QC
+      name: Quality Controls
+      description: Ensure work meets standards
+    - code: RC
+      name: Risk Controls
+      description: Identify and manage what can go wrong
+    - code: SC
+      name: Security Controls
+      description: Protect against threats and vulnerabilities
+    - code: AC
+      name: AI Controls
+      description: Address EU AI Act requirements
+    - code: GC
+      name: Governance Controls
+      description: Maintain the audit trail across everything
+
+  delegation_patterns:
+    - pattern: fully_automated
+      description: Agent executes; no human judgement required
+    - pattern: automated_policy_enforced
+      description: Agent executes via policy engine; no human intervention
+    - pattern: automated_with_human_escalation
+      description: Agent executes; human escalated on anomaly
+    - pattern: agent_drafts_human_approves
+      description: Agent produces draft; human validates before proceeding
+    - pattern: agent_analyses_human_resolves
+      description: Agent surfaces findings; human makes the decision
+    - pattern: agent_executes_human_reviews
+      description: Agent runs the process; human reviews results
+    - pattern: agent_classifies_human_validates
+      description: Agent classifies; human confirms classification
+    - pattern: agent_proposes_human_confirms
+      description: Agent proposes option; human confirms
+    - pattern: agent_calculates_human_decides
+      description: Agent computes outcome; human makes go/no-go
+    - pattern: agent_validates_human_approves
+      description: Agent checks completeness; human signs off
+    - pattern: agent_monitors_human_reports
+      description: Agent detects; human files the report
+    - pattern: agent_creates_human_reviews
+      description: Agent creates artefact; human reviews
+    - pattern: agent_logs_human_reviews
+      description: Agent writes log; human reviews it
+    - pattern: agent_compiles_human_approves
+      description: Agent compiles checklist; human approves
+    - pattern: agent_checks_human_approves
+      description: Agent verifies; human approves
+    - pattern: human_required
+      description: Cannot be delegated. Human must decide. Agent must stop and escalate.
+
+cross_cutting:
+  description: Three governance controls that span all six stages.
+  controls_file: cross-cutting/controls.yaml
+  feedback_loops_file: cross-cutting/feedback-loops.yaml
+  controls:
+    - id: GC-0A
+      name: Audit Trail & Compliance Reporting
+      track: GC
+    - id: GC-0B
+      name: End-to-End Traceability
+      track: GC
+    - id: GC-0C
+      name: Agent Provenance Registry
+      track: GC
+
+stages:
+  - number: 1
+    name: Intent Ingestion
+    slug: 01-intent-ingestion
+    directory: stages/01-intent-ingestion
+    controls_file: stages/01-intent-ingestion/controls.yaml
+    readme: stages/01-intent-ingestion/README.md
+    templates:
+      - stages/01-intent-ingestion/templates/feature-spec.yaml
+    description: >-
+      High-level business goals are captured, disambiguated, and transformed
+      into structured technical requirements. Establishes the source of truth
+      for all subsequent agentic actions.
+    controls:
+      - id: QC-1A
+        name: Specification Validation
+        track: QC
+      - id: QC-1B
+        name: Coherence & Conflict Resolution
+        track: QC
+      - id: RC-1A
+        name: Risk Classification (NF-RED)
+        track: RC
+      - id: SC-1A
+        name: Pre-Guardrails
+        track: SC
+      - id: AC-1A
+        name: AI Risk Tier Classification
+        track: AC
+      - id: GC-1A
+        name: Intent Traceability
+        track: GC
+
+  - number: 2
+    name: System Design
+    slug: 02-system-design
+    directory: stages/02-system-design
+    controls_file: stages/02-system-design/controls.yaml
+    readme: stages/02-system-design/README.md
+    directives:
+      - stages/02-system-design/directives/core-security-directives.xml
+    description: >-
+      Validated intent is translated into architecture and technical
+      specifications. Threat modelling and Core Security Directive injection
+      occur here before any coding begins.
+    controls:
+      - id: QC-2A
+        name: Design Completeness & Standards
+        track: QC
+      - id: RC-2A
+        name: Design Approval (F-RED)
+        track: RC
+      - id: SC-2A
+        name: Threat Model Validation
+        track: SC
+      - id: SC-2B
+        name: Directive Injection
+        track: SC
+      - id: AC-2A
+        name: AI Component Design Review
+        track: AC
+
+  - number: 3
+    name: Coding & Implementation
+    slug: 03-coding-implementation
+    directory: stages/03-coding-implementation
+    controls_file: stages/03-coding-implementation/controls.yaml
+    readme: stages/03-coding-implementation/README.md
+    description: >-
+      Code is produced by human developers, AI agents, or both. The most
+      control-dense stage: enforces quality, controls agent permissions, scans
+      for security issues, tracks provenance, and converges into a reviewed PR.
+    controls:
+      - id: QC-3A
+        name: Pull Request Creation & Review
+        track: QC
+      - id: QC-3B
+        name: Code Quality Standards
+        track: QC
+      - id: RC-3A
+        name: Decision Log
+        track: RC
+      - id: SC-3A
+        name: Permission Management
+        track: SC
+      - id: SC-3B
+        name: Post-Guardrails
+        track: SC
+      - id: SC-3C
+        name: Secrets & Credentials Scanning
+        track: SC
+      - id: GC-3A
+        name: Code Provenance Tracking
+        track: GC
+
+  - number: 4
+    name: Testing & Documentation
+    slug: 04-testing-documentation
+    directory: stages/04-testing-documentation
+    controls_file: stages/04-testing-documentation/controls.yaml
+    readme: stages/04-testing-documentation/README.md
+    description: >-
+      The verification gate. Answers "does it work correctly?" and "is it safe
+      to release?" Culminates in a risk threshold evaluation that opens or
+      blocks the door to deployment.
+    controls:
+      - id: QC-4A
+        name: Functional & Non-Functional Testing
+        track: QC
+      - id: QC-4B
+        name: AI Output Validation
+        track: QC
+      - id: QC-4C
+        name: Documentation Completeness
+        track: QC
+      - id: RC-4A
+        name: Risk Threshold Evaluation
+        track: RC
+      - id: SC-4A
+        name: SAST
+        track: SC
+      - id: SC-4B
+        name: DAST
+        track: SC
+      - id: AC-4A
+        name: Bias & Fairness Testing
+        track: AC
+
+  - number: 5
+    name: Deployment & Release
+    slug: 05-deployment-release
+    directory: stages/05-deployment-release
+    controls_file: stages/05-deployment-release/controls.yaml
+    readme: stages/05-deployment-release/README.md
+    description: >-
+      Promotion to production. Carries the strongest governance requirements.
+      Ensures everything prior is complete, the deployment is trustworthy, and
+      there is a verified rollback path.
+    controls:
+      - id: QC-5A
+        name: Release Readiness Checklist
+        track: QC
+      - id: RC-5A
+        name: CAB Approval
+        track: RC
+      - id: RC-5B
+        name: Rollback Plan Validation
+        track: RC
+      - id: SC-5A
+        name: Infrastructure Security
+        track: SC
+      - id: SC-5B
+        name: Deployment Integrity
+        track: SC
+
+  - number: 6
+    name: Observability & Maintenance
+    slug: 06-observability-maintenance
+    directory: stages/06-observability-maintenance
+    controls_file: stages/06-observability-maintenance/controls.yaml
+    readme: stages/06-observability-maintenance/README.md
+    description: >-
+      The only stage that never ends. Continuous monitoring of operational
+      health, security posture, risk evolution, and AI behaviour. Feeds back
+      into the lifecycle through defined re-entry paths.
+    controls:
+      - id: QC-6A
+        name: SLA/SLO Monitoring
+        track: QC
+      - id: RC-6A
+        name: Risk & Health Monitoring
+        track: RC
+      - id: SC-6A
+        name: Incident Scanning & Detection
+        track: SC
+      - id: SC-6B
+        name: Runtime Anomaly Detection
+        track: SC
+      - id: AC-6A
+        name: AI Post-Market Surveillance
+        track: AC
+
+supporting_files:
+  schema:
+    control_definition: schema/control.schema.json
+    feature_specification: schema/feature-spec.schema.json
+  registry: controls/registry.yaml
+  regulatory: regulatory/compliance-matrix.yaml
