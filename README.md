@@ -76,7 +76,7 @@ Five control tracks run through the entire lifecycle:
 | 5 Deployment | QC-5A | RC-5A, RC-5B | SC-5A, SC-5B | — | — |
 | 6 Observability | QC-6A | RC-6A | SC-6A, SC-6B | AC-6A | — |
 
-**Total: 30 controls.** Full definitions in [controls/registry.yaml](controls/registry.yaml).
+**Total: 38 controls** (including 3 cross-cutting). Full definitions in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 
@@ -103,19 +103,25 @@ a-sdlc/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json      ← JSON Schema for feature specifications
 ├── controls/
-│   └── registry.yaml                 ← Flat index of all 30 controls
+│   ├── registry.yaml                 ← Flat index of all 38 controls (fast lookup by ID)
+│   └── tracks/
+│       ├── qc/                       ← Quality Control definitions (QC-1A … QC-6A)
+│       ├── rc/                       ← Risk Control definitions (RC-1A … RC-6A)
+│       ├── sc/                       ← Security Control definitions (SC-1A … SC-6B)
+│       ├── ac/                       ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
+│       └── gc/                       ← Governance Control definitions (GC-0A … GC-3A)
 ├── stages/
-│   ├── 01-intent-ingestion/
-│   ├── 02-system-design/
-│   ├── 03-coding-implementation/
-│   ├── 04-testing-documentation/
-│   ├── 05-deployment-release/
-│   └── 06-observability-maintenance/
+│   ├── 01-intent-ingestion/          ← stage.yaml + README.md + templates/
+│   ├── 02-system-design/             ← stage.yaml + README.md + directives/
+│   ├── 03-coding-implementation/     ← stage.yaml + README.md
+│   ├── 04-testing-documentation/     ← stage.yaml + README.md
+│   ├── 05-deployment-release/        ← stage.yaml + README.md
+│   └── 06-observability-maintenance/ ← stage.yaml + README.md
 ├── cross-cutting/
-│   ├── controls.yaml                 ← GC-0A, GC-0B, GC-0C
 │   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions
 └── regulatory/
-    └── compliance-matrix.yaml        ← DORA / DNB / EU AI Act coverage map
+    ├── compliance-matrix.yaml        ← DORA / DNB / EU AI Act coverage map
+    └── sources.yaml                  ← Official article texts and obligation summaries
 ```
 
 ---
