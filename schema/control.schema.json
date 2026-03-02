@@ -56,6 +56,10 @@
           "note": {
             "type": "string",
             "description": "Optional note on how the control applies in this stage (e.g. sequencing, conditionality)."
+          },
+          "directive_payload": {
+            "type": "string",
+            "description": "Path to the directive payload file injected at this stage entry. Used by SC-2B."
           }
         }
       }
@@ -243,7 +247,7 @@
         },
         "frequency": {
           "type": "string",
-          "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered"]
+          "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered", "per_stage_entry", "per_session"]
         },
         "sla_minutes": { "type": "integer", "minimum": 0 }
       }
@@ -271,6 +275,10 @@
           "required_in_path": { "type": "boolean" }
         }
       }
+    },
+    "directive_payload": {
+      "type": "string",
+      "description": "Path to the directive payload file injected by this control. Used by SC-0D for the core directive bundle."
     },
     "metadata": {
       "type": "object",

@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/directive.schema.json",
+  "title": "A-SDLC Directive Bundle",
+  "description": "Schema for agent behavioural directive bundles: directives/core/core-directives.yaml and directives/stages/NN-name.yaml. Injected by SC-0D (core) and SC-2B (stage).",
+  "type": "object",
+  "required": ["meta", "injection", "enforcement", "categories"],
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["id", "scope", "classification", "version"],
+      "additionalProperties": false,
+      "description": "Metadata identifying the directive bundle.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this directive bundle (e.g. 'core-directives', 'stage-2-directives')."
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["global", "stage"],
+          "description": "global = injected at session start via SC-0D; stage = injected at stage entry via SC-2B."
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["immutable"],
+          "description": "All directive bundles are immutable."
+        },
+        "precedence": {
+          "type": "string",
+          "description": "Precedence level (e.g. 'absolute' for core, 'stage' for stage-level)."
+        },
+        "version": {
+          "type": "string",
+          "description": "Semantic or simple version string."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Role responsible for authoring and maintaining these directives."
+        },
+        "review_cycle": {
+          "type": "string",
+          "description": "How often this bundle must be reviewed (e.g. 'annually', 'quarterly')."
+        },
+        "last_reviewed": {
+          "type": "string",
+          "description": "ISO 8601 date of the last review."
+        },
+        "next_review": {
+          "type": "string",
+          "description": "ISO 8601 date of the next scheduled review."
+        },
+        "stage": {
+          "type": "string",
+          "description": "Stage slug this bundle applies to (e.g. '01-intent-ingestion'). Present on stage-scoped bundles."
+        }
+      }
+    },
+    "injection": {
+      "type": "object",
+      "required": ["trigger", "acknowledgement_required"],
+      "additionalProperties": false,
+      "description": "Controls how and when the bundle is injected into agent context.",
+      "properties": {
+        "trigger": {
+          "type": "string",
+          "enum": ["session_start", "stage_entry"],
+          "description": "When injection occurs: session_start (SC-0D core) or stage_entry (SC-2B stage)."
+        },
+        "stage_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6,
+          "description": "Stage number this bundle is injected at. Present on stage-scoped bundles."
+        },
+        "acknowledgement_required": {
+          "type": "boolean",
+          "description": "Agent must log acknowledgement of receipt before proceeding."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Agent-type-specific injection guidance for LLMs, API agents, frameworks, and pipelines."
+        }
+      }
+    },
+    "enforcement": {
+      "type": "object",
+      "required": ["overridable"],
+      "description": "Defines what happens when directives are violated or override attempts are made.",
+      "properties": {
+        "overridable": {
+          "type": "boolean",
+          "description": "Always false — directives cannot be overridden."
+        },
+        "override_sources_refused": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of instruction sources whose override attempts must be refused."
+        },
+        "on_override_attempt": {
+          "type": "object",
+          "description": "Response behaviour when an override attempt is detected.",
+          "properties": {
+            "action": {
+              "type": "string",
+              "description": "Action to take (e.g. 'refuse_and_log')."
+            },
+            "response_template": {
+              "type": "string",
+              "description": "Template for the refusal response shown to the requester."
+            },
+            "audit_log": {
+              "type": "object",
+              "description": "Defines what must be written to the audit log on violation.",
+              "properties": {
+                "event": { "type": "string" },
+                "required_fields": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "after_refusal": {
+          "type": "string",
+          "description": "Behavioural guidance for the agent after a refusal event."
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Directive categories grouping related behavioural constraints.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "directives"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Short category code (e.g. AUTH, CTRL, DATA, SPEC, CODE)."
+          },
+          "name": {
+            "type": "string",
+            "description": "Full category name."
+          },
+          "directives": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Individual directive entries within this category.",
+            "items": {
+              "type": "object",
+              "required": ["id", "text"],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique directive ID within the bundle (e.g. AUTH-01, CODE-03). Used in audit logs."
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 10,
+                  "description": "Plain-prose directive text readable by any agent type without special parsing."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
