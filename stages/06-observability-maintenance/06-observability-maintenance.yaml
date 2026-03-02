@@ -23,4 +23,13 @@ exit_criteria:
 - Not a time-bounded stage — exits only when the system is decommissioned.
 - Escalations from any Stage 6 control may trigger a feedback loop into earlier stages.
 next_stage: null
-templates: []
+process: process.md
+artifacts:
+  inputs:
+    - ../05-deployment-release/artifacts/outputs/deployment-integrity-record.yaml
+  outputs:
+    - artifacts/outputs/slo-monitoring-record.yaml
+    - artifacts/outputs/risk-health-monitoring-record.yaml
+    - artifacts/outputs/incident-detection-record.yaml
+    - artifacts/outputs/anomaly-detection-record.yaml
+    - artifacts/outputs/ai-surveillance-report.yaml

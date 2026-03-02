@@ -23,4 +23,14 @@ exit_criteria:
 - 'SC-5A: Infrastructure security baseline validated — no unresolved deviations'
 - 'SC-5B: Deployment integrity verified — artefact checksums match tested build'
 next_stage: 6
-templates: []
+process: process.md
+artifacts:
+  inputs:
+    - ../04-testing-documentation/artifacts/outputs/risk-threshold-evaluation.yaml
+    - ../03-coding-implementation/artifacts/outputs/pull-request-record.yaml
+  outputs:
+    - artifacts/outputs/release-readiness-checklist.yaml
+    - artifacts/outputs/change-approval-record.yaml
+    - artifacts/outputs/rollback-plan.yaml
+    - artifacts/outputs/infrastructure-security-report.yaml
+    - artifacts/outputs/deployment-integrity-record.yaml

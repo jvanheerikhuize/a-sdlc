@@ -1,0 +1,82 @@
+# =============================================================================
+# AI Post-Market Surveillance Report Template
+# =============================================================================
+# Produced periodically by control AC-6A (Step 6.6).
+# CONDITIONAL: Only applicable when the deployed system includes AI components.
+# Records ongoing AI performance tracking, bias re-testing, and serious AI
+# incident reporting per EU AI Act Art. 72 and Art. 73.
+#
+# Retention: 10 years (EU AI Act Art. 72(1) — technical documentation).
+#
+# Usage:
+#   This file is updated periodically. Do not copy per feature.
+# =============================================================================
+
+system_id: ""                      # System or service identifier
+stage: 6
+control: AC-6A
+applicability: ""                  # applicable | not_applicable
+reporting_period_start: ""         # ISO 8601 date
+reporting_period_end: ""           # ISO 8601 date
+ai_tier: ""                        # From Stage 1 AC-1A
+
+# --- Performance tracking (vs Stage 4 QC-4B baselines) ---
+performance_tracking:
+  last_evaluated: ""               # ISO 8601 datetime
+  metrics: []
+  # e.g.:
+  # - metric: ""                   # e.g. accuracy | hallucination_rate | latency
+  #   stage_4_baseline: null
+  #   current_value: null
+  #   threshold: null
+  #   status: ""                   # within_threshold | degraded | critical
+
+# --- Scheduled bias re-testing ---
+bias_retesting:
+  last_executed: ""                # ISO 8601 datetime
+  next_scheduled: ""
+  results: []
+  # e.g.:
+  # - characteristic: ""           # age | gender | ethnicity | disability
+  #   disparate_impact_ratio: null
+  #   threshold: null
+  #   passed: null
+  overall_status: ""               # passed | failed | not_yet_executed
+
+# --- Serious AI incident log ---
+# EU AI Act Art. 73: serious incident = incident posing risk to health, safety,
+# or fundamental rights; unexpected side effect; malfunction leading to harm.
+serious_incidents: []
+# e.g.:
+# - id: ""
+#   detected_at: ""
+#   description: ""
+#   harm_category: ""              # health_safety | fundamental_rights | property | other
+#   reported_to_authority: null    # true | false
+#   authority_notified: ""
+#   report_submitted_at: ""        # ISO 8601 datetime
+#   reported_by: ""                # AGL name
+#   resolution_status: ""          # open | resolved
+#   resolution_detail: ""
+
+# --- Technical documentation (EU AI Act Annex IV) ---
+technical_documentation:
+  last_updated: ""                 # ISO 8601 datetime
+  location: ""
+  annex_iv_current: null           # true | false
+
+# --- AGL review ---
+agl_review:
+  reviewed_by: ""                  # AGL full name
+  reviewed_at: ""                  # ISO 8601 datetime
+  recommendation: ""               # no_action | retrain | rollback | design_change
+  recommendation_rationale: ""
+  feedback_loop_triggered: null    # true | false
+  feedback_loop_path: ""           # path_b_feature | path_b_quickfix
+
+summary:
+  performance_degraded: null       # true | false
+  bias_thresholds_met: null        # true | false | not_yet_executed
+  open_serious_incidents: 0
+  status: ""                       # satisfactory | review_required | not_applicable
+  last_updated: ""                 # ISO 8601 datetime

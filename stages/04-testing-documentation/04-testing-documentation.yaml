@@ -29,4 +29,17 @@ exit_criteria:
 - 'AC-4A: Bias & fairness test passed within defined thresholds (or not-applicable)'
 - 'RC-4A: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
 next_stage: 5
-templates: []
+process: process.md
+artifacts:
+  inputs:
+    - ../01-intent-ingestion/artifacts/outputs/feature-spec.yaml
+    - ../01-intent-ingestion/artifacts/outputs/ai-tier-classification.yaml
+    - ../03-coding-implementation/artifacts/outputs/pull-request-record.yaml
+  outputs:
+    - artifacts/outputs/test-results-report.yaml
+    - artifacts/outputs/sast-scan-report.yaml
+    - artifacts/outputs/dast-scan-report.yaml
+    - artifacts/outputs/documentation-completeness-report.yaml
+    - artifacts/outputs/ai-output-validation-report.yaml
+    - artifacts/outputs/bias-fairness-report.yaml
+    - artifacts/outputs/risk-threshold-evaluation.yaml

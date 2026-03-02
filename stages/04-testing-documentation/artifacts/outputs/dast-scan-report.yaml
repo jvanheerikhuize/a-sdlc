@@ -1,0 +1,65 @@
+# =============================================================================
+# DAST Scan Report Template
+# =============================================================================
+# Produced during Step 4.3 by control SC-4B.
+# Records dynamic application security test results against the deployed
+# test environment, mapped to OWASP Top 10.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp dast-scan-report.yaml FEAT-XXXX-dast-scan-report.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 4
+control: SC-4B
+scanned_at: ""                     # ISO 8601 datetime
+tooling: ""                        # Name and version of DAST tool
+target_environment: ""             # URL / endpoint of test environment
+
+test_categories:
+  injection_attacks:
+    executed: null                 # true | false
+    findings: 0
+  authentication_flaws:
+    executed: null
+    findings: 0
+  session_management:
+    executed: null
+    findings: 0
+  tls_configuration:
+    executed: null
+    findings: 0
+  owasp_top_10:
+    executed: null
+    findings: 0
+
+findings: []
+# Per-finding entries, e.g.:
+# - id: "DAST-001"
+#   endpoint: ""
+#   owasp_category: ""             # e.g. A03:2021 – Injection
+#   cwe_id: ""
+#   severity: ""                   # critical | high | medium | low | informational
+#   description: ""
+#   evidence: ""                   # Request/response snippet or reproduction steps
+#   resolution:
+#     status: ""                   # open | remediated | accepted
+#     remediated_at: ""
+#     accepted_by: ""              # SA name (required for critical/high)
+#     acceptance_rationale: ""
+
+summary:
+  total_findings: 0
+  by_severity:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+    informational: 0
+  unresolved_critical: 0          # Must be 0 or formally accepted before Stage 4 exit
+  unresolved_high: 0
+  status: ""                       # passed | passed_with_accepted_risk | failed
+  reviewed_by: ""                  # SA name
+  reviewed_at: ""                  # ISO 8601 datetime

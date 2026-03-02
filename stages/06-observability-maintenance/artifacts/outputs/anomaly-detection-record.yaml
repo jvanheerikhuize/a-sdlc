@@ -1,0 +1,60 @@
+# =============================================================================
+# Anomaly Detection Record Template
+# =============================================================================
+# Produced continuously by control SC-6B (Step 6.5).
+# Records statistical behavioural baseline deviations: AI model drift,
+# adversarial inputs, abnormal resource patterns, unexpected call graphs.
+# Anomalies exceeding thresholds are escalated to SC-6A (Step 6.4).
+# Updated on a rolling basis for the operational lifetime of the system.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   This file is continuously updated. Do not copy per feature.
+# =============================================================================
+
+system_id: ""                      # System or service identifier
+stage: 6
+control: SC-6B
+
+baselines: []
+# Per-component baseline entries, e.g.:
+# - component: ""
+#   baseline_version: ""
+#   last_updated: ""               # ISO 8601 datetime
+#   status: ""                     # active | drift_detected | updating
+
+anomalies: []
+# Per-anomaly entries, e.g.:
+# - id: ""                         # Anomaly identifier
+#   detected_at: ""                # ISO 8601 datetime
+#   component: ""
+#   type: ""                       # ai_model_drift | adversarial_input | resource_pattern | call_graph | other
+#   description: ""
+#   deviation_magnitude: null      # Numeric measure of deviation from baseline
+#   threshold: null                # Threshold that was exceeded
+#   severity: ""                   # critical | high | medium | low
+#
+#   # Escalation to SC-6A (Step 6.4)
+#   escalated_to_sc6a: null        # true | false
+#   incident_ref: ""               # SC-6A incident ID (if escalated)
+#   escalated_at: ""
+#
+#   # SA investigation (for high-severity anomalies)
+#   sa_investigation:
+#     investigated_by: ""          # SA name
+#     investigation_at: ""
+#     determination: ""            # security_incident | implementation_defect | false_positive | monitoring_noise
+#     feedback_loop_triggered: null
+#     feedback_loop_path: ""       # path_b_quickfix | path_b_feature
+#
+#   resolution:
+#     status: ""                   # open | escalated | resolved | false_positive
+#     resolved_at: ""
+
+summary:
+  total_anomalies: 0
+  open_anomalies: 0
+  escalated_to_incidents: 0
+  false_positives: 0
+  last_updated: ""                 # ISO 8601 datetime
