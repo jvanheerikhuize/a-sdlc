@@ -3,7 +3,7 @@
     "allow": [
       "Bash(python3:*)",
       "Read(//tmp/**)",
-      "Bash(git add README.md AGENTS.md framework.yaml controls/ feedbackloops/ regulatory/ schema/ stages/)",
+      "Bash(git add README.md AGENTS.md asdlc.yaml controls/ feedbackloops/ regulatory/ schema/ stages/)",
       "WebFetch(domain:www.digital-operational-resilience-act.com)"
     ]
   }

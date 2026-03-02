@@ -100,7 +100,7 @@ See [regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml) for t
 a-sdlc/
 ├── AGENTS.md                          ← Agent entrypoint (read first if you are an agent)
 ├── README.md                          ← This file
-├── framework.yaml                     ← Machine-readable manifest of all stages and controls
+├── asdlc.yaml                     ← Machine-readable manifest of all stages and controls
 ├── schema/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json      ← JSON Schema for feature specifications
