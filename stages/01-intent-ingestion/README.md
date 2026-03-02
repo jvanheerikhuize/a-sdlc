@@ -4,16 +4,19 @@ The Intent Ingestion phase is the entry point between human ambition and machine
 
 During this stage, humans or agents interact with stakeholders to clarify nuances, analyse existing system constraints, and map dependencies — ensuring the initial idea is translated into a comprehensive, machine-readable specification. By automating the discovery of edge cases and identifying potential architectural conflicts at the point of entry, this phase establishes the **source of truth** that ensures all subsequent agentic actions are aligned with the user's original objective.
 
-## Key Tasks
+## Steps
 
-- Receive and parse the incoming change request into structured format
-- Validate completeness: every requirement has acceptance criteria and non-functional attributes
-- Cross-reference all requirements to detect conflicts, contradictions, and competing priorities
-- Present conflict map to stakeholders with severity ratings and resolution options
-- Obtain stakeholder decisions on all blocking and significant conflicts
-- Classify non-functional risk exposure 
-- If AI components are involved: classify the EU AI Act risk tier
-- Log all inputs, transformations, decisions, and outputs for traceability
+Full step-by-step process with roles and decision points: [process.md](process.md)
+
+| Step | Control | Name | Delegation | Sequencing |
+| ---- | ------- | ---- | ---------- | ---------- |
+| [1.1](process.md#step-11--screen-incoming-request) | [SC-1A](../../controls/sc/SC-1A.yaml) | Screen Request | Fully automated | Runs first — blocks all other steps if flagged |
+| [1.2](process.md#step-12--draft-feature-specification) | [QC-1A](../../controls/qc/QC-1A.yaml) | Draft Feature Specification | Agent drafts | After 1.1 |
+| [1.3](process.md#step-13--conflict-analysis) | [QC-1B](../../controls/qc/QC-1B.yaml) | Conflict Analysis | Agent analyses, PO resolves | Parallel with 1.4 and 1.5 |
+| [1.4](process.md#step-14--risk-classification) | [RC-1A](../../controls/rc/RC-1A.yaml) | Risk Classification | Agent classifies, RO validates | Parallel with 1.3 and 1.5 |
+| [1.5](process.md#step-15--ai-tier-classification-conditional) | [AC-1A](../../controls/ac/AC-1A.yaml) | AI Tier Classification *(conditional)* | Agent proposes, AGL confirms | Parallel with 1.3 and 1.4 |
+| [1.6](process.md#step-16--product-owner-sign-off) | [QC-1A](../../controls/qc/QC-1A.yaml) | Product Owner Sign-off | Human required | After 1.3, 1.4, and 1.5 |
+| [1.7](process.md#step-17--traceability-log) | [GC-1A](../../controls/gc/GC-1A.yaml) | Traceability Log | Fully automated | After 1.6 |
 
 ## Controls
 
