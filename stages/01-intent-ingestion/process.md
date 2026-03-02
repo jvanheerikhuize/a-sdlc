@@ -104,7 +104,7 @@ Steps 3, 4, and 5 are independent of each other and run in parallel after Step 2
 | | |
 |---|---|
 | **Input** | Draft feature specification |
-| **Output** | risk classification (`artifacts/outputs/risk-classification.yaml`) |
+| **Output** | Risk classification record (`artifacts/outputs/risk-classification.yaml`) |
 | **On failure** | Escalate to Risk Officer for manual assessment; classification must resolve before Step 6 |
 
 ---

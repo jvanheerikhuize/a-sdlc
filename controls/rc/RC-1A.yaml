@@ -7,7 +7,7 @@
 
 id: RC-1A
 name: Risk Classification
-description: 'Classify the non-functional risk exposure of the change using the risk classification criteria. The resulting risk tier
+description: 'Classify the non-functional risk exposure of the change. The resulting risk tier
   determines governance intensity for all subsequent stages: which controls require enhanced scrutiny, what approval authority
   is needed, and what testing depth is required.'
 required_in_stages:
