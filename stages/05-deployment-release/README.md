@@ -28,9 +28,9 @@ No deployment may proceed without a formal change approval (RC-5A) and cryptogra
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [QC-5A](../../controls/tracks/qc/QC-5A.yaml)
-  - [RC-5A](../../controls/tracks/rc/RC-5A.yaml), [RC-5B](../../controls/tracks/rc/RC-5B.yaml)
-  - [SC-5A](../../controls/tracks/sc/SC-5A.yaml), [SC-5B](../../controls/tracks/sc/SC-5B.yaml)
+  - [QC-5A](../../controls/qc/QC-5A.yaml)
+  - [RC-5A](../../controls/rc/RC-5A.yaml), [RC-5B](../../controls/rc/RC-5B.yaml)
+  - [SC-5A](../../controls/sc/SC-5A.yaml), [SC-5B](../../controls/sc/SC-5B.yaml)
 
 ## Stage Exit Criteria
 

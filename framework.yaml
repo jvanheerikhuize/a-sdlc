@@ -72,7 +72,7 @@ framework:
 
 cross_cutting:
   description: Three governance controls that span all six stages.
-  controls_track: controls/tracks/gc/
+  controls_track: controls/gc/
   feedback_loops_file: feedbackloops/feedback-loops.yaml
   controls:
     - id: GC-0A

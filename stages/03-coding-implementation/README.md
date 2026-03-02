@@ -32,10 +32,10 @@ No agent may begin work in this stage without first having received the signed C
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [GC-3A](../../controls/tracks/gc/GC-3A.yaml)
-  - [QC-3A](../../controls/tracks/qc/QC-3A.yaml), [QC-3B](../../controls/tracks/qc/QC-3B.yaml)
-  - [RC-3A](../../controls/tracks/rc/RC-3A.yaml)
-  - [SC-3A](../../controls/tracks/sc/SC-3A.yaml), [SC-3B](../../controls/tracks/sc/SC-3B.yaml), [SC-3C](../../controls/tracks/sc/SC-3C.yaml)
+  - [GC-3A](../../controls/gc/GC-3A.yaml)
+  - [QC-3A](../../controls/qc/QC-3A.yaml), [QC-3B](../../controls/qc/QC-3B.yaml)
+  - [RC-3A](../../controls/rc/RC-3A.yaml)
+  - [SC-3A](../../controls/sc/SC-3A.yaml), [SC-3B](../../controls/sc/SC-3B.yaml), [SC-3C](../../controls/sc/SC-3C.yaml)
 
 ## Stage Exit Criteria
 

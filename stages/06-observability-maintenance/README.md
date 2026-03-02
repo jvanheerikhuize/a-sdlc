@@ -29,10 +29,10 @@ Stage 6 feeds back into the lifecycle through two defined re-entry paths when is
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [AC-6A](../../controls/tracks/ac/AC-6A.yaml)
-  - [QC-6A](../../controls/tracks/qc/QC-6A.yaml)
-  - [RC-6A](../../controls/tracks/rc/RC-6A.yaml)
-  - [SC-6A](../../controls/tracks/sc/SC-6A.yaml), [SC-6B](../../controls/tracks/sc/SC-6B.yaml)
+  - [AC-6A](../../controls/ac/AC-6A.yaml)
+  - [QC-6A](../../controls/qc/QC-6A.yaml)
+  - [RC-6A](../../controls/rc/RC-6A.yaml)
+  - [SC-6A](../../controls/sc/SC-6A.yaml), [SC-6B](../../controls/sc/SC-6B.yaml)
 
 ## DORA Incident Classification & Reporting Timelines
 

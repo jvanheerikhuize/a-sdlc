@@ -28,10 +28,10 @@ Threat modelling, design completeness validation, and the injection of Core Secu
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [AC-2A](../../controls/tracks/ac/AC-2A.yaml)
-  - [QC-2A](../../controls/tracks/qc/QC-2A.yaml)
-  - [RC-2A](../../controls/tracks/rc/RC-2A.yaml)
-  - [SC-2A](../../controls/tracks/sc/SC-2A.yaml), [SC-2B](../../controls/tracks/sc/SC-2B.yaml)
+  - [AC-2A](../../controls/ac/AC-2A.yaml)
+  - [QC-2A](../../controls/qc/QC-2A.yaml)
+  - [RC-2A](../../controls/rc/RC-2A.yaml)
+  - [SC-2A](../../controls/sc/SC-2A.yaml), [SC-2B](../../controls/sc/SC-2B.yaml)
 
 ## Stage Exit Criteria
 

@@ -104,12 +104,11 @@ a-sdlc/
 │   └── feature-spec.schema.json      ← JSON Schema for feature specifications
 ├── controls/
 │   ├── registry.yaml                 ← Flat index of all 38 controls (fast lookup by ID)
-│   └── tracks/
-│       ├── qc/                       ← Quality Control definitions (QC-1A … QC-6A)
-│       ├── rc/                       ← Risk Control definitions (RC-1A … RC-6A)
-│       ├── sc/                       ← Security Control definitions (SC-1A … SC-6B)
-│       ├── ac/                       ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
-│       └── gc/                       ← Governance Control definitions (GC-0A … GC-3A)
+│   ├── qc/                           ← Quality Control definitions (QC-1A … QC-6A)
+│   ├── rc/                           ← Risk Control definitions (RC-1A … RC-6A)
+│   ├── sc/                           ← Security Control definitions (SC-1A … SC-6B)
+│   ├── ac/                           ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
+│   └── gc/                           ← Governance Control definitions (GC-0A … GC-3A)
 ├── stages/
 │   ├── 01-intent-ingestion/          ← stage.yaml + README.md + templates/
 │   ├── 02-system-design/             ← stage.yaml + README.md + directives/

@@ -1,7 +1,7 @@
 # =============================================================================
 # Stage 4: Testing & Documentation
 # Lightweight stage definition — lists required controls by ID.
-# Full control definitions: controls/tracks/[track]/[ID].yaml
+# Full control definitions: controls/[track]/[ID].yaml
 # =============================================================================
 
 number: 4

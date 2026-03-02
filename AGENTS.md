@@ -76,9 +76,9 @@ Load only the files relevant to the stage you are operating in. Cross-cutting co
 ### Always Load (Cross-Cutting)
 
 ```text
-controls/tracks/gc/GC-0A.yaml      # Audit Trail & Compliance Reporting
-controls/tracks/gc/GC-0B.yaml      # End-to-End Traceability
-controls/tracks/gc/GC-0C.yaml      # Agent Provenance Registry
+controls/gc/GC-0A.yaml      # Audit Trail & Compliance Reporting
+controls/gc/GC-0B.yaml      # End-to-End Traceability
+controls/gc/GC-0C.yaml      # Agent Provenance Registry
 feedbackloops/feedback-loops.yaml  # Re-entry paths for incidents and changes
 ```
 
@@ -98,11 +98,11 @@ For each stage, load the lightweight stage definition and then the individual co
 Individual control definitions live in:
 
 ```text
-controls/tracks/qc/   # QC-1A through QC-6A  (Quality Controls)
-controls/tracks/rc/   # RC-1A through RC-6A  (Risk Controls)
-controls/tracks/sc/   # SC-1A through SC-6B  (Security Controls)
-controls/tracks/ac/   # AC-1A through AC-6A  (AI Controls)
-controls/tracks/gc/   # GC-0A through GC-3A  (Governance Controls)
+controls/qc/   # QC-1A through QC-6A  (Quality Controls)
+controls/rc/   # RC-1A through RC-6A  (Risk Controls)
+controls/sc/   # SC-1A through SC-6B  (Security Controls)
+controls/ac/   # AC-1A through AC-6A  (AI Controls)
+controls/gc/   # GC-0A through GC-3A  (Governance Controls)
 ```
 
 Each stage directory contains:

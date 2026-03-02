@@ -31,10 +31,10 @@ This stage culminates in a risk threshold evaluation (RC-4A) that produces one o
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [AC-4A](../../controls/tracks/ac/AC-4A.yaml)
-  - [QC-4A](../../controls/tracks/qc/QC-4A.yaml), [QC-4B](../../controls/tracks/qc/QC-4B.yaml), [QC-4C](../../controls/tracks/qc/QC-4C.yaml)
-  - [RC-4A](../../controls/tracks/rc/RC-4A.yaml)
-  - [SC-4A](../../controls/tracks/sc/SC-4A.yaml), [SC-4B](../../controls/tracks/sc/SC-4B.yaml)
+  - [AC-4A](../../controls/ac/AC-4A.yaml)
+  - [QC-4A](../../controls/qc/QC-4A.yaml), [QC-4B](../../controls/qc/QC-4B.yaml), [QC-4C](../../controls/qc/QC-4C.yaml)
+  - [RC-4A](../../controls/rc/RC-4A.yaml)
+  - [SC-4A](../../controls/sc/SC-4A.yaml), [SC-4B](../../controls/sc/SC-4B.yaml)
 
 ## Stage Exit Criteria
 

@@ -29,11 +29,11 @@ During this stage, humans or agents interact with stakeholders to clarify nuance
 Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
 
 Individual control definitions by track:
-  - [AC-1A](../../controls/tracks/ac/AC-1A.yaml)
-  - [GC-1A](../../controls/tracks/gc/GC-1A.yaml)
-  - [QC-1A](../../controls/tracks/qc/QC-1A.yaml), [QC-1B](../../controls/tracks/qc/QC-1B.yaml)
-  - [RC-1A](../../controls/tracks/rc/RC-1A.yaml)
-  - [SC-1A](../../controls/tracks/sc/SC-1A.yaml)
+  - [AC-1A](../../controls/ac/AC-1A.yaml)
+  - [GC-1A](../../controls/gc/GC-1A.yaml)
+  - [QC-1A](../../controls/qc/QC-1A.yaml), [QC-1B](../../controls/qc/QC-1B.yaml)
+  - [RC-1A](../../controls/rc/RC-1A.yaml)
+  - [SC-1A](../../controls/sc/SC-1A.yaml)
 
 ## Stage Exit Criteria
 
