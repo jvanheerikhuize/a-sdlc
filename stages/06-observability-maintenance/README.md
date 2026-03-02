@@ -26,7 +26,13 @@ Stage 6 feeds back into the lifecycle through two defined re-entry paths when is
 | SC-6B | Runtime Anomaly Detection | Behavioural baselines, statistical anomaly detection, AI model drift, adversarial input detection. | Automated + human escalation | DORA: Art. 10; DNB: Anomaly detection; AI Act: Art. 15(3), Art. 9(2)(b) |
 | AC-6A | AI Post-Market Surveillance | Art. 72: ongoing performance tracking, bias re-testing, incident logging, and documentation maintenance. | Agent monitors, human reports | AI Act: Art. 72, Art. 73, Art. 61 |
 
-Full control definitions: [controls.yaml](controls.yaml)
+Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+
+Individual control definitions by track:
+  - [AC-6A](../../controls/tracks/ac/AC-6A.yaml)
+  - [QC-6A](../../controls/tracks/qc/QC-6A.yaml)
+  - [RC-6A](../../controls/tracks/rc/RC-6A.yaml)
+  - [SC-6A](../../controls/tracks/sc/SC-6A.yaml), [SC-6B](../../controls/tracks/sc/SC-6B.yaml)
 
 ## DORA Incident Classification & Reporting Timelines
 

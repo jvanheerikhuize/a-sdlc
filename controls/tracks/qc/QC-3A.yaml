@@ -1,0 +1,67 @@
+# =============================================================================
+# Control: QC-3A — Pull Request Creation & Review
+# Track:   QC (Quality Controls)
+# Owner:   Engineering / Tech Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-3A
+name: Pull Request Creation & Review
+description: All implementation work — whether produced by humans, agents, or both — converges into a pull request that includes
+  evidence from every other Stage 3 control. The PR must be reviewed and approved by the appropriate number of reviewers before
+  merge. Reviewer count and seniority are determined by the risk classification from RC-1A.
+required_in_stages:
+- number: 3
+  name: Coding & Implementation
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: agent_creates_human_reviews
+  human_display: Agent creates, human reviews
+  agent_role: Create pull request with all Stage 3 control evidence attached; assign reviewers per risk tier.
+  human_role: Review all evidence; review code; approve or request changes; log approval with identity and timestamp.
+owner:
+  team: Engineering
+  role: Tech Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(5)
+    obligation: Documented procedures for ICT change management including peer review
+  dnb:
+  - area: Four-eyes principle for code changes
+    requirement: All code changes require independent review before merge
+inputs:
+- name: Implementation code
+  description: Code produced by human developers, agents, or both during Stage 3.
+- name: Stage 3 control evidence
+  description: Evidence artefacts from QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, and GC-3A.
+outputs:
+- name: Approved pull request
+  type: artefact
+  description: Merged PR with full evidence package and reviewer approvals recorded.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Tech Lead
+  description: PRs with failing controls or unresolved review comments cannot be merged.
+automation:
+  frequency: per_change
+dependencies:
+- QC-3B
+- RC-3A
+- SC-3A
+- SC-3B
+- SC-3C
+- GC-3A
+feedback_loops:
+- path: path_a_autofix
+  required_in_path: true
+- path: path_b_quickfix
+  required_in_path: true
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

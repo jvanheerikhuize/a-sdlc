@@ -1,22 +1,12 @@
 # =============================================================================
 # A-SDLC Control Registry
 # =============================================================================
-# Flat index of all 30 controls across the Agentic SDLC framework.
+# Flat index of all 38 controls across the Agentic SDLC framework.
 # Use this file for fast lookup by control ID without reading individual
-# stage files. Full control definitions are in each stage's controls.yaml.
+# track files. Full control definitions are in controls/tracks/[track]/[ID].yaml.
 #
-# Total controls: 30
-# Tracks: QC (9) | RC (7) | SC (10) | AC (5) | GC (5) — wait, let me count
-# QC: 1A,1B,2A,3A,3B,4A,4B,4C,5A,6A = 10
-# RC: 1A,2A,3A,4A,5A,5B,6A = 7
-# SC: 1A,2A,2B,3A,3B,3C,4A,4B,5A,5B,6A,6B = 12
-# AC: 1A,2A,4A,6A = 4
-# GC: 0A,0B,0C,1A,3A = 5
-# Wait — let me recount from the source documents:
-# QC: 1A,1B,2A,3A,3B,4A,4B,4C,5A,6A = 10
-# RC: 1A,2A,3A,4A,5A,5B,6A = 7
-# SC: 1A,2A,2B,3A,3B,3C,4A,4B,5A,5B,6A,6B = 12... but original doc says SC-5A not in cross-cutting
-# Let me just list them from the source docs
+# Total controls: 38
+# QC: 10 | RC: 7 | SC: 12 | AC: 4 | GC: 5
 # =============================================================================
 
 registry:
@@ -31,7 +21,7 @@ registry:
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: cross-cutting/controls.yaml
+    file: controls/tracks/gc/GC-0A.yaml
     owner_team: Governance & Compliance
 
   - id: GC-0B
@@ -40,7 +30,7 @@ registry:
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: cross-cutting/controls.yaml
+    file: controls/tracks/gc/GC-0B.yaml
     owner_team: Engineering Platform
 
   - id: GC-0C
@@ -49,7 +39,7 @@ registry:
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: cross-cutting/controls.yaml
+    file: controls/tracks/gc/GC-0C.yaml
     owner_team: Governance & Compliance
 
   # ---------------------------------------------------------------------------
@@ -62,7 +52,7 @@ registry:
     stage_name: Intent Ingestion
     track: QC
     delegation: agent_drafts_human_approves
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/qc/QC-1A.yaml
     owner_team: Product / Delivery
 
   - id: QC-1B
@@ -71,7 +61,7 @@ registry:
     stage_name: Intent Ingestion
     track: QC
     delegation: agent_analyses_human_resolves
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/qc/QC-1B.yaml
     owner_team: Product / Delivery
 
   - id: RC-1A
@@ -80,7 +70,7 @@ registry:
     stage_name: Intent Ingestion
     track: RC
     delegation: agent_classifies_human_validates
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/rc/RC-1A.yaml
     owner_team: Risk Management
 
   - id: SC-1A
@@ -89,7 +79,7 @@ registry:
     stage_name: Intent Ingestion
     track: SC
     delegation: fully_automated
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/sc/SC-1A.yaml
     owner_team: Security
 
   - id: AC-1A
@@ -98,7 +88,7 @@ registry:
     stage_name: Intent Ingestion
     track: AC
     delegation: agent_proposes_human_confirms
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/ac/AC-1A.yaml
     owner_team: AI Governance
 
   - id: GC-1A
@@ -107,7 +97,7 @@ registry:
     stage_name: Intent Ingestion
     track: GC
     delegation: fully_automated
-    file: stages/01-intent-ingestion/controls.yaml
+    file: controls/tracks/gc/GC-1A.yaml
     owner_team: Governance & Compliance
 
   # ---------------------------------------------------------------------------
@@ -120,7 +110,7 @@ registry:
     stage_name: System Design
     track: QC
     delegation: agent_drafts_human_approves
-    file: stages/02-system-design/controls.yaml
+    file: controls/tracks/qc/QC-2A.yaml
     owner_team: Engineering
 
   - id: RC-2A
@@ -129,7 +119,7 @@ registry:
     stage_name: System Design
     track: RC
     delegation: human_required
-    file: stages/02-system-design/controls.yaml
+    file: controls/tracks/rc/RC-2A.yaml
     owner_team: Risk Management
 
   - id: SC-2A
@@ -138,7 +128,7 @@ registry:
     stage_name: System Design
     track: SC
     delegation: agent_drafts_human_approves
-    file: stages/02-system-design/controls.yaml
+    file: controls/tracks/sc/SC-2A.yaml
     owner_team: Security
 
   - id: SC-2B
@@ -147,7 +137,7 @@ registry:
     stage_name: System Design
     track: SC
     delegation: automated_policy_enforced
-    file: stages/02-system-design/controls.yaml
+    file: controls/tracks/sc/SC-2B.yaml
     directive_payload: stages/02-system-design/directives/core-security-directives.xml
     owner_team: Security
 
@@ -157,7 +147,7 @@ registry:
     stage_name: System Design
     track: AC
     delegation: agent_drafts_human_approves
-    file: stages/02-system-design/controls.yaml
+    file: controls/tracks/ac/AC-2A.yaml
     owner_team: AI Governance
 
   # ---------------------------------------------------------------------------
@@ -170,7 +160,7 @@ registry:
     stage_name: Coding & Implementation
     track: QC
     delegation: agent_creates_human_reviews
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/qc/QC-3A.yaml
     owner_team: Engineering
     feedback_loops:
       - path_a_autofix
@@ -182,7 +172,7 @@ registry:
     stage_name: Coding & Implementation
     track: QC
     delegation: fully_automated
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/qc/QC-3B.yaml
     owner_team: Engineering
     feedback_loops:
       - path_a_autofix
@@ -194,7 +184,7 @@ registry:
     stage_name: Coding & Implementation
     track: RC
     delegation: agent_logs_human_reviews
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/rc/RC-3A.yaml
     owner_team: Engineering
     feedback_loops:
       - path_b_quickfix
@@ -205,7 +195,7 @@ registry:
     stage_name: Coding & Implementation
     track: SC
     delegation: automated_policy_enforced
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/sc/SC-3A.yaml
     owner_team: Security
     feedback_loops:
       - path_b_quickfix
@@ -216,7 +206,7 @@ registry:
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/sc/SC-3B.yaml
     owner_team: Security
     feedback_loops:
       - path_a_autofix
@@ -228,7 +218,7 @@ registry:
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/sc/SC-3C.yaml
     owner_team: Security
     feedback_loops:
       - path_a_autofix
@@ -240,7 +230,7 @@ registry:
     stage_name: Coding & Implementation
     track: GC
     delegation: fully_automated
-    file: stages/03-coding-implementation/controls.yaml
+    file: controls/tracks/gc/GC-3A.yaml
     owner_team: Governance & Compliance
     feedback_loops:
       - path_a_autofix
@@ -256,7 +246,7 @@ registry:
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_executes_human_reviews
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/qc/QC-4A.yaml
     owner_team: Quality Assurance
     feedback_loops:
       - path_a_autofix
@@ -268,7 +258,7 @@ registry:
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_executes_human_reviews
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/qc/QC-4B.yaml
     owner_team: AI Governance
     note: Applicable to AI components only
 
@@ -278,7 +268,7 @@ registry:
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_checks_human_approves
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/qc/QC-4C.yaml
     owner_team: Engineering
 
   - id: RC-4A
@@ -287,7 +277,7 @@ registry:
     stage_name: Testing & Documentation
     track: RC
     delegation: agent_calculates_human_decides
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/rc/RC-4A.yaml
     owner_team: Risk Management
     feedback_loops:
       - path_a_autofix
@@ -299,7 +289,7 @@ registry:
     stage_name: Testing & Documentation
     track: SC
     delegation: fully_automated
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/sc/SC-4A.yaml
     owner_team: Security
     feedback_loops:
       - path_a_autofix
@@ -311,7 +301,7 @@ registry:
     stage_name: Testing & Documentation
     track: SC
     delegation: fully_automated
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/sc/SC-4B.yaml
     owner_team: Security
 
   - id: AC-4A
@@ -320,7 +310,7 @@ registry:
     stage_name: Testing & Documentation
     track: AC
     delegation: agent_executes_human_reviews
-    file: stages/04-testing-documentation/controls.yaml
+    file: controls/tracks/ac/AC-4A.yaml
     owner_team: AI Governance
     note: Applicable to AI components only
 
@@ -334,7 +324,7 @@ registry:
     stage_name: Deployment & Release
     track: QC
     delegation: agent_compiles_human_approves
-    file: stages/05-deployment-release/controls.yaml
+    file: controls/tracks/qc/QC-5A.yaml
     owner_team: Engineering / Release Management
 
   - id: RC-5A
@@ -343,7 +333,7 @@ registry:
     stage_name: Deployment & Release
     track: RC
     delegation: human_required
-    file: stages/05-deployment-release/controls.yaml
+    file: controls/tracks/rc/RC-5A.yaml
     owner_team: Risk Management / Release Management
     feedback_loops:
       - path_b_quickfix
@@ -354,7 +344,7 @@ registry:
     stage_name: Deployment & Release
     track: RC
     delegation: agent_validates_human_approves
-    file: stages/05-deployment-release/controls.yaml
+    file: controls/tracks/rc/RC-5B.yaml
     owner_team: Engineering / Release Management
 
   - id: SC-5A
@@ -363,7 +353,7 @@ registry:
     stage_name: Deployment & Release
     track: SC
     delegation: fully_automated
-    file: stages/05-deployment-release/controls.yaml
+    file: controls/tracks/sc/SC-5A.yaml
     owner_team: Security / Infrastructure
 
   - id: SC-5B
@@ -372,7 +362,7 @@ registry:
     stage_name: Deployment & Release
     track: SC
     delegation: fully_automated
-    file: stages/05-deployment-release/controls.yaml
+    file: controls/tracks/sc/SC-5B.yaml
     owner_team: Security / Release Management
     feedback_loops:
       - path_a_autofix
@@ -388,7 +378,7 @@ registry:
     stage_name: Observability & Maintenance
     track: QC
     delegation: fully_automated
-    file: stages/06-observability-maintenance/controls.yaml
+    file: controls/tracks/qc/QC-6A.yaml
     owner_team: Engineering / SRE
 
   - id: RC-6A
@@ -397,7 +387,7 @@ registry:
     stage_name: Observability & Maintenance
     track: RC
     delegation: automated_with_human_escalation
-    file: stages/06-observability-maintenance/controls.yaml
+    file: controls/tracks/rc/RC-6A.yaml
     owner_team: Risk Management / SRE
 
   - id: SC-6A
@@ -406,7 +396,7 @@ registry:
     stage_name: Observability & Maintenance
     track: SC
     delegation: automated_with_human_escalation
-    file: stages/06-observability-maintenance/controls.yaml
+    file: controls/tracks/sc/SC-6A.yaml
     owner_team: Security
 
   - id: SC-6B
@@ -415,7 +405,7 @@ registry:
     stage_name: Observability & Maintenance
     track: SC
     delegation: automated_with_human_escalation
-    file: stages/06-observability-maintenance/controls.yaml
+    file: controls/tracks/sc/SC-6B.yaml
     owner_team: Security / SRE
 
   - id: AC-6A
@@ -424,6 +414,6 @@ registry:
     stage_name: Observability & Maintenance
     track: AC
     delegation: agent_monitors_human_reports
-    file: stages/06-observability-maintenance/controls.yaml
+    file: controls/tracks/ac/AC-6A.yaml
     owner_team: AI Governance
     note: Applicable to AI components only

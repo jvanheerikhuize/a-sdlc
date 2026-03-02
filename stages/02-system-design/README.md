@@ -25,7 +25,13 @@ Threat modelling, design completeness validation, and the injection of Core Secu
 | SC-2B | Directive Injection | Injects signed, immutable Core Security Directives into the agent before coding. Company policy cannot be overridden. | Fully automated (signed) | DORA: Art. 9(4)(c); DNB: Logical access management; AI Act: Art. 14(1) |
 | AC-2A | AI Component Design Review | For AI systems: validates model selection, data pipelines, explainability, and human oversight mechanisms. | Agent assists, human approves | AI Act: Art. 11, Annex IV; Art. 13; Art. 14 |
 
-Full control definitions: [controls.yaml](controls.yaml)
+Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+
+Individual control definitions by track:
+  - [AC-2A](../../controls/tracks/ac/AC-2A.yaml)
+  - [QC-2A](../../controls/tracks/qc/QC-2A.yaml)
+  - [RC-2A](../../controls/tracks/rc/RC-2A.yaml)
+  - [SC-2A](../../controls/tracks/sc/SC-2A.yaml), [SC-2B](../../controls/tracks/sc/SC-2B.yaml)
 
 ## Stage Exit Criteria
 

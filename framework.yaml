@@ -72,7 +72,7 @@ framework:
 
 cross_cutting:
   description: Three governance controls that span all six stages.
-  controls_file: cross-cutting/controls.yaml
+  controls_track: controls/tracks/gc/
   feedback_loops_file: cross-cutting/feedback-loops.yaml
   controls:
     - id: GC-0A
@@ -90,7 +90,7 @@ stages:
     name: Intent Ingestion
     slug: 01-intent-ingestion
     directory: stages/01-intent-ingestion
-    controls_file: stages/01-intent-ingestion/controls.yaml
+    stage_file: stages/01-intent-ingestion/stage.yaml
     readme: stages/01-intent-ingestion/README.md
     templates:
       - stages/01-intent-ingestion/templates/feature-spec.yaml
@@ -122,7 +122,7 @@ stages:
     name: System Design
     slug: 02-system-design
     directory: stages/02-system-design
-    controls_file: stages/02-system-design/controls.yaml
+    stage_file: stages/02-system-design/stage.yaml
     readme: stages/02-system-design/README.md
     directives:
       - stages/02-system-design/directives/core-security-directives.xml
@@ -151,7 +151,7 @@ stages:
     name: Coding & Implementation
     slug: 03-coding-implementation
     directory: stages/03-coding-implementation
-    controls_file: stages/03-coding-implementation/controls.yaml
+    stage_file: stages/03-coding-implementation/stage.yaml
     readme: stages/03-coding-implementation/README.md
     description: >-
       Code is produced by human developers, AI agents, or both. The most
@@ -184,7 +184,7 @@ stages:
     name: Testing & Documentation
     slug: 04-testing-documentation
     directory: stages/04-testing-documentation
-    controls_file: stages/04-testing-documentation/controls.yaml
+    stage_file: stages/04-testing-documentation/stage.yaml
     readme: stages/04-testing-documentation/README.md
     description: >-
       The verification gate. Answers "does it work correctly?" and "is it safe
@@ -217,7 +217,7 @@ stages:
     name: Deployment & Release
     slug: 05-deployment-release
     directory: stages/05-deployment-release
-    controls_file: stages/05-deployment-release/controls.yaml
+    stage_file: stages/05-deployment-release/stage.yaml
     readme: stages/05-deployment-release/README.md
     description: >-
       Promotion to production. Carries the strongest governance requirements.
@@ -244,7 +244,7 @@ stages:
     name: Observability & Maintenance
     slug: 06-observability-maintenance
     directory: stages/06-observability-maintenance
-    controls_file: stages/06-observability-maintenance/controls.yaml
+    stage_file: stages/06-observability-maintenance/stage.yaml
     readme: stages/06-observability-maintenance/README.md
     description: >-
       The only stage that never ends. Continuous monitoring of operational

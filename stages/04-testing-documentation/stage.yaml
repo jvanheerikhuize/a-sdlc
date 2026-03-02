@@ -1,0 +1,32 @@
+# =============================================================================
+# Stage 4: Testing & Documentation
+# Lightweight stage definition — lists required controls by ID.
+# Full control definitions: controls/tracks/[track]/[ID].yaml
+# =============================================================================
+
+number: 4
+name: Testing & Documentation
+description: Validate the implementation against all acceptance criteria, security requirements, and documentation standards.
+  RC-4A is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted
+  RC-4A result.
+required_controls:
+- id: QC-4A
+- id: QC-4B
+  note: Applicable when the change involves an AI component
+- id: QC-4C
+- id: SC-4A
+- id: SC-4B
+- id: AC-4A
+  note: Applicable when the change involves an AI component
+- id: RC-4A
+  note: Final go/no-go gate — depends on all other Stage 4 controls
+exit_criteria:
+- 'QC-4A: All acceptance criteria from Stage 1 have passing tests'
+- 'QC-4B: AI output validation passed within defined accuracy thresholds (or not-applicable)'
+- 'QC-4C: Documentation completeness confirmed and approved'
+- 'SC-4A: SAST passed — no critical or high-severity findings unresolved'
+- 'SC-4B: DAST passed — no critical or high-severity findings unresolved'
+- 'AC-4A: Bias & fairness test passed within defined thresholds (or not-applicable)'
+- 'RC-4A: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
+next_stage: 5
+templates: []

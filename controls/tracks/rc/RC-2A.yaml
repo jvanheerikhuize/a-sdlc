@@ -1,0 +1,63 @@
+# =============================================================================
+# Control: RC-2A — Design Approval (F-RED)
+# Track:   RC (Risk Controls)
+# Owner:   Risk Management / Risk Officer
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: RC-2A
+name: Design Approval (F-RED)
+description: 'Consolidated governance gate combining design approval with functional risk classification (F-RED). Determines
+  the appropriate sign-off authority based on the functional risk tier: high-risk requires senior architecture board approval;
+  medium requires lead architect; low may be pre-approved. This control cannot be delegated to an agent.'
+required_in_stages:
+- number: 2
+  name: System Design
+  mandatory: true
+track:
+  code: RC
+  name: Risk Controls
+delegation:
+  pattern: human_required
+  human_display: Human required
+  agent_role: Prepare design approval package with F-RED classification, risk summary, and supporting evidence.
+  human_role: Make the formal approval decision. This control cannot be delegated to an agent under any circumstances.
+owner:
+  team: Risk Management
+  role: Risk Officer
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(1)
+    obligation: Governance and approval of ICT changes must be proportionate to risk
+  dnb:
+  - area: Risk-based approval authority for changes
+    requirement: Approval authority must match risk tier; high-risk changes require senior sign-off
+  eu_ai_act:
+  - article: Art. 9
+    requirement: Risk management approval required for AI system design before implementation
+inputs:
+- name: Design validation report
+  source_control: QC-2A
+  description: Completed design validation confirming standards compliance.
+- name: NF-RED risk classification
+  source_control: RC-1A
+  description: Risk tier from Stage 1 informing approval authority requirements.
+outputs:
+- name: Design approval decision
+  type: decision
+  description: Formal approval or rejection with authority identity, timestamp, and conditions.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Risk Officer
+  description: Rejected designs are returned for revision. No coding may begin without approval.
+automation:
+  frequency: per_change
+dependencies:
+- QC-2A
+- RC-1A
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

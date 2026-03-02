@@ -10,7 +10,11 @@ Three governance controls span all six stages of the A-SDLC lifecycle. They are 
 | GC-0B | End-to-End Traceability | Bidirectional traceability from intent through deployment and monitoring. Supports impact analysis. | Fully automated |
 | GC-0C | Agent Provenance Registry | Centralised registry of all agent contributions: what they produced, decisions made, humans who approved. | Fully automated |
 
-Full control definitions: [controls.yaml](controls.yaml)
+Control definitions (by track):
+
+  - [GC-0A](../controls/tracks/gc/GC-0A.yaml) — Audit Trail & Compliance Reporting
+  - [GC-0B](../controls/tracks/gc/GC-0B.yaml) — End-to-End Traceability
+  - [GC-0C](../controls/tracks/gc/GC-0C.yaml) — Agent Provenance Registry
 
 ## Feedback Loops
 

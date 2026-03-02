@@ -1,0 +1,35 @@
+# =============================================================================
+# Stage 3: Coding & Implementation
+# Lightweight stage definition — lists required controls by ID.
+# Full control definitions: controls/tracks/[track]/[ID].yaml
+# =============================================================================
+
+number: 3
+name: Coding & Implementation
+description: Implement the approved design under continuous automated quality and security controls. All implementation —
+  human, agent, or co-authored — converges into a reviewed and approved pull request before Stage 4 begins.
+required_controls:
+- id: QC-3B
+  note: Runs continuously on every commit
+- id: SC-3A
+  note: Enforced throughout the implementation session
+- id: SC-3B
+  note: Runs on all agent-generated code before PR creation
+- id: SC-3C
+  note: Runs on every commit
+- id: RC-3A
+  note: Logged throughout; reviewed by Tech Lead
+- id: GC-3A
+  note: All code tagged at point of generation
+- id: QC-3A
+  note: Final gate — aggregates all other Stage 3 evidence
+exit_criteria:
+- 'QC-3B: All commits passed quality gates (no threshold violations)'
+- 'SC-3A: Permission enforcement log shows no out-of-boundary access'
+- 'SC-3B: Post-guardrail scan passed — no malicious patterns detected'
+- 'SC-3C: Secrets scan passed on all commits — no credentials found'
+- 'RC-3A: Decision log complete and reviewed'
+- 'GC-3A: Code provenance tags applied to all contributions'
+- 'QC-3A: Pull request approved by required reviewers per risk tier'
+next_stage: 4
+templates: []

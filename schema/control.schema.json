@@ -4,7 +4,7 @@
   "title": "A-SDLC Control Definition",
   "description": "Schema for Agentic SDLC control definitions. Regulatory scope: DORA · DNB · EU AI Act.",
   "type": "object",
-  "required": ["id", "name", "description", "stage", "track", "delegation", "regulatory_mapping"],
+  "required": ["id", "name", "description", "required_in_stages", "track", "delegation", "regulatory_mapping"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -22,28 +22,41 @@
       "type": "string",
       "description": "Functional description starting with a verb. Answers: if this control didn't exist, what would go wrong?"
     },
-    "stage": {
-      "type": "object",
-      "required": ["number", "name"],
-      "additionalProperties": false,
-      "properties": {
-        "number": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 6,
-          "description": "0 = cross-cutting, 1-6 = lifecycle stage number."
-        },
-        "name": {
-          "type": "string",
-          "enum": [
-            "Cross-Cutting",
-            "Intent Ingestion",
-            "System Design",
-            "Coding & Implementation",
-            "Testing & Documentation",
-            "Deployment & Release",
-            "Observability & Maintenance"
-          ]
+    "required_in_stages": {
+      "type": "array",
+      "description": "Stages in which this control is required. Supports controls active in multiple stages.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["number", "name", "mandatory"],
+        "additionalProperties": false,
+        "properties": {
+          "number": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6,
+            "description": "0 = cross-cutting (always active), 1-6 = lifecycle stage number."
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "Cross-Cutting",
+              "Intent Ingestion",
+              "System Design",
+              "Coding & Implementation",
+              "Testing & Documentation",
+              "Deployment & Release",
+              "Observability & Maintenance"
+            ]
+          },
+          "mandatory": {
+            "type": "boolean",
+            "description": "Whether this control is mandatory (true) or optional/conditional (false) in this stage."
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional note on how the control applies in this stage (e.g. sequencing, conditionality)."
+          }
         }
       }
     },

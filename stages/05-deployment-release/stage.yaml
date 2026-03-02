@@ -1,0 +1,26 @@
+# =============================================================================
+# Stage 5: Deployment & Release
+# Lightweight stage definition — lists required controls by ID.
+# Full control definitions: controls/tracks/[track]/[ID].yaml
+# =============================================================================
+
+number: 5
+name: Deployment & Release
+description: Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact
+  integrity checking. RC-5A CAB Approval is a mandatory human gate that cannot be delegated.
+required_controls:
+- id: QC-5A
+- id: RC-5A
+  note: Human-required gate — cannot be delegated to an agent
+- id: RC-5B
+- id: SC-5A
+- id: SC-5B
+  note: Must run immediately before deployment execution
+exit_criteria:
+- 'QC-5A: Release readiness checklist completed — all prior controls evidenced'
+- 'RC-5A: CAB approval granted by appropriate authority'
+- 'RC-5B: Rollback plan validated and tested in pre-production'
+- 'SC-5A: Infrastructure security baseline validated — no unresolved deviations'
+- 'SC-5B: Deployment integrity verified — artefact checksums match tested build'
+next_stage: 6
+templates: []

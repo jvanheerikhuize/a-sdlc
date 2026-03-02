@@ -28,7 +28,13 @@ This stage culminates in a risk threshold evaluation (RC-4A) that produces one o
 | SC-4B | DAST | Runtime security testing: injection attacks, auth flaws, session management, TLS configuration. | Fully automated | DORA: Art. 24, Art. 25; DNB: Penetration testing; AI Act: Art. 15(3) |
 | AC-4A | Bias & Fairness Testing | For AI systems: tests for discriminatory outcomes across protected characteristics. | Agent executes, human reviews | AI Act: Art. 10(2)(f); Art. 10(5); Art. 15(1) |
 
-Full control definitions: [controls.yaml](controls.yaml)
+Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+
+Individual control definitions by track:
+  - [AC-4A](../../controls/tracks/ac/AC-4A.yaml)
+  - [QC-4A](../../controls/tracks/qc/QC-4A.yaml), [QC-4B](../../controls/tracks/qc/QC-4B.yaml), [QC-4C](../../controls/tracks/qc/QC-4C.yaml)
+  - [RC-4A](../../controls/tracks/rc/RC-4A.yaml)
+  - [SC-4A](../../controls/tracks/sc/SC-4A.yaml), [SC-4B](../../controls/tracks/sc/SC-4B.yaml)
 
 ## Stage Exit Criteria
 

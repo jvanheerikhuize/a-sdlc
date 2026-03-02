@@ -26,7 +26,14 @@ During this stage, humans or agents interact with stakeholders to clarify nuance
 | AC-1A | AI Risk Tier Classification | For AI changes: classifies EU AI Act risk tier and triggers corresponding compliance requirements. | Agent proposes, human confirms | AI Act: Art. 6, Annex III |
 | GC-1A | Intent Traceability | Logs original request, all agent transformations, and validated output. First link in the audit chain. | Fully automated | DORA: Art. 8(6); DNB: Auditability; AI Act: Art. 12 |
 
-Full control definitions: [controls.yaml](controls.yaml)
+Stage definition (required controls + exit criteria): [stage.yaml](stage.yaml)
+
+Individual control definitions by track:
+  - [AC-1A](../../controls/tracks/ac/AC-1A.yaml)
+  - [GC-1A](../../controls/tracks/gc/GC-1A.yaml)
+  - [QC-1A](../../controls/tracks/qc/QC-1A.yaml), [QC-1B](../../controls/tracks/qc/QC-1B.yaml)
+  - [RC-1A](../../controls/tracks/rc/RC-1A.yaml)
+  - [SC-1A](../../controls/tracks/sc/SC-1A.yaml)
 
 ## Stage Exit Criteria
 

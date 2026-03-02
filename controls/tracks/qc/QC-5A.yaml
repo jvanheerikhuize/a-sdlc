@@ -1,0 +1,60 @@
+# =============================================================================
+# Control: QC-5A — Release Readiness Checklist
+# Track:   QC (Quality Controls)
+# Owner:   Engineering / Release Management / Release Manager
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-5A
+name: Release Readiness Checklist
+description: 'Compile and verify the complete release readiness package: confirm all prior stage controls have passed, all
+  approvals are in place, documentation is current, and the release package is complete and matches what was tested. This
+  is the final quality gate before the formal approval process begins.'
+required_in_stages:
+- number: 5
+  name: Deployment & Release
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: agent_compiles_human_approves
+  human_display: Agent compiles, human approves
+  agent_role: Compile release readiness checklist by querying audit trail for all control pass evidences; flag any gaps.
+  human_role: Review checklist; approve release package or require resolution of flagged gaps.
+owner:
+  team: Engineering / Release Management
+  role: Release Manager
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(5)
+    obligation: Documented deployment and release procedures with verification of prior controls
+  dnb:
+  - area: Release management and production acceptance
+    requirement: Release readiness must be formally verified before deployment proceeds
+inputs:
+- name: Audit trail
+  source_control: GC-0A
+  description: Complete audit trail confirming all prior controls were executed and passed.
+- name: Risk threshold evaluation decision
+  source_control: RC-4A
+  description: Stage 4 go/no-go decision confirming readiness for deployment.
+outputs:
+- name: Release readiness checklist
+  type: evidence
+  description: Completed checklist confirming all prior controls passed with references to evidence artefacts.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Release Manager
+  description: Gaps in prior control evidence block the release. Must be resolved before RC-5A approval can be sought.
+automation:
+  frequency: per_release
+dependencies:
+- RC-4A
+- GC-0A
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

@@ -1,0 +1,60 @@
+# =============================================================================
+# Control: GC-0A — Audit Trail & Compliance Reporting
+# Track:   GC (Governance Controls)
+# Owner:   Governance & Compliance / Compliance Officer
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: GC-0A
+name: Audit Trail & Compliance Reporting
+description: Log every control execution with timestamp, actor, outcome, and supporting evidence. Produce DORA/DNB examination
+  artefacts on demand. The audit trail must be immutable and tamper-evident.
+required_in_stages:
+- number: 0
+  name: Cross-Cutting
+  mandatory: true
+track:
+  code: GC
+  name: Governance Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Execute all control logging and produce audit artefacts automatically.
+  human_role: Review audit reports on demand; present artefacts during regulatory examinations.
+owner:
+  team: Governance & Compliance
+  role: Compliance Officer
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(6)
+    obligation: Documentation and reporting of ICT risk management activities
+  - article: Art. 5(2)
+    obligation: Management body accountability for ICT risk framework
+  dnb:
+  - area: Audit trail requirements
+    requirement: Complete, tamper-evident log of all control executions for examination readiness
+  eu_ai_act:
+  - article: Art. 12
+    requirement: Record-keeping and logging requirements for high-risk AI systems
+  - article: Art. 17(1)(d)
+    requirement: Quality management documentation requirements
+outputs:
+- name: Control execution log
+  type: log_entry
+  description: Timestamped, attributed record of every control execution with outcome and evidence references.
+  retention: 7 years (DORA Art. 8(6))
+- name: Regulatory examination pack
+  type: report
+  description: On-demand compilation of all audit artefacts mapped to regulatory obligations.
+  retention: 7 years (DORA Art. 8(6))
+failure_behaviour:
+  action: block
+  escalation_target: Compliance Officer
+  description: If audit logging fails, the associated control execution is blocked until logging is restored.
+automation:
+  frequency: per_change
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

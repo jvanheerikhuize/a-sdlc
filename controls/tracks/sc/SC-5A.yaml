@@ -1,0 +1,55 @@
+# =============================================================================
+# Control: SC-5A — Infrastructure Security
+# Track:   SC (Security Controls)
+# Owner:   Security / Infrastructure / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-5A
+name: Infrastructure Security
+description: 'Validate the production environment security baseline immediately before deployment: verify patching status,
+  access control configurations, network segmentation rules, infrastructure-as-code compliance, and absence of unexpected
+  configuration drift since last validated baseline.'
+required_in_stages:
+- number: 5
+  name: Deployment & Release
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Scan production environment configuration against approved security baseline; report any deviations.
+  human_role: Review deviations; resolve before deployment or provide documented risk acceptance.
+owner:
+  team: Security / Infrastructure
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 9(2)
+    obligation: Protection of ICT infrastructure through security baseline management
+  dnb:
+  - area: Production environment security baseline
+    requirement: Security baseline must be validated before each production deployment
+  eu_ai_act:
+  - article: Art. 15(4)
+    requirement: Appropriate level of cybersecurity in production environment for AI systems
+outputs:
+- name: Infrastructure security baseline report
+  type: evidence
+  description: Validation results confirming production environment matches approved security baseline.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: Deviations from security baseline block deployment until resolved or formally accepted.
+automation:
+  frequency: per_release
+dependencies:
+- RC-5A
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

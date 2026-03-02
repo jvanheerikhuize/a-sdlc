@@ -1,0 +1,29 @@
+# =============================================================================
+# Stage 1: Intent Ingestion
+# Lightweight stage definition — lists required controls by ID.
+# Full control definitions: controls/tracks/[track]/[ID].yaml
+# =============================================================================
+
+number: 1
+name: Intent Ingestion
+description: Capture, validate, and enrich an incoming change request into a structured, approved feature specification. All
+  downstream stages depend on this specification as their source of truth. No design work begins until Stage 1 is complete.
+required_controls:
+- id: SC-1A
+  note: Must run first — screens for adversarial inputs before any agent processing
+- id: QC-1A
+- id: QC-1B
+- id: RC-1A
+- id: AC-1A
+  note: Applicable when the change involves an AI component
+- id: GC-1A
+exit_criteria:
+- 'SC-1A: Pre-guardrails passed — no injection patterns detected in incoming request'
+- 'QC-1A: Feature specification approved by Product Owner'
+- 'QC-1B: All blocking conflicts resolved; non-blocking conflicts documented'
+- 'RC-1A: NF-RED risk tier assigned and logged'
+- 'AC-1A: AI Act risk tier confirmed (or not-applicable documented)'
+- 'GC-1A: Intent audit record written to immutable log'
+next_stage: 2
+templates:
+- templates/feature-spec.yaml

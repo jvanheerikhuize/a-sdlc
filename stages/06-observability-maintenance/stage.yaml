@@ -1,0 +1,26 @@
+# =============================================================================
+# Stage 6: Observability & Maintenance
+# Lightweight stage definition — lists required controls by ID.
+# Full control definitions: controls/tracks/[track]/[ID].yaml
+# =============================================================================
+
+number: 6
+name: Observability & Maintenance
+description: Operate, monitor, and maintain the deployed system. Controls in this stage run continuously, not per-change.
+  Escalations from Stage 6 controls may trigger feedback loops back into earlier stages for remediation.
+required_controls:
+- id: QC-6A
+  note: Continuous — runs throughout the operational lifetime
+- id: RC-6A
+  note: Continuous — runs throughout the operational lifetime
+- id: SC-6A
+  note: Continuous — DORA Art. 17–19 reporting obligations
+- id: SC-6B
+  note: Continuous — feeds anomalies into SC-6A incident process
+- id: AC-6A
+  note: Applicable when deployed system includes AI components
+exit_criteria:
+- Not a time-bounded stage — exits only when the system is decommissioned.
+- Escalations from any Stage 6 control may trigger a feedback loop into earlier stages.
+next_stage: null
+templates: []
