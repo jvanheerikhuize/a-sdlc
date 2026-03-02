@@ -1,0 +1,38 @@
+# =============================================================================
+# Decision Log Template
+# =============================================================================
+# Produced during Step 3.2 (continuous) by control RC-3A.
+# Captures all significant implementation decisions, with rationale and
+# alternatives considered. Reviewed by Tech Lead before PR approval.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp decision-log.yaml FEAT-XXXX-decision-log.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 3
+control: RC-3A
+reviewed_by: ""                    # Tech Lead / Lead Architect name
+reviewed_at: ""                    # ISO 8601 datetime
+
+decisions:
+  - id: "DEC-001"
+    timestamp: ""                  # ISO 8601 datetime
+    made_by: ""                    # agent | human | co-authored
+    step: "3.2"
+    decision: ""                   # What was decided
+    rationale: ""                  # Why this option was chosen
+    alternatives_considered: []    # Other options evaluated
+    has_security_implication: null # true | false
+    has_compliance_implication: null  # true | false
+    reviewer_notes: ""             # Tech Lead review comment (populated at Step 3.5)
+
+summary:
+  total_decisions: 0
+  agent_decisions: 0
+  human_decisions: 0
+  decisions_with_security_implications: 0
+  decisions_with_compliance_implications: 0
+  all_reviewed: null               # true | false — must be true before QC-3A approval

@@ -1,0 +1,47 @@
+# =============================================================================
+# Post-Guardrail Scan Template
+# =============================================================================
+# Produced during Step 3.3 by control SC-3B.
+# Scans all agent-generated code for malicious patterns, backdoors, supply
+# chain attacks, and adversarial constructs before PR creation.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp post-guardrail-scan.yaml FEAT-XXXX-post-guardrail-scan.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 3
+control: SC-3B
+scanned_at: ""                     # ISO 8601 datetime
+tooling: ""                        # Name and version of scanning tool
+
+scope:
+  files_scanned: 0
+  lines_scanned: 0
+  agent_generated_files: 0        # Subset of files_scanned attributed to AGT
+
+findings: []
+# Per-finding entries, e.g.:
+# - id: "FINDING-001"
+#   file: ""
+#   line: null
+#   category: ""                   # malicious_pattern | backdoor | supply_chain | adversarial | obfuscation
+#   description: ""
+#   severity: ""                   # critical | high | medium | low
+#   resolved: null                 # true | false
+#   resolved_at: ""
+#   resolution: ""                 # code_removed | false_positive_confirmed
+#   reviewed_by: ""                # SA name (required for all high/critical findings)
+
+summary:
+  total_findings: 0
+  by_severity:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+  unresolved_critical: 0          # Must be 0 before QC-3A (PR creation)
+  unresolved_high: 0
+  status: ""                       # passed | failed

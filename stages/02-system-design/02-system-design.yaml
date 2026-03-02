@@ -21,7 +21,7 @@ exit_criteria:
 - 'QC-2A: Design validated and approved by Lead Architect'
 - 'RC-2A: Design approval granted and logged'
 - 'SC-2A: STRIDE threat model validated and all critical threats mitigated'
-- 'SC-2B: Core Security Directives injected and acknowledged by agent'
+- 'SC-2B: Stage 2 and Stage 3 directive bundles injected and acknowledged by agent'
 - 'AC-2A: AI component design review approved (or not-applicable documented)'
 next_stage: 3
 process: process.md
@@ -35,4 +35,5 @@ artifacts:
     - artifacts/outputs/directive-injection-confirmation.yaml
     - artifacts/outputs/ai-component-design-review.yaml
 directives:
-- directives/core-security-directives.xml
+  - directives/stages/02-system-design.yaml
+  - directives/stages/03-coding-implementation.yaml

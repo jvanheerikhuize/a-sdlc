@@ -32,4 +32,15 @@ exit_criteria:
 - 'GC-3A: Code provenance tags applied to all contributions'
 - 'QC-3A: Pull request approved by required reviewers per risk tier'
 next_stage: 4
-templates: []
+process: process.md
+artifacts:
+  inputs:
+    - ../02-system-design/artifacts/outputs/design-document.yaml
+    - ../02-system-design/artifacts/outputs/directive-injection-confirmation.yaml
+  outputs:
+    - artifacts/outputs/permission-enforcement-log.yaml
+    - artifacts/outputs/quality-gate-report.yaml
+    - artifacts/outputs/decision-log.yaml
+    - artifacts/outputs/post-guardrail-scan.yaml
+    - artifacts/outputs/secrets-scan-report.yaml
+    - artifacts/outputs/pull-request-record.yaml
