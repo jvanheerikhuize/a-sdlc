@@ -71,10 +71,18 @@ framework:
       description: Cannot be delegated. Human must decide. Agent must stop and escalate.
 
 cross_cutting:
-  description: Three governance controls that span all six stages.
-  controls_track: controls/gc/
+  description: Controls and directives active across all six stages for every agent session.
   feedback_loops_file: feedbackloops/feedback-loops.yaml
+  directives:
+    core: directives/core/core-directives.yaml
+    stages: directives/stages/
   controls:
+    - id: SC-0D
+      name: Core Directive Injection
+      track: SC
+    - id: SC-2B
+      name: Stage Directive Injection
+      track: SC
     - id: GC-0A
       name: Audit Trail & Compliance Reporting
       track: GC
@@ -124,11 +132,9 @@ stages:
     directory: stages/02-system-design
     stage_file: stages/02-system-design/02-system-design.yaml
     readme: stages/02-system-design/README.md
-    directives:
-      - stages/02-system-design/directives/core-security-directives.xml
     description: >-
       Validated intent is translated into architecture and technical
-      specifications. Threat modelling and Core Security Directive injection
+      specifications. Threat modelling and stage directive injection
       occur here before any coding begins.
     controls:
       - id: QC-2A

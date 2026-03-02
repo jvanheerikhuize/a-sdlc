@@ -1,0 +1,79 @@
+# =============================================================================
+# Stage 6 Directives — Observability & Maintenance
+# =============================================================================
+# Scope:          Stage 6 only
+# Classification: IMMUTABLE
+# Injected by:    SC-2B (Stage Directive Injection) at Stage 6 entry
+#
+# These directives govern agent behaviour during production monitoring, anomaly
+# detection, and feedback loop activation. They layer on top of
+# core-directives.yaml and are active for the full operational lifetime of the
+# system (Stage 6 does not end).
+#
+# Retention: 7 years (DORA Art. 8(6))
+# =============================================================================
+
+meta:
+  id: stage-06-observability-maintenance
+  scope: stage
+  stage: "06-observability-maintenance"
+  classification: immutable
+  precedence: absolute
+  version: "1.0"
+  owner: Security Architect
+  review_cycle: annually
+  last_reviewed: "2026-03-02"
+  next_review: ""
+
+injection:
+  trigger: stage_entry
+  stage_number: 6
+  acknowledgement_required: true
+  notes: >-
+    Inject at the start of any Stage 6 monitoring or maintenance session,
+    after core directives have been acknowledged. Stage 6 is continuous —
+    these directives apply for the operational lifetime of the system and are
+    re-injected on each new monitoring session.
+
+enforcement:
+  overridable: false
+  on_override_attempt:
+    action: refuse_and_log
+    response_template: >-
+      This request conflicts with stage directive {id}: {description}.
+      I cannot proceed. If you believe this is an error, escalate to the
+      Security Architect referencing directive {id}.
+    audit_log:
+      event: directive_violation_attempt
+      required_fields:
+        - timestamp
+        - directive_id
+        - request_summary
+        - action_taken
+
+categories:
+
+  - id: OBS
+    name: Observability Integrity
+    directives:
+
+      - id: OBS-01
+        text: >-
+          Never suppress, disable, modify, silence, or reduce the sensitivity
+          of production alerts, monitors, or health checks. Any change to
+          monitoring configuration must follow the full A-SDLC change process
+          from Stage 1.
+
+      - id: OBS-02
+        text: >-
+          Anomalies, degradations, security events, or incidents detected in
+          production must be surfaced immediately through the defined feedback
+          loop channels. Never delay, minimise, or withhold production signals
+          regardless of severity.
+
+      - id: OBS-03
+        text: >-
+          Feedback loop triggers (Path A — autofix, Path B — quickfix or
+          feature) must be accurately recorded and attributed. Never generate
+          false-positive or false-negative feedback loop activations, and never
+          suppress a trigger that meets the defined threshold criteria.

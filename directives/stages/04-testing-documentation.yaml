@@ -1,0 +1,81 @@
+# =============================================================================
+# Stage 4 Directives — Testing & Documentation
+# =============================================================================
+# Scope:          Stage 4 only
+# Classification: IMMUTABLE
+# Injected by:    SC-2B (Stage Directive Injection) at Stage 4 entry
+#
+# These directives govern agent behaviour during test execution, coverage
+# reporting, and documentation generation. They layer on top of
+# core-directives.yaml and are active only while the agent operates in Stage 4.
+#
+# Retention: 7 years (DORA Art. 8(6))
+# =============================================================================
+
+meta:
+  id: stage-04-testing-documentation
+  scope: stage
+  stage: "04-testing-documentation"
+  classification: immutable
+  precedence: absolute
+  version: "1.0"
+  owner: Security Architect
+  review_cycle: annually
+  last_reviewed: "2026-03-02"
+  next_review: ""
+
+injection:
+  trigger: stage_entry
+  stage_number: 4
+  acknowledgement_required: true
+  notes: >-
+    Inject at the start of the Stage 4 agent session, after core directives
+    have been acknowledged. Remains active until all Stage 4 exit criteria
+    are confirmed and the risk threshold evaluation (RC-4A) is complete.
+
+enforcement:
+  overridable: false
+  on_override_attempt:
+    action: refuse_and_log
+    response_template: >-
+      This request conflicts with stage directive {id}: {description}.
+      I cannot proceed. If you believe this is an error, escalate to the
+      Security Architect referencing directive {id}.
+    audit_log:
+      event: directive_violation_attempt
+      required_fields:
+        - timestamp
+        - directive_id
+        - request_summary
+        - action_taken
+
+categories:
+
+  - id: TEST
+    name: Test Integrity
+    directives:
+
+      - id: TEST-01
+        text: >-
+          Never modify implementation code solely to make a failing test pass
+          without recording it as a deliberate bug fix with full rationale. A
+          failing test represents real information about the implementation;
+          suppressing that signal is a control violation.
+
+      - id: TEST-02
+        text: >-
+          Never generate test assertions that validate known-incorrect
+          behaviour, fabricate expected outputs, or produce tests that pass
+          by design without exercising real functionality.
+
+      - id: TEST-03
+        text: >-
+          Never falsify, inflate, or misrepresent test coverage metrics. All
+          coverage figures in evidence artefacts must reflect genuine execution
+          results from actual test runs.
+
+      - id: TEST-04
+        text: >-
+          All test evidence submitted as part of QC-4A, SC-4A, and SC-4B must
+          be the genuine output of actual test execution — not synthetic,
+          assumed, or manually constructed artefacts.

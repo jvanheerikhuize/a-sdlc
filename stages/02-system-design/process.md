@@ -153,18 +153,18 @@ flowchart LR
 
 ---
 
-## Step 2.6 — Directive Injection
+## Step 2.6 — Stage Directive Injection
 
 **Control:** [SC-2B](../../controls/sc/SC-2B.yaml) · **Delegation:** Fully automated · **Runs after:** Step 2.5 (approval)
 
 | Actor | Action |
 | ----- | ------ |
-| AGT | Receive signed Core Security Directives payload; load into agent context |
-| AGT | Acknowledge receipt with cryptographic confirmation |
+| AGT | Receive signed Stage 2 and Stage 3 directive payloads; load into agent context |
+| AGT | Acknowledge receipt of both payloads with confirmation |
 
 | | |
 | --- | --- |
-| **Input** | [directives/core-security-directives.xml](directives/core-security-directives.xml) (signed payload) |
+| **Inputs** | [directives/stages/02-system-design.yaml](../../../directives/stages/02-system-design.yaml) · [directives/stages/03-coding-implementation.yaml](../../../directives/stages/03-coding-implementation.yaml) |
 | **Output** | Directive injection confirmation (`artifacts/outputs/directive-injection-confirmation.yaml`) |
 | **On failure** | Stage 2 completion is blocked; Stage 3 cannot begin until injection is confirmed |
 

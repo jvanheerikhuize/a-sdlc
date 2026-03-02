@@ -2,7 +2,7 @@
 
 Validated intent is translated into architecture, system design, and technical specifications. Agents may assist in generating design proposals, but **human architects retain final approval authority**.
 
-Threat modelling, design completeness validation, and the injection of Core Security Directives into agent contexts all occur at this stage. No agent may begin coding (Stage 3) without first receiving the signed SC-2B directive payload.
+Threat modelling, design completeness validation, and stage directive injection all occur at this stage. No agent may begin coding (Stage 3) without first receiving the signed SC-2B directive payloads for Stage 2 and Stage 3.
 
 ## Steps
 
@@ -15,7 +15,7 @@ Full step-by-step process with roles and decision points: [process.md](process.m
 | [2.3](process.md#step-23--stride-threat-modelling) | STRIDE Threat Modelling | Agent generates, SA validates | Parallel with 2.2 and 2.4 |
 | [2.4](process.md#step-24--ai-component-design-review-conditional) | AI Component Design Review *(conditional)* | Agent assists, AGL approves | Parallel with 2.2 and 2.3 |
 | [2.5](process.md#step-25--design-approval) | Design Approval | Human required | After 2.2, 2.3, and 2.4 |
-| [2.6](process.md#step-26--directive-injection) | Directive Injection | Fully automated | After 2.5 |
+| [2.6](process.md#step-26--stage-directive-injection) | Stage Directive Injection | Fully automated | After 2.5 |
 
 ## Controls
 
@@ -27,7 +27,7 @@ Stage definition (required controls + exit criteria): [02-system-design.yaml](02
 | [SC-2A](../../controls/sc/SC-2A.yaml) | Threat Model Validation | STRIDE-based analysis verifying design does not introduce insecure patterns. | Agent generates, SA validates | DORA: Art. 8(3); DNB: Threat analysis; AI Act: Art. 15(3) |
 | [AC-2A](../../controls/ac/AC-2A.yaml) | AI Component Design Review | For AI systems: validates model selection, data pipelines, explainability, and human oversight mechanisms. | Agent assists, AGL approves | AI Act: Art. 11, Annex IV; Art. 13; Art. 14 |
 | [RC-2A](../../controls/rc/RC-2A.yaml) | Design Approval | Consolidated governance gate: design approval with functional risk classification. Sign-off authority determined by risk tier. | Human required | DORA: Art. 8(1); DNB: Approval authority; AI Act: Art. 9 |
-| [SC-2B](../../controls/sc/SC-2B.yaml) | Directive Injection | Injects signed, immutable Core Security Directives into the agent before coding. Cannot be overridden by any instruction. | Fully automated (signed) | DORA: Art. 9(4)(c); DNB: Logical access management; AI Act: Art. 14(1) |
+| [SC-2B](../../controls/sc/SC-2B.yaml) | Stage Directive Injection | Injects signed, immutable stage directive bundles (Stage 2 + Stage 3) into the agent before coding. Cannot be overridden by any instruction. | Fully automated (signed) | DORA: Art. 9(4)(c); DNB: Logical access management; AI Act: Art. 14(1) |
 
 ## Stage Exit Criteria
 
@@ -37,12 +37,12 @@ All of the following must be true before progressing to Stage 3:
 - [ ] SC-2A passed: STRIDE threat model reviewed and all critical threats mitigated
 - [ ] AC-2A passed (if AI component): model selection, data governance, and explainability documented and approved
 - [ ] RC-2A passed: design approved by appropriate authority per risk classification
-- [ ] SC-2B executed: Core Security Directives signed and injected into agent context
+- [ ] SC-2B executed: Stage 2 and Stage 3 directive bundles signed and injected into agent context
 
 ## Artifacts
 
 - **Process:** [process.md](process.md) — Step-by-step guide with roles, dependencies, and decision points
-- **Directives:** [directives/core-security-directives.xml](directives/core-security-directives.xml) — SC-2B injection payload (immutable)
+- **Directives:** [../../directives/stages/02-system-design.yaml](../../directives/stages/02-system-design.yaml) · [../../directives/stages/03-coding-implementation.yaml](../../directives/stages/03-coding-implementation.yaml) — SC-2B injection payloads (immutable)
 
 **Input (from Stage 1):**
 

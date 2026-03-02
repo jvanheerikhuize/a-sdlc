@@ -16,11 +16,15 @@ stage: 2
 control: SC-2B
 immutable: true
 
-directive_payload:
-  file: "stages/02-system-design/directives/core-security-directives.xml"
-  sha256: ""                       # SHA-256 hash of the injected payload at time of injection
-  signed_by: ""                    # Security Architect who signed the payload
-  signed_at: ""                    # ISO 8601 datetime of signing
+directive_payloads:
+  - file: "directives/stages/02-system-design.yaml"
+    sha256: ""                     # SHA-256 hash of the injected payload at time of injection
+    signed_by: ""                  # Security Architect who signed the payload
+    signed_at: ""                  # ISO 8601 datetime of signing
+  - file: "directives/stages/03-coding-implementation.yaml"
+    sha256: ""
+    signed_by: ""
+    signed_at: ""
 
 injection:
   agent_id: ""                     # Identifier of the agent that received the injection

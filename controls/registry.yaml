@@ -1,12 +1,12 @@
 # =============================================================================
 # A-SDLC Control Registry
 # =============================================================================
-# Flat index of all 38 controls across the Agentic SDLC framework.
+# Flat index of all 39 controls across the Agentic SDLC framework.
 # Use this file for fast lookup by control ID without reading individual
 # track files. Full control definitions are in controls/[track]/[ID].yaml.
 #
-# Total controls: 38
-# QC: 10 | RC: 7 | SC: 12 | AC: 4 | GC: 5
+# Total controls: 39
+# QC: 10 | RC: 7 | SC: 13 | AC: 4 | GC: 5
 # =============================================================================
 
 registry:
@@ -14,6 +14,16 @@ registry:
   # ---------------------------------------------------------------------------
   # Cross-Cutting (Stage 0) — Always active across all stages
   # ---------------------------------------------------------------------------
+
+  - id: SC-0D
+    name: Core Directive Injection
+    stage: 0
+    stage_name: Cross-Cutting
+    track: SC
+    delegation: automated_policy_enforced
+    file: controls/sc/SC-0D.yaml
+    directive_payload: directives/core/core-directives.yaml
+    owner_team: Security
 
   - id: GC-0A
     name: Audit Trail & Compliance Reporting
@@ -132,13 +142,19 @@ registry:
     owner_team: Security
 
   - id: SC-2B
-    name: Directive Injection
-    stage: 2
-    stage_name: System Design
+    name: Stage Directive Injection
+    stage: 0
+    stage_name: Cross-Cutting
     track: SC
     delegation: automated_policy_enforced
     file: controls/sc/SC-2B.yaml
-    directive_payload: stages/02-system-design/directives/core-security-directives.xml
+    directive_payloads:
+      - directives/stages/01-intent-ingestion.yaml
+      - directives/stages/02-system-design.yaml
+      - directives/stages/03-coding-implementation.yaml
+      - directives/stages/04-testing-documentation.yaml
+      - directives/stages/05-deployment-release.yaml
+      - directives/stages/06-observability-maintenance.yaml
     owner_team: Security
 
   - id: AC-2A
