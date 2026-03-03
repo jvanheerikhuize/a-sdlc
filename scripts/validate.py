@@ -47,6 +47,7 @@ STAGES_DIR    = REPO / "stages"
 DIRECTIVES_DIR = REPO / "directives"
 REGISTRY_FILE  = CONTROLS_DIR / "registry.yaml"
 FEEDBACK_FILE  = REPO / "feedbackloops" / "feedback-loops.yaml"
+FEEDBACK_DIR   = REPO / "feedbackloops"
 
 CONTROL_ID_RE = re.compile(r"^(QC|RC|SC|AC|GC)-[0-6][A-Z]$")
 
@@ -341,13 +342,53 @@ def check_control_dependencies(checker, registry_ids):
 # ── section 6: feedback loops ─────────────────────────────────────────────────
 
 def check_feedback_loops(checker, registry_ids):
-    checker.section("6/7  Feedback loops — control reference validation")
+    checker.section("6/7  Feedback loops — structure + control reference validation")
 
     if not FEEDBACK_FILE.exists():
         checker.fail(f"Feedback loops file not found: {rel(FEEDBACK_FILE)}")
         return
 
+    # Structural files
+    for required_file in ("process.md", "README.md"):
+        p = FEEDBACK_DIR / required_file
+        if p.exists():
+            checker.ok(f"feedbackloops/{required_file} present")
+        else:
+            checker.fail(f"feedbackloops/{required_file} missing")
+
+    # Artifact outputs directory
+    artifacts_out = FEEDBACK_DIR / "artifacts" / "outputs"
+    if artifacts_out.exists():
+        n = len(list(artifacts_out.glob("*.yaml")))
+        checker.ok(f"feedbackloops/artifacts/outputs/ present ({n} templates)")
+    else:
+        checker.fail("feedbackloops/artifacts/outputs/ directory missing")
+
+    # Autofix templates directory (may be empty at start — warn only)
+    autofix_dir = FEEDBACK_DIR / "autofix-templates"
+    if autofix_dir.exists():
+        n = len(list(autofix_dir.glob("*.yaml")))
+        checker.ok(f"feedbackloops/autofix-templates/ present ({n} template(s))")
+    else:
+        checker.warn("feedbackloops/autofix-templates/ directory not yet created")
+
+    # Validate paths declared in feedback-loops.yaml header
     data = load_yaml(FEEDBACK_FILE)
+    process_ref = data.get("process")
+    if process_ref:
+        p = FEEDBACK_DIR / process_ref
+        if p.exists():
+            checker.ok(f"feedback-loops.yaml: process ref resolves — {process_ref}")
+        else:
+            checker.fail(f"feedback-loops.yaml: process ref not found — {process_ref}")
+
+    for art_path in (data.get("artifacts") or {}).get("outputs", []):
+        p = FEEDBACK_DIR / art_path
+        if p.exists():
+            checker.ok(f"feedback-loops.yaml: artifact ref resolves — {art_path}")
+        else:
+            checker.warn(f"feedback-loops.yaml: artifact ref not found — {art_path}")
+
     loops = data.get("feedback_loops", [])
 
     def extract_control_ids(value):

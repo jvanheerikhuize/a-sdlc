@@ -1,0 +1,80 @@
+# =============================================================================
+# Feedback Loop Activation Record Template
+# =============================================================================
+# Produced during Step FL.5 when any feedback loop path is activated.
+# Records the full lifecycle of a feedback loop event: trigger, path
+# classification, approvals, re-entry, and outcome. IMMUTABLE after CO review.
+#
+# One record per feedback loop activation. Not per-feature — per activation event.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp feedback-loop-activation-record.yaml FLOOP-NNNN-activation-record.yaml
+# =============================================================================
+
+activation_id: ""                  # FLOOP-NNNN (sequential, unique per activation)
+immutable: true
+
+# --- Trigger ---
+trigger:
+  detected_at: ""                  # ISO 8601 datetime
+  originating_control: ""          # Control ID (QC-6A | RC-6A | SC-6A | SC-6B | AC-6A)
+  source_record: ""                # Path to the Stage 6 artifact that triggered this loop
+  alert_id: ""                     # Alert or incident ID from the source record
+  description: ""                  # Brief description of the triggering issue
+
+# --- Path FL.1: Classification ---
+path_classification:
+  path: ""                         # path_a | path_b_quickfix | path_b_feature
+  classified_by: ""                # RO full name
+  classified_by_role: ""           # Risk Officer
+  classified_at: ""                # ISO 8601 datetime
+  rationale: ""                    # Why this path was selected
+
+  # Path A eligibility (populated when path is path_a)
+  path_a_eligibility:
+    template_matched: ""           # ID of the matched pre-approved autofix template
+    template_match_confirmed_by: "" # Agent identifier
+    risk_classification: ""        # low (required for Path A)
+    no_architectural_changes: null # true (required for Path A)
+    root_cause_confirmed_by: ""    # SA name (required for security-triggered issues)
+
+  # Path B classification (populated when path is path_b_quickfix or path_b_feature)
+  path_b_classification:
+    type: ""                       # quickfix | feature
+    classified_by: ""              # RO full name
+    classified_at: ""              # ISO 8601 datetime
+    rationale: ""
+
+# --- Re-entry ---
+re_entry:
+  stage: null                      # 1 (Feature) | 3 (Path A or Quickfix)
+  stage_name: ""                   # Intent Ingestion | Coding & Implementation
+  tracking_id: ""                  # FEAT-XXXX (Feature) or hotfix tracking ID (Quickfix/Path A)
+  initiated_by: ""                 # OPS full name
+  initiated_at: ""                 # ISO 8601 datetime
+
+# --- Outcome ---
+outcome:
+  status: ""                       # in_progress | completed | escalated_to_feature | abandoned
+  completed_at: ""                 # ISO 8601 datetime (when re-entry change was deployed or resolved)
+  deployed_change_id: ""           # FEAT-XXXX or hotfix ID of the resulting deployed change
+  deviation_from_path_a: null      # true | false — was a Path A upgraded to Path B during execution?
+  deviation_detail: ""             # Populated if deviation_from_path_a is true
+
+  # For Path A: minimum controls executed
+  path_a_controls_executed: []
+  # e.g.:
+  # - control_id: QC-3A
+  #   passed: true
+  #   artifact: ""
+
+# --- Compliance review ---
+compliance_review:
+  reviewed_by: ""                  # CO full name
+  reviewed_at: ""                  # ISO 8601 datetime
+  dora_art8_documented: null       # true | false
+  dora_art19_impact: null          # true | false (for SC-6A-triggered loops)
+  dora_art19_notes: ""
+  notes: ""

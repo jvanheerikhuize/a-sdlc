@@ -1,0 +1,88 @@
+# =============================================================================
+# Pre-Approved Autofix Template
+# =============================================================================
+# Defines a single pre-approved autofix pattern for use in Path A feedback
+# loop activations. An issue must match the template EXACTLY to be eligible
+# for Path A. Partial matches are not permitted.
+#
+# Templates must be approved by the Risk Officer and Security Architect before
+# use. Each template is immutable after approval.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp autofix-template.yaml AFX-NNN-<description>.yaml
+#   Store in: feedbackloops/autofix-templates/
+# =============================================================================
+
+template_id: ""                    # AFX-NNN (e.g. AFX-001)
+name: ""                           # Short descriptive name (e.g. "Dependency patch — critical CVE")
+immutable: true
+
+# --- Scope ---
+scope:
+  applicable_components: []        # Components this template may be applied to (e.g. ["api-gateway", "auth-service"])
+  applicable_cve_severity: ""      # For dependency patches: critical | high | medium | low
+  applicable_trigger_controls:     # Which Stage 6 controls may trigger this template
+    - ""                           # e.g. RC-6A | SC-6A | SC-6B | QC-6A
+  applicable_issue_types: []       # Free-text descriptors (e.g. ["dependency-version-bump", "config-value-correction"])
+
+# --- Eligibility constraints ---
+# All conditions must be true for an issue to match this template.
+eligibility_constraints:
+  max_files_changed: null          # Maximum number of files the fix may touch
+  max_lines_changed: null          # Maximum lines of code changed
+  no_logic_changes: null           # true = only dependency/config changes; no business logic changes
+  no_api_changes: null             # true = no API contract changes
+  no_schema_changes: null          # true = no database schema changes
+  no_new_dependencies: null        # true = no new third-party libraries introduced
+  additional_constraints: []       # Free-text list of any other required conditions
+
+# --- Required actions ---
+# Exact sequence of actions the agent must take. No deviations permitted.
+required_actions:
+  - step: 1
+    action: ""                     # e.g. "Update dependency version in package manifest"
+    actor: AGT
+    constraints: ""                # e.g. "Version must match the patched version from the CVE advisory"
+  - step: 2
+    action: ""
+    actor: AGT
+    constraints: ""
+  # Add steps as needed. The agent must follow these exactly and in order.
+
+# --- Minimum controls ---
+# Must not exceed or modify the Path A minimum control set defined in feedback-loops.yaml.
+minimum_controls:
+  - QC-3A
+  - QC-3B
+  - SC-3B
+  - SC-3C
+  - GC-3A
+  - QC-4A
+  - SC-4A
+  - RC-4A
+  - SC-5B
+
+# --- Deviation protocol ---
+deviation_protocol: >-
+  If any required action cannot be completed exactly as defined, or if any
+  eligibility constraint is violated during execution, the agent must
+  immediately stop, escalate to OPS, and upgrade to Path B. No partial
+  completion of this template is permitted.
+
+# --- Approval ---
+approval:
+  approved_by_ro: ""               # Risk Officer full name
+  approved_by_ro_at: ""            # ISO 8601 datetime
+  approved_by_sa: ""               # Security Architect full name
+  approved_by_sa_at: ""            # ISO 8601 datetime
+  review_date: ""                  # Date by which this template must be reviewed/revalidated
+
+# --- Metadata ---
+metadata:
+  version: ""
+  created_at: ""                   # ISO 8601 date
+  last_updated: ""                 # ISO 8601 date
+  status: ""                       # draft | review | approved | deprecated
+  usage_count: 0                   # Updated each time this template is successfully executed

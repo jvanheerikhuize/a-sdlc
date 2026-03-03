@@ -5,12 +5,23 @@
 # (Observability & Maintenance) flow back into the lifecycle.
 # Each path specifies the minimum controls that must be re-executed.
 #
+# Process (roles, steps, decision points): process.md
+# Artifacts: artifacts/outputs/
+#
 # Regulatory basis:
 #   DORA Art. 8(1)  — ICT risk management framework must cover ALL changes.
 #                     No exception for urgency.
 #   DORA Art. 8(5)  — Even expedited changes must follow documented procedures.
 #   DORA Art. 17(3) — Incident response and recovery requirements.
 # =============================================================================
+
+process: process.md
+
+artifacts:
+  outputs:
+    - artifacts/outputs/feedback-loop-activation-record.yaml
+
+autofix_templates_dir: feedbackloops/autofix-templates/
 
 feedback_loops:
 
@@ -25,6 +36,7 @@ feedback_loops:
       - Issue must match a pre-approved autofix template exactly.
       - Risk classification must be low.
       - No new architectural changes are introduced.
+      - Root cause must be confirmed (SA sign-off for security-triggered issues).
       - If any condition is not met, the path MUST be upgraded to Path B.
     description: >-
       For low-risk, pre-approved patterns only. Re-enters directly at Stage 3
@@ -74,20 +86,25 @@ feedback_loops:
     re_entry_stage: 3
     re_entry_stage_name: Coding & Implementation
     description: >-
-      Re-enters Stage 3 with the full Stage 3 and Stage 4 control sets, plus
-      RC-5A (CAB Approval) which is mandatory for all quickfix deployments.
+      Re-enters Stage 3 with the full Stage 3, Stage 4, and Stage 5 control
+      sets. RC-5A (CAB Approval) is mandatory for all Quickfix deployments
+      regardless of the original issue's risk tier.
     minimum_controls:
-      full_stage_controls:
-        - stage: 3
-          note: All Stage 3 controls must be executed (QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A).
-        - stage: 4
-          note: All Stage 4 controls must be executed (QC-4A, QC-4B if AI, QC-4C, RC-4A, SC-4A, SC-4B, AC-4A if AI).
-        - stage: 5
-          note: All Stage 5 controls must be executed.
-      additional:
+      scope: all_stage_controls
+      stages:
+        - number: 3
+          controls: [QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A]
+        - number: 4
+          controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
+          note: QC-4B and AC-4A applicable only if AI components are involved.
+        - number: 5
+          controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B]
+      additional_controls:
         - id: RC-5A
           name: CAB Approval
-          rationale: Formal change approval is mandatory for all quickfix deployments regardless of risk level.
+          rationale: >-
+            Formal change approval is mandatory for all Quickfix deployments
+            regardless of risk level. Cannot be waived.
     regulatory_mapping:
       dora:
         - article: "Art. 8(1)"
@@ -104,7 +121,22 @@ feedback_loops:
       Re-enters at Stage 1 for complete processing through all six stages.
       No controls are skipped. The change is treated as a new feature request.
     minimum_controls:
-      - note: All controls across all six stages (Stages 1–6) must be executed in sequence.
+      scope: full_lifecycle
+      stages:
+        - number: 1
+          controls: [SC-1A, QC-1A, QC-1B, RC-1A, AC-1A, GC-1A]
+        - number: 2
+          controls: [SC-2B, QC-2A, RC-2A, SC-2A, AC-2A]
+        - number: 3
+          controls: [SC-3A, QC-3B, RC-3A, SC-3B, SC-3C, QC-3A, GC-3A]
+        - number: 4
+          controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
+          note: QC-4B and AC-4A applicable only if AI components are involved.
+        - number: 5
+          controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B]
+        - number: 6
+          controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
+          note: Stage 6 monitoring must be re-activated after the new feature is deployed.
     regulatory_mapping:
       dora:
         - article: "Art. 8(1)"

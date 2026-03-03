@@ -72,7 +72,12 @@ framework:
 
 cross_cutting:
   description: Controls and directives active across all six stages for every agent session.
-  feedback_loops_file: feedbackloops/feedback-loops.yaml
+  feedback_loops:
+    definition: feedbackloops/feedback-loops.yaml
+    process: feedbackloops/process.md
+    readme: feedbackloops/README.md
+    artifacts_dir: feedbackloops/artifacts/
+    autofix_templates_dir: feedbackloops/autofix-templates/
   directives:
     core: directives/core/core-directives.yaml
     stages: directives/stages/
