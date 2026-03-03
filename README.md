@@ -70,7 +70,7 @@ Five control tracks run through the entire lifecycle:
 
 | Stage | QC | RC | SC | AC | GC |
 | ----- | -- | -- | -- | -- | -- |
-| Cross-cutting | — | — | — | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml) |
+| Cross-cutting | — | — | [SC-0D](controls/sc/SC-0D.yaml) | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml) |
 | [1 Intent Ingestion](stages/01-intent-ingestion/README.md) | [QC-1A](controls/qc/QC-1A.yaml), [QC-1B](controls/qc/QC-1B.yaml) | [RC-1A](controls/rc/RC-1A.yaml) | [SC-1A](controls/sc/SC-1A.yaml) | [AC-1A](controls/ac/AC-1A.yaml) | [GC-1A](controls/gc/GC-1A.yaml) |
 | [2 System Design](stages/02-system-design/README.md) | [QC-2A](controls/qc/QC-2A.yaml) | [RC-2A](controls/rc/RC-2A.yaml) | [SC-2A](controls/sc/SC-2A.yaml), [SC-2B](controls/sc/SC-2B.yaml) | [AC-2A](controls/ac/AC-2A.yaml) | — |
 | [3 Coding & Impl](stages/03-coding-implementation/README.md) | [QC-3A](controls/qc/QC-3A.yaml), [QC-3B](controls/qc/QC-3B.yaml) | [RC-3A](controls/rc/RC-3A.yaml) | [SC-3A](controls/sc/SC-3A.yaml), [SC-3B](controls/sc/SC-3B.yaml), [SC-3C](controls/sc/SC-3C.yaml) | — | [GC-3A](controls/gc/GC-3A.yaml) |
@@ -78,7 +78,7 @@ Five control tracks run through the entire lifecycle:
 | [5 Deployment](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml) | — | — |
 | [6 Observability](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
 
-**Total: 38 controls** (including 3 cross-cutting). Full index in [controls/registry.yaml](controls/registry.yaml).
+**Total: 39 controls** (including 4 cross-cutting: SC-0D, GC-0A, GC-0B, GC-0C; SC-2B is cross-cutting but executed at Stage 2). Full index in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 
@@ -105,10 +105,10 @@ a-sdlc/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json      ← JSON Schema for feature specifications
 ├── controls/
-│   ├── registry.yaml                 ← Flat index of all 38 controls (fast lookup by ID)
+│   ├── registry.yaml                 ← Flat index of all 39 controls (fast lookup by ID)
 │   ├── qc/                           ← Quality Control definitions (QC-1A … QC-6A)
 │   ├── rc/                           ← Risk Control definitions (RC-1A … RC-6A)
-│   ├── sc/                           ← Security Control definitions (SC-1A … SC-6B)
+│   ├── sc/                           ← Security Control definitions (SC-0D, SC-1A … SC-6B)
 │   ├── ac/                           ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
 │   └── gc/                           ← Governance Control definitions (GC-0A … GC-3A)
 ├── stages/
