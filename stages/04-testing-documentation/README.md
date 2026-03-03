@@ -44,6 +44,15 @@ All of the following must be true before progressing to Stage 5:
 - [ ] QC-4C passed: all documentation complete and current
 - [ ] RC-4A completed: go/no-go decision is pass or approved conditional pass
 
+If RC-4A produces a **fail** outcome, a feedback loop is triggered:
+
+| Condition | Path | Re-Entry |
+| --------- | ---- | -------- |
+| Easy, obvious, low-risk fix — root cause unambiguous, no architectural changes, code-only | Path A — Quick Fix | Stage 3 (minimum controls) |
+| Any other condition — complex root cause, architectural impact, or unclear scope | Path B — Full Re-entry | Stage 1 |
+
+See [feedbackloops/README.md](../../feedbackloops/README.md) for eligibility criteria and minimum control sets.
+
 ## Artifacts
 
 - **Process:** [process.md](process.md) — Step-by-step guide with roles, dependencies, and decision points

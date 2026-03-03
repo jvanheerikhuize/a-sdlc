@@ -2,7 +2,7 @@
 
 The **only stage that never ends.** Provides continuous monitoring of operational health, security posture, risk evolution, and AI behaviour from the moment Stage 5 hands over to production.
 
-Stage 6 feeds back into the lifecycle through two defined re-entry paths when issues requiring code changes are detected. See [feedbackloops/feedback-loops.yaml](../../feedbackloops/feedback-loops.yaml).
+Stage 6 feeds back into the lifecycle through two defined re-entry paths when issues requiring code changes are detected. See [feedbackloops/README.md](../../feedbackloops/README.md).
 
 ## Steps
 
@@ -37,9 +37,10 @@ Escalations from any Stage 6 control may trigger a feedback loop into earlier st
 
 | Condition | Path | Re-Entry |
 | --------- | ---- | -------- |
-| Low-risk issue matching pre-approved template | Path A — Autofix | Stage 3 |
-| Bug requiring targeted code fix | Path B — Quickfix | Stage 3 |
-| Issue requiring new functionality or architectural change | Path B — Feature | Stage 1 |
+| Easy, obvious, low-risk issue matching pre-approved template — root cause confirmed | Path A — Quick Fix | Stage 3 (minimum controls) |
+| Any other condition — complex, architectural, or unclear root cause | Path B — Full Re-entry | Stage 1 |
+
+See [feedbackloops/README.md](../../feedbackloops/README.md) for eligibility criteria and minimum control sets.
 
 ## DORA Incident Reporting Timelines
 

@@ -37,8 +37,10 @@ flowchart LR
     S6["6 · Observability &\nMaintenance"]
 
     S1 --> S2 --> S3 --> S4 --> S5 --> S6
-    S6 -- "Path A / Path B Quickfix" --> S3
-    S6 -- "Path B Feature" --> S1
+    S4 -- "Path A (quick fix)" --> S3
+    S4 -- "Path B (complex)" --> S1
+    S6 -- "Path A (quick fix)" --> S3
+    S6 -- "Path B (complex)" --> S1
 ```
 
 | Stage | Name | Purpose |
@@ -50,7 +52,7 @@ flowchart LR
 | [Stage 5](stages/05-deployment-release/README.md) | Deployment & Release | Promote to production with maximum governance controls |
 | [Stage 6](stages/06-observability-maintenance/README.md) | Observability & Maintenance | Continuous monitoring; the only stage that never ends |
 
-When Stage 6 detects an issue requiring a code change, work re-enters via the [Feedback Loops](feedbackloops/README.md) (Path A autofix or Path B quickfix/feature).
+When Stage 4 or Stage 6 detects an issue requiring a code change, work re-enters via the [Feedback Loops](feedbackloops/README.md): **Path A** (easy/obvious/low-risk → Stage 3) or **Path B** (otherwise → Stage 1).
 
 ---
 

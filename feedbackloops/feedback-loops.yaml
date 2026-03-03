@@ -1,8 +1,9 @@
 # =============================================================================
 # Feedback Loops
 # =============================================================================
-# Defines the re-entry paths by which issues detected in Stage 6
-# (Observability & Maintenance) flow back into the lifecycle.
+# Defines the re-entry paths by which issues detected in Stage 4
+# (Testing & Documentation) or Stage 6 (Observability & Maintenance)
+# flow back into the lifecycle.
 # Each path specifies the minimum controls that must be re-executed.
 #
 # Process (roles, steps, decision points): process.md
@@ -26,29 +27,43 @@ autofix_templates_dir: feedbackloops/autofix-templates/
 feedback_loops:
 
   - id: path_a
-    name: Path A — Incident → Autofix
-    trigger: >-
-      An incident is detected in Stage 6 that matches a pre-approved,
-      low-risk autofix template exactly.
+    name: Path A — Quick Fix → Stage 3
+    trigger_sources:
+      - stage: 6
+        name: Observability & Maintenance
+        source_controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
+        description: Alert or incident detected during continuous Stage 6 monitoring.
+        eligibility:
+          - Issue matches a pre-approved autofix template exactly (no partial matches).
+          - Risk classification is low.
+          - No new architectural changes are required.
+          - Root cause is confirmed (SA sign-off required for SC-6A and SC-6B triggers).
+      - stage: 4
+        name: Testing & Documentation
+        source_controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
+        description: >-
+          Test failure, SAST/DAST finding, AI validation failure, or documentation
+          gap detected during Stage 4.
+        eligibility:
+          - Root cause is unambiguous from the failing control output.
+          - Risk classification is low.
+          - No new architectural changes are required.
+          - Fix is isolated to code only — no schema, API, or contract changes.
     re_entry_stage: 3
     re_entry_stage_name: Coding & Implementation
-    eligibility:
-      - Issue must match a pre-approved autofix template exactly.
-      - Risk classification must be low.
-      - No new architectural changes are introduced.
-      - Root cause must be confirmed (SA sign-off for security-triggered issues).
-      - If any condition is not met, the path MUST be upgraded to Path B.
     description: >-
-      For low-risk, pre-approved patterns only. Re-enters directly at Stage 3
-      without requiring Stages 1 or 2. If the issue does not match its template
-      exactly, it must be escalated to Path B — no exceptions.
+      For easy, obvious, low-risk issues with a clear root cause. Re-enters
+      directly at Stage 3. If any eligibility condition is not met, Path B is
+      mandatory — no exceptions. When triggered from Stage 4, the specific
+      Stage 4 control(s) that raised the issue must be re-executed in addition
+      to the minimum control set below.
     minimum_controls:
       - id: QC-3A
         name: Pull Request Creation & Review
         rationale: All code changes must be reviewed before merge.
       - id: QC-3B
         name: Code Quality Standards
-        rationale: Automated quality checks apply to autofix output.
+        rationale: Automated quality checks apply to all fixes.
       - id: SC-3B
         name: Post-Guardrails
         rationale: Agent-generated fix must be scanned for malicious patterns.
@@ -57,7 +72,7 @@ feedback_loops:
         rationale: Fix must not introduce exposed credentials.
       - id: GC-3A
         name: Code Provenance Tracking
-        rationale: Autofix output must be attributed to the agent that produced it.
+        rationale: Fix output must be attributed to the agent or developer that produced it.
       - id: QC-4A
         name: Functional & Non-Functional Testing
         rationale: Fix must be tested before deployment.
@@ -77,47 +92,18 @@ feedback_loops:
         - article: "Art. 17(3)"
           obligation: Incident response and recovery must follow defined procedures.
 
-  - id: path_b_quickfix
-    name: Path B — Bug/Change → Quickfix
-    trigger: >-
-      A bug or change is identified that requires a targeted code fix but does
-      not introduce new features or architectural changes. Also the mandatory
-      upgrade path from Path A when the issue does not match its template.
-    re_entry_stage: 3
-    re_entry_stage_name: Coding & Implementation
-    description: >-
-      Re-enters Stage 3 with the full Stage 3, Stage 4, and Stage 5 control
-      sets. RC-5A (CAB Approval) is mandatory for all Quickfix deployments
-      regardless of the original issue's risk tier.
-    minimum_controls:
-      scope: all_stage_controls
-      stages:
-        - number: 3
-          controls: [QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A]
-        - number: 4
-          controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
-          note: QC-4B and AC-4A applicable only if AI components are involved.
-        - number: 5
-          controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B]
-      additional_controls:
-        - id: RC-5A
-          name: CAB Approval
-          rationale: >-
-            Formal change approval is mandatory for all Quickfix deployments
-            regardless of risk level. Cannot be waived.
-    regulatory_mapping:
-      dora:
-        - article: "Art. 8(1)"
-          obligation: ICT risk management framework must cover all changes. No exception for urgency.
-
-  - id: path_b_feature
-    name: Path B — Bug/Change → Feature Change
-    trigger: >-
-      A change identified in Stage 6 requires new functionality, architectural
-      modification, or is too complex to classify as a quickfix.
+  - id: path_b
+    name: Path B — Full Re-entry → Stage 1
+    trigger_sources:
+      - stage: 6
+        name: Observability & Maintenance
+      - stage: 4
+        name: Testing & Documentation
     re_entry_stage: 1
     re_entry_stage_name: Intent Ingestion
     description: >-
+      For any issue not meeting Path A eligibility: complex bugs, new functionality
+      requirements, architectural changes, or cases where root cause is unclear.
       Re-enters at Stage 1 for complete processing through all six stages.
       No controls are skipped. The change is treated as a new feature request.
     minimum_controls:
@@ -136,7 +122,7 @@ feedback_loops:
           controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B]
         - number: 6
           controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
-          note: Stage 6 monitoring must be re-activated after the new feature is deployed.
+          note: Stage 6 monitoring must be re-activated after the change is deployed.
     regulatory_mapping:
       dora:
         - article: "Art. 8(1)"

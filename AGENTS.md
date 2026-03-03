@@ -133,12 +133,12 @@ controls/registry.yaml    # Flat index of all 39 controls — fast lookup by ID 
 
 ## Feedback Loops
 
-When Stage 6 detects an issue requiring code changes, re-entry occurs via one of two paths defined in `feedbackloops/feedback-loops.yaml`:
+When Stage 4 or Stage 6 detects an issue requiring code changes, re-entry occurs via one of two paths defined in `feedbackloops/feedback-loops.yaml`:
 
-- **Path A — Incident → Autofix:** Low-risk, pre-approved patterns. Re-enters Stage 3.
-- **Path B — Bug/Change → Quickfix or Feature:** Quickfixes re-enter Stage 3 (full controls + RC-5A). Feature changes re-enter Stage 1.
+- **Path A — Quick Fix:** Easy, obvious, low-risk issue with a clear root cause. Re-enters Stage 3 with a minimum control set. Stage 6: must match a pre-approved autofix template exactly. Stage 4: root cause must be unambiguous from failing control output, fix is code-only.
+- **Path B — Full Re-entry:** Any issue not meeting Path A eligibility. Re-enters Stage 1 for the complete lifecycle — no controls skipped.
 
-If a Path A issue does not match its template exactly, it must be upgraded to Path B.
+If a Path A execution deviates from expected scope, upgrade to Path B immediately.
 
 ---
 
