@@ -1,0 +1,523 @@
+{
+  "metadata": {
+    "analysis_date": "2026-03-04",
+    "framework": "A-SDLC Framework Gap Analysis",
+    "scope": "DORA (Regulation EU 2022/2554) and EU AI Act (Regulation EU 2024/1689)",
+    "total_controls": 39,
+    "total_regulatory_articles": 25
+  },
+  "dora_analysis": {
+    "framework_name": "Digital Operational Resilience Act",
+    "regulation": "Regulation (EU) 2022/2554",
+    "effective_date": "2025-01-17",
+    "well_covered": [
+      {
+        "article": "Art. 10",
+        "title": "Detection",
+        "requirement": "Financial entities must establish mechanisms to promptly detect anomalous activities including ICT network issues and incidents, and identify potential critical failure points.",
+        "controls": ["SC-6A", "SC-6B", "QC-6A", "RC-6A"],
+        "coverage_percentage": 90,
+        "rationale": "Multiple controls address real-time detection, anomaly monitoring, and incident classification through SIEM, monitoring dashboards, and continuous risk assessment."
+      }
+    ],
+    "partially_covered": [
+      {
+        "article": "Art. 8",
+        "title": "Identification",
+        "requirement": "Financial entities must identify, classify and adequately document all ICT supported business functions, roles, information assets, and ICT assets; conduct annual reviews and assess risks.",
+        "controls": ["RC-1A", "GC-0B"],
+        "coverage_percentage": 66,
+        "rationale": "RC-1A provides risk classification. GC-0B provides end-to-end traceability. However, gaps exist in initial ICT asset inventory, continuous vulnerability scanning, and change impact analysis.",
+        "gaps": ["Initial ICT asset inventory and documentation", "Continuous vulnerability scanning", "Change impact on legacy systems"]
+      },
+      {
+        "article": "Art. 24",
+        "title": "General requirements for digital operational resilience testing",
+        "requirement": "Financial entities must create and maintain a comprehensive digital operational resilience testing programme including risk-based assessments, independent testing, and validation methods.",
+        "controls": ["SC-4A", "SC-4B", "SC-5A"],
+        "coverage_percentage": 66,
+        "rationale": "SAST and DAST address testing methodologies. Infrastructure security covers environment validation. Gap: no explicit control for independent testing verification, penetration testing coordination, or test result trending.",
+        "gaps": ["Independent test verification", "Penetration testing framework", "Vulnerability trending and remediation tracking"]
+      }
+    ],
+    "poorly_covered": [
+      {
+        "article": "Art. 5",
+        "title": "Governance and organisation",
+        "requirement": "Management body must maintain governance framework, define ICT risk policies, approve strategy and risk tolerance levels, oversee business continuity plans, and establish reporting channels.",
+        "controls": ["RC-5A"],
+        "coverage_percentage": 33,
+        "rationale": "RC-5A (CAB Approval) addresses formal governance approval but does not cover management body accountability, risk tolerance definition, or ongoing governance oversight.",
+        "gaps": ["Management body training and competency", "ICT risk appetite and tolerance level definition", "Risk tolerance monitoring and adjustment", "Board-level reporting cadence"]
+      },
+      {
+        "article": "Art. 17",
+        "title": "ICT-related incident management process",
+        "requirement": "Financial entities shall define, establish and implement an ICT incident management process including documentation, root cause analysis, consistent monitoring, and follow-up.",
+        "controls": ["SC-6A"],
+        "coverage_percentage": 33,
+        "rationale": "SC-6A provides incident detection and classification but does not address root cause analysis procedures, corrective action tracking, or incident process governance.",
+        "gaps": ["Root cause analysis procedures", "Corrective action tracking", "Post-incident review process", "Incident escalation criteria"]
+      },
+      {
+        "article": "Art. 18",
+        "title": "Classification of ICT-related incidents and cyber threats",
+        "requirement": "Financial entities must categorise ICT incidents per DORA taxonomy assessing impact through six criteria and classify significant cyber threats.",
+        "controls": ["SC-6A"],
+        "coverage_percentage": 33,
+        "rationale": "SC-6A detects and logs incidents but single control insufficient for comprehensive DORA classification framework with six impact criteria.",
+        "gaps": ["Documented DORA classification taxonomy", "Client impact assessment", "Geographical spread analysis", "Data integrity impact measurement"]
+      },
+      {
+        "article": "Art. 19",
+        "title": "Reporting of major ICT-related incidents",
+        "requirement": "Financial entities must report major ICT incidents to competent authorities with specific timelines: 4h initial, 72h intermediate, 1 month final, plus client notification.",
+        "controls": ["SC-6A", "GC-0A"],
+        "coverage_percentage": 33,
+        "rationale": "SC-6A detects incidents and GC-0A provides audit trail, but no control explicitly manages DORA reporting timelines, regulatory notification, or client communication procedures.",
+        "gaps": ["Regulatory reporting workflow", "Timeline compliance automation", "Client notification process", "Cross-border authority coordination"]
+      },
+      {
+        "article": "Art. 25",
+        "title": "Testing of ICT tools and systems",
+        "requirement": "Testing must include vulnerability assessments, open source analysis, network security assessments, gap analyses, physical security reviews, source code reviews, scenario tests, compatibility testing, and penetration testing.",
+        "controls": ["SC-4B"],
+        "coverage_percentage": 33,
+        "rationale": "DAST (SC-4B) covers dynamic testing but does not address the full range of DORA test types including open source analysis, network assessments, physical security, or scenario-based testing.",
+        "gaps": ["Open source component analysis (SBOM)", "Network security assessment", "Physical security testing", "Scenario-based testing framework", "Penetration testing roadmap"]
+      },
+      {
+        "article": "Art. 28",
+        "title": "General principles of sound management of ICT third-party risk",
+        "requirement": "Financial entities must manage third-party ICT risk, maintain registers, conduct due diligence, ensure compliance, implement contracts, and develop exit strategies.",
+        "controls": ["GC-0C", "SC-3A", "GC-3A", "SC-5B"],
+        "coverage_percentage": 33,
+        "rationale": "GC-0C provides agent provenance but does not address third-party vendor management, contract requirements, concentration risk assessment, or exit strategy validation.",
+        "gaps": ["Third-party vendor register", "Pre-contract due diligence", "Concentration risk assessment", "Contract termination procedures", "Exit strategy validation"]
+      }
+    ],
+    "not_covered": [
+      {
+        "article": "Art. 9",
+        "title": "Protection and prevention",
+        "requirement": "Financial entities must continuously monitor ICT systems, deploy appropriate security tools, establish security policies, implement access controls, deploy strong authentication, implement change management, and maintain patch policies.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "While individual security controls exist (SC-*), they are not explicitly mapped to Art. 9. This represents a significant gap in documenting comprehensive protection mechanisms.",
+        "gaps": [
+          "Continuous ICT system monitoring policy",
+          "Security tools baseline definition",
+          "Authentication and access control policy documentation",
+          "Patch and update management program",
+          "Network segmentation and isolation procedures",
+          "Data protection at rest, in transit, and in use"
+        ]
+      },
+      {
+        "article": "Art. 11",
+        "title": "Response and recovery",
+        "requirement": "Financial entities must implement ICT business continuity policy ensuring continuity of critical functions, limit damage through recovery procedures, test plans annually, and maintain crisis management function.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "RC-5B validates rollback plans but no control explicitly addresses business continuity policy, crisis management, or cross-functional recovery procedures.",
+        "gaps": [
+          "ICT business continuity policy",
+          "Crisis management function definition",
+          "Critical function identification and prioritization",
+          "Business impact analysis (BIA)",
+          "Recovery time objective (RTO) definition",
+          "Recovery point objective (RPO) definition",
+          "Business continuity testing and exercises"
+        ]
+      }
+    ]
+  },
+  "eu_ai_act_analysis": {
+    "framework_name": "Artificial Intelligence Act",
+    "regulation": "Regulation (EU) 2024/1689",
+    "effective_date": "2024-08-01",
+    "well_covered": [
+      {
+        "article": "Art. 12",
+        "title": "Record-keeping",
+        "requirement": "High-risk AI systems shall technically allow for automatic recording of events (logs) over their lifetime with traceability of system functioning including period of use, reference databases, and input data summaries.",
+        "controls": ["GC-0A", "GC-0B", "GC-1A", "GC-3A"],
+        "coverage_percentage": 90,
+        "rationale": "Multiple governance controls provide comprehensive logging, traceability, and audit trail capabilities meeting AI Act record-keeping requirements."
+      }
+    ],
+    "partially_covered": [
+      {
+        "article": "Art. 9",
+        "title": "Risk management system",
+        "requirement": "A continuous iterative risk management system must identify known and foreseeable risks, estimate and evaluate risks, evaluate post-market monitoring data, and adopt targeted risk management measures.",
+        "controls": ["AC-1A", "RC-4A", "AC-6A"],
+        "coverage_percentage": 66,
+        "rationale": "AC-1A provides AI risk classification and RC-4A evaluates risk thresholds. AC-6A addresses post-market monitoring. Gap: no explicit control for iterative risk assessment process or foreseeable misuse scenarios.",
+        "gaps": ["Iterative risk assessment process", "Reasonably foreseeable misuse scenarios", "Risk acceptance and residual risk documentation"]
+      },
+      {
+        "article": "Art. 73",
+        "title": "Reporting of serious incidents",
+        "requirement": "Providers must report serious AI incidents to market surveillance authorities within 15 days (10 days if death involved, 2 days for widespread infringements), with detailed incident information.",
+        "controls": ["AC-6A", "SC-6A"],
+        "coverage_percentage": 66,
+        "rationale": "AC-6A provides post-market surveillance and SC-6A detects incidents but neither explicitly manages AI-specific reporting timelines or serious incident classification.",
+        "gaps": ["Serious incident definition for AI systems", "Regulatory reporting workflow for AI incidents", "Timeline compliance automation (15/10/2 days)"]
+      }
+    ],
+    "poorly_covered": [
+      {
+        "article": "Art. 6",
+        "title": "Classification rules for high-risk AI systems",
+        "requirement": "AI systems are classified as high-risk if they are safety components of products under Union harmonisation legislation or fall within Annex III categories (biometrics, critical infrastructure, employment, etc.).",
+        "controls": ["AC-1A"],
+        "coverage_percentage": 33,
+        "rationale": "AC-1A provides AI risk tier classification but does not explicitly address Annex III categories or product harmonisation legislation mapping.",
+        "gaps": ["Annex III category identification and mapping", "Product harmonisation legislation assessment", "Safety component determination", "Risk tier escalation criteria"]
+      },
+      {
+        "article": "Art. 13",
+        "title": "Transparency and provision of information to deployers",
+        "requirement": "AI systems must be accompanied by instructions for use with concise, complete information including provider details, system characteristics, capabilities, limitations, intended purpose, accuracy, robustness, cybersecurity, potential risks, and human oversight measures.",
+        "controls": ["AC-2A"],
+        "coverage_percentage": 33,
+        "rationale": "AC-2A provides design review but does not explicitly ensure transparency documentation for deployers or instructions for use preparation.",
+        "gaps": ["Instructions for use documentation", "Accuracy metrics declaration", "Limitation documentation", "Human oversight measure documentation", "Deployer communication process"]
+      },
+      {
+        "article": "Art. 14",
+        "title": "Human oversight",
+        "requirement": "High-risk AI systems must be designed with human-machine interfaces enabling effective human oversight during use, with oversight assigned to competent, trained natural persons with authority and support.",
+        "controls": ["AC-2A", "SC-2B"],
+        "coverage_percentage": 33,
+        "rationale": "AC-2A addresses design review and SC-2B (directives) provides guidance injection but does not address human oversight competency, training requirements, or organizational assignment.",
+        "gaps": ["Human oversight role definition", "Competency and training requirements", "Authority and accountability framework", "Human-machine interface usability", "Intervention capability design"]
+      },
+      {
+        "article": "Art. 72",
+        "title": "Post-market monitoring",
+        "requirement": "Providers must actively collect and analyze data on performance and compliance of AI systems throughout their lifetime; post-market monitoring plan must be proportionate to technology risks and included in technical documentation.",
+        "controls": ["AC-6A"],
+        "coverage_percentage": 33,
+        "rationale": "AC-6A provides post-market surveillance but single control insufficient for comprehensive monitoring plan, data collection methodology, and performance analysis framework.",
+        "gaps": ["Post-market monitoring plan documentation", "Performance metric definition and collection", "Data collection methodology", "Compliance trend analysis", "Root cause investigation process"]
+      },
+      {
+        "article": "Annex III",
+        "title": "High-risk AI systems (biometrics, critical infrastructure, employment, etc.)",
+        "requirement": "Lists specific AI system categories requiring compliance with Chapter III Section 2 requirements including biometric identification, critical infrastructure management, employment, essential services, law enforcement, migration, and justice.",
+        "controls": ["AC-1A"],
+        "coverage_percentage": 33,
+        "rationale": "AC-1A classification control does not explicitly address each Annex III category or ensure category-specific compliance requirements are triggered.",
+        "gaps": ["Annex III category mapping", "Category-specific compliance trigger", "Sectoral regulation integration", "Conflict resolution (EU AI Act vs. sectoral law)"]
+      }
+    ],
+    "not_covered": [
+      {
+        "article": "Art. 10",
+        "title": "Data and data governance",
+        "requirement": "High-risk AI systems must use training, validation, and testing data meeting quality criteria; governance must address data collection, preparation, bias examination, and data gap identification.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "AC-4A addresses bias testing but no control explicitly manages data governance, data quality criteria, or data preparation processes.",
+        "gaps": [
+          "Data governance framework",
+          "Data quality criteria and standards",
+          "Data collection process documentation",
+          "Data preparation operations (annotation, labeling, cleaning)",
+          "Data bias assessment methodology",
+          "Data gap analysis and remediation",
+          "Data retention and deletion policies"
+        ]
+      },
+      {
+        "article": "Art. 11",
+        "title": "Technical documentation",
+        "requirement": "Technical documentation for high-risk AI systems must be prepared before market placement with minimum elements specified in Annex IV, including system description, development process, monitoring, risk management, and changes throughout lifecycle.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "QC-4C addresses documentation completeness but does not explicitly reference AI Act technical documentation requirements or Annex IV elements.",
+        "gaps": [
+          "Annex IV element checklist implementation",
+          "AI system general description documentation",
+          "Development process documentation",
+          "Risk management system documentation",
+          "Change management documentation",
+          "Harmonised standards application documentation",
+          "EU declaration of conformity"
+        ]
+      },
+      {
+        "article": "Art. 15",
+        "title": "Accuracy, robustness and cybersecurity",
+        "requirement": "High-risk AI systems must achieve appropriate levels of accuracy, robustness, and cybersecurity; be resilient against attempts to alter use or outputs; protect against adversarial attacks, data poisoning, model poisoning, and adversarial examples.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "AC-4A addresses bias and fairness but no control explicitly addresses accuracy metrics, robustness requirements, or adversarial attack resilience.",
+        "gaps": [
+          "Accuracy metric definition and documentation",
+          "Robustness testing framework",
+          "Cybersecurity assessment for AI-specific vulnerabilities",
+          "Adversarial attack simulation and testing",
+          "Data poisoning defense mechanisms",
+          "Model poisoning detection and mitigation",
+          "Fail-safe and backup plan documentation"
+        ]
+      },
+      {
+        "article": "Art. 17",
+        "title": "Quality management system",
+        "requirement": "Providers must implement a documented quality management system ensuring regulatory compliance with specific elements: strategy, design control, development procedures, testing procedures, technical specifications, data management, risk management, post-market monitoring, incident reporting, communication protocols, record-keeping, resource management, and accountability framework.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "Multiple controls address individual elements but no control explicitly implements a comprehensive QMS per AI Act Art. 17(1) requirements.",
+        "gaps": [
+          "Regulatory compliance strategy documentation",
+          "Design control procedures",
+          "Quality control and assurance procedures",
+          "Technical specifications and standards documentation",
+          "Data management system documentation",
+          "Resource management and supply chain security",
+          "Management accountability framework",
+          "QMS audit and review process"
+        ]
+      },
+      {
+        "article": "Art. 26",
+        "title": "Obligations of deployers of high-risk AI systems",
+        "requirement": "Deployers must use AI systems in accordance with instructions, assign oversight to competent personnel, ensure input data quality and representativeness, monitor system operation, report issues to providers, and immediately notify authorities of serious incidents.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "GC-0C addresses agent provenance but no control explicitly addresses deployer obligations, oversight assignment, or input data validation.",
+        "gaps": [
+          "Deployer compliance procedures",
+          "Oversight personnel assignment and training",
+          "Input data quality assurance",
+          "Input data representativeness validation",
+          "Performance monitoring procedures",
+          "Issue and incident reporting to provider",
+          "Authority notification procedures",
+          "Suspension and use termination procedures"
+        ]
+      },
+      {
+        "article": "Annex IV",
+        "title": "Technical documentation elements for high-risk AI systems",
+        "requirement": "Specifies minimum elements of technical documentation including general description, detailed element description, monitoring and control information, risk management system description, lifecycle changes, harmonised standards, and EU declaration of conformity.",
+        "controls": [],
+        "coverage_percentage": 0,
+        "rationale": "QC-4C addresses documentation completeness but does not explicitly implement Annex IV element requirements.",
+        "gaps": [
+          "AI system general description section",
+          "Detailed element and component descriptions",
+          "Development process documentation",
+          "Monitoring and functioning description",
+          "Risk management system section",
+          "Lifecycle change documentation",
+          "Applied standards listing",
+          "EU declaration of conformity preparation"
+        ]
+      }
+    ]
+  },
+  "feedback_loop_gaps": {
+    "description": "Analysis of how feedback loops address regulatory requirements when issues are detected in Stage 4 or Stage 6",
+    "path_a_coverage": {
+      "name": "Path A — Quick Fix → Stage 3",
+      "minimum_controls": ["QC-3A", "QC-3B", "SC-3B", "SC-3C", "GC-3A", "QC-4A", "SC-4A", "RC-4A", "SC-5B"],
+      "regulatory_requirements_covered": [
+        "Art. 8(5) - Change management procedures",
+        "Art. 9(2) - Code integrity and malicious code detection",
+        "Art. 9(4)(c) - Access and secrets management",
+        "Art. 12 - Record-keeping and provenance",
+        "Art. 15(1) - Code quality and reliability",
+        "Art. 15(3) - Security analysis and integrity verification"
+      ],
+      "gaps": [
+        "No explicit human review/approval for expedited fixes",
+        "Limited to low-risk issues only; no medium/high risk feedback coverage",
+        "Does not address root cause analysis or architectural issues"
+      ]
+    },
+    "path_b_coverage": {
+      "name": "Path B — Full Re-entry → Stage 1",
+      "minimum_controls": ["Full lifecycle controls (SC-1A through AC-6A)"],
+      "regulatory_requirements_covered": [
+        "Full DORA and EU AI Act coverage through complete stage re-entry",
+        "Art. 8(1) - Comprehensive ICT risk management",
+        "Art. 9 - Complete protection and prevention review"
+      ],
+      "gaps": [
+        "No specific guidance on multi-stage re-entry for complex issues",
+        "Assumes all Stage 1-6 controls equally applicable to all issue types"
+      ]
+    },
+    "overall_feedback_loop_assessment": {
+      "strengths": [
+        "Path A provides expedited remediation for low-risk issues while maintaining critical security controls",
+        "Path B ensures full regulatory compliance for complex issues through complete lifecycle re-entry",
+        "Both paths include GC-3A (code provenance) ensuring accountability"
+      ],
+      "weaknesses": [
+        "Gap in medium-risk feedback handling between Path A and B",
+        "No explicit regulatory reporting trigger in feedback loops for DORA/AI Act incidents",
+        "Feedback loop decision tree does not reference regulatory classification (DORA Art. 18)",
+        "No explicit third-party impact assessment in feedback loops (Art. 28)"
+      ],
+      "critical_gaps": [
+        "Feedback loops do not address DORA Art. 19 incident reporting timelines",
+        "No explicit mapping of feedback loop triggers to DORA/AI Act incident definitions",
+        "Missing control for escalation authority in feedback loops"
+      ]
+    }
+  },
+  "summary": {
+    "overall_coverage": {
+      "dora_coverage_percent": 38,
+      "eu_ai_act_coverage_percent": 28,
+      "combined_coverage_percent": 33,
+      "assessment": "FRAMEWORK DEMONSTRATES FOUNDATIONAL COVERAGE BUT SIGNIFICANT REGULATORY GAPS EXIST"
+    },
+    "dora_findings": {
+      "articles_well_covered": 1,
+      "articles_partially_covered": 2,
+      "articles_poorly_covered": 6,
+      "articles_not_covered": 2,
+      "total_dora_articles_analyzed": 11,
+      "top_priorities": [
+        "Art. 9 (Protection and prevention) - CRITICAL: No explicit controls despite being core DORA requirement",
+        "Art. 11 (Response and recovery) - CRITICAL: No business continuity policy or crisis management controls",
+        "Art. 5 (Governance) - HIGH: Management body accountability and risk tolerance not explicitly addressed",
+        "Art. 28 (Third-party risk) - HIGH: Vendor management and exit strategy controls missing"
+      ]
+    },
+    "eu_ai_act_findings": {
+      "articles_well_covered": 1,
+      "articles_partially_covered": 2,
+      "articles_poorly_covered": 5,
+      "articles_not_covered": 6,
+      "total_articles_analyzed": 14,
+      "top_priorities": [
+        "Art. 10 (Data governance) - CRITICAL: No controls for data quality, bias assessment, or data preparation",
+        "Art. 11 (Technical documentation) - CRITICAL: Annex IV elements not implemented despite QC-4C",
+        "Art. 15 (Accuracy, robustness, cybersecurity) - CRITICAL: No accuracy metrics, robustness testing, or adversarial attack resilience",
+        "Art. 17 (Quality management system) - CRITICAL: Comprehensive QMS not documented despite individual controls",
+        "Art. 26 (Deployer obligations) - CRITICAL: Input data validation and deployer oversight not addressed"
+      ]
+    },
+    "critical_gaps_requiring_immediate_action": [
+      {
+        "gap_id": "DORA-001",
+        "framework": "DORA",
+        "article": "Art. 9",
+        "title": "Protection and prevention",
+        "severity": "CRITICAL",
+        "impact": "Core DORA obligation for continuous monitoring and security tool deployment entirely unmapped",
+        "recommendation": "Create SC-series controls for: ICT monitoring policy, security baseline, authentication framework, patch management, network segmentation"
+      },
+      {
+        "gap_id": "DORA-002",
+        "framework": "DORA",
+        "article": "Art. 11",
+        "title": "Response and recovery",
+        "severity": "CRITICAL",
+        "impact": "No business continuity, crisis management, or RTO/RPO controls; single control for rollback insufficient",
+        "recommendation": "Create RC-series controls for: Business continuity policy, BIA, RTO/RPO definition, crisis management function, BC testing"
+      },
+      {
+        "gap_id": "AIACT-001",
+        "framework": "EU AI Act",
+        "article": "Art. 10",
+        "title": "Data and data governance",
+        "severity": "CRITICAL",
+        "impact": "No data governance controls despite being foundational for high-risk AI systems",
+        "recommendation": "Create AC-series controls for: Data governance framework, data quality criteria, bias assessment, data preparation, gap analysis"
+      },
+      {
+        "gap_id": "AIACT-002",
+        "framework": "EU AI Act",
+        "article": "Art. 11",
+        "title": "Technical documentation",
+        "severity": "CRITICAL",
+        "impact": "Annex IV requirements not explicitly implemented; QC-4C insufficient for AI Act documentation scope",
+        "recommendation": "Enhance QC-4C or create new AC control explicitly implementing all Annex IV elements with AI-specific documentation requirements"
+      },
+      {
+        "gap_id": "AIACT-003",
+        "framework": "EU AI Act",
+        "article": "Art. 15",
+        "title": "Accuracy, robustness and cybersecurity",
+        "severity": "CRITICAL",
+        "impact": "No controls for accuracy metrics, robustness testing, or adversarial attack resilience; AC-4A (bias) alone insufficient",
+        "recommendation": "Create AC-series controls for: Accuracy metric definition, robustness testing, adversarial attack simulation, model poisoning defense"
+      },
+      {
+        "gap_id": "AIACT-004",
+        "framework": "EU AI Act",
+        "article": "Art. 17",
+        "title": "Quality management system",
+        "severity": "CRITICAL",
+        "impact": "Comprehensive QMS requirement not implemented as unified control; individual elements scattered across tracks",
+        "recommendation": "Create new GC control consolidating QMS requirements or enhance existing control to explicitly implement all Art. 17(1) elements"
+      },
+      {
+        "gap_id": "CROSS-001",
+        "framework": "DORA + EU AI Act",
+        "article": "Art. 19 + Art. 73",
+        "title": "Incident reporting and regulatory timelines",
+        "severity": "CRITICAL",
+        "impact": "No controls explicitly manage DORA (4h/72h/1mo) or AI Act (15/10/2 days) reporting timelines",
+        "recommendation": "Create SC-series control for incident reporting workflow with automated timeline tracking and regulatory notification"
+      }
+    ],
+    "enhancement_roadmap": {
+      "phase_1_critical_gaps": [
+        "SC-9A: ICT Monitoring and Detection Policy Implementation",
+        "RC-7A: Business Continuity and Disaster Recovery",
+        "AC-3A: Data Governance Framework",
+        "AC-5A: AI Model Robustness and Accuracy Testing",
+        "SC-7A: Incident Reporting and Regulatory Notification"
+      ],
+      "phase_2_coverage_improvements": [
+        "Enhance Art. 5 governance controls with management body accountability",
+        "Enhance Art. 28 third-party controls with vendor management and exit strategy",
+        "Create comprehensive technical documentation control for Art. 11/Annex IV",
+        "Create deployer obligations control for Art. 26"
+      ],
+      "phase_3_integration": [
+        "Map feedback loops to regulatory incident classification",
+        "Implement regulatory timeline automation in incident response",
+        "Create cross-functional controls for Art. 28 third-party coordination",
+        "Add regulatory reporting artifacts to control outputs"
+      ]
+    },
+    "coverage_summary_by_control_track": {
+      "SC (Security Controls)": {
+        "mapped_articles": 15,
+        "coverage_percent": 45,
+        "gaps": "Art. 9 (comprehensive protection), Art. 11 (recovery), Art. 19 (reporting workflows)"
+      },
+      "QC (Quality Controls)": {
+        "mapped_articles": 8,
+        "coverage_percent": 35,
+        "gaps": "Art. 11 (business continuity), AIACT Art. 10 (data governance), AIACT Art. 11 (documentation completeness)"
+      },
+      "RC (Risk Controls)": {
+        "mapped_articles": 8,
+        "coverage_percent": 32,
+        "gaps": "Art. 5 (governance), Art. 11 (recovery procedures), AIACT Art. 17 (QMS)"
+      },
+      "AC (AI Controls)": {
+        "mapped_articles": 9,
+        "coverage_percent": 42,
+        "gaps": "AIACT Art. 10 (data governance), AIACT Art. 15 (accuracy/robustness), AIACT Art. 26 (deployer obligations)"
+      },
+      "GC (Governance Controls)": {
+        "mapped_articles": 9,
+        "coverage_percent": 38,
+        "gaps": "DORA Art. 5 (management body), AIACT Art. 17 (comprehensive QMS)"
+      }
+    }
+  }
+}

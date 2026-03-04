@@ -88,10 +88,90 @@ Five control tracks run through the entire lifecycle:
 
 Every control is mapped to at least one of two regulatory frameworks:
 
-- **DORA** — Digital Operational Resilience Act (EU, from January 2025): ICT risk management, incident reporting, operational resilience, third-party oversight
+- **DORA** — Digital Operational Resilience Act (EU, effective January 2025): ICT risk management, incident reporting, operational resilience, third-party oversight
 - **EU AI Act** — Risk-tiered AI requirements: transparency, data governance, accuracy, robustness, human oversight
 
-See [regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml) for the full coverage map and [regulatory/sources.yaml](regulatory/sources.yaml) for official article texts.
+### Current Coverage
+
+**Status: Framework Remediation Required** ⚠️
+
+| Framework    | Coverage | Critical Gaps      | Status                     |
+| ------------ | -------- | ------------------ | -------------------------- |
+| **DORA**     | 38%      | 2 articles         | Moderate-High Risk         |
+| **EU AI Act** | 28%      | 6 articles         | High Risk                  |
+| **Combined** | 33%      | 8 articles total   | Significant Remediation    |
+
+### Gap Analysis Overview
+
+The framework currently has **well-designed controls** for coding, testing, and deployment, but **lacks critical controls** in three areas:
+
+#### ⚠️ **Critical Gaps (Not Covered)**
+
+**DORA:**
+
+- **Art. 9** (Protection & Prevention) — Comprehensive ICT security policies, cryptography, network isolation
+- **Art. 11** (Response & Recovery) — Business continuity, disaster recovery, restoration procedures
+
+**EU AI Act:**
+
+- **Art. 10** (Data & Governance) — Data quality, bias detection, data management systems
+- **Art. 11** (Technical Documentation) — Annex IV compliance documentation
+- **Art. 15** (Accuracy, Robustness) — AI model safety testing and adversarial robustness
+- **Art. 17** (Quality Management) — Comprehensive QMS for AI systems
+- **Art. 26** (Deployer Obligations) — End-user accountability and monitoring
+
+#### ⚠️ **Regulatory Timeline Gap**
+
+Both frameworks mandate **legally required incident reporting timelines** with **no automated control**:
+
+| Timeline       | Requirement                         | Control            | Status                    |
+| -------------- | ----------------------------------- | ------------------ | ------------------------- |
+| DORA Art. 19   | 4h initial, 72h intermediate, 30d  | SC-6A detects only | ❌ No reporting automation |
+| EU AI Act 73   | 2-15 days depending on severity    | SC-6A detects only | ❌ No reporting automation |
+
+**Recommendation:** Create **SC-7A (Incident Reporting & Regulatory Notification)** to automate timeline tracking and notification.
+
+### Documentation & Compliance Tools
+
+For detailed analysis, see:
+
+| Document                                     | Purpose                                                              | Audience                |
+| -------------------------------------------- | -------------------------------------------------------------------- | ----------------------- |
+| [GAP_ANALYSIS_README.md](GAP_ANALYSIS_README.md) | Gap analysis entry point with remediation roadmap (3-18 months) | Compliance, Executives  |
+| [REGULATORY_COVERAGE_MATRIX.md](REGULATORY_COVERAGE_MATRIX.md) | Quick-reference tables for coverage assessment by article | Architects, Auditors    |
+| [GAP_ANALYSIS_SUMMARY.md](GAP_ANALYSIS_SUMMARY.md) | Comprehensive detailed analysis with control mapping | Developers, Architects |
+| [gap-analysis-output.json](gap-analysis-output.json) | Machine-readable JSON for integration and tooling | DevOps, Automation      |
+| [regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml) | Control-to-requirement mapping by compliance area | Reference               |
+| [regulatory/sources.yaml](regulatory/sources.yaml) | Full text of all DORA and EU AI Act articles | Legal, Compliance       |
+
+### Remediation Roadmap
+
+**Phase 1: Critical (3–6 months)** — Address legally mandated gaps
+
+- SC-7A: Incident Reporting & Regulatory Notification (DORA 4h/72h, AI Act 15d)
+- RC-7A/7B/7C: ICT Business Continuity Planning
+- AC-3A: Data Governance Framework
+- AC-5A: AI Robustness Testing
+- **Expected:** 60% DORA, 45% EU AI Act coverage
+
+**Phase 2: High-Priority (6–12 months)** — Enhance partial coverage
+
+- Strengthen Art. 5, 17–18, 25, 28 mappings
+- Create deployer obligations control (EU AI Act Art. 26)
+- **Expected:** 75% DORA, 65% EU AI Act coverage
+
+**Phase 3: Optimization (12–18 months)** — Achieve full compliance
+
+- **Expected:** 90% DORA, 85% EU AI Act coverage
+
+### Compliance Readiness by Use Case
+
+| Use Case                      | DORA     | AI Act   | Readiness   | Action                                  |
+| ----------------------------- | -------- | -------- | ----------- | --------------------------------------- |
+| Non-AI financial system       | ⚠️ 38%   | —        | Moderate    | Implement Phase 1 before production     |
+| **AI system (regulated)**     | ⚠️ 38%   | ❌ 28%   | **BLOCKED** | **DO NOT DEPLOY** until Phase 1 done    |
+| Non-AI consumer system        | ✅ 80%+  | —        | Ready       | Adequate for production                 |
+| AI system (consumers)         | ⚠️ 38%   | ⚠️ 28%   | Restricted  | Implement critical gaps minimum         |
 
 ---
 
