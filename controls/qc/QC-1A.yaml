@@ -29,9 +29,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8
     obligation: ICT risk management requires documented change procedures with complete specifications
-  dnb:
-  - area: IT change management
-    requirement: Complete specification required before change proceeds to design
 inputs:
 - name: Incoming change request
   description: Raw change request from stakeholder (ticket, brief, or natural language intent).

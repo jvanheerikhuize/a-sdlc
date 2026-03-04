@@ -31,9 +31,6 @@ regulatory_mapping:
     obligation: Traceability of ICT changes through the full change management process
   - article: Art. 8(6)
     obligation: Documented ICT risk management with full change history
-  dnb:
-  - area: Traceability of changes
-    requirement: Bidirectional traceability from requirement to deployment; impact analysis capability
   eu_ai_act:
   - article: Art. 12(2)
     requirement: Traceability of AI system functioning and decision-making

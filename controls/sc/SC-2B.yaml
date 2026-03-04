@@ -60,9 +60,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(4)(c)
     obligation: ICT security policies and access controls must govern automated agents
-  dnb:
-  - area: Logical access management for automated agents
-    requirement: Agents must operate under defined, enforced security policies before performing work
   eu_ai_act:
   - article: Art. 14(1)
     requirement: Human oversight measures must be built into AI system design and operation

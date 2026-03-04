@@ -8,7 +8,6 @@
 # Frameworks:
 #   DORA      — Regulation (EU) 2022/2554  |  effective 17 January 2025
 #   EU AI Act — Regulation (EU) 2024/1689  |  effective 01 August 2024
-#   DNB       — De Nederlandsche Bank supervisory guidance
 #
 # How to reference from controls:
 #   regulatory_mapping:
@@ -17,9 +16,8 @@
 #         obligation: <short label>   ← human label; authoritative text is in this file
 #
 # Maintenance:
-#   Update articles when the European Commission issues delegated acts or
-#   when DNB publishes updated supervisory guidance. Bump `last_updated` and
-#   note the change in `changelog` at the bottom of this file.
+#   Update articles when the European Commission issues delegated acts.
+#   Bump `last_updated` and note the change in `changelog` at the bottom of this file.
 # =============================================================================
 
 # ---------------------------------------------------------------------------
@@ -720,150 +718,15 @@ eu_ai_act:
 
 
 # ---------------------------------------------------------------------------
-# DNB — De Nederlandsche Bank Supervisory Guidance
-# ---------------------------------------------------------------------------
-
-dnb:
-  name: De Nederlandsche Bank — Supervisory Guidance
-  role: >
-    DNB is the Dutch prudential supervisor for financial institutions. As the
-    competent authority under DORA for Dutch financial entities, DNB enforces
-    DORA requirements and issues supplementary guidance on operational resilience,
-    information security, and ICT risk management.
-  official_url: https://www.dnb.nl/en/
-  dora_page: https://www.dnb.nl/en/sector-information/open-book-supervision/laws-and-eu-regulations/dora/
-  reporting_2025: https://www.dnb.nl/en/sector-news/supervision-2025/dora-reporting-dora-registers-of-information-in-april-2025/
-  tlpt_page: https://www.dnb.nl/en/sector-information/cash-and-payment-systems/dnb-oversees-cyber-resilience-tests/threat-led-penetration-testing-tlpt/
-
-  supervisory_frameworks:
-
-    - id: "DORA-Implementation"
-      title: DORA Implementation and Supervisory Expectations
-      effective_date: "2025-01-17"
-      status: current
-      summary: >
-        From 17 January 2025, DORA is the statutory framework for operational resilience
-        for in-scope financial entities. DNB's Good Practice Information Security (2023)
-        is no longer applicable to DORA-regulated entities; DORA supersedes it.
-        DNB implements DORA requirements proportionally and in a risk-based manner.
-      key_expectations:
-        - area: Gap analysis
-          requirement: >
-            Institutions must conduct a thorough gap analysis against both the DORA
-            regulation and the underlying RTS/ITS with appropriate urgency. DNB
-            monitors progress of compliance programmes.
-        - area: Information register reporting
-          requirement: >
-            Financial institutions must report the DORA information register (all
-            contractual arrangements for ICT services provided by third parties)
-            by 23 April 2025, in xBRL-CSV format. This supports the European
-            designation of critical third-party ICT service providers.
-        - area: Third-party management
-          requirement: >
-            DORA imposes stricter requirements for managing cyber risks in outsourcing
-            chains. Due diligence on ICT providers must be strengthened. European
-            supervisors may conduct inspections of critical third-party ICT providers
-            in tandem with national authorities.
-        - area: Threat-led penetration testing (TLPT)
-          requirement: >
-            Under DORA, threat-led penetration tests are mandatory for the largest
-            financial institutions. If a financial institution meets the DORA criteria,
-            it is required to conduct TLPT in which realistic cyber attacks are simulated
-            to strengthen detection and response capabilities.
-        - area: Management body responsibility
-          requirement: >
-            A compliance programme under the responsibility of management, with progress
-            monitored and periodically reported to the management body, is expected for
-            all in-scope institutions.
-
-    - id: "Information-Security"
-      title: Information Security Supervisory Requirements
-      status: superseded_for_dora_scope
-      note: >
-        The Good Practice Information Security document has been superseded by DORA
-        for entities in DORA's scope. The eight control domains below reflect the
-        enduring security expectations that carry through into DORA implementation.
-      control_domains:
-        - domain: "1. Information security policy"
-          requirement: >
-            Documented and board-approved information security policy defining objectives,
-            principles, and governance structure. Policy must be regularly reviewed.
-        - domain: "2. Organisation of information security"
-          requirement: >
-            Clear roles and responsibilities for information security. Security function
-            must be independent from operational ICT functions (segregation of duties).
-        - domain: "3. Human resource security"
-          requirement: >
-            Security awareness and training for all staff and contractors. Background
-            verification for sensitive roles. Clear procedures for staff onboarding
-            and offboarding including access revocation.
-        - domain: "4. Access management"
-          requirement: >
-            Least-privilege access control. Privileged access management (PAM) for
-            administrative accounts. Regular access reviews and prompt revocation.
-            Multi-factor authentication for remote access and privileged accounts.
-        - domain: "5. Cryptography"
-          requirement: >
-            Use of approved cryptographic standards for data at rest and in transit.
-            Robust key management procedures. Prohibition on deprecated algorithms.
-        - domain: "6. Physical and environmental security"
-          requirement: >
-            Physical access controls for data centres and server rooms. Environmental
-            monitoring and protection against physical threats.
-        - domain: "7. Operations security"
-          requirement: >
-            Change management with four-eyes principle. Vulnerability management and
-            patch management. Capacity management. Logging and monitoring of systems.
-            Protection against malware.
-        - domain: "8. Incident management"
-          requirement: >
-            Documented incident response process. Reporting to DNB within DORA
-            timelines for major incidents. Root cause analysis and lessons learned.
-            Testing of incident response procedures.
-
-    - id: "Change-Management"
-      title: Change Management Supervisory Expectations
-      summary: >
-        DNB expects robust change management as part of DORA Art. 8(5) compliance.
-        Key requirements are: four-eyes principle for all significant changes; approval
-        authority matrix defining who can authorise changes at each risk level;
-        documented rollback procedures tested before deployment; and end-to-end
-        traceability linking changes to approved design and business requirements.
-      key_requirements:
-        - control: Four-eyes principle
-          mapped_to: QC-3A   # Pull Request Creation & Review
-        - control: Approval authority matrix
-          mapped_to: RC-5A   # CAB Approval
-        - control: Rollback procedures
-          mapped_to: RC-5B   # Rollback Plan Validation
-        - control: End-to-end traceability
-          mapped_to: GC-0B   # End-to-End Traceability
-
-    - id: "Agent-Accountability"
-      title: Third-Party and Agent Accountability Expectations
-      summary: >
-        As AI agents and automated processes become part of software delivery pipelines,
-        DNB expects institutions to apply the same rigour to agent oversight as to
-        human third-party oversight. This includes maintaining an agent registry with
-        provenance information, defining and enforcing least-privilege access boundaries
-        for agents, and governing agent behaviour through documented directives that
-        cannot be overridden by user instruction.
-      key_requirements:
-        - control: Agent registry
-          mapped_to: GC-0C   # Agent Provenance Registry
-        - control: Agent access management
-          mapped_to: SC-3A   # Permission Management
-        - control: Agent governance via directives
-          mapped_to: SC-2B   # Directive Injection
-
-
-# ---------------------------------------------------------------------------
 # Changelog
 # ---------------------------------------------------------------------------
 
 changelog:
+  - date: "2026-03-04"
+    change: Removed DNB supervisory guidance track (superseded by DORA as the authoritative framework).
+    author: A-SDLC Framework Team
   - date: "2026-03-02"
-    change: Initial creation — sourced from DORA (EU 2022/2554), EU AI Act (EU 2024/1689), and DNB DORA guidance page.
+    change: Initial creation — sourced from DORA (EU 2022/2554) and EU AI Act (EU 2024/1689).
     author: A-SDLC Framework Team
     note: >
       Art. 28a reference in compliance-matrix.yaml flagged as a probable error.

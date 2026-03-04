@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(1)
     obligation: Proportionate ICT risk management requires risk classification before change proceeds
-  dnb:
-  - area: Risk-based approach to change governance
-    requirement: Risk tier determines approval authority and governance intensity for the change
   eu_ai_act:
   - article: Art. 9(2)
     requirement: Risk management must be applied proportionately throughout the AI system lifecycle

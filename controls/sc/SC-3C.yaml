@@ -29,9 +29,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(4)(c)
     obligation: Strong authentication and cryptographic key management policies
-  dnb:
-  - area: Credential and key management controls
-    requirement: No credentials may be committed to version control in any form
 outputs:
 - name: Secrets scan result
   type: evidence

@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(1)
     obligation: Governance and approval of ICT changes must be proportionate to risk
-  dnb:
-  - area: Risk-based approval authority for changes
-    requirement: Approval authority must match risk tier; high-risk changes require senior sign-off
   eu_ai_act:
   - article: Art. 9
     requirement: Risk management approval required for AI system design before implementation

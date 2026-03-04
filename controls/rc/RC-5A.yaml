@@ -32,9 +32,6 @@ regulatory_mapping:
     obligation: Governance and control of ICT changes requires formal approval at appropriate authority level
   - article: Art. 5
     obligation: Management body accountability for ICT risk framework and change approvals
-  dnb:
-  - area: Change Advisory Board requirements and approval authority matrix
-    requirement: Formal CAB process for high-risk changes; approval authority must match risk tier
 inputs:
 - name: Release readiness checklist
   source_control: QC-5A

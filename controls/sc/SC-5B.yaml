@@ -32,9 +32,6 @@ regulatory_mapping:
     obligation: ICT system integrity must be maintained through the deployment process
   - article: Art. 28a
     obligation: Supply chain security requirements for ICT systems
-  dnb:
-  - area: Integrity of production deployments and supply chain controls
-    requirement: Cryptographic verification required between tested and deployed artefacts
   eu_ai_act:
   - article: Art. 15(3)
     requirement: Resilience against manipulation of AI systems by third parties during deployment

@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(5)
     obligation: Documented procedures for ICT change management including peer review
-  dnb:
-  - area: Four-eyes principle for code changes
-    requirement: All code changes require independent review before merge
 inputs:
 - name: Implementation code
   description: Code produced by human developers, agents, or both during Stage 3.

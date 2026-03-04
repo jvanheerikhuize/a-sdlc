@@ -16,7 +16,6 @@ framework:
   status: approved
   regulatory_scope:
     - DORA
-    - DNB
     - EU AI Act
 
   control_tracks:

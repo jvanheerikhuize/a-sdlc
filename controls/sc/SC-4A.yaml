@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 24
     obligation: General requirements for ICT testing including security testing
-  dnb:
-  - area: Security testing of applications
-    requirement: Static security analysis required for all code changes before production
   eu_ai_act:
   - article: Art. 15(2)
     requirement: Examination of AI systems for biases and cybersecurity vulnerabilities

@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(6)
     obligation: Documentation of ICT risk management activities including all change processing steps
-  dnb:
-  - area: Auditability of change management process
-    requirement: Full audit trail from original request to validated specification
   eu_ai_act:
   - article: Art. 12
     requirement: Record-keeping and logging for high-risk AI systems throughout the lifecycle

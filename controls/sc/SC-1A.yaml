@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(2)
     obligation: Protection of ICT systems from unauthorised access and manipulation
-  dnb:
-  - area: Integrity of IT processing
-    requirement: Incoming requests must be screened for integrity before processing
   eu_ai_act:
   - article: Art. 15(4)
     requirement: AI systems must be resilient against errors, faults, and manipulation attempts

@@ -7,8 +7,8 @@
 
 id: GC-0A
 name: Audit Trail & Compliance Reporting
-description: Log every control execution with timestamp, actor, outcome, and supporting evidence. Produce DORA/DNB examination
-  artefacts on demand. The audit trail must be immutable and tamper-evident.
+description: Log every control execution with timestamp, actor, outcome, and supporting evidence. Produce DORA
+  examination artefacts on demand. The audit trail must be immutable and tamper-evident.
 required_in_stages:
 - number: 0
   name: Cross-Cutting
@@ -31,9 +31,6 @@ regulatory_mapping:
     obligation: Documentation and reporting of ICT risk management activities
   - article: Art. 5(2)
     obligation: Management body accountability for ICT risk framework
-  dnb:
-  - area: Audit trail requirements
-    requirement: Complete, tamper-evident log of all control executions for examination readiness
   eu_ai_act:
   - article: Art. 12
     requirement: Record-keeping and logging requirements for high-risk AI systems

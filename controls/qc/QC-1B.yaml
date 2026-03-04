@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8
     obligation: Risk identification and assessment of ICT changes must include conflict analysis
-  dnb:
-  - area: Risk assessment of proposed changes
-    requirement: Contradictions and competing priorities must be resolved before design proceeds
   eu_ai_act:
   - article: Art. 9
     requirement: Risk management system must identify foreseeable risks including specification conflicts

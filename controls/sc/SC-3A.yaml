@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(4)(c)
     obligation: Access and identity management policies must govern all ICT systems including agents
-  dnb:
-  - area: Logical access management and separation of duties
-    requirement: Least-privilege must be enforced on all automated processes
   eu_ai_act:
   - article: Art. 15(4)
     requirement: Protection against unauthorised third-party manipulation through access controls

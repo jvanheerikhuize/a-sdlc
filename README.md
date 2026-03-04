@@ -86,10 +86,9 @@ Five control tracks run through the entire lifecycle:
 
 ## Regulatory Compliance
 
-Every control is mapped to at least one of three regulatory frameworks:
+Every control is mapped to at least one of two regulatory frameworks:
 
 - **DORA** — Digital Operational Resilience Act (EU, from January 2025): ICT risk management, incident reporting, operational resilience, third-party oversight
-- **DNB** — De Nederlandsche Bank: Dutch supervisory expectations for IT governance, change management, and operational risk
 - **EU AI Act** — Risk-tiered AI requirements: transparency, data governance, accuracy, robustness, human oversight
 
 See [regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml) for the full coverage map and [regulatory/sources.yaml](regulatory/sources.yaml) for official article texts.
@@ -124,7 +123,7 @@ a-sdlc/
 │   ├── README.md                     ← Feedback process documentation and decision tree
 │   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions
 └── regulatory/
-    ├── compliance-matrix.yaml        ← DORA / DNB / EU AI Act coverage map
+    ├── compliance-matrix.yaml        ← DORA / EU AI Act coverage map
     └── sources.yaml                  ← Official article texts and obligation summaries
 ```
 

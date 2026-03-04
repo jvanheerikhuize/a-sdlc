@@ -29,9 +29,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(4)
     obligation: ICT systems must be designed to ensure resilience and meet quality standards
-  dnb:
-  - area: Architecture review and approval procedures
-    requirement: Design must be reviewed against organisational standards before implementation
 inputs:
 - name: Validated feature specification
   source_control: QC-1A

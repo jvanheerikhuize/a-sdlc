@@ -22,13 +22,13 @@ Stage definition (required controls + exit criteria): [03-coding-implementation.
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
-| [SC-3A](../../controls/sc/SC-3A.yaml) | Permission Management | Enforces least-privilege on what the agent can access: files, APIs, data, and network resources. | Automated (policy-enforced) | DORA: Art. 9(4)(c); DNB: Logical access management; AI Act: Art. 15(4) |
-| [QC-3B](../../controls/qc/QC-3B.yaml) | Code Quality Standards | Automated linting, complexity thresholds, coding standards, and maintainability metrics. Runs on every commit. | Fully automated | DORA: Art. 8(4); DNB: Software quality; AI Act: Art. 15(1) |
-| [SC-3C](../../controls/sc/SC-3C.yaml) | Secrets & Credentials Scanning | Real-time scanning for hardcoded secrets. Blocks commits containing exposed credentials. | Fully automated | DORA: Art. 9(4)(c); DNB: Credential management |
-| [RC-3A](../../controls/rc/RC-3A.yaml) | Decision Log | Captures implementation decisions — especially agent autonomous choices. Records rationale and alternatives. | Agent logs, human reviews | DORA: Art. 8(6); DNB: Decision audit trail; AI Act: Art. 12(1) |
-| [GC-3A](../../controls/gc/GC-3A.yaml) | Code Provenance Tracking | Records human-written vs. agent-generated code. Immutable records for DORA accountability. | Fully automated | DORA: Art. 8(6); DNB: Auditability; AI Act: Art. 12; Art. 17(1)(f) |
-| [SC-3B](../../controls/sc/SC-3B.yaml) | Post-Guardrails | Scans agent-generated code for malicious patterns, backdoors, and adversarial constructs. | Fully automated | DORA: Art. 9(2); DNB: Code integrity; AI Act: Art. 15(3) |
-| [QC-3A](../../controls/qc/QC-3A.yaml) | Pull Request Creation & Review | All work converges into a PR with evidence from every other Stage 3 control. Reviewed before merge. | Agent creates, human reviews | DORA: Art. 8(5); DNB: Four-eyes principle |
+| [SC-3A](../../controls/sc/SC-3A.yaml) | Permission Management | Enforces least-privilege on what the agent can access: files, APIs, data, and network resources. | Automated (policy-enforced) | DORA: Art. 9(4)(c); AI Act: Art. 15(4) |
+| [QC-3B](../../controls/qc/QC-3B.yaml) | Code Quality Standards | Automated linting, complexity thresholds, coding standards, and maintainability metrics. Runs on every commit. | Fully automated | DORA: Art. 8(4); AI Act: Art. 15(1) |
+| [SC-3C](../../controls/sc/SC-3C.yaml) | Secrets & Credentials Scanning | Real-time scanning for hardcoded secrets. Blocks commits containing exposed credentials. | Fully automated | DORA: Art. 9(4)(c) |
+| [RC-3A](../../controls/rc/RC-3A.yaml) | Decision Log | Captures implementation decisions — especially agent autonomous choices. Records rationale and alternatives. | Agent logs, human reviews | DORA: Art. 8(6); AI Act: Art. 12(1) |
+| [GC-3A](../../controls/gc/GC-3A.yaml) | Code Provenance Tracking | Records human-written vs. agent-generated code. Immutable records for DORA accountability. | Fully automated | DORA: Art. 8(6); AI Act: Art. 12; Art. 17(1)(f) |
+| [SC-3B](../../controls/sc/SC-3B.yaml) | Post-Guardrails | Scans agent-generated code for malicious patterns, backdoors, and adversarial constructs. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(3) |
+| [QC-3A](../../controls/qc/QC-3A.yaml) | Pull Request Creation & Review | All work converges into a PR with evidence from every other Stage 3 control. Reviewed before merge. | Agent creates, human reviews | DORA: Art. 8(5) |
 
 ## Stage Exit Criteria
 

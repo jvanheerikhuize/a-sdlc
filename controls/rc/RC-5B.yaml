@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 11(6)
     obligation: ICT business continuity requirements including restoration procedures for failed changes
-  dnb:
-  - area: Rollback and recovery procedures for changes
-    requirement: Verified rollback procedure with tested execution time required for all production changes
 outputs:
 - name: Rollback plan validation report
   type: evidence

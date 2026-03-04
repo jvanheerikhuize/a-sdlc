@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(6)
     obligation: Documentation requirements for ICT risk management including change documentation
-  dnb:
-  - area: Documentation standards for changes
-    requirement: All changes must have complete documentation before production deployment
   eu_ai_act:
   - article: Art. 11, Annex IV
     requirement: Technical documentation requirements for high-risk AI systems must be complete before deployment

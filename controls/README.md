@@ -47,7 +47,7 @@ required_in_stages   # List of stages + mandatory flag
 track                # code + name
 delegation           # pattern + agent_role + human_role
 owner                # team + role + contact
-regulatory_mapping   # dora / dnb / eu_ai_act articles
+regulatory_mapping   # dora / eu_ai_act articles
 inputs               # Artifacts consumed
 outputs              # Artifacts produced (type, description, retention)
 failure_behaviour    # action + escalation_target

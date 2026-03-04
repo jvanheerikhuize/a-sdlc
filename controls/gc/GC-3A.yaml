@@ -31,9 +31,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(6)
     obligation: Traceability of ICT changes including identification of all contributors
-  dnb:
-  - area: Auditability of development activities
-    requirement: Immutable record of human vs. agent contributions to all code changes
   eu_ai_act:
   - article: Art. 12
     requirement: Record-keeping requirements for high-risk AI systems including output attribution

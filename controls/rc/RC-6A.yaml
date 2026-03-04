@@ -33,9 +33,6 @@ regulatory_mapping:
     obligation: Continuous identification and assessment of ICT risk including vulnerability management
   - article: Art. 10
     obligation: Detection of anomalous activities and potential ICT vulnerabilities
-  dnb:
-  - area: Continuous risk monitoring and infrastructure health management
-    requirement: Ongoing monitoring of configuration, vulnerability, and capacity risks
   eu_ai_act:
   - article: Art. 9(1)
     requirement: Continuous and iterative risk management process throughout the AI system lifecycle

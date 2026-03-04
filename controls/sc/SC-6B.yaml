@@ -31,9 +31,6 @@ regulatory_mapping:
   dora:
   - article: Art. 10
     obligation: Detection of anomalous activities and ICT-related incidents through continuous monitoring
-  dnb:
-  - area: Anomaly detection and early warning systems
-    requirement: Statistical anomaly detection required as part of operational monitoring
   eu_ai_act:
   - article: Art. 15(3)
     requirement: Resilience of AI systems against errors, inconsistencies, and adversarial inputs

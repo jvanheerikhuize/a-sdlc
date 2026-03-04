@@ -23,10 +23,10 @@ Stage definition (required controls + exit criteria): [06-observability-maintena
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
-| [QC-6A](../../controls/qc/QC-6A.yaml) | SLA/SLO Monitoring | Continuous measurement of SLIs against SLOs. Error budget burn rate alerting. | Fully automated | DORA: Art. 10, Art. 8(4); DNB: Service level management |
-| [RC-6A](../../controls/rc/RC-6A.yaml) | Risk & Health Monitoring | Config drift, SBOM vulnerabilities, app health, capacity, certificate expiry, dependency status. | Automated, human escalation | DORA: Art. 8(2), Art. 10; DNB: Continuous risk monitoring; AI Act: Art. 9(1) |
-| [SC-6A](../../controls/sc/SC-6A.yaml) | Incident Scanning & Detection | Real-time SIEM with MITRE ATT&CK detection. DORA Art. 18 classification and reporting timelines. | Automated, human escalation | DORA: Art. 17, Art. 18, Art. 19; DNB: Incident reporting; AI Act: Art. 73 |
-| [SC-6B](../../controls/sc/SC-6B.yaml) | Runtime Anomaly Detection | Statistical behavioural baselines. AI model drift, adversarial input detection. Feeds into SC-6A. | Automated, human escalation | DORA: Art. 10; DNB: Anomaly detection; AI Act: Art. 15(3), Art. 9(2)(b) |
+| [QC-6A](../../controls/qc/QC-6A.yaml) | SLA/SLO Monitoring | Continuous measurement of SLIs against SLOs. Error budget burn rate alerting. | Fully automated | DORA: Art. 10, Art. 8(4) |
+| [RC-6A](../../controls/rc/RC-6A.yaml) | Risk & Health Monitoring | Config drift, SBOM vulnerabilities, app health, capacity, certificate expiry, dependency status. | Automated, human escalation | DORA: Art. 8(2), Art. 10; AI Act: Art. 9(1) |
+| [SC-6A](../../controls/sc/SC-6A.yaml) | Incident Scanning & Detection | Real-time SIEM with MITRE ATT&CK detection. DORA Art. 18 classification and reporting timelines. | Automated, human escalation | DORA: Art. 17, Art. 18, Art. 19; AI Act: Art. 73 |
+| [SC-6B](../../controls/sc/SC-6B.yaml) | Runtime Anomaly Detection | Statistical behavioural baselines. AI model drift, adversarial input detection. Feeds into SC-6A. | Automated, human escalation | DORA: Art. 10; AI Act: Art. 15(3), Art. 9(2)(b) |
 | [AC-6A](../../controls/ac/AC-6A.yaml) | AI Post-Market Surveillance *(conditional)* | Art. 72 post-market monitoring: performance tracking, bias re-testing, serious incident reporting. | Agent monitors, AGL reports | AI Act: Art. 72, Art. 73, Art. 61 |
 
 ## Stage Exit Criteria

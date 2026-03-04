@@ -29,9 +29,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(3)
     obligation: Identification and assessment of ICT-related threats as part of change management
-  dnb:
-  - area: Threat analysis as part of change process
-    requirement: STRIDE or equivalent threat analysis required for all significant design changes
   eu_ai_act:
   - article: Art. 15(3)
     requirement: AI systems must be resilient against adversarial attacks; threat analysis required at design stage

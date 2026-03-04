@@ -29,9 +29,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(4)
     obligation: ICT systems must be built to minimise ICT risk through quality controls
-  dnb:
-  - area: Software quality assurance requirements
-    requirement: Automated quality gates must be applied to all code changes
   eu_ai_act:
   - article: Art. 15(1)
     requirement: AI systems must be designed for appropriate levels of accuracy and reliability

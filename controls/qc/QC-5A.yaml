@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(5)
     obligation: Documented deployment and release procedures with verification of prior controls
-  dnb:
-  - area: Release management and production acceptance
-    requirement: Release readiness must be formally verified before deployment proceeds
 inputs:
 - name: Audit trail
   source_control: GC-0A

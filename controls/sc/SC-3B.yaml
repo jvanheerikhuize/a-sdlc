@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(2)
     obligation: Protection and prevention of ICT systems from malicious code and integrity violations
-  dnb:
-  - area: Malware and code integrity controls
-    requirement: All code must be scanned for malicious patterns before merge
   eu_ai_act:
   - article: Art. 15(3)
     requirement: Resilience against attempts to alter system use by exploiting vulnerabilities in the code

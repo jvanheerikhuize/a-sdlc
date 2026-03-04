@@ -42,9 +42,6 @@ regulatory_mapping:
     obligation: ICT security policies and access controls must govern all automated agents
   - article: Art. 9(2)
     obligation: Protection and prevention of ICT systems must be maintained throughout operations
-  dnb:
-  - area: Logical access management for automated agents
-    requirement: Agents must operate under defined, enforced security policies at all times
   eu_ai_act:
   - article: Art. 14(1)
     requirement: Human oversight measures must be built into AI system design and operation

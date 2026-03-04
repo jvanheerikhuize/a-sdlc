@@ -24,13 +24,13 @@ Stage definition (required controls + exit criteria): [04-testing-documentation.
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
-| [SC-4A](../../controls/sc/SC-4A.yaml) | SAST | Static security analysis of full codebase for CWE-mapped vulnerabilities. Heightened scrutiny on agent-generated code. | Fully automated | DORA: Art. 24; DNB: Security testing; AI Act: Art. 15(2) |
-| [QC-4A](../../controls/qc/QC-4A.yaml) | Functional & Non-Functional Testing | Full test suite against Stage 1 acceptance criteria: functional, performance, load, accessibility, regression. | Agent executes, QA reviews | DORA: Art. 8(4); DNB: OTAP; AI Act: Art. 15(1) |
-| [SC-4B](../../controls/sc/SC-4B.yaml) | DAST | Runtime security testing: injection attacks, auth flaws, session management, TLS configuration, OWASP Top 10. | Fully automated | DORA: Art. 24, Art. 25; DNB: Penetration testing; AI Act: Art. 15(3) |
+| [SC-4A](../../controls/sc/SC-4A.yaml) | SAST | Static security analysis of full codebase for CWE-mapped vulnerabilities. Heightened scrutiny on agent-generated code. | Fully automated | DORA: Art. 24; AI Act: Art. 15(2) |
+| [QC-4A](../../controls/qc/QC-4A.yaml) | Functional & Non-Functional Testing | Full test suite against Stage 1 acceptance criteria: functional, performance, load, accessibility, regression. | Agent executes, QA reviews | DORA: Art. 8(4); AI Act: Art. 15(1) |
+| [SC-4B](../../controls/sc/SC-4B.yaml) | DAST | Runtime security testing: injection attacks, auth flaws, session management, TLS configuration, OWASP Top 10. | Fully automated | DORA: Art. 24, Art. 25; AI Act: Art. 15(3) |
 | [QC-4B](../../controls/qc/QC-4B.yaml) | AI Output Validation *(conditional)* | For AI components: hallucination detection, accuracy benchmarking, output consistency, and boundary testing. | Agent executes, AGL reviews | AI Act: Art. 15(1); Art. 9(7) |
 | [AC-4A](../../controls/ac/AC-4A.yaml) | Bias & Fairness Testing *(conditional)* | For AI components: tests for discriminatory outcomes across protected characteristics. | Agent executes, AGL reviews | AI Act: Art. 10(2)(f); Art. 10(5); Art. 15(1) |
-| [QC-4C](../../controls/qc/QC-4C.yaml) | Documentation Completeness | Verifies runbooks, API docs, ADRs, and decision logs are present and current. | Agent checks, human approves | DORA: Art. 8(6); DNB: Documentation standards; AI Act: Art. 11, Annex IV |
-| [RC-4A](../../controls/rc/RC-4A.yaml) | Risk Threshold Evaluation | Aggregates all Stage 4 results. Determines whether residual risk is within appetite. Formal go/no-go decision. | Agent calculates, RO decides | DORA: Art. 8(1); DNB: Risk acceptance; AI Act: Art. 9(2)(a) |
+| [QC-4C](../../controls/qc/QC-4C.yaml) | Documentation Completeness | Verifies runbooks, API docs, ADRs, and decision logs are present and current. | Agent checks, human approves | DORA: Art. 8(6); AI Act: Art. 11, Annex IV |
+| [RC-4A](../../controls/rc/RC-4A.yaml) | Risk Threshold Evaluation | Aggregates all Stage 4 results. Determines whether residual risk is within appetite. Formal go/no-go decision. | Agent calculates, RO decides | DORA: Art. 8(1); AI Act: Art. 9(2)(a) |
 
 ## Stage Exit Criteria
 

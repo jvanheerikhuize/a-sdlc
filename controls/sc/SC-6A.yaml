@@ -34,9 +34,6 @@ regulatory_mapping:
     obligation: Classification of ICT-related incidents per DORA taxonomy
   - article: Art. 19
     obligation: Reporting of major ICT incidents to competent authorities within defined timelines
-  dnb:
-  - area: Incident management and reporting to DNB
-    requirement: All major incidents must be reported to DNB within DORA-specified timelines
   eu_ai_act:
   - article: Art. 73
     requirement: Reporting of serious AI incidents to relevant authorities

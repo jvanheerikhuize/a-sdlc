@@ -7,11 +7,12 @@ This directory contains the regulatory reference material that underpins every A
 | File | Purpose |
 | ---- | ------- |
 | [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated view: which controls satisfy which regulatory requirement areas |
-| [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA, DNB, and the EU AI Act |
+| [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA and the EU AI Act |
 
 ## Regulatory Frameworks
 
 ### DORA — Digital Operational Resilience Act
+
 Regulation (EU) 2022/2554 · Effective 17 January 2025
 
 Applies to financial entities operating in the EU. Key obligations for the A-SDLC:
@@ -26,20 +27,8 @@ Applies to financial entities operating in the EU. Key obligations for the A-SDL
 | Art. 17–19 | Incident classification, response, and reporting | SC-6A |
 | Art. 24–25 | Security testing | SC-4A, SC-4B |
 
-### DNB — De Nederlandsche Bank
-Supervisory guidance for IT governance, change management, and operational risk at Dutch financial institutions.
-
-Key requirement areas addressed:
-
-| Area | Controls |
-| ---- | -------- |
-| Change management | QC-3A, QC-5A, RC-5A, GC-0B |
-| Four-eyes principle | QC-3A, RC-2A, RC-5A |
-| Risk-based approval authority | RC-1A, RC-4A |
-| Security testing | SC-4A, SC-4B |
-| Auditability | GC-0A, GC-0B, GC-0C, GC-1A, GC-3A |
-
 ### EU AI Act — Artificial Intelligence Act
+
 Regulation (EU) 2024/1689 · Effective 1 August 2024
 
 Applies to AI systems placed on the EU market. The A-SDLC enforces compliance through the AI control track (AC):

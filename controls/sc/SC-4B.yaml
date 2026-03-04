@@ -32,9 +32,6 @@ regulatory_mapping:
     obligation: Requirements for ICT testing of security controls
   - article: Art. 25
     obligation: Testing of ICT tools and systems including penetration testing
-  dnb:
-  - area: Penetration and vulnerability testing
-    requirement: Dynamic security testing required before production deployment
   eu_ai_act:
   - article: Art. 15(3)
     requirement: Technical solutions for AI-specific cybersecurity including runtime attack simulation

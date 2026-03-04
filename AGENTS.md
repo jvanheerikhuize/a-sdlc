@@ -153,10 +153,9 @@ If a Path A execution deviates from expected scope, upgrade to Path B immediatel
 
 ## Regulatory Context
 
-This framework enforces compliance with three regulatory frameworks. Every control is mapped to at least one:
+This framework enforces compliance with two regulatory frameworks. Every control is mapped to at least one:
 
 - **DORA** (Digital Operational Resilience Act) — ICT risk management, incident reporting, operational resilience
-- **DNB** (De Nederlandsche Bank) — Dutch supervisory IT governance expectations
 - **EU AI Act** — Risk-tiered requirements for AI systems in financial services
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.

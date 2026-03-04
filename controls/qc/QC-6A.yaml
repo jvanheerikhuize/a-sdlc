@@ -32,9 +32,6 @@ regulatory_mapping:
     obligation: Detection of anomalous activities impacting operational performance
   - article: Art. 8(4)
     obligation: Operational resilience monitoring of ICT systems
-  dnb:
-  - area: Service level management and performance monitoring
-    requirement: Continuous monitoring of service levels with alerting for degradation
 outputs:
 - name: SLO monitoring dashboard
   type: evidence

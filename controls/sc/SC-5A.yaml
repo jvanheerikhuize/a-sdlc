@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 9(2)
     obligation: Protection of ICT infrastructure through security baseline management
-  dnb:
-  - area: Production environment security baseline
-    requirement: Security baseline must be validated before each production deployment
   eu_ai_act:
   - article: Art. 15(4)
     requirement: Appropriate level of cybersecurity in production environment for AI systems

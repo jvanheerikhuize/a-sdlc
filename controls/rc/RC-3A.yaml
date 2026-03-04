@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(6)
     obligation: Documentation of ICT risk management decisions throughout the change process
-  dnb:
-  - area: Decision audit trail for changes
-    requirement: All implementation decisions must be recorded with rationale and reviewer identity
   eu_ai_act:
   - article: Art. 12(1)
     requirement: Automatic recording of events including agent decisions for high-risk AI systems

@@ -24,12 +24,12 @@ Stage definition (required controls + exit criteria): [01-intent-ingestion.yaml]
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
-| [SC-1A](../../controls/sc/SC-1A.yaml) | Pre-Guardrails | Screens incoming requests for prompt injection attacks that could manipulate agent interpretation. | Fully automated | DORA: Art. 9(2); DNB: Integrity of IT processing; AI Act: Art. 15(4) |
-| [QC-1A](../../controls/qc/QC-1A.yaml) | Specification Validation | Confirms the request has been correctly captured with complete acceptance criteria and NFRs. | Agent drafts, human approves | DORA: Art. 8; DNB: IT change management |
-| [QC-1B](../../controls/qc/QC-1B.yaml) | Coherence & Conflict Resolution | Detects contradictions between requirements. Forces stakeholders to resolve trade-offs before design. | Agent analyses, human resolves | DORA: Art. 8; DNB: Risk assessment; AI Act: Art. 9 |
-| [RC-1A](../../controls/rc/RC-1A.yaml) | Risk Classification | Classifies non-functional risk exposure and determines governance intensity for the entire change. | Agent classifies, human validates | DORA: Art. 8(1); DNB: Risk-based governance; AI Act: Art. 9(2) |
+| [SC-1A](../../controls/sc/SC-1A.yaml) | Pre-Guardrails | Screens incoming requests for prompt injection attacks that could manipulate agent interpretation. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(4) |
+| [QC-1A](../../controls/qc/QC-1A.yaml) | Specification Validation | Confirms the request has been correctly captured with complete acceptance criteria and NFRs. | Agent drafts, human approves | DORA: Art. 8 |
+| [QC-1B](../../controls/qc/QC-1B.yaml) | Coherence & Conflict Resolution | Detects contradictions between requirements. Forces stakeholders to resolve trade-offs before design. | Agent analyses, human resolves | DORA: Art. 8; AI Act: Art. 9 |
+| [RC-1A](../../controls/rc/RC-1A.yaml) | Risk Classification | Classifies non-functional risk exposure and determines governance intensity for the entire change. | Agent classifies, human validates | DORA: Art. 8(1); AI Act: Art. 9(2) |
 | [AC-1A](../../controls/ac/AC-1A.yaml) | AI Risk Tier Classification | For AI changes: classifies EU AI Act risk tier and triggers corresponding compliance requirements. | Agent proposes, human confirms | AI Act: Art. 6, Annex III |
-| [GC-1A](../../controls/gc/GC-1A.yaml) | Intent Traceability | Logs original request, all agent transformations, and validated output. First link in the audit chain. | Fully automated | DORA: Art. 8(6); DNB: Auditability; AI Act: Art. 12 |
+| [GC-1A](../../controls/gc/GC-1A.yaml) | Intent Traceability | Logs original request, all agent transformations, and validated output. First link in the audit chain. | Fully automated | DORA: Art. 8(6); AI Act: Art. 12 |
 
 ## Stage Exit Criteria
 

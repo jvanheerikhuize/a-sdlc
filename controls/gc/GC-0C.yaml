@@ -32,9 +32,6 @@ regulatory_mapping:
     obligation: Third-party ICT service provider oversight and accountability
   - article: Art. 8(6)
     obligation: ICT documentation including agent and automation contributions
-  dnb:
-  - area: Third-party and agent accountability
-    requirement: Registry of agent actions for outsourcing governance and accountability
   eu_ai_act:
   - article: Art. 17(1)(f)
     requirement: Data management and quality management documentation

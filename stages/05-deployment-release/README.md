@@ -23,11 +23,11 @@ Stage definition (required controls + exit criteria): [05-deployment-release.yam
 
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
-| [QC-5A](../../controls/qc/QC-5A.yaml) | Release Readiness Checklist | Verifies all prior gates passed, approvals obtained, documentation current, release package complete. | Agent compiles, REL approves | DORA: Art. 8(5); DNB: Release management |
-| [RC-5A](../../controls/rc/RC-5A.yaml) | CAB Approval | Formal change approval. High-risk: CAB. Medium: line management. Low: pre-approved procedure. Cannot be delegated. | Human required | DORA: Art. 8(1), Art. 5; DNB: Change Advisory Board |
-| [RC-5B](../../controls/rc/RC-5B.yaml) | Rollback Plan Validation | Verified rollback strategy with defined triggers, tested in pre-production, with clear decision authority. | Agent validates, REL approves | DORA: Art. 11(6); DNB: Rollback and recovery |
-| [SC-5A](../../controls/sc/SC-5A.yaml) | Infrastructure Security Baseline | Validates production environment: patching, access controls, network segmentation, IaC compliance. | Fully automated | DORA: Art. 9(2); DNB: Production security baseline; AI Act: Art. 15(4) |
-| [SC-5B](../../controls/sc/SC-5B.yaml) | Deployment Integrity | Cryptographic verification that tested artefacts are exactly what gets deployed. No tampering. | Fully automated | DORA: Art. 9(2), Art. 28a; DNB: Supply chain controls; AI Act: Art. 15(3) |
+| [QC-5A](../../controls/qc/QC-5A.yaml) | Release Readiness Checklist | Verifies all prior gates passed, approvals obtained, documentation current, release package complete. | Agent compiles, REL approves | DORA: Art. 8(5) |
+| [RC-5A](../../controls/rc/RC-5A.yaml) | CAB Approval | Formal change approval. High-risk: CAB. Medium: line management. Low: pre-approved procedure. Cannot be delegated. | Human required | DORA: Art. 8(1), Art. 5 |
+| [RC-5B](../../controls/rc/RC-5B.yaml) | Rollback Plan Validation | Verified rollback strategy with defined triggers, tested in pre-production, with clear decision authority. | Agent validates, REL approves | DORA: Art. 11(6) |
+| [SC-5A](../../controls/sc/SC-5A.yaml) | Infrastructure Security Baseline | Validates production environment: patching, access controls, network segmentation, IaC compliance. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(4) |
+| [SC-5B](../../controls/sc/SC-5B.yaml) | Deployment Integrity | Cryptographic verification that tested artefacts are exactly what gets deployed. No tampering. | Fully automated | DORA: Art. 9(2), Art. 28a; AI Act: Art. 15(3) |
 
 ## Stage Exit Criteria
 

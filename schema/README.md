@@ -16,7 +16,7 @@ JSON Schema definitions (Draft 2020-12) for all structured YAML files in the rep
 **control.schema.json**
 - `id` must match pattern `[Track]-[Stage][Letter]` and must equal the filename (without `.yaml`)
 - `required_in_stages` is an array — controls can appear in multiple stages
-- `regulatory_mapping` must include at least one of `dora`, `dnb`, or `eu_ai_act`
+- `regulatory_mapping` must include at least one of `dora` or `eu_ai_act`
 
 **stage.schema.json**
 - `required_controls` lists control IDs by reference — full definitions stay in `controls/`

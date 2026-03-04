@@ -30,9 +30,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(4)
     obligation: Thorough testing of ICT systems before deployment to production
-  dnb:
-  - area: OTAP testing methodology and acceptance testing
-    requirement: All changes must pass acceptance testing against defined criteria before production
   eu_ai_act:
   - article: Art. 15(1)
     requirement: AI systems must be tested for appropriate levels of accuracy and reliability

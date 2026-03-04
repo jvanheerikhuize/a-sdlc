@@ -31,9 +31,6 @@ regulatory_mapping:
   dora:
   - article: Art. 8(1)
     obligation: Risk appetite and tolerance levels must be respected; changes exceeding appetite must not proceed
-  dnb:
-  - area: Risk acceptance procedures and residual risk assessment
-    requirement: Formal risk acceptance required for conditional pass; appropriate authority must sign off
   eu_ai_act:
   - article: Art. 9(2)(a)
     requirement: Estimation and evaluation of known and foreseeable risks before deployment
