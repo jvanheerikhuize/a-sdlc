@@ -12,6 +12,16 @@ controls:
         article: "8(5)"
         coverage: Strong
 
+  QC-1B:
+    name: "Coherence & Conflict Resolution"
+    mappings:
+      - framework: DORA
+        article: "8"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+
   QC-2A:
     name: "Design Completeness & Standards"
     mappings:
@@ -65,6 +75,12 @@ controls:
     name: "Zero-Trust Architecture Validation"
     mappings:
       - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: DORA
+        article: "9(3)"
+        coverage: Strong
+      - framework: DORA
         article: "9(4)"
         coverage: Strong
 
@@ -79,7 +95,16 @@ controls:
     name: "Third-Party Continuous Risk Monitoring"
     mappings:
       - framework: DORA
-        article: "28"
+        article: "10"
+        coverage: Strong
+      - framework: DORA
+        article: "11"
+        coverage: Strong
+      - framework: DORA
+        article: "28(3)"
+        coverage: Strong
+      - framework: DORA
+        article: "28(4)"
         coverage: Strong
 
   # Dual-Framework Controls
@@ -123,13 +148,13 @@ controls:
     name: "Compliance Evidence Automation"
     mappings:
       - framework: DORA
+        article: "5(2)"
+        coverage: Strong
+      - framework: DORA
         article: "8(6)"
         coverage: Strong
       - framework: EU AI Act
-        article: "16"
-        coverage: Partial
-      - framework: EU AI Act
-        article: "24"
+        article: "17(1)"
         coverage: Strong
 
   GC-1A:
@@ -180,11 +205,14 @@ controls:
     name: "Data Classification & Sensitivity Screening"
     mappings:
       - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: DORA
         article: "9(4)"
         coverage: Strong
       - framework: EU AI Act
-        article: "10(5)"
-        coverage: Strong
+        article: "10"
+        coverage: Partial
 
   SC-2A:
     name: "Threat Model Validation"
@@ -233,10 +261,16 @@ controls:
     name: "SCA & SBOM Generation"
     mappings:
       - framework: DORA
-        article: "25"
+        article: "25(1)"
+        coverage: Strong
+      - framework: DORA
+        article: "28"
+        coverage: Strong
+      - framework: DORA
+        article: "8(4-5)"
         coverage: Strong
       - framework: EU AI Act
-        article: "15(4)"
+        article: "15(3)"
         coverage: Strong
 
   SC-3E:
@@ -287,8 +321,14 @@ controls:
       - framework: DORA
         article: "25"
         coverage: Strong
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
       - framework: EU AI Act
         article: "15(3)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
         coverage: Strong
       - framework: EU AI Act
         article: "15(5)"
@@ -334,14 +374,17 @@ controls:
     name: "Secrets & Key Management Lifecycle"
     mappings:
       - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: DORA
+        article: "9(3)"
+        coverage: Strong
+      - framework: DORA
         article: "9(4)"
         coverage: Strong
       - framework: EU AI Act
         article: "15(4)"
         coverage: Strong
-      - framework: EU AI Act
-        article: "84"
-        coverage: Partial
 
   SC-6A:
     name: "Incident Detection, Classification & Response"
@@ -411,6 +454,12 @@ controls:
   RC-2B:
     name: "Privacy Impact Assessment Gate"
     mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9(2)(a)"
+        coverage: Strong
       - framework: EU AI Act
         article: "10(5)"
         coverage: Strong
@@ -546,6 +595,12 @@ controls:
     mappings:
       - framework: EU AI Act
         article: "51"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "52"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "53"
         coverage: Strong
       - framework: EU AI Act
         article: "55"
@@ -687,22 +742,24 @@ controls:
 # Summary Statistics
 summary:
   total_controls: 51
-  dora_mapped: 43
-  eu_ai_act_mapped: 30
-  dual_framework: 35
-  dora_only: 10
-  eu_ai_act_only: 6
+  dora_mapped: 47
+  eu_ai_act_mapped: 40
+  dual_framework: 36
+  dora_only: 11
+  eu_ai_act_only: 4
 
 # Framework Article Coverage
 frameworks:
   DORA:
     chapters: 9
     total_articles: 64
-    mapped_articles: 31
-    unmapped_reason: "Articles 1-4 (definitional), 5 (org governance), 20-23, 26-27, 29-44, 45-64 (procedural/regulatory)"
+    mapped_articles: 13
+    coverage_note: "Mapped: 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 24, 25, 28"
+    unmapped_reason: "Articles 1-4 (definitional), 12-16, 20-23, 26-27, 29-64 (procedural/enforcement)"
 
   EU AI Act:
     chapters: 10
     total_articles: 99
-    mapped_articles: 44
-    unmapped_reason: "Articles 1-4 (definitional), 16-25 (conformity/quality verified by QC-4C), 57-63 (optional), 64-70 (regulatory governance), 74-102 (enforcement/penalties)"
+    mapped_articles: 28
+    coverage_note: "Mapped: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 21, 23, 24, 25, 50, 51, 52, 53, 54, 55, 56, 71, 72, 73"
+    unmapped_reason: "Articles 1-4 (definitional), 18-19, 22, 26-49, 57-70, 74-102 (procedural/enforcement)"
