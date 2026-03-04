@@ -6,12 +6,9 @@ This directory contains the regulatory reference material that underpins every A
 
 | File | Purpose |
 | ---- | ------- |
-| [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated view: which controls satisfy which regulatory requirement areas |
-| [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA and the EU AI Act |
-| [REFORMULATION-ANALYSIS.md](REFORMULATION-ANALYSIS.md) | Strategy for improving compliance by reformulating 7 existing controls and creating 4 new controls (78–88% projected coverage) |
-| [reformulation-summary.csv](reformulation-summary.csv) | Quick-reference matrix of all 11 control changes (reformulations + new controls) |
-| [gapanalysis/](gapanalysis/) | Gap analysis deliverables: coverage assessment, remediation roadmap, and machine-readable output |
-| [moscow/](moscow/) | MoSCoW prioritization framework: 39 controls categorized as Must/Should/Could by regulatory impact |
+| [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated regulatory mapping: which controls satisfy which DORA and EU AI Act articles; coverage by track and regulatory area |
+| [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA and the EU AI Act; used as source material for all mappings |
+| **README.md** (this file) | Overview of regulatory frameworks, coverage summary, control mapping strategy (single-framework vs. dual-framework scoping) |
 
 ## Regulatory Frameworks
 
