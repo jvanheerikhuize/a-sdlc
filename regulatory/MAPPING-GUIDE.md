@@ -1,11 +1,15 @@
 # Regulatory Mapping Update Guide
 
+**For AI Agents:** Use [MAPPING-RUNBOOK.yaml](MAPPING-RUNBOOK.yaml) — machine-executable workflows with deterministic steps, error handling, and validation rules.
+
+**For Humans:** Use this guide for context and decision-making. The runbook provides the structured execution.
+
 This guide provides a repeatable workflow for maintaining regulatory mappings as controls are added or articles are remapped.
 
 ## Quick Reference: Where Regulatory Data Lives
 
 | File | Purpose | Audience |
-|------|---------|----------|
+| --- | --- | --- |
 | `controls/[track]/[ID].yaml` | Control definitions with `regulatory_mapping` field | Control owners, developers |
 | `compliance-matrix.yaml` | Consolidated control-to-article index (machine-readable) | Validation scripts, dashboards |
 | `control-article-index.yaml` | Human-editable source of truth for all mappings | You (for updates) |
@@ -17,9 +21,10 @@ This guide provides a repeatable workflow for maintaining regulatory mappings as
 ## Workflow: Adding or Updating a Control Mapping
 
 ### Step 1: Edit the Control YAML
+
 Update the control definition with the `regulatory_mapping` field. Example:
 
-```yaml
+``` yaml
 regulatory_mapping:
   - framework: DORA
     article: "9(2)"
@@ -34,9 +39,10 @@ regulatory_mapping:
 **Coverage values:** `Strong` | `Partial` | `Not Mapped`
 
 ### Step 2: Update `control-article-index.yaml`
+
 Add or update the entry in this consolidated index:
 
-```yaml
+``` yaml
 controls:
   SC-3A:
     name: "Permission & Access Control Enforcement"
@@ -54,7 +60,7 @@ controls:
 ### Step 3: Update `compliance-matrix.yaml`
 Add the control to the appropriate section(s):
 
-```yaml
+``` yaml
 DORA:
   "9(3)":
     controls:
@@ -72,7 +78,8 @@ Add or modify the article row in the appropriate chapter table:
 **Format for Partial:** Include "**Not covered (org responsibility):**" section.
 
 ### Step 5: Validate and Commit
-```bash
+
+``` bash
 # Run validation (when script is available)
 python3 scripts/validate-regulatory.py
 
@@ -155,16 +162,20 @@ If a new article exists in DORA or EU AI Act:
 ## Finding Information Quickly
 
 ### "Which controls map to DORA Art. 25?"
+
 → Search `compliance-matrix.yaml` for `"25"` under DORA section
 
 ### "What does SC-3D cover?"
+
 → Read `controls/sc/SC-3D.yaml` `regulatory_mapping` field
 → Or search `control-article-index.yaml` for SC-3D entry
 
 ### "Which articles don't have control mappings?"
+
 → Search `README.md` for `ℹ️ Org-level execution` or `ℹ️ Regulatory authority function`
 
 ### "Why is this marked Partial?"
+
 → Read the "Not covered (org responsibility)" paragraph in README.md
 
 ---

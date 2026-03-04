@@ -1,0 +1,441 @@
+# Regulatory Mapping Runbook (Agent-Native)
+# Machine-executable workflow for adding/updating control-to-article mappings
+# Format: Designed for AI agents and automation to follow deterministically
+
+version: "1.0"
+name: "A-SDLC Regulatory Mapping Update Workflow"
+description: "Structured runbook for maintaining control-to-article regulatory mappings"
+
+workflows:
+  # Workflow 1: Add a new mapping to an existing control
+  add_new_mapping:
+    id: "WF-ADD-NEW-MAPPING"
+    name: "Add New Mapping to Existing Control"
+    description: "When a control should map to an additional article"
+    preconditions:
+      - condition: "Control YAML file exists"
+        path: "controls/[track]/[ID].yaml"
+        check_type: "file_exists"
+      - condition: "Article is defined in DORA or EU AI Act"
+        check_type: "manual"
+      - condition: "control-article-index.yaml is accessible"
+        path: "regulatory/control-article-index.yaml"
+        check_type: "file_exists"
+
+    steps:
+      - step_id: 1
+        name: "Read current control YAML"
+        action: "read_file"
+        input:
+          file: "controls/[track]/[ID].yaml"
+        output:
+          var: "control_yaml"
+        validation:
+          - must_contain: "regulatory_mapping"
+        error_handling:
+          - if: "file_not_found"
+            then: "ABORT - Control file does not exist"
+          - if: "no_regulatory_mapping_field"
+            then: "ABORT - Control has no regulatory_mapping field"
+
+      - step_id: 2
+        name: "Determine coverage level"
+        action: "manual_assessment"
+        input:
+          article: "[FRAMEWORK] Art. [NUMBER]"
+          article_text: "Read from sources.yaml"
+          control_description: "From control_yaml[description]"
+        output:
+          var: "coverage"
+          allowed_values: ["Strong", "Partial"]
+        validation:
+          - coverage must be one of: ["Strong", "Partial"]
+        notes: |
+          Strong: Control directly enforces the obligation
+          Partial: Control addresses part; entity handles rest
+
+      - step_id: 3
+        name: "If Partial, document the gap"
+        action: "conditional"
+        condition: "coverage == 'Partial'"
+        steps:
+          - substep: "Identify what the control DOES cover"
+            output: "gap_covered"
+          - substep: "Identify what is NOT covered (org responsibility)"
+            output: "gap_not_covered"
+          - substep: "Create gap explanation"
+            template: |
+              **✅ Partial** — [control] [does what].
+              **Not covered (org responsibility):** [what org does].
+              A-SDLC [provides X]; entity [handles Y].
+            output: "gap_explanation"
+
+      - step_id: 4
+        name: "Update control YAML regulatory_mapping array"
+        action: "edit_file"
+        input:
+          file: "controls/[track]/[ID].yaml"
+          section: "regulatory_mapping"
+          new_entry:
+            framework: "[DORA|EU AI Act]"
+            article: "[ARTICLE_NUMBER]"
+            coverage: "[coverage]"
+            rationale: "[explanation or gap_explanation]"
+        output:
+          var: "updated_control_yaml"
+        validation:
+          - yaml_must_be_valid: true
+          - regulatory_mapping must be array: true
+
+      - step_id: 5
+        name: "Update control-article-index.yaml"
+        action: "edit_file"
+        input:
+          file: "regulatory/control-article-index.yaml"
+          section: "controls.[ID].mappings"
+          new_entry:
+            framework: "[DORA|EU AI Act]"
+            article: "[ARTICLE_NUMBER]"
+            coverage: "[coverage]"
+        output:
+          var: "updated_index"
+        validation:
+          - yaml_must_be_valid: true
+
+      - step_id: 6
+        name: "Update compliance-matrix.yaml"
+        action: "edit_file"
+        input:
+          file: "regulatory/compliance-matrix.yaml"
+          section: "[FRAMEWORK].[ARTICLE_NUMBER].controls"
+          action: "append"
+          value: "[ID]"
+        output:
+          var: "updated_matrix"
+        validation:
+          - yaml_must_be_valid: true
+          - control_appears_in_controls_section: true
+
+      - step_id: 7
+        name: "Update README.md article table"
+        action: "edit_file"
+        input:
+          file: "regulatory/README.md"
+          section: "Chapter_[X]_Table"
+          article_row: "[ARTICLE_NUMBER]"
+          updates:
+            - field: "Primary Controls"
+              action: "append"
+              value: "[ID]"
+            - field: "Coverage & Rationale"
+              value: "[gap_explanation or control_rationale]"
+        output:
+          var: "updated_readme"
+        validation:
+          - markdown_must_be_valid: true
+          - article_row_exists: true
+
+      - step_id: 8
+        name: "Run validation checklist"
+        action: "validate"
+        checks:
+          - check: "All 4 files updated"
+            files:
+              - "controls/[track]/[ID].yaml"
+              - "regulatory/control-article-index.yaml"
+              - "regulatory/compliance-matrix.yaml"
+              - "regulatory/README.md"
+            validation_type: "file_consistency"
+          - check: "No duplicate control-article pairs"
+            validation_type: "uniqueness"
+          - check: "Partial coverage has gap explanation"
+            condition: "coverage == 'Partial'"
+            validation_type: "content_check"
+          - check: "YAML is valid in all files"
+            validation_type: "syntax"
+          - check: "Markdown is valid"
+            validation_type: "syntax"
+        error_handling:
+          - if: "validation_fails"
+            then: "HALT - Report specific validation failure and do not proceed to commit"
+
+      - step_id: 9
+        name: "Create git commit"
+        action: "git_commit"
+        input:
+          files:
+            - "controls/[track]/[ID].yaml"
+            - "regulatory/control-article-index.yaml"
+            - "regulatory/compliance-matrix.yaml"
+            - "regulatory/README.md"
+          message: |
+            Map [ID] to [FRAMEWORK] Art. [ARTICLE_NUMBER]
+
+            Coverage: [Strong|Partial]
+            Rationale: [one-line summary]
+
+      - step_id: 10
+        name: "Push to remote"
+        action: "git_push"
+        input:
+          branch: "main"
+          remote: "origin"
+
+    postconditions:
+      - "All 4 files updated and committed"
+      - "Commit pushed to origin/main"
+      - "No validation errors"
+
+  # Workflow 2: Add a completely new control
+  add_new_control:
+    id: "WF-ADD-NEW-CONTROL"
+    name: "Add Completely New Control"
+    description: "When creating a brand new control with regulatory mappings"
+    preconditions:
+      - condition: "New control ID is unique"
+        check_type: "grep_registry"
+        pattern: "[NEW_ID]"
+      - condition: "Control ID follows naming convention [Track]-[Stage][Letter]"
+        check_type: "regex"
+        pattern: "[A-Z]{2}-[0-6][A-Z]"
+
+    steps:
+      - step_id: 1
+        name: "Create control YAML file"
+        action: "create_file"
+        input:
+          path: "controls/[track]/[ID].yaml"
+          template: "control.schema.json"
+          required_fields:
+            - id: "[ID]"
+            - name: "[Control Name]"
+            - description: "[description]"
+            - regulatory_mapping:
+                - framework: "[DORA|EU AI Act]"
+                  article: "[ARTICLE]"
+                  coverage: "[Strong|Partial]"
+                  rationale: "[explanation]"
+        output:
+          var: "new_control_yaml"
+        validation:
+          - yaml_matches_schema: "controls/schema/control.schema.json"
+
+      - step_id: 2
+        name: "Add to controls/registry.yaml"
+        action: "edit_file"
+        input:
+          file: "controls/registry.yaml"
+          section: "controls"
+          new_entry:
+            id: "[ID]"
+            name: "[Control Name]"
+            track: "[TRACK]"
+            stage: "[STAGE]"
+            file: "controls/[track]/[ID].yaml"
+
+      - step_id: 3
+        name: "Add to stages/[NN]/[NN].yaml"
+        action: "edit_file"
+        input:
+          file: "stages/[NN]-[name]/[NN]-[name].yaml"
+          section: "required_controls"
+          new_entry:
+            id: "[ID]"
+            note: "[optional note]"
+
+      - step_id: 4
+        name: "Add to asdlc.yaml if cross-cutting"
+        action: "conditional"
+        condition: "stage == '0'"
+        steps:
+          - action: "edit_file"
+            input:
+              file: "asdlc.yaml"
+              section: "cross_cutting.controls"
+              append: "- id: [ID], name: [name], track: [track]"
+
+      - step_id: 5
+        name: "Add to control-article-index.yaml"
+        action: "edit_file"
+        input:
+          file: "regulatory/control-article-index.yaml"
+          section: "controls"
+          new_entry:
+            "[ID]":
+              name: "[Control Name]"
+              mappings:
+                - framework: "[DORA|EU AI Act]"
+                  article: "[ARTICLE]"
+                  coverage: "[Strong|Partial]"
+
+      - step_id: 6
+        name: "Add to compliance-matrix.yaml"
+        action: "edit_file"
+        input:
+          file: "regulatory/compliance-matrix.yaml"
+          section: "[FRAMEWORK].[ARTICLE].controls"
+          append: "[ID]"
+
+      - step_id: 7
+        name: "Add to README.md stage sections"
+        action: "edit_file"
+        input:
+          file: "stages/[NN]-[name]/README.md"
+          section: "controls table"
+          new_row:
+            - id: "[ID]"
+            - name: "[Control Name]"
+
+      - step_id: 8
+        name: "Add to regulatory/README.md article tables"
+        action: "edit_file"
+        input:
+          file: "regulatory/README.md"
+          section: "[FRAMEWORK] Chapter [X] article tables"
+          article_row: "[ARTICLE]"
+          update: "Add [ID] to Primary Controls column"
+
+      - step_id: 9
+        name: "Run validation"
+        action: "validate"
+        checks:
+          - check: "Control appears in all expected files"
+            files:
+              - "controls/[track]/[ID].yaml"
+              - "controls/registry.yaml"
+              - "stages/[NN]/[NN].yaml"
+              - "asdlc.yaml"
+              - "regulatory/control-article-index.yaml"
+              - "regulatory/compliance-matrix.yaml"
+              - "regulatory/README.md"
+          - check: "No duplicate control IDs"
+          - check: "All YAML valid"
+          - check: "All Markdown valid"
+          - check: "Coverage stats updated"
+
+      - step_id: 10
+        name: "Commit all changes"
+        action: "git_commit"
+        input:
+          message: |
+            Add new control [ID]: [Control Name]
+
+            Maps to [FRAMEWORK] Art. [ARTICLE] with [Strong|Partial] coverage.
+            Updates all documentation and cross-references.
+
+      - step_id: 11
+        name: "Push to remote"
+        action: "git_push"
+
+    postconditions:
+      - "Control appears in all 7 required files"
+      - "All validations pass"
+      - "Changes committed and pushed"
+
+validation_rules:
+  # Rules for validating Partial coverage
+  partial_coverage_rule:
+    name: "Partial coverage must explain the gap"
+    condition: "coverage == 'Partial'"
+    requirements:
+      - must_include: "**Not covered (org responsibility):**"
+      - must_include: "A-SDLC"
+      - must_include: "entity"
+      - explanation_must_be_specific: true
+        meaning: "Not generic; explains exact boundary"
+
+  # Rules for control-article uniqueness
+  uniqueness_rule:
+    name: "No duplicate control-article pairs"
+    scope: "All mappings across all files"
+    error: "Mapping appears in multiple files with different coverage levels"
+
+  # Rules for consistency
+  consistency_rule:
+    name: "Consistency across files"
+    checks:
+      - "control-article-index.yaml matches control YAML mappings"
+      - "compliance-matrix.yaml reflects control-article-index"
+      - "README.md tables match compliance-matrix"
+    error_handling: "If mismatch found, HALT and report"
+
+file_templates:
+  # Template for new control YAML
+  control_yaml_template: |
+    id: [ID]
+    name: "[Name]"
+    description: "[Description]"
+    required_in_stages:
+      - stage: [STAGE]
+        mandatory: true
+    track:
+      code: [TRACK]
+      name: "[Track Name]"
+    regulatory_mapping:
+      - framework: "[DORA|EU AI Act]"
+        article: "[ARTICLE]"
+        coverage: "[Strong|Partial]"
+        rationale: "[Explanation]"
+
+  # Template for control-article-index entry
+  index_entry_template: |
+    [ID]:
+      name: "[Control Name]"
+      mappings:
+        - framework: "[DORA|EU AI Act]"
+          article: "[ARTICLE]"
+          coverage: "[Strong|Partial]"
+
+  # Template for README.md table row (Strong)
+  readme_strong_template: |
+    | **Art. [NUMBER]** | [Title] | [ID_LIST] | **✅ Strong** — [explanation]. |
+
+  # Template for README.md table row (Partial)
+  readme_partial_template: |
+    | **Art. [NUMBER]** | [Title] | [ID_LIST] | **✅ Partial** — [what's covered]. **Not covered (org responsibility):** [gap]. A-SDLC [provides]; entity [handles]. |
+
+error_recovery:
+  # What to do if a step fails
+  file_not_found:
+    action: "ABORT"
+    message: "Required file does not exist"
+    recovery: "Verify file path and re-run workflow"
+
+  yaml_invalid:
+    action: "ROLLBACK"
+    message: "YAML syntax error in updated file"
+    recovery: "Fix YAML and re-run from last step"
+
+  validation_fails:
+    action: "HALT"
+    message: "Validation check failed"
+    recovery: "Review validation error, fix issue, re-run from validation step"
+
+  git_error:
+    action: "HALT"
+    message: "Git operation failed"
+    recovery: "Check git status, resolve conflicts, re-run from git step"
+
+# Checklist for manual verification (when agent cannot auto-validate)
+manual_verification_checklist:
+  before_commit:
+    - [ ] "All 4 files updated (control YAML, index, matrix, README)"
+    - [ ] "No duplicate control-article mappings"
+    - [ ] "Partial mappings include 'Not covered (org responsibility)' section"
+    - [ ] "Gap explanation is specific, not generic"
+    - [ ] "YAML and Markdown are syntactically valid"
+    - [ ] "Control ID appears in correct article rows in README"
+    - [ ] "Coverage stats updated if this is new DORA/EU AI Act mapping"
+
+# Output format for agents
+agent_output_schema:
+  workflow_id: "[WF-ADD-NEW-MAPPING|WF-ADD-NEW-CONTROL]"
+  status: "[SUCCESS|FAILED|HALTED]"
+  files_modified:
+    - "file_path"
+    - "number_of_changes"
+  validations_passed: ["list of checks"]
+  validations_failed: ["list of checks if any"]
+  git_commit_hash: "[hash]"
+  next_steps: "[if any]"
+  notes: "[summary for human review]"
