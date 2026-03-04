@@ -9,6 +9,7 @@ This directory contains the regulatory reference material that underpins every A
 | [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated view: which controls satisfy which regulatory requirement areas |
 | [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA and the EU AI Act |
 | [gapanalysis/](gapanalysis/) | Gap analysis deliverables: coverage assessment, remediation roadmap, and machine-readable output |
+| [moscow/](moscow/) | MoSCoW prioritization framework: 39 controls categorized as Must/Should/Could by regulatory impact |
 
 ## Regulatory Frameworks
 

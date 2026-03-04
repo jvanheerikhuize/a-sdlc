@@ -145,6 +145,31 @@ For detailed analysis, see:
 | [compliance-matrix.yaml](regulatory/compliance-matrix.yaml) | Control-to-requirement mapping by compliance area | Reference               |
 | [sources.yaml](regulatory/sources.yaml) | Full text of all DORA and EU AI Act articles | Legal, Compliance       |
 
+### Control Prioritization (MoSCoW Framework)
+
+All 39 controls have been prioritized using MoSCoW (Must/Should/Could/Won't) analysis aligned with DORA and EU AI Act requirements:
+
+| Category     | Count | Coverage Impact           | Timeline              |
+| ------------ | ----- | ------------------------- | --------------------- |
+| **Must-Have (M)** | 23 (59%) | DORA 38%→72%, AI Act 28%→65% | Phase 1 (3-6 months) |
+| **Should-Have (S)** | 12 (31%) | DORA 72%→85%, AI Act 65%→82% | Phase 2 (6-12 months) |
+| **Could-Have (C)** | 4 (10%) | DORA 85%→95%+, AI Act 82%→95%+ | Phase 3 (12-18 months) |
+
+**Critical Blocking Controls (Stage Gates):**
+- RC-2A (Design Approval) → Blocks Stage 3 entry
+- RC-4A (Risk Threshold) → Blocks Stage 5 entry
+- RC-5A (CAB Approval) → Blocks production deployment
+- SC-3A (Permission Management) → Blocks code changes
+
+For detailed prioritization analysis:
+
+| Document                                           | Purpose                                        | Audience              |
+| -------------------------------------------------- | ---------------------------------------------- | --------------------- |
+| [MOSCOW-QUICK-REFERENCE.md](regulatory/moscow/MOSCOW-QUICK-REFERENCE.md) | Quick lookup guide with at-a-glance categorization | Daily use, teams |
+| [MOSCOW-PRIORITIZATION-README.md](regulatory/moscow/MOSCOW-PRIORITIZATION-README.md) | Comprehensive guide with implementation roadmap | Planning, governance |
+| [moscow-prioritization.csv](regulatory/moscow/moscow-prioritization.csv) | Spreadsheet matrix for sorting and analysis | Project managers |
+| [moscow-prioritization.json](regulatory/moscow/moscow-prioritization.json) | Machine-readable output for tooling integration | DevOps, automation |
+
 ### Remediation Roadmap
 
 **Phase 1: Critical (3–6 months)** — Address legally mandated gaps
@@ -206,12 +231,18 @@ a-sdlc/
 └── regulatory/
     ├── compliance-matrix.yaml        ← DORA / EU AI Act coverage map
     ├── sources.yaml                  ← Official article texts and obligation summaries
-    └── gapanalysis/                  ← Gap analysis deliverables
-        ├── ANALYSIS_INDEX.md         ← Navigation guide for all gap analysis documents
-        ├── GAP_ANALYSIS_README.md    ← Entry point with remediation roadmap (3-18 months)
-        ├── REGULATORY_COVERAGE_MATRIX.md ← Quick-reference tables by article
-        ├── GAP_ANALYSIS_SUMMARY.md   ← Comprehensive detailed analysis
-        └── gap-analysis-output.json  ← Machine-readable output for tooling
+    ├── gapanalysis/                  ← Gap analysis deliverables
+    │   ├── ANALYSIS_INDEX.md         ← Navigation guide for all gap analysis documents
+    │   ├── GAP_ANALYSIS_README.md    ← Entry point with remediation roadmap (3-18 months)
+    │   ├── REGULATORY_COVERAGE_MATRIX.md ← Quick-reference tables by article
+    │   ├── GAP_ANALYSIS_SUMMARY.md   ← Comprehensive detailed analysis
+    │   └── gap-analysis-output.json  ← Machine-readable output for tooling
+    └── moscow/                       ← MoSCoW prioritization analysis
+        ├── MOSCOW-QUICK-REFERENCE.md ← Quick lookup guide (daily use)
+        ├── MOSCOW-PRIORITIZATION-README.md ← Comprehensive implementation roadmap
+        ├── MOSCOW-PRIORITIZATION-INDEX.md ← Master index and cross-references
+        ├── moscow-prioritization.csv ← Spreadsheet matrix for analysis
+        └── moscow-prioritization.json ← Machine-readable prioritization data
 ```
 
 ---

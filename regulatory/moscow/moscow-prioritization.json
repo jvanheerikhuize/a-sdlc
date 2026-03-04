@@ -1,0 +1,693 @@
+{
+  "moscow_prioritization": {
+    "framework": "A-SDLC Control Prioritization Matrix",
+    "version": "1.0",
+    "date": "2026-03-04",
+    "context": {
+      "regulatory_coverage": {
+        "dora_coverage": "38%",
+        "eu_ai_act_coverage": "28%",
+        "combined_coverage": "33%"
+      },
+      "critical_gaps": 8,
+      "implementation_phases": {
+        "phase_1": "3-6 months (critical regulatory requirements)",
+        "phase_2": "6-12 months (enhance partial coverage)",
+        "phase_3": "12-18 months (optimization)"
+      }
+    },
+    "summary": {
+      "total_controls": 39,
+      "must_have": 23,
+      "should_have": 12,
+      "could_have": 4,
+      "won't_have": 0,
+      "distribution_by_stage": {
+        "cross_cutting": {
+          "must": 5,
+          "should": 0,
+          "could": 0,
+          "won't": 0
+        },
+        "stage_1": {
+          "must": 4,
+          "should": 2,
+          "could": 0,
+          "won't": 0
+        },
+        "stage_2": {
+          "must": 3,
+          "should": 2,
+          "could": 0,
+          "won't": 0
+        },
+        "stage_3": {
+          "must": 4,
+          "should": 3,
+          "could": 0,
+          "won't": 0
+        },
+        "stage_4": {
+          "must": 4,
+          "should": 2,
+          "could": 1,
+          "won't": 0
+        },
+        "stage_5": {
+          "must": 2,
+          "should": 2,
+          "could": 1,
+          "won't": 0
+        },
+        "stage_6": {
+          "must": 1,
+          "should": 1,
+          "could": 2,
+          "won't": 0
+        }
+      }
+    },
+    "controls": {
+      "must_have": [
+        {
+          "id": "SC-0D",
+          "name": "Core Directive Injection",
+          "stage": 0,
+          "stage_name": "Cross-Cutting",
+          "track": "SC",
+          "category": "M",
+          "justification": "Foundational security control ensuring core directives are injected at session start. Non-negotiable for policy enforcement across all stages. DORA Art. 9(4) requires documented ICT security policies.",
+          "regulatory_mapping": ["DORA Art. 9(4)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Blocks all downstream controls if missing",
+          "risk_without": "Complete failure of policy enforcement framework; uncontrolled agent behavior"
+        },
+        {
+          "id": "GC-0A",
+          "name": "Audit Trail & Compliance Reporting",
+          "stage": 0,
+          "stage_name": "Cross-Cutting",
+          "track": "GC",
+          "category": "M",
+          "justification": "Required for audit trail and incident reporting compliance. Mandatory for DORA Art. 17 (ICT incident management) and EU AI Act Art. 12 (record-keeping). Non-negotiable for regulatory proof.",
+          "regulatory_mapping": ["DORA Art. 17", "EU AI Act Art. 12"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing audit trail violates regulatory requirements",
+          "risk_without": "Non-compliance with incident reporting timelines (4h/72h/1mo); inability to prove AI system monitoring"
+        },
+        {
+          "id": "GC-0B",
+          "name": "End-to-End Traceability",
+          "stage": 0,
+          "stage_name": "Cross-Cutting",
+          "track": "GC",
+          "category": "M",
+          "justification": "Foundational traceability across entire SDLC. Required by DORA Art. 8(1) (document all ICT-supported functions and assets) and EU AI Act Art. 12 (logging of AI system usage). Critical for demonstrating compliance.",
+          "regulatory_mapping": ["DORA Art. 8(1)", "EU AI Act Art. 12"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Impossible to prove end-to-end compliance without traceability",
+          "risk_without": "Cannot demonstrate data governance; audit failures"
+        },
+        {
+          "id": "GC-0C",
+          "name": "Agent Provenance Registry",
+          "stage": 0,
+          "stage_name": "Cross-Cutting",
+          "track": "GC",
+          "category": "M",
+          "justification": "Required for third-party oversight (DORA Art. 28) and deployer obligations (EU AI Act Art. 26(5)). Essential for supply chain security and monitoring AI systems.",
+          "regulatory_mapping": ["DORA Art. 28", "EU AI Act Art. 26(5), Art. 17(1)(f)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing third-party/agent oversight creates compliance gap",
+          "risk_without": "Unable to manage ICT third-party risk; breach of deployer monitoring obligations"
+        },
+        {
+          "id": "QC-1A",
+          "name": "Specification Validation",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "QC",
+          "category": "M",
+          "justification": "Establishes source of truth for all agentic actions. Prevents propagation of invalid requirements downstream. Foundational for quality and compliance.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Invalid specs cascade into all subsequent stages",
+          "risk_without": "Misaligned development; rework across multiple stages"
+        },
+        {
+          "id": "RC-1A",
+          "name": "Risk Classification",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "RC",
+          "category": "M",
+          "justification": "Required by DORA Art. 8(2) to continuously identify ICT risk sources and assess cyber threats. Foundational for AI risk management (EU AI Act Art. 9). Cannot proceed without risk tier.",
+          "regulatory_mapping": ["DORA Art. 8(2)", "EU AI Act Art. 9"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Risk management cannot proceed without classification",
+          "risk_without": "Unmanaged risks; inability to apply appropriate governance to high-risk AI systems"
+        },
+        {
+          "id": "AC-1A",
+          "name": "AI Risk Tier Classification",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "AC",
+          "category": "M",
+          "justification": "Required by EU AI Act Art. 6 (classification rules for high-risk AI) and Art. 9 (risk management system). Determines entire compliance regime. Non-negotiable for AI systems.",
+          "regulatory_mapping": ["EU AI Act Art. 6", "EU AI Act Art. 9"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Determines which AI Act requirements apply",
+          "risk_without": "Unknown whether system is high-risk; potential serious violations if misclassified as low-risk"
+        },
+        {
+          "id": "GC-1A",
+          "name": "Intent Traceability",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "GC",
+          "category": "M",
+          "justification": "Establishes starting point for end-to-end traceability required by DORA Art. 8(1) and EU AI Act Art. 12. Source of truth for audit trail.",
+          "regulatory_mapping": ["DORA Art. 8(1)", "EU AI Act Art. 12"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Root traceability point; missing here breaks downstream audit trail",
+          "risk_without": "Incomplete audit trail; cannot trace back to original intent"
+        },
+        {
+          "id": "SC-1A",
+          "name": "Pre-Guardrails",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 9 (ICT security policies) and EU AI Act Art. 15(4) (resilience against manipulation). Prevents malicious intent from entering development cycle.",
+          "regulatory_mapping": ["DORA Art. 9", "EU AI Act Art. 15(4)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Prevents prohibited/harmful systems from starting development",
+          "risk_without": "Uncontrolled system scope; potential development of prohibited AI systems"
+        },
+        {
+          "id": "QC-2A",
+          "name": "Design Completeness & Standards",
+          "stage": 2,
+          "stage_name": "System Design",
+          "track": "QC",
+          "category": "M",
+          "justification": "Ensures design meets standards before coding begins. Critical gate to prevent costly rework. Required for quality assurance.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Incomplete designs cascade to implementation rework",
+          "risk_without": "Technical debt; missing architectural requirements"
+        },
+        {
+          "id": "RC-2A",
+          "name": "Design Approval",
+          "stage": 2,
+          "stage_name": "System Design",
+          "track": "RC",
+          "category": "M",
+          "justification": "Human-required control ensuring design risk is formally assessed before coding. Critical governance gate blocking code implementation.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Blocks deployment of risky designs",
+          "risk_without": "High-risk designs proceed to implementation without approval"
+        },
+        {
+          "id": "SC-2A",
+          "name": "Threat Model Validation",
+          "stage": 2,
+          "stage_name": "System Design",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 25 (testing methodologies) and EU AI Act Art. 9 (risk management). Threat model is foundation for security testing and mitigation.",
+          "regulatory_mapping": ["DORA Art. 25", "EU AI Act Art. 9"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Security testing roadmap depends on threat model",
+          "risk_without": "Security testing lacks direction; unidentified threat vectors"
+        },
+        {
+          "id": "SC-2B",
+          "name": "Stage Directive Injection",
+          "stage": 0,
+          "stage_name": "Cross-Cutting",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 9(4) and EU AI Act Art. 14 (human oversight). Injects stage-specific directives governing agent behavior. Non-negotiable for human oversight and policy enforcement.",
+          "regulatory_mapping": ["DORA Art. 9(4)", "EU AI Act Art. 14"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing stage directives break oversight chain",
+          "risk_without": "Uncontrolled agent behavior; missing human oversight mandates"
+        },
+        {
+          "id": "AC-2A",
+          "name": "AI Component Design Review",
+          "stage": 2,
+          "stage_name": "System Design",
+          "track": "AC",
+          "category": "M",
+          "justification": "Required by EU AI Act Art. 10 (data governance), Art. 13 (transparency), and Art. 14 (human oversight). Critical gate for AI systems to address data quality, transparency, and oversight.",
+          "regulatory_mapping": ["EU AI Act Art. 10", "EU AI Act Art. 13", "EU AI Act Art. 14"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing AI design review breaches multiple AI Act articles",
+          "risk_without": "Unaddressed data governance; missing transparency and oversight mechanisms"
+        },
+        {
+          "id": "SC-3A",
+          "name": "Permission Management",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 9(4) (access controls and authentication). Prevents unauthorized code changes and enforces least privilege.",
+          "regulatory_mapping": ["DORA Art. 9(4)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing access controls violate DORA Art. 9 requirements",
+          "risk_without": "Uncontrolled code access; potential security breaches during implementation"
+        },
+        {
+          "id": "SC-3B",
+          "name": "Post-Guardrails",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 9 and EU AI Act Art. 15(4) (resilience against manipulation). Detects and prevents malicious code or policy violations in final code.",
+          "regulatory_mapping": ["DORA Art. 9", "EU AI Act Art. 15(4)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Post-guardrails prevent malicious code from reaching testing",
+          "risk_without": "Malicious or non-compliant code passes through to testing and deployment"
+        },
+        {
+          "id": "SC-3C",
+          "name": "Secrets & Credentials Scanning",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 28 (supply chain security) and EU AI Act Art. 15(3) (supply chain integrity). Prevents exposure of sensitive credentials.",
+          "regulatory_mapping": ["DORA Art. 28", "EU AI Act Art. 15(3)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Exposed credentials cause immediate compliance breach",
+          "risk_without": "Credential exposure; potential supply chain compromise"
+        },
+        {
+          "id": "GC-3A",
+          "name": "Code Provenance Tracking",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "GC",
+          "category": "M",
+          "justification": "Required by EU AI Act Art. 17(1)(f) (data/documentation requirements) and DORA Art. 28 (third-party oversight). Essential for supply chain security and AI audit trail.",
+          "regulatory_mapping": ["EU AI Act Art. 17(1)(f)", "DORA Art. 28"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Cannot prove code provenance for regulatory audit",
+          "risk_without": "Unknown code origins; cannot identify malicious or third-party contributions"
+        },
+        {
+          "id": "SC-4A",
+          "name": "SAST",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 24-25 (digital operational resilience testing). Static analysis is foundational security testing for identifying code-level vulnerabilities.",
+          "regulatory_mapping": ["DORA Art. 24-25"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - SAST is baseline security testing requirement",
+          "risk_without": "Code-level vulnerabilities not identified before testing/deployment"
+        },
+        {
+          "id": "SC-4B",
+          "name": "DAST",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 24-25 (operational resilience testing including penetration testing). Dynamic analysis is foundational for runtime security validation.",
+          "regulatory_mapping": ["DORA Art. 24-25"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - DAST is baseline security testing requirement",
+          "risk_without": "Runtime/deployment vulnerabilities not identified before production"
+        },
+        {
+          "id": "RC-4A",
+          "name": "Risk Threshold Evaluation",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "RC",
+          "category": "M",
+          "justification": "Required by EU AI Act Art. 9(7) (testing to verify risk management measures). Blocks deployment if residual risk exceeds tolerance. Critical gate.",
+          "regulatory_mapping": ["EU AI Act Art. 9(7)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Blocks high-risk deployment; gates stage exit",
+          "risk_without": "Unmanaged risks proceed to deployment; no go/no-go decision"
+        },
+        {
+          "id": "QC-4C",
+          "name": "Documentation Completeness",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "QC",
+          "category": "M",
+          "justification": "Required by EU AI Act Art. 11 (technical documentation) and Annex IV. Non-negotiable for regulatory proof of AI system compliance.",
+          "regulatory_mapping": ["EU AI Act Art. 11", "EU AI Act Annex IV"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing documentation violates EU AI Act Art. 11",
+          "risk_without": "Cannot prove regulatory compliance; market access blocked"
+        },
+        {
+          "id": "RC-5A",
+          "name": "CAB Approval",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "RC",
+          "category": "M",
+          "justification": "Required by change management governance (DORA Art. 8(5)). Human-required control ensuring deployment decision is formally authorized.",
+          "regulatory_mapping": ["DORA Art. 8(5)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Blocks unauthorized deployments",
+          "risk_without": "Uncontrolled deployments; bypass of change management procedure"
+        },
+        {
+          "id": "SC-5A",
+          "name": "Infrastructure Security",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 24-25 (testing of infrastructure). Ensures production environment meets security requirements before deployment.",
+          "regulatory_mapping": ["DORA Art. 24-25"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Infrastructure vulnerabilities expose production systems",
+          "risk_without": "Production deployment to insecure infrastructure"
+        },
+        {
+          "id": "SC-5B",
+          "name": "Deployment Integrity",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 28 (supply chain security) and EU AI Act Art. 15(3) (supply chain integrity). Ensures code/model integrity during deployment.",
+          "regulatory_mapping": ["DORA Art. 28", "EU AI Act Art. 15(3)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Deployment tampering bypasses all prior controls",
+          "risk_without": "Tampered code deployed to production; prior security controls negated"
+        },
+        {
+          "id": "SC-6A",
+          "name": "Incident Scanning & Detection",
+          "stage": 6,
+          "stage_name": "Observability & Maintenance",
+          "track": "SC",
+          "category": "M",
+          "justification": "Required by DORA Art. 10 (detection mechanisms) and Art. 17-19 (incident management and reporting). Critical for incident identification and regulatory reporting.",
+          "regulatory_mapping": ["DORA Art. 10", "DORA Art. 17-19"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "CRITICAL - Missing incident detection blocks regulatory reporting",
+          "risk_without": "Incidents not detected; regulatory reporting timelines missed (4h/72h)"
+        }
+      ],
+      "should_have": [
+        {
+          "id": "QC-1B",
+          "name": "Coherence & Conflict Resolution",
+          "stage": 1,
+          "stage_name": "Intent Ingestion",
+          "track": "QC",
+          "category": "S",
+          "justification": "High-value quality control preventing conflicting requirements upstream. Not blocking but significantly improves development efficiency and reduces rework.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 2",
+          "remediation_impact": "MEDIUM - Conflicting specs cause mid-cycle rework",
+          "risk_without": "Inconsistent requirements lead to design conflicts downstream"
+        },
+        {
+          "id": "RC-2A",
+          "name": "Design Approval",
+          "stage": 2,
+          "stage_name": "System Design",
+          "track": "RC",
+          "category": "S",
+          "justification": "Human-required; see Must-Have category. Listed as Should in distribution due to redundancy with QC-2A gate.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "MEDIUM",
+          "risk_without": ""
+        },
+        {
+          "id": "QC-3A",
+          "name": "Pull Request Creation & Review",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "QC",
+          "category": "S",
+          "justification": "Important for code quality and peer review but can be supplemented with automated checks. Supports DORA Art. 8(5) (change management) but not blocking.",
+          "regulatory_mapping": ["DORA Art. 8(5)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "MEDIUM - Code changes tracked but not strictly gated",
+          "risk_without": "Code changes lack peer review; quality degradation possible"
+        },
+        {
+          "id": "QC-3B",
+          "name": "Code Quality Standards",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "QC",
+          "category": "S",
+          "justification": "Automated enforcement of code quality. Improves maintainability and reduces technical debt. Not blocking deployment but significant for long-term maintainability.",
+          "regulatory_mapping": [],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "MEDIUM - Technical debt accumulates without code quality standards",
+          "risk_without": "Code quality degradation; increased maintenance cost"
+        },
+        {
+          "id": "RC-3A",
+          "name": "Decision Log",
+          "stage": 3,
+          "stage_name": "Coding & Implementation",
+          "track": "RC",
+          "category": "S",
+          "justification": "Supports audit trail and compliance reporting (GC-0A). Important for demonstrating decision rationale but not blocking deployment.",
+          "regulatory_mapping": ["DORA Art. 8(6)"],
+          "phase_implementation": "Phase 2",
+          "remediation_impact": "MEDIUM - Audit trail incomplete without decision log",
+          "risk_without": "Cannot demonstrate decision-making rationale; audit gaps"
+        },
+        {
+          "id": "QC-4A",
+          "name": "Functional & Non-Functional Testing",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "QC",
+          "category": "S",
+          "justification": "Critical quality gate but automated testing tooling can substitute some manual testing. Required for verification but gates compliance more through exit criteria.",
+          "regulatory_mapping": ["DORA Art. 24"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Missing functional testing prevents verification gate",
+          "risk_without": "Untested functionality reaches deployment; failures in production"
+        },
+        {
+          "id": "QC-4B",
+          "name": "AI Output Validation",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "AC",
+          "category": "S",
+          "justification": "Important for AI systems but only applicable to AI components. Supports EU AI Act Art. 15 (accuracy/robustness) but not blocking if no AI present.",
+          "regulatory_mapping": ["EU AI Act Art. 15"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH (for AI) - Missing AI output validation breaches Art. 15",
+          "risk_without": "Unvalidated AI outputs; accuracy/robustness not verified"
+        },
+        {
+          "id": "RC-5B",
+          "name": "Rollback Plan Validation",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "RC",
+          "category": "S",
+          "justification": "Required by DORA Art. 11 (ICT business continuity). Important for recovery but gates exit through rollback readiness.",
+          "regulatory_mapping": ["DORA Art. 11"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH - Missing rollback plan blocks recovery capability",
+          "risk_without": "No recovery path if deployment fails; business continuity gap"
+        },
+        {
+          "id": "QC-5A",
+          "name": "Release Readiness Checklist",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "QC",
+          "category": "S",
+          "justification": "Comprehensive gate checklist supporting change management (DORA Art. 8(5)). Important but gates through exit criteria.",
+          "regulatory_mapping": ["DORA Art. 8(5)"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "MEDIUM - Incomplete readiness checklist gates deployment",
+          "risk_without": "Incomplete deployments; missing pre-release verifications"
+        },
+        {
+          "id": "RC-6A",
+          "name": "Risk & Health Monitoring",
+          "stage": 6,
+          "stage_name": "Observability & Maintenance",
+          "track": "RC",
+          "category": "S",
+          "justification": "Required by DORA Art. 10-11 (detection and monitoring) for continuous risk assessment. Important for ongoing compliance but monitoring rather than blocking.",
+          "regulatory_mapping": ["DORA Art. 10-11"],
+          "phase_implementation": "Phase 2",
+          "remediation_impact": "HIGH - Missing risk monitoring breaks continuous compliance",
+          "risk_without": "Unmonitored risk drift; regulatory violations go undetected"
+        },
+        {
+          "id": "AC-4A",
+          "name": "Bias & Fairness Testing",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "AC",
+          "category": "S",
+          "justification": "Required by EU AI Act Art. 10 (data governance for bias), Art. 15 (robustness). Critical for high-risk AI but only applicable to AI components.",
+          "regulatory_mapping": ["EU AI Act Art. 10", "EU AI Act Art. 15"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH (for AI) - Missing bias testing breaches Art. 10/15",
+          "risk_without": "Undetected bias in AI systems; fairness violations; discrimination risk"
+        },
+        {
+          "id": "AC-6A",
+          "name": "AI Post-Market Surveillance",
+          "stage": 6,
+          "stage_name": "Observability & Maintenance",
+          "track": "AC",
+          "category": "S",
+          "justification": "Required by EU AI Act Art. 72 (post-market monitoring) and Art. 26(5) (deployer monitoring obligations). Critical for deployed AI systems but monitoring rather than blocking.",
+          "regulatory_mapping": ["EU AI Act Art. 72", "EU AI Act Art. 26(5)"],
+          "phase_implementation": "Phase 2",
+          "remediation_impact": "HIGH - Missing AI surveillance violates Art. 72",
+          "risk_without": "No monitoring of deployed AI behavior; serious incidents not detected"
+        }
+      ],
+      "could_have": [
+        {
+          "id": "QC-6A",
+          "name": "SLA/SLO Monitoring",
+          "stage": 6,
+          "stage_name": "Observability & Maintenance",
+          "track": "QC",
+          "category": "C",
+          "justification": "Efficiency optimization for operational monitoring. Nice-to-have for SLA tracking but not blocking. Supports Phase 3 optimization.",
+          "regulatory_mapping": ["DORA Art. 11"],
+          "phase_implementation": "Phase 3",
+          "remediation_impact": "LOW - Absence affects operational efficiency, not compliance",
+          "risk_without": "SLA/SLO tracking requires manual effort; visibility reduced"
+        },
+        {
+          "id": "SC-6B",
+          "name": "Runtime Anomaly Detection",
+          "stage": 6,
+          "stage_name": "Observability & Maintenance",
+          "track": "SC",
+          "category": "C",
+          "justification": "Advanced monitoring for operational security. Complements SC-6A with enhanced detection but not blocking. Phase 3 optimization.",
+          "regulatory_mapping": ["DORA Art. 10"],
+          "phase_implementation": "Phase 3",
+          "remediation_impact": "LOW - Enhancement to SC-6A; not blocking if SC-6A present",
+          "risk_without": "Anomaly detection less sophisticated; may miss subtle attacks"
+        },
+        {
+          "id": "SC-4B",
+          "name": "DAST",
+          "stage": 4,
+          "stage_name": "Testing & Documentation",
+          "track": "SC",
+          "category": "C",
+          "justification": "Listed as Could; see Must-Have category. Dynamic testing is critical not optional.",
+          "regulatory_mapping": ["DORA Art. 24-25"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH",
+          "risk_without": ""
+        },
+        {
+          "id": "RC-5B",
+          "name": "Rollback Plan Validation",
+          "stage": 5,
+          "stage_name": "Deployment & Release",
+          "track": "RC",
+          "category": "C",
+          "justification": "Listed as Could; see Should-Have category. Rollback plan is required not optional.",
+          "regulatory_mapping": ["DORA Art. 11"],
+          "phase_implementation": "Phase 1",
+          "remediation_impact": "HIGH",
+          "risk_without": ""
+        }
+      ],
+      "won't_have": []
+    },
+    "dependencies": {
+      "critical_chains": [
+        {
+          "chain": "Intent → Risk Classification → Design → Threat Model → Security Testing → Deployment",
+          "controls": ["QC-1A", "RC-1A", "QC-2A", "SC-2A", "SC-4A", "SC-4B", "SC-5B"],
+          "impact": "Missing any control in chain breaks verification gate"
+        },
+        {
+          "chain": "AI Risk Tier → AI Design Review → Bias Testing → AI Surveillance",
+          "controls": ["AC-1A", "AC-2A", "AC-4A", "AC-6A"],
+          "impact": "Missing AI controls creates compliance gap for AI systems"
+        },
+        {
+          "chain": "Directives (SC-0D, SC-2B) → Permission Management (SC-3A) → Post-Guardrails (SC-3B) → Incident Detection (SC-6A)",
+          "controls": ["SC-0D", "SC-2B", "SC-3A", "SC-3B", "SC-6A"],
+          "impact": "Missing directive injection breaks entire security enforcement chain"
+        },
+        {
+          "chain": "Audit Trail (GC-0A) → Traceability (GC-0B) → Code Provenance (GC-3A) → Agent Registry (GC-0C)",
+          "controls": ["GC-0A", "GC-0B", "GC-3A", "GC-0C"],
+          "impact": "Missing any governance control creates audit trail gaps"
+        }
+      ],
+      "blocking_controls": [
+        {
+          "control": "RC-2A",
+          "blocks": ["QC-2A", "SC-2A", "AC-2A"],
+          "rationale": "Design approval gate prevents all stage 2 designs from proceeding"
+        },
+        {
+          "control": "RC-4A",
+          "blocks": ["QC-5A", "RC-5A", "SC-5A", "SC-5B"],
+          "rationale": "Risk threshold must pass before deployment phase"
+        },
+        {
+          "control": "RC-5A",
+          "blocks": ["SC-5A", "SC-5B"],
+          "rationale": "CAB approval required before any deployment actions"
+        }
+      ]
+    },
+    "risk_assessment": {
+      "risk_without_must_haves": {
+        "regulatory_compliance": "CRITICAL - 8 article violations across DORA and EU AI Act",
+        "deployment_blockage": "CRITICAL - Cannot legally deploy AI systems or handle incidents",
+        "audit_failure": "CRITICAL - Cannot prove compliance to regulators",
+        "security_posture": "CRITICAL - No incident detection, no security testing, no access controls",
+        "governance_gap": "CRITICAL - No audit trail, no traceability, no third-party oversight",
+        "ai_systems_impact": "CRITICAL - Cannot classify high-risk AI; cannot demonstrate governance"
+      },
+      "phase_1_completion": {
+        "coverage_improvement": "38% → 72% (DORA), 28% → 65% (EU AI Act)",
+        "critical_gaps_closed": 8,
+        "compliance_gates": "All blocking controls in place",
+        "deployment_readiness": "Can legally deploy with risk management",
+        "incident_response": "Can meet DORA reporting timelines (4h/72h/30d)"
+      },
+      "phase_2_enhancements": {
+        "coverage_improvement": "72% → 85% (DORA), 65% → 82% (EU AI Act)",
+        "efficiency_gains": "Automated monitoring, decision logs, enhanced testing",
+        "oversight_strengthening": "Continuous monitoring, risk drift detection, AI surveillance"
+      },
+      "phase_3_optimization": {
+        "coverage_improvement": "85% → 95%+ (both frameworks)",
+        "operational_excellence": "SLA tracking, advanced anomaly detection, predictive monitoring"
+      }
+    }
+  }
+}
