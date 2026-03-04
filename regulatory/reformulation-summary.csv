@@ -1,0 +1,12 @@
+Control_ID,Type,Current_Scope,Gap_Addressed,New_Capability,Regulatory_Articles,Compliance_Impact,Effort_Weeks,Priority
+SC-6A,Reformulation,Incident detection + classification,DORA 19 - Reporting timelines,Automated regulatory reporting workflow + timeline tracking + AI incident reporting,"DORA Art. 19, EU AI Act Art. 73",+15-18%,2-3,CRITICAL
+AC-4A,Reformulation,Bias and fairness testing,EU AI Act Art. 15 - Robustness,Accuracy metrics + robustness testing + adversarial attack simulation,EU AI Act Art. 15,+12-15%,3-4,HIGH
+QC-4C,Reformulation,Documentation completeness,EU AI Act Art. 11 - Annex IV,Structured Annex IV checklist + EU declaration of conformity,EU AI Act Art. 11 Annex IV,+8-10%,1-2,HIGH
+AC-2A,Reformulation,AI design review,EU AI Act Art. 10 - Data governance,Data governance framework validation + bias assessment procedures,EU AI Act Art. 10,+8-10%,2-3,HIGH
+RC-5B,Reformulation,Rollback plan validation,DORA Art. 11 - Business continuity,Business continuity policy + crisis management + RTO/RPO + BC testing,DORA Art. 11,+12-15%,3-4,HIGH
+SC-4B,Reformulation,Dynamic testing,DORA Art. 25 - Comprehensive testing,SBOM analysis + network assessment + scenario testing + pen test roadmap,DORA Art. 25,+10-12%,4-5,MEDIUM
+SC-3A,Reformulation,Permission management,DORA Art. 28 - Third-party risk,Vendor register + due diligence + contract requirements + exit strategy,DORA Art. 28,+10-12%,2-3,MEDIUM
+SC-7A,New Control,N/A,DORA Art. 9 - Protection & Prevention,Comprehensive ICT security policy + continuous monitoring framework,"DORA Art. 9","NEW: +8-10% (total: +25-30% with reformulations)",4-6,CRITICAL
+AC-3A,New Control,N/A,EU AI Act Art. 10 - Data governance,Comprehensive data governance framework,"EU AI Act Art. 10","NEW: +8-10% (total: +25-30% with reformulations)",3-4,CRITICAL
+AC-5A,New Control,N/A,EU AI Act Art. 17 - Quality Management System,Comprehensive AI Quality Management System,"EU AI Act Art. 17","NEW: +8-10% (total: +25-30% with reformulations)",5-7,CRITICAL
+GC-4A,New Control,N/A,EU AI Act Art. 26 - Deployer obligations,Deployer compliance and oversight documentation,"EU AI Act Art. 26","NEW: +8-10% (total: +25-30% with reformulations)",2-3,HIGH

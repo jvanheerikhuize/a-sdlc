@@ -131,6 +131,58 @@ Both frameworks mandate **legally required incident reporting timelines** with *
 
 **Recommendation:** Create **SC-7A (Incident Reporting & Regulatory Notification)** to automate timeline tracking and notification.
 
+### Compliance Improvement Path: Reformulation + New Controls
+
+Rather than starting from scratch, a **hybrid strategy** improves compliance by strategically reformulating existing controls and adding targeted new controls:
+
+#### Strategy Overview
+
+- **Reformulate 7 existing controls** (expand scope) → **+25–30%** compliance gain
+- **Create 4 new controls** (address policy/governance gaps) → **+20–25%** compliance gain
+- **Combined approach** → **78–88% total coverage** (vs. current 33%)
+
+#### Phase 1A: Control Reformulations (2–3 weeks)
+
+| Control | New Capability | Impact |
+| ------- | -------------- | ------ |
+| **SC-6A** | Automated regulatory reporting workflow + timeline tracking | DORA 19, AI Act 73 |
+| **AC-4A** | Accuracy metrics + robustness testing + adversarial attack resilience | EU AI Act 15 |
+| **QC-4C** | Structured Annex IV checklist + EU declaration of conformity | EU AI Act 11 |
+| **AC-2A** | Data governance framework validation | EU AI Act 10 |
+| **RC-5B** | Business continuity policy + crisis management + RTO/RPO | DORA 11 |
+| **SC-4B** | SBOM analysis + network security assessment + scenario testing | DORA 25 |
+| **SC-3A** | Vendor register + due diligence + contract management | DORA 28 |
+
+**Compliance Impact:** DORA 38%→55%, AI Act 28%→40% (combined 33%→48%)
+
+#### Phase 1B: New Controls (3–4 weeks)
+
+| Control | Purpose | Impact |
+| ------- | ------- | ------ |
+| **SC-7A** | ICT Security Policy & Continuous Monitoring | DORA 9 (Protection & Prevention) |
+| **AC-3A** | Data Governance Framework | EU AI Act 10 (Data & Governance) |
+| **AC-5A** | AI Quality Management System | EU AI Act 17 (Comprehensive QMS) |
+| **GC-4A** | Deployer Compliance & Oversight Documentation | EU AI Act 26 (End-user accountability) |
+
+**Compliance Impact:** DORA 55%→75%, AI Act 40%→65% (combined 48%→70%)
+
+#### Final Coverage Projection
+
+**Timeline:** 5–7 weeks (parallel execution)
+
+| Framework | Current | Phase 1A | Phase 1B | Improvement |
+| --------- | ------- | -------- | -------- | ----------- |
+| **DORA** | 38% | 55% | 75% | **+37%** |
+| **EU AI Act** | 28% | 40% | 65% | **+37%** |
+| **Combined** | 33% | 48% | **70%** | **+37%** |
+
+For detailed analysis, including implementation roadmap, control dependencies, and effort estimates, see:
+
+| Document | Purpose |
+| -------- | ------- |
+| [REFORMULATION-ANALYSIS.md](regulatory/REFORMULATION-ANALYSIS.md) | Complete reformulation strategy with control-by-control breakdown |
+| [reformulation-summary.csv](regulatory/reformulation-summary.csv) | Quick-reference matrix of all 11 control changes |
+
 ### Documentation & Compliance Tools
 
 For detailed analysis, see:
