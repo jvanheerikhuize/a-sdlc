@@ -18,11 +18,11 @@ Regulation (EU) 2022/2554 · Effective 17 January 2025
 
 Applies to financial entities operating in the EU. **All chapters and articles mapped below:**
 
-#### Chapter I: General Provisions (Arts. 1–4)
+#### DORA Chapter I: General Provisions (Arts. 1–4)
 
 Not subject to specific A-SDLC controls — these are definitional and procedural provisions that provide context for operational compliance. Compliance achieved through adherence to Articles 5–64.
 
-#### Chapter II: ICT Risk Management (Arts. 5–16)
+#### DORA Chapter II: ICT Risk Management (Arts. 5–16)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
@@ -34,7 +34,7 @@ Not subject to specific A-SDLC controls — these are definitional and procedura
 | **Art. 10** | Detection mechanisms | SC-6A, SC-6B, QC-6A, RC-6A | ✅ Strong |
 | **Art. 11** | Response and recovery | RC-5B, QC-6A, RC-6A, QC-5A | ✅ Strong |
 
-#### Chapter III: Incident Management (Arts. 17–23)
+#### DORA Chapter III: Incident Management (Arts. 17–23)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
@@ -43,7 +43,7 @@ Not subject to specific A-SDLC controls — these are definitional and procedura
 | **Art. 19** | Reporting | GC-0A, SC-6A | ✅ Partial |
 | **Art. 20–23** | Classification criteria, reporting timelines | *Operational procedures for entities — not controlled by development lifecycle* | ℹ️ **Org-level compliance** |
 
-#### Chapter IV: Digital Operational Resilience Testing (Arts. 24–27)
+#### DORA Chapter IV: Digital Operational Resilience Testing (Arts. 24–27)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
@@ -51,15 +51,30 @@ Not subject to specific A-SDLC controls — these are definitional and procedura
 | **Art. 25** | Testing of tools and systems | SC-4A, SC-4B, SC-5A, SC-3D, SC-3E, SC-4C, QC-4A | ✅ Strong |
 | **Art. 26–27** | Penetration testing, TLPT oversight | *Operational testing coordinated by financial entity governance* | ℹ️ **Org-level execution** |
 
-#### Chapter V: Third-Party Risk (Arts. 28–44)
+#### DORA Chapter V: Third-Party Risk (Arts. 28–44)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
 | **Art. 28** | Third-party risk management | GC-0C, SC-3A, GC-3A, SC-5B | ✅ Partial |
 | **Art. 29–44** | Concentration risk, contracts, exit strategies | *Procurement & vendor management — financial entity responsibility* | ℹ️ **Org-level execution** |
 
-#### Chapter VI–IX: Competent Authorities, Delegated Acts, Transitions (Arts. 45–64)
-Not subject to A-SDLC controls — these are regulatory procedural and transitional provisions.
+#### DORA Chapter VI: Information-Sharing Arrangements (Art. 45)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 45** | Information-sharing arrangements | *Operational information-sharing procedures — not SDLC-controlled* | ℹ️ **Org-level execution** |
+
+#### DORA Chapter VII: Competent Authorities (Arts. 46–56)
+
+Regulatory authority designation and coordination — not subject to A-SDLC controls.
+
+#### DORA Chapter VIII: Delegated Acts (Arts. 57–60)
+
+European Commission delegated regulations — not subject to A-SDLC controls.
+
+#### DORA Chapter IX: Transitional and Final Provisions (Arts. 61–64)
+
+Implementation timelines and transitional exemptions — not subject to A-SDLC controls.
 
 ---
 
@@ -67,9 +82,19 @@ Not subject to A-SDLC controls — these are regulatory procedural and transitio
 
 Regulation (EU) 2024/1689 · Effective 1 August 2024
 
-Applies to AI system providers and deployers in the EU. **All articles mapped below:**
+Applies to AI system providers and deployers in the EU. **All chapters and articles mapped below:**
 
-#### Chapter III: High-Risk AI Systems (Arts. 6–44)
+#### EU AI Act Chapter I: General Provisions (Arts. 1–4)
+
+Definitional and scope provisions — not subject to explicit A-SDLC controls; compliance achieved through adherence to Articles 5–99.
+
+#### EU AI Act Chapter II: Prohibited AI Practices (Art. 5)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 5** | Prohibited AI practices | SC-1A, SC-3B for detection; operational compliance is financial entity responsibility | ℹ️ **Org-level enforcement** |
+
+#### EU AI Act Chapter III: High-Risk AI Systems (Arts. 6–49)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
@@ -83,20 +108,45 @@ Applies to AI system providers and deployers in the EU. **All articles mapped be
 | **Art. 15** | Accuracy, robustness, cybersecurity | AC-4A, SC-1A, SC-3B, SC-5B, QC-4A, QC-4B, SC-4D | ✅ Strong |
 | **Art. 16–25** | Conformity assessment, quality management | *Operational procedures for documentation — verified in QC-4C* | ℹ️ **Org-level execution** |
 
-#### Chapter V: GPAI Models (Arts. 51–56)
+#### EU AI Act Chapter IV: Transparency Obligations (Art. 50)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 50** | Transparency for certain AI systems | AC-2A for documentation and transparency | ✅ Partial |
+
+#### EU AI Act Chapter V: General-Purpose AI Models (Arts. 51–56)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
 | **Art. 51–56** | GPAI obligations, transparency, testing | AC-1B, AC-2A, AC-2B | ✅ Strong |
 
-#### Chapter VI: Deployment, Monitoring, Enforcement (Arts. 57–102)
+#### EU AI Act Chapter VI: Measures in Support of Innovation (Arts. 57–63)
+
+Regulatory sandboxes and innovation support — not subject to A-SDLC controls (optional opt-in programs).
+
+#### EU AI Act Chapter VII: Governance (Arts. 64–70)
+
+AI Office, Board, and governance structures — regulatory authority responsibility, not SDLC-controlled.
+
+#### EU AI Act Chapter VIII: Post-Market Monitoring, Information Sharing, Market Surveillance (Arts. 71–80)
 
 | Article | Title | Primary Controls | Coverage |
 | ------- | ----- | ---------------- | -------- |
-| **Art. 26** | Deployer obligations | GC-0C, AC-6A | ✅ Partial |
-| **Art. 72** | Post-market monitoring | AC-6A | ✅ Partial |
+| **Art. 71** | Post-market monitoring by deployers | *Operational monitoring by financial entity* | ℹ️ **Org-level execution** |
+| **Art. 72** | Post-market monitoring by providers | AC-6A | ✅ Partial |
 | **Art. 73** | Serious incident reporting | AC-6A, SC-6A | ✅ Partial |
-| **Art. 74–102** | Market surveillance, enforcement, penalties | *Regulatory enforcement by authorities — not A-SDLC controlled* | ℹ️ **Org-level compliance** |
+| **Art. 74–80** | Market surveillance, information sharing | *Regulatory authority and member state functions* | ℹ️ **Org-level compliance** |
+
+#### EU AI Act Chapter IX: Codes of Conduct and Guidelines (Arts. 81–83)
+
+Voluntary codes of conduct and authority guidance — not binding SDLC controls.
+
+#### EU AI Act Chapter X: Confidentiality and Penalties (Arts. 84–99)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 84–88** | Confidentiality obligations | GC-0A for audit trail; operational confidentiality is entity responsibility | ℹ️ **Org-level execution** |
+| **Art. 89–99** | Administrative fines and penalties | *Enforcement by regulatory authorities* | ℹ️ **Regulatory authority functions** |
 
 ---
 
