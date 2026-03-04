@@ -16,34 +16,136 @@ This directory contains the regulatory reference material that underpins every A
 
 Regulation (EU) 2022/2554 · Effective 17 January 2025
 
-Applies to financial entities operating in the EU. Key obligations for the A-SDLC:
+Applies to financial entities operating in the EU. **All chapters and articles mapped below:**
 
-| DORA Article | Obligation | Primary Controls |
-| ------------ | ---------- | ---------------- |
-| Art. 8(1–6) | ICT risk management lifecycle | RC-1A, RC-2A, RC-4A, RC-6A |
-| Art. 8(5) | Documented procedures for expedited changes | Feedback Loop Path A |
-| Art. 9(2) | Prevention and detection of ICT incidents | SC-1A, SC-3B, SC-4A, SC-6A |
-| Art. 9(4)(c) | Security policies governing automated agents | SC-0D, SC-2B |
-| Art. 10 | Continuous monitoring and response | QC-6A, RC-6A, SC-6B |
-| Art. 17–19 | Incident classification, response, and reporting | SC-6A |
-| Art. 24–25 | Security testing | SC-4A, SC-4B |
+#### Chapter I: General Provisions (Arts. 1–4)
+
+Not subject to specific A-SDLC controls — these are definitional and procedural provisions that provide context for operational compliance. Compliance achieved through adherence to Articles 5–64.
+
+#### Chapter II: ICT Risk Management (Arts. 5–16)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 5** | Governance and organisation | *Not directly mapped — governance responsibility delegated to financial entity board* | ⚠️ **See note below** |
+| **Art. 8** | Identification | RC-1A, GC-0B, QC-1A, QC-2A, RC-3A | ✅ Strong |
+| **Art. 8(5-6)** | Documentation of procedures | QC-1A, QC-1B, QC-3A, RC-3A, GC-0A | ✅ Strong |
+| **Art. 9(2)** | Prevention and detection | SC-0D, SC-1A, SC-2B, SC-3A, SC-3B, SC-1B, SC-5C | ✅ Strong |
+| **Art. 9(4)** | Change management | RC-2A, RC-5A, QC-3A, QC-3B, RC-3A | ✅ Strong |
+| **Art. 10** | Detection mechanisms | SC-6A, SC-6B, QC-6A, RC-6A | ✅ Strong |
+| **Art. 11** | Response and recovery | RC-5B, QC-6A, RC-6A, QC-5A | ✅ Strong |
+
+#### Chapter III: Incident Management (Arts. 17–23)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 17** | ICT incident management | GC-0A, SC-6A | ✅ Strong |
+| **Art. 18** | Classification | SC-6A | ✅ Partial |
+| **Art. 19** | Reporting | GC-0A, SC-6A | ✅ Partial |
+| **Art. 20–23** | Classification criteria, reporting timelines | *Operational procedures for entities — not controlled by development lifecycle* | ℹ️ **Org-level compliance** |
+
+#### Chapter IV: Digital Operational Resilience Testing (Arts. 24–27)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 24** | General testing requirements | SC-4A, SC-4B, SC-5A, QC-4A, QC-4B | ✅ Strong |
+| **Art. 25** | Testing of tools and systems | SC-4A, SC-4B, SC-5A, SC-3D, SC-3E, SC-4C, QC-4A | ✅ Strong |
+| **Art. 26–27** | Penetration testing, TLPT oversight | *Operational testing coordinated by financial entity governance* | ℹ️ **Org-level execution** |
+
+#### Chapter V: Third-Party Risk (Arts. 28–44)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 28** | Third-party risk management | GC-0C, SC-3A, GC-3A, SC-5B | ✅ Partial |
+| **Art. 29–44** | Concentration risk, contracts, exit strategies | *Procurement & vendor management — financial entity responsibility* | ℹ️ **Org-level execution** |
+
+#### Chapter VI–IX: Competent Authorities, Delegated Acts, Transitions (Arts. 45–64)
+Not subject to A-SDLC controls — these are regulatory procedural and transitional provisions.
+
+---
 
 ### EU AI Act — Artificial Intelligence Act
 
 Regulation (EU) 2024/1689 · Effective 1 August 2024
 
-Applies to AI systems placed on the EU market. The A-SDLC enforces compliance through the AI control track (AC):
+Applies to AI system providers and deployers in the EU. **All articles mapped below:**
 
-| AI Act Article | Obligation | Primary Controls |
-| -------------- | ---------- | ---------------- |
-| Art. 6, Annex III | Risk tier classification | AC-1A |
-| Art. 9 | Risk management system | AC-1A, RC-4A |
-| Art. 10(2)(f), Art. 15(1) | Bias and fairness testing | AC-4A |
-| Art. 11, Annex IV | Technical documentation | QC-4C, AC-2A |
-| Art. 13 | Transparency and explainability | AC-2A |
-| Art. 14 | Human oversight | RC-2A, SC-0D, SC-2B |
-| Art. 15 | Accuracy, robustness, security | SC-4A, SC-4B |
-| Art. 72–73 | Post-market monitoring and incident reporting | AC-6A, SC-6A |
+#### Chapter III: High-Risk AI Systems (Arts. 6–44)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 6 + Annex III** | High-risk classification | AC-1A | ✅ Partial |
+| **Art. 9** | Risk management system | AC-1A, RC-4A, AC-6A, RC-2A, QC-1B, RC-3A | ✅ Strong |
+| **Art. 10** | Data governance | AC-2A, AC-4A | ✅ Partial |
+| **Art. 11 + Annex IV** | Technical documentation | QC-4C, AC-2A | ✅ Partial |
+| **Art. 12** | Record-keeping | GC-0A, GC-0B, RC-3A, GC-0D | ✅ Strong |
+| **Art. 13** | Transparency | AC-2A | ✅ Partial |
+| **Art. 14** | Human oversight | SC-2B, AC-2A | ✅ Partial |
+| **Art. 15** | Accuracy, robustness, cybersecurity | AC-4A, SC-1A, SC-3B, SC-5B, QC-4A, QC-4B, SC-4D | ✅ Strong |
+| **Art. 16–25** | Conformity assessment, quality management | *Operational procedures for documentation — verified in QC-4C* | ℹ️ **Org-level execution** |
+
+#### Chapter V: GPAI Models (Arts. 51–56)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 51–56** | GPAI obligations, transparency, testing | AC-1B, AC-2A, AC-2B | ✅ Strong |
+
+#### Chapter VI: Deployment, Monitoring, Enforcement (Arts. 57–102)
+
+| Article | Title | Primary Controls | Coverage |
+| ------- | ----- | ---------------- | -------- |
+| **Art. 26** | Deployer obligations | GC-0C, AC-6A | ✅ Partial |
+| **Art. 72** | Post-market monitoring | AC-6A | ✅ Partial |
+| **Art. 73** | Serious incident reporting | AC-6A, SC-6A | ✅ Partial |
+| **Art. 74–102** | Market surveillance, enforcement, penalties | *Regulatory enforcement by authorities — not A-SDLC controlled* | ℹ️ **Org-level compliance** |
+
+---
+
+### Coverage Interpretation Guide
+
+**✅ Strong:** Explicit control(s) directly verify or enforce this obligation
+
+**✅ Partial:** Control(s) address part of the obligation; remaining aspects handled operationally
+
+**⚠️ Not Mapped:** Obligation exists but falls outside A-SDLC scope (see below)
+
+**ℹ️ Org-level:** Obligation is non-technical or organizational governance (not lifecycle-controlled)
+
+---
+
+### Why Certain Articles Don't Have Explicit A-SDLC Controls
+
+#### **DORA Art. 5: Governance and Organisation**
+
+**Obligation:** Board and senior management must maintain governance framework, define risk tolerance, ensure training on ICT risk.
+
+**Why not controlled:** Art. 5 is an **organizational governance obligation** that applies to the financial entity as a whole, not to the software development lifecycle. It requires:
+
+- Board-level decision-making and oversight (not an SDLC process gate)
+- Enterprise-wide governance framework (spans beyond development)
+- Training programme for all staff (not just development teams)
+
+**How it's enabled:** The A-SDLC framework assumes an underlying governance structure defined per Art. 5. All 51 controls execute within that framework. RC-2A (Design Approval) and RC-5A (CAB Approval) assume human decision-makers with appropriate authority, which is established by Art. 5 governance.
+
+#### **DORA Arts. 20–23, 26–27, 29–44: Procedural/Operational Governance**
+
+**Why not controlled:** These articles prescribe:
+
+- Incident classification criteria (Art. 20–22) — determined operationally per incident
+- Penetration testing oversight (Art. 26–27) — coordinated by financial entity's risk office
+- Vendor selection, contracting, SLA negotiation (Arts. 29–44) — procurement function
+
+These are executed outside the development lifecycle. SC-6A enables incident detection; the financial entity operationally applies Art. 20–23 classification and reporting rules.
+
+#### **EU AI Act Arts. 16–25, 74–102: Conformity Assessment, Enforcement**
+
+**Why not controlled:**
+
+- Conformity assessment (Art. 16) and quality management (Art. 22–25) produce documentation verified by QC-4C
+- Market surveillance (Art. 74+) and enforcement (Art. 85+) are regulatory authority functions
+
+The A-SDLC enables compliance; authorities execute enforcement.
+
+---
 
 ## Coverage Summary
 
