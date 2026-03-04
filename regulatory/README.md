@@ -48,6 +48,46 @@ Applies to AI systems placed on the EU market. The A-SDLC enforces compliance th
 | Art. 15 | Accuracy, robustness, security | SC-4A, SC-4B |
 | Art. 72–73 | Post-market monitoring and incident reporting | AC-6A, SC-6A |
 
+## Coverage Summary
+
+The A-SDLC framework now includes **51 controls** across 5 tracks, with the following regulatory coverage:
+
+### Overall Coverage
+
+| Framework | Mapped Controls | Coverage |
+| --------- | --------------- | -------- |
+| **DORA** | 27 / 51 | **52.9%** |
+| **EU AI Act** | 22 / 51 | **43.1%** |
+
+### Coverage by Track
+
+| Track | Total Controls | DORA-Mapped | EU AI Act-Mapped | Combined Mapped |
+| ----- | -------------- | ----------- | ---------------- | --------------- |
+| QC (Quality) | 10 | 4 (40%) | 2 (20%) | 4 (40%) |
+| RC (Risk) | 8 | 5 (62.5%) | 2 (25%) | 5 (62.5%) |
+| SC (Security) | 16 | 14 (87.5%) | 8 (50%) | 14 (87.5%) |
+| AC (AI) | 6 | 3 (50%) | 6 (100%) | 6 (100%) |
+| GC (Governance) | 6 | 6 (100%) | 6 (100%) | 6 (100%) |
+
+### Key Coverage Areas
+
+**DORA Strengths (87.5% SC track):**
+
+- Security testing (Art. 24–25): SC-4A, SC-4B, SC-4C, SC-4D
+- Incident management (Art. 17–19): SC-6A, SC-6B, GC-0A
+- Third-party risk (Art. 28): GC-0C, GC-3A, SC-3D, SC-3E
+- Access controls (Art. 9): SC-3A, SC-5C
+- ICT risk lifecycle (Art. 8–11): RC-1A, RC-2A, RC-4A, RC-6A
+
+**EU AI Act Strengths (100% AC & GC tracks):**
+
+- AI risk management (Art. 9): AC-1A, AC-1B, RC-4A, AC-6A
+- Bias & fairness testing (Art. 10, 15): AC-4A, SC-4D
+- Technical documentation (Art. 11, Annex IV): QC-4C, AC-2A, AC-2B
+- Model governance (Art. 72): AC-2B, AC-6A
+- GPAI obligations (Art. 51–56): AC-1B, AC-2A, AC-2B
+- Post-market surveillance (Art. 73): AC-6A, SC-6A
+
 ## How Controls Reference This Material
 
 Each control YAML in `controls/[track]/` carries a `regulatory_mapping` field citing specific articles from the frameworks above. The articles are sourced from [sources.yaml](sources.yaml), and the cross-cutting coverage view is maintained in [compliance-matrix.yaml](compliance-matrix.yaml).
