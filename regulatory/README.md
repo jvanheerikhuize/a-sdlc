@@ -4,11 +4,22 @@ This directory contains the regulatory reference material that underpins every A
 
 ## Files
 
-| File | Purpose |
-| ---- | ------- |
-| [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated regulatory mapping: which controls satisfy which DORA and EU AI Act articles; coverage by track and regulatory area |
-| [sources.yaml](sources.yaml) | Canonical article texts and obligation summaries for DORA and the EU AI Act; used as source material for all mappings |
-| **README.md** (this file) | Overview of regulatory frameworks, coverage summary, control mapping strategy (single-framework vs. dual-framework scoping) |
+| File | Purpose | For Updates? |
+| ---- | ------- | ----------- |
+| [MAPPING-GUIDE.md](MAPPING-GUIDE.md) | **Step-by-step workflow** for adding/updating control mappings | ✅ **Start here** |
+| [control-article-index.yaml](control-article-index.yaml) | Machine-readable source of truth for all control-article mappings (edit this, not the README directly) | ✅ **Central resource** |
+| [compliance-matrix.yaml](compliance-matrix.yaml) | Consolidated mapping: which controls satisfy which DORA/EU AI Act articles; coverage by track | Reference |
+| [sources.yaml](sources.yaml) | Official article texts and obligation summaries; used as source material for mappings | Reference |
+| **README.md** (this file) | Human-readable article-to-control tables; framework overview; coverage summary | Generated from control-article-index.yaml |
+
+### Quick Start for Updates
+
+**Adding a new control mapping?** Follow this order:
+
+1. **Read** [MAPPING-GUIDE.md](MAPPING-GUIDE.md) for the workflow
+2. **Edit** [control-article-index.yaml](control-article-index.yaml) to add/update the mapping
+3. **Sync** the entry to `compliance-matrix.yaml`
+4. **Update** this README's article tables accordingly
 
 ## Regulatory Frameworks
 

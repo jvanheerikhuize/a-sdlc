@@ -1,0 +1,708 @@
+# Control-to-Article Mapping Index
+# Machine-readable source of truth for all regulatory mappings
+# Generated from: controls/[track]/[ID].yaml regulatory_mapping fields
+# Used to validate consistency and support README generation
+
+controls:
+  # DORA-Only Controls
+  QC-1A:
+    name: "Feature Acceptance Criteria"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+
+  QC-2A:
+    name: "Design Completeness & Standards"
+    mappings:
+      - framework: DORA
+        article: "8(4)"
+        coverage: Strong
+
+  QC-3A:
+    name: "Pull Request Creation & Review"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+
+  QC-3B:
+    name: "Code Quality Standards"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+
+  QC-5A:
+    name: "Release Readiness Checklist"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+
+  QC-6A:
+    name: "SLA/SLO Monitoring"
+    mappings:
+      - framework: DORA
+        article: "8(6)"
+        coverage: Strong
+
+  RC-5A:
+    name: "CAB Approval"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+
+  RC-5B:
+    name: "Rollback Plan Validation"
+    mappings:
+      - framework: DORA
+        article: "11"
+        coverage: Strong
+
+  SC-2C:
+    name: "Zero-Trust Architecture Validation"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+
+  SC-3C:
+    name: "Secrets & Credentials Scanning"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+
+  RC-6B:
+    name: "Third-Party Continuous Risk Monitoring"
+    mappings:
+      - framework: DORA
+        article: "28"
+        coverage: Strong
+
+  # Dual-Framework Controls
+  GC-0A:
+    name: "Audit Trail & Compliance Reporting"
+    mappings:
+      - framework: DORA
+        article: "17"
+        coverage: Strong
+      - framework: DORA
+        article: "19"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "12"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Partial
+
+  GC-0B:
+    name: "End-to-End Traceability"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "20"
+        coverage: Strong
+
+  GC-0C:
+    name: "Agent Provenance Registry"
+    mappings:
+      - framework: DORA
+        article: "28"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "23"
+        coverage: Partial
+
+  GC-0D:
+    name: "Compliance Evidence Automation"
+    mappings:
+      - framework: DORA
+        article: "8(6)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "16"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "24"
+        coverage: Strong
+
+  GC-1A:
+    name: "Intent Audit Record"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9(2)"
+        coverage: Strong
+
+  GC-3A:
+    name: "Code Provenance Tracking"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Partial
+
+  # Security Controls (Mostly Dual-Framework)
+  SC-0D:
+    name: "Core Directive Injection"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "14"
+        coverage: Partial
+
+  SC-1A:
+    name: "Pre-Guardrails"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "5"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-1B:
+    name: "Data Classification & Sensitivity Screening"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "10(5)"
+        coverage: Strong
+
+  SC-2A:
+    name: "Threat Model Validation"
+    mappings:
+      - framework: DORA
+        article: "8(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9(2)"
+        coverage: Strong
+
+  SC-2B:
+    name: "Stage Directive Injection"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "14"
+        coverage: Partial
+
+  SC-3A:
+    name: "Permission & Access Control Enforcement"
+    mappings:
+      - framework: DORA
+        article: "9(3)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-3B:
+    name: "Post-Guardrails"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "5"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-3D:
+    name: "SCA & SBOM Generation"
+    mappings:
+      - framework: DORA
+        article: "25"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-3E:
+    name: "Container & IaC Security Scanning"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: DORA
+        article: "25"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-4A:
+    name: "SAST"
+    mappings:
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: DORA
+        article: "25"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-4B:
+    name: "DAST"
+    mappings:
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: DORA
+        article: "25"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-4C:
+    name: "API Security Testing"
+    mappings:
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: DORA
+        article: "25"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(3)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(5)"
+        coverage: Strong
+
+  SC-4D:
+    name: "Adversarial AI Robustness Testing"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(5)"
+        coverage: Strong
+
+  SC-5A:
+    name: "Infrastructure Security"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-5B:
+    name: "Deployment Integrity"
+    mappings:
+      - framework: DORA
+        article: "9(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+
+  SC-5C:
+    name: "Secrets & Key Management Lifecycle"
+    mappings:
+      - framework: DORA
+        article: "9(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "84"
+        coverage: Partial
+
+  SC-6A:
+    name: "Incident Detection, Classification & Response"
+    mappings:
+      - framework: DORA
+        article: "9(1)"
+        coverage: Strong
+      - framework: DORA
+        article: "17"
+        coverage: Strong
+      - framework: DORA
+        article: "18"
+        coverage: Partial
+      - framework: DORA
+        article: "19"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "73"
+        coverage: Strong
+
+  SC-6B:
+    name: "Anomaly Detection & Alerting"
+    mappings:
+      - framework: DORA
+        article: "9(1)"
+        coverage: Strong
+      - framework: DORA
+        article: "10"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Strong
+
+  # Risk Controls (Mostly Dual-Framework)
+  RC-1A:
+    name: "Risk Classification"
+    mappings:
+      - framework: DORA
+        article: "6"
+        coverage: Partial
+      - framework: DORA
+        article: "8"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+
+  RC-2A:
+    name: "Design Approval"
+    mappings:
+      - framework: DORA
+        article: "8(3)"
+        coverage: Strong
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "8"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+
+  RC-2B:
+    name: "Privacy Impact Assessment Gate"
+    mappings:
+      - framework: EU AI Act
+        article: "10(5)"
+        coverage: Strong
+
+  RC-3A:
+    name: "Decision Log"
+    mappings:
+      - framework: DORA
+        article: "7"
+        coverage: Strong
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "12"
+        coverage: Strong
+
+  RC-4A:
+    name: "Risk Threshold Evaluation"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "17"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "21"
+        coverage: Partial
+
+  RC-6A:
+    name: "Risk & Health Monitoring"
+    mappings:
+      - framework: DORA
+        article: "8(6)"
+        coverage: Strong
+      - framework: DORA
+        article: "10"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "71"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Strong
+
+  # Quality Controls (EU AI Act-Only)
+  QC-4A:
+    name: "Functional & Non-Functional Testing"
+    mappings:
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(1)"
+        coverage: Strong
+
+  QC-4B:
+    name: "AI Output Validation"
+    mappings:
+      - framework: DORA
+        article: "24"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "10(1)"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "10(3)"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "15(1)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(3)"
+        coverage: Partial
+
+  QC-4C:
+    name: "Documentation Completeness"
+    mappings:
+      - framework: DORA
+        article: "8(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "11"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "16"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "17"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "20"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "24"
+        coverage: Strong
+
+  # AI Controls (EU AI Act-Only)
+  AC-1A:
+    name: "AI Risk Tier Classification"
+    mappings:
+      - framework: EU AI Act
+        article: "5"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "6"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "7"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "10(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "55"
+        coverage: Partial
+
+  AC-1B:
+    name: "GPAI & Foundation Model Obligation Screening"
+    mappings:
+      - framework: EU AI Act
+        article: "51"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "55"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "56"
+        coverage: Strong
+
+  AC-2A:
+    name: "AI Component Design Review"
+    mappings:
+      - framework: EU AI Act
+        article: "10"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "11"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "13"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "14(1)"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "15(1)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "16"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "17"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "20"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "24"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "25"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "50"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "51"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "52"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "53"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "54"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "72(3)"
+        coverage: Strong
+
+  AC-2B:
+    name: "AI Model Governance & Version Control"
+    mappings:
+      - framework: DORA
+        article: "28"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "11"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "51"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "52"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "53"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "56"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72(2)"
+        coverage: Strong
+
+  AC-4A:
+    name: "Bias & Fairness Testing"
+    mappings:
+      - framework: EU AI Act
+        article: "10(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "10(5)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(1)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(2)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(3)"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "15(5)"
+        coverage: Strong
+
+  AC-6A:
+    name: "AI Post-Market Surveillance"
+    mappings:
+      - framework: DORA
+        article: "28"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "9"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "10(4)"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "15(3)"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "25"
+        coverage: Partial
+      - framework: EU AI Act
+        article: "56"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "71"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "72"
+        coverage: Strong
+      - framework: EU AI Act
+        article: "73"
+        coverage: Strong
+
+# Summary Statistics
+summary:
+  total_controls: 51
+  dora_mapped: 43
+  eu_ai_act_mapped: 30
+  dual_framework: 35
+  dora_only: 10
+  eu_ai_act_only: 6
+
+# Framework Article Coverage
+frameworks:
+  DORA:
+    chapters: 9
+    total_articles: 64
+    mapped_articles: 31
+    unmapped_reason: "Articles 1-4 (definitional), 5 (org governance), 20-23, 26-27, 29-44, 45-64 (procedural/regulatory)"
+
+  EU AI Act:
+    chapters: 10
+    total_articles: 99
+    mapped_articles: 44
+    unmapped_reason: "Articles 1-4 (definitional), 16-25 (conformity/quality verified by QC-4C), 57-63 (optional), 64-70 (regulatory governance), 74-102 (enforcement/penalties)"
