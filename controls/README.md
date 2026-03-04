@@ -1,20 +1,20 @@
 # Controls
 
-This directory contains all 39 A-SDLC control definitions, organised by track.
+This directory contains all 51 A-SDLC control definitions, organised by track.
 
 ## Tracks
 
 | Directory | Code | Name | Controls | Owner team |
 | --------- | ---- | ---- | -------- | ---------- |
 | [qc/](qc/) | `QC` | Quality Controls | 10 | Engineering / Product |
-| [rc/](rc/) | `RC` | Risk Controls | 7 | Risk Management |
-| [sc/](sc/) | `SC` | Security Controls | 13 | Security |
-| [ac/](ac/) | `AC` | AI Controls | 4 | AI Governance |
-| [gc/](gc/) | `GC` | Governance Controls | 5 | Governance & Compliance |
+| [rc/](rc/) | `RC` | Risk Controls | 9 | Risk Management |
+| [sc/](sc/) | `SC` | Security Controls | 20 | Security |
+| [ac/](ac/) | `AC` | AI Controls | 6 | AI Governance |
+| [gc/](gc/) | `GC` | Governance Controls | 6 | Governance & Compliance |
 
 ## Fast Lookup
 
-[registry.yaml](registry.yaml) — flat index of all 39 controls with ID, name, stage, track, delegation pattern, and file path. Use this for programmatic lookup or quick reference without reading individual control files.
+[registry.yaml](registry.yaml) — flat index of all 51 controls with ID, name, stage, track, delegation pattern, and file path. Use this for programmatic lookup or quick reference without reading individual control files.
 
 ## Control ID Format
 
@@ -25,7 +25,7 @@ This directory contains all 39 A-SDLC control definitions, organised by track.
 
 ## Cross-Cutting Controls
 
-Five controls are always active regardless of stage:
+Six controls are always active regardless of stage:
 
 | ID | Name | Payload |
 | -- | ---- | ------- |
@@ -34,6 +34,7 @@ Five controls are always active regardless of stage:
 | [GC-0A](gc/GC-0A.yaml) | Audit Trail & Compliance Reporting | — |
 | [GC-0B](gc/GC-0B.yaml) | End-to-End Traceability | — |
 | [GC-0C](gc/GC-0C.yaml) | Agent Provenance Registry | — |
+| [GC-0D](gc/GC-0D.yaml) | Compliance Evidence Automation | — |
 
 ## Control File Structure
 

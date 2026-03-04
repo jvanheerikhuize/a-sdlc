@@ -115,7 +115,7 @@ Each stage directory contains:
 ### Full Control Registry
 
 ```text
-controls/registry.yaml    # Flat index of all 39 controls — fast lookup by ID with file path
+controls/registry.yaml    # Flat index of all 51 controls — fast lookup by ID with file path
 ```
 
 ---

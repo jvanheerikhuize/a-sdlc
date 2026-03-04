@@ -37,7 +37,7 @@ Exit codes: `0` = passed (with or without warnings) · `1` = failures present ·
 | Section | Checks |
 | ------- | ------ |
 | **1/7 Control files** | Schema compliance; `id` field matches filename; ID pattern `[Track]-[Stage][Letter]` |
-| **2/7 Registry** | All 39 controls present; no duplicate IDs; all `file` and `directive_payload` paths resolve |
+| **2/7 Registry** | All 51 controls present; no duplicate IDs; all `file` and `directive_payload` paths resolve |
 | **3/7 Stage files** | Schema compliance; `process.md` exists; all `required_controls` IDs in registry; all artifact paths exist |
 | **4/7 Directive files** | Schema compliance for core and all six stage directive bundles |
 | **5/7 Control dependencies** | All `dependencies` IDs exist in registry; no circular dependency chains |
