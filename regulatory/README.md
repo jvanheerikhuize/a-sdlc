@@ -16,65 +16,107 @@ This directory contains the regulatory reference material that underpins every A
 
 Regulation (EU) 2022/2554 · Effective 17 January 2025
 
-Applies to financial entities operating in the EU. **All chapters and articles mapped below:**
+Applies to financial entities operating in the EU. **All chapters and articles comprehensively mapped below:**
 
 #### DORA Chapter I: General Provisions (Arts. 1–4)
 
-Not subject to specific A-SDLC controls — these are definitional and procedural provisions that provide context for operational compliance. Compliance achieved through adherence to Articles 5–64.
+| Article | Title | A-SDLC Control(s) | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 1** | Subject matter | — | Definitional scope; compliance achieved through adherence to later chapters. |
+| **Art. 2** | Scope | — | Scope determination is organizational governance (which entities must comply). A-SDLC applies once scope is determined. |
+| **Art. 3** | Definitions | — | Provides terminology used throughout DORA. Not directly controlled by SDLC processes. |
+| **Art. 4** | Exemptions and transitional provisions | — | Regulatory exemptions and grandfathering provisions; entity determines applicability. Not SDLC-controlled. |
 
 #### DORA Chapter II: ICT Risk Management (Arts. 5–16)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 5** | Governance and organisation | *Not directly mapped — governance responsibility delegated to financial entity board* | ⚠️ **See note below** |
-| **Art. 8** | Identification | RC-1A, GC-0B, QC-1A, QC-2A, RC-3A | ✅ Strong |
-| **Art. 8(5-6)** | Documentation of procedures | QC-1A, QC-1B, QC-3A, RC-3A, GC-0A | ✅ Strong |
-| **Art. 9(2)** | Prevention and detection | SC-0D, SC-1A, SC-2B, SC-3A, SC-3B, SC-1B, SC-5C | ✅ Strong |
-| **Art. 9(4)** | Change management | RC-2A, RC-5A, QC-3A, QC-3B, RC-3A | ✅ Strong |
-| **Art. 10** | Detection mechanisms | SC-6A, SC-6B, QC-6A, RC-6A | ✅ Strong |
-| **Art. 11** | Response and recovery | RC-5B, QC-6A, RC-6A, QC-5A | ✅ Strong |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 5** | Governance and organisation of ICT risk | — | **Org-level responsibility.** Board and senior management establish governance framework, risk appetite, training programs. This is enterprise governance that pre-exists SDLC execution; A-SDLC assumes this framework is in place. RC-2A and RC-5A validate human decision-making authority established by Art. 5 governance. |
+| **Art. 6** | ICT risk identification | RC-1A | RC-1A creates risk register at project start (Stage 1), enabling identification of ICT risks. ✅ Partial |
+| **Art. 7** | Risk management framework documentation | GC-0A, RC-3A, GC-0B | GC-0A maintains audit trail of risk decisions; GC-0B documents risk assessment history; RC-3A records mitigation decisions. ✅ Strong |
+| **Art. 8** | ICT risk management process | RC-1A, RC-2A, RC-3A, RC-4A, RC-6A | RC-1A identifies risks (Art. 8(2)); RC-2A assesses and prioritizes (Art. 8(3)); RC-3A documents decisions (Art. 8(5)); RC-4A validates risk acceptance (Art. 8(5)); RC-6A monitors ongoing risk evolution (Art. 8(6)). ✅ Strong |
+| **Art. 8(5-6)** | Documentation and continuous monitoring | QC-1A, QC-1B, QC-3A, RC-3A, GC-0A, QC-6A, RC-6A | All controls produce documented evidence. QC-6A and RC-6A enable continuous monitoring. ✅ Strong |
+| **Art. 9(1)** | ICT-related incidents and vulnerabilities | SC-6A, SC-6B, GC-0A | SC-6A detects incidents; SC-6B detects anomalies; GC-0A logs all events. ✅ Strong |
+| **Art. 9(2)** | Prevention and detection of security threats | SC-0D, SC-1A, SC-1B, SC-2A, SC-2B, SC-3A, SC-3B, SC-3D, SC-3E, SC-4A, SC-4B, SC-4C, SC-4D, SC-5A, SC-5B, SC-5C | Comprehensive security controls from Stage 1 through 5 prevent and detect threats across all development and deployment lifecycle. ✅ Strong |
+| **Art. 9(3)** | Least privilege and segregation of duties | SC-3A | SC-3A enforces permission models and access control least-privilege principles. ✅ Strong |
+| **Art. 9(4)** | ICT security policies and technical measures | SC-0D, SC-1A, SC-1B, SC-2C, SC-3A, SC-3C, SC-3E, SC-5A, SC-5C, RC-5A | SC-0D injects core security directives; SC-2C validates zero-trust architecture; SC-3C and SC-5C manage secrets/keys; SC-5A validates infrastructure baseline. RC-5A gates deployment. ✅ Strong |
+| **Art. 10** | Detection and monitoring | SC-6A, SC-6B, QC-6A, RC-6A | SC-6A and SC-6B provide real-time incident and anomaly detection; QC-6A and RC-6A monitor operational health and risk metrics. ✅ Strong |
+| **Art. 11** | Response and recovery procedures | RC-5B, RC-6A, QC-6A | RC-5B validates rollback procedures before deployment; RC-6A and QC-6A monitor recovery execution. ✅ Strong |
+| **Art. 12** | Reporting incidents to competent authorities | GC-0A, SC-6A | GC-0A maintains audit trail of incidents with timestamps and evidence; SC-6A classifies and logs incident details for regulatory reporting. ✅ Partial |
+| **Art. 13** | Reporting incidents to customers | GC-0A, SC-6A | GC-0A provides audit evidence of incident timelines; SC-6A logs incident classification and timing for customer notification. ✅ Partial |
+| **Art. 14** | Mitigation measures and contingency plans | RC-2A, RC-5B | RC-2A develops mitigation strategies during design phase; RC-5B validates contingency and rollback procedures. ✅ Strong |
+| **Art. 15** | Continuity and recovery planning | RC-5B, RC-6A, QC-5A | RC-5B validates recovery plan feasibility; RC-6A monitors ongoing recovery capability; QC-5A gates release only after continuity measures are verified. ✅ Strong |
+| **Art. 16** | Backup policies and restoration procedures | RC-5B, QC-5A | RC-5B validates backup and recovery procedures; QC-5A checks backup integrity before release. ✅ Partial |
 
 #### DORA Chapter III: Incident Management (Arts. 17–23)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 17** | ICT incident management | GC-0A, SC-6A | ✅ Strong |
-| **Art. 18** | Classification | SC-6A | ✅ Partial |
-| **Art. 19** | Reporting | GC-0A, SC-6A | ✅ Partial |
-| **Art. 20–23** | Classification criteria, reporting timelines | *Operational procedures for entities — not controlled by development lifecycle* | ℹ️ **Org-level compliance** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 17** | ICT incident management function | GC-0A, SC-6A | GC-0A creates immutable log of all incidents; SC-6A detects and escalates incidents. ✅ Strong |
+| **Art. 18** | Classification of incidents | SC-6A | SC-6A classifies incidents by severity and impact; classification feeds into Art. 19-20 reporting rules. ✅ Partial |
+| **Art. 19** | Incident reporting to competent authorities | GC-0A, SC-6A | GC-0A maintains timestamp and evidence audit trail; SC-6A triggers automated incident notifications and logging. ✅ Strong |
+| **Art. 20** | Classification of significant impact events | — | **Org-level procedure.** DORA Annex defines materiality thresholds (e.g., >€1M loss, >100K customers affected). Classification is entity policy decision, not SDLC-controlled. SC-6A and GC-0A enable the entity to apply these criteria. ℹ️ **Org-level execution** |
+| **Art. 21** | Notification to competent authorities | — | **Org-level procedure.** Timelines (4 hours for notification, 15 days for full disclosure) are administrative execution managed by financial entity risk/compliance function. A-SDLC supports through incident logging (GC-0A, SC-6A). ℹ️ **Org-level execution** |
+| **Art. 22** | Notification to financial customers | — | **Org-level procedure.** Determination of "likely to materially impact" and customer notification strategy are entity governance decisions. A-SDLC provides evidence trail. ℹ️ **Org-level execution** |
+| **Art. 23** | Public disclosure | — | **Org-level procedure.** Public disclosure decisions and timeline are entity responsibility. A-SDLC provides documentation evidence. ℹ️ **Org-level execution** |
 
 #### DORA Chapter IV: Digital Operational Resilience Testing (Arts. 24–27)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 24** | General testing requirements | SC-4A, SC-4B, SC-5A, QC-4A, QC-4B | ✅ Strong |
-| **Art. 25** | Testing of tools and systems | SC-4A, SC-4B, SC-5A, SC-3D, SC-3E, SC-4C, QC-4A | ✅ Strong |
-| **Art. 26–27** | Penetration testing, TLPT oversight | *Operational testing coordinated by financial entity governance* | ℹ️ **Org-level execution** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 24** | General testing requirements | SC-4A, SC-4B, QC-4A, QC-4B, SC-5A | SC-4A (SAST) and SC-4B (DAST) test code; QC-4A tests functionality; QC-4B tests AI outputs; SC-5A validates infrastructure baseline. ✅ Strong |
+| **Art. 25** | Testing of tools, systems, and data | SC-3D, SC-3E, SC-4A, SC-4B, SC-4C, SC-5A, QC-4A | SC-3D scans open-source dependencies (Art. 25(1) explicit requirement); SC-3E scans container/IaC; SC-4A/B/C test application and API security; SC-5A validates infrastructure. ✅ Strong |
+| **Art. 26** | Penetration testing | — | **Org-level execution.** Penetration testing is coordinated by financial entity risk/governance function; A-SDLC enables through SC-4A, SC-4B, SC-5A infrastructure readiness. Entity executes test scope and interpretation. ℹ️ **Org-level execution** |
+| **Art. 27** | Threat-led penetration testing (TLPT) oversight | — | **Org-level/Regulatory execution.** TLPT is a regulatory-directed assessment coordinated with ECB/EBA. Individual SDLC cannot govern regulatory testing scope. A-SDLC ensures infrastructure and code posture readiness (SC-5A, SC-4A/B). ℹ️ **Org-level execution** |
 
 #### DORA Chapter V: Third-Party Risk (Arts. 28–44)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 28** | Third-party risk management | GC-0C, SC-3A, GC-3A, SC-5B | ✅ Partial |
-| **Art. 29–44** | Concentration risk, contracts, exit strategies | *Procurement & vendor management — financial entity responsibility* | ℹ️ **Org-level execution** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 28** | ICT third-party risk management | GC-0C, GC-3A, SC-3D, SC-3E, RC-6B | GC-0C tracks code provenance/origin; GC-3A logs third-party code; SC-3D scans dependencies for CVEs; SC-3E scans container/IaC risk; RC-6B monitors provider risk posture. ✅ Strong |
+| **Art. 29** | ICT concentration risk | — | **Org-level responsibility.** Entity determines which third parties are critical (concentration assessment) and concentration limits. A-SDLC supports through Art. 28 tracking. ℹ️ **Org-level execution** |
+| **Art. 30** | Contractual requirements for ICT third parties | — | **Org-level/Procurement responsibility.** Financial entity negotiates SLAs, security clauses, exit terms with vendors. A-SDLC does not control contracting. ℹ️ **Org-level execution** |
+| **Art. 31** | Subcontracting arrangements | — | **Org-level/Legal responsibility.** Entity approval of vendor subcontracting chains is governance outside SDLC scope. ℹ️ **Org-level execution** |
+| **Art. 32** | Exit strategies and continuity | — | **Org-level responsibility.** Exit planning (data return timelines, continuity arrangements) is vendor management function. RC-5B validates rollback capability for *internal* deployments, not third-party exits. ℹ️ **Org-level execution** |
+| **Art. 33** | Right to audit ICT third parties | — | **Org-level responsibility.** Financial entity exercises audit rights in vendor contracts. A-SDLC does not govern third-party audit. ℹ️ **Org-level execution** |
+| **Art. 34** | Right of competent authority to audit | — | **Regulatory authority function.** Competent authorities (ECB, EBA, etc.) direct audits of third parties. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 35** | Information-sharing arrangements with third parties | — | **Org-level procedure.** Information-sharing agreements are entity policy. A-SDLC supports through GC-0A audit trail. ℹ️ **Org-level execution** |
+| **Art. 36** | Remediation measures (termination, suspension) | — | **Org-level responsibility.** Entity decides whether to suspend/terminate third-party relationships based on incident severity. A-SDLC provides evidence through SC-6A incident logging. ℹ️ **Org-level execution** |
+| **Art. 37** | Enhanced due diligence | — | **Org-level responsibility.** Financial entity conducts vendor security assessment (SOC 2 audits, security questionnaires). A-SDLC enforces controls over *use* of third-party services (SC-3D, SC-3E), not vendor selection. ℹ️ **Org-level execution** |
+| **Art. 38** | Critical ICT third-party definition | — | **Org-level/Regulatory criteria.** DORA Annex defines criticality thresholds. Entity applies these to determine which third parties are critical. A-SDLC does not determine criticality. ℹ️ **Org-level execution** |
+| **Art. 39** | Critical third-party risk management framework | — | **Org-level responsibility.** Entity establishes framework for critical third parties (Art. 32 requires explicit exit plans). A-SDLC ensures code from critical third parties is scanned (SC-3D/E). ℹ️ **Org-level execution** |
+| **Art. 40** | Concentration risk for critical third parties | — | **Org-level risk governance.** Entity limits dependency on any single critical third party. A-SDLC supports through supply chain visibility (SC-3D, GC-0C, GC-3A). ℹ️ **Org-level execution** |
+| **Art. 41** | Information about critical third parties | — | **Org-level/Regulatory reporting.** Entity discloses critical third-party names to competent authority. Not SDLC-controlled. ℹ️ **Org-level execution** |
+| **Art. 42** | Supervisory powers over critical third parties | — | **Regulatory authority function.** Competent authorities (ECB) directly regulate critical ICT third parties (cloud providers, AI service providers). A-SDLC does not control regulatory oversight. ℹ️ **Regulatory authority function** |
+| **Art. 43** | Regulatory technical standards (RTS) | — | **Regulatory delegation.** European Commission issues detailed RTS on third-party risk management. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 44** | Implementation timelines | — | **Org-level/Transitional provision.** Entity determines implementation timeline for critical third-party risk measures. Not SDLC-controlled. ℹ️ **Org-level execution** |
 
 #### DORA Chapter VI: Information-Sharing Arrangements (Art. 45)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 45** | Information-sharing arrangements | *Operational information-sharing procedures — not SDLC-controlled* | ℹ️ **Org-level execution** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 45** | Information-sharing arrangements on cyber security incidents | — | **Org-level procedure.** Financial entity participates in DORA information-sharing networks (CSIRTs, sectoral platforms). A-SDLC provides incident evidence (SC-6A, GC-0A); sharing decision is entity governance. ℹ️ **Org-level execution** |
 
 #### DORA Chapter VII: Competent Authorities (Arts. 46–56)
 
-Regulatory authority designation and coordination — not subject to A-SDLC controls.
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Arts. 46–56** | Competent authority designation, coordination, and powers | — | **Regulatory authority governance.** Articles 46–56 define ECB, EBA, national regulator roles and powers. Authorities supervise financial entities' DORA compliance (including SDLC execution). Not subject to SDLC controls. ℹ️ **Regulatory authority function** |
 
 #### DORA Chapter VIII: Delegated Acts (Arts. 57–60)
 
-European Commission delegated regulations — not subject to A-SDLC controls.
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Arts. 57–60** | Delegated acts and technical standards | — | **European Commission regulatory delegation.** Articles authorize EC to issue delegated regulations (DAs) and technical standards. Not SDLC-controlled; issued as separate regulations. ℹ️ **Regulatory authority function** |
 
 #### DORA Chapter IX: Transitional and Final Provisions (Arts. 61–64)
 
-Implementation timelines and transitional exemptions — not subject to A-SDLC controls.
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 61** | Implementation and reporting timelines | — | **Entity implementation planning.** Entity determines internal timeline for DORA control deployment. Not SDLC-controlled. ℹ️ **Org-level execution** |
+| **Art. 62** | Transitional exemptions for critical third parties | — | **Org-level/Regulatory.** Financial entities and ECB determine whether to use exemptions for critical third-party risk measures (Phase 1: up to 2027). Not SDLC-controlled. ℹ️ **Org-level execution** |
+| **Art. 63** | Review clause | — | **Regulatory function.** European Commission reviews DORA effectiveness (2027+). Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 64** | Entry into force | — | **Regulatory/Historical.** DORA effective 17 January 2025. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
 
 ---
 
@@ -82,71 +124,140 @@ Implementation timelines and transitional exemptions — not subject to A-SDLC c
 
 Regulation (EU) 2024/1689 · Effective 1 August 2024
 
-Applies to AI system providers and deployers in the EU. **All chapters and articles mapped below:**
+Applies to AI system providers and deployers in the EU. **All chapters and articles comprehensively mapped below:**
 
 #### EU AI Act Chapter I: General Provisions (Arts. 1–4)
 
-Definitional and scope provisions — not subject to explicit A-SDLC controls; compliance achieved through adherence to Articles 5–99.
+| Article | Title | A-SDLC Control(s) | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 1** | Subject matter and objective | — | Establishes scope and objectives of AI Act. Compliance achieved through adherence to later chapters. Not directly SDLC-controlled. |
+| **Art. 2** | Scope | — | Determines whether AI systems or providers are in scope (EU market, EU users, EU deployers). Entity makes scope determination; not SDLC-controlled. |
+| **Art. 3** | Definitions | — | Defines "AI system," "high-risk," "deployer," "provider," "GPAI," etc. Terminology baseline for compliance. Not directly controlled. |
+| **Art. 4** | Amendment of Annex I and Annex III | — | Regulatory procedures for updating prohibited/high-risk AI system definitions. Regulatory authority function, not SDLC-controlled. |
 
 #### EU AI Act Chapter II: Prohibited AI Practices (Art. 5)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 5** | Prohibited AI practices | SC-1A, SC-3B for detection; operational compliance is financial entity responsibility | ℹ️ **Org-level enforcement** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 5(1)** | Prohibition of AI practices causing harm | SC-1A, SC-3B, AC-1A | **Strong coverage with implementation responsibility.** SC-1A detects adversarial inputs in intent phase; SC-3B scans for injected code post-implementation; AC-1A flags high-risk AI systems that may violate Art. 5 (automated border control, law enforcement). However, **final determination that an AI system violates Art. 5 is entity responsibility** — A-SDLC enables detection but entity must enforce prohibition. ✅ Strong **+ Org-level enforcement** |
 
 #### EU AI Act Chapter III: High-Risk AI Systems (Arts. 6–49)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 6 + Annex III** | High-risk classification | AC-1A | ✅ Partial |
-| **Art. 9** | Risk management system | AC-1A, RC-4A, AC-6A, RC-2A, QC-1B, RC-3A | ✅ Strong |
-| **Art. 10** | Data governance | AC-2A, AC-4A | ✅ Partial |
-| **Art. 11 + Annex IV** | Technical documentation | QC-4C, AC-2A | ✅ Partial |
-| **Art. 12** | Record-keeping | GC-0A, GC-0B, RC-3A, GC-0D | ✅ Strong |
-| **Art. 13** | Transparency | AC-2A | ✅ Partial |
-| **Art. 14** | Human oversight | SC-2B, AC-2A | ✅ Partial |
-| **Art. 15** | Accuracy, robustness, cybersecurity | AC-4A, SC-1A, SC-3B, SC-5B, QC-4A, QC-4B, SC-4D | ✅ Strong |
-| **Art. 16–25** | Conformity assessment, quality management | *Operational procedures for documentation — verified in QC-4C* | ℹ️ **Org-level execution** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 6** | Classification of high-risk AI systems | AC-1A | AC-1A classifies AI systems using Annex III high-risk categories at Stage 1 (Intent Ingestion). ✅ Strong |
+| **Art. 7** | High-risk classification obligation | AC-1A | AC-1A documents whether a proposed AI system falls under Annex III high-risk categories. ✅ Strong |
+| **Art. 8** | Substantial modification of high-risk AI systems | AC-1A, RC-2A | When an AI system change constitutes "substantial modification," AC-1A re-classifies; RC-2A updates risk assessment. ✅ Partial |
+| **Art. 9** | Risk management system for high-risk AI systems | AC-1A, RC-1A, RC-2A, RC-4A, AC-6A, QC-1B, RC-3A, GC-0A | RC-1A identifies AI-specific risks (Stage 1); RC-2A develops mitigation (Stage 2); AC-6A monitors post-market (Stage 6); GC-0A maintains audit evidence. ✅ Strong |
+| **Art. 10(1)** | Data governance: training data quality | AC-2A, QC-4B | AC-2A documents training data governance; QC-4B validates data quality. ✅ Partial |
+| **Art. 10(2)** | Data governance: prohibited/bias risks | AC-2A, AC-4A | AC-2A identifies prohibited data categories (e.g., special categories per Art. 10(2)(a)); AC-4A tests for bias. ✅ Strong |
+| **Art. 10(3)** | Data governance: data filtering and cleaning | AC-2A, QC-4B | AC-2A documents data preprocessing; QC-4B validates cleaning effectiveness. ✅ Partial |
+| **Art. 10(4)** | Data governance: feedback loop monitoring | AC-2A, AC-6A | AC-2A establishes feedback loop governance; AC-6A monitors performance degradation post-market. ✅ Strong |
+| **Art. 10(5)** | Data governance: fundamental rights impact | AC-2A, SC-1B, AC-1A | AC-2A includes fundamental rights impact assessment (privacy, discrimination); SC-1B classifies sensitive data; AC-1A includes rights impact in high-risk classification. ✅ Strong |
+| **Art. 11** | Technical documentation of high-risk AI systems | AC-2A, QC-4C, AC-2B | AC-2A documents system design, architecture, model training; QC-4C ensures completeness; AC-2B tracks model versions. ✅ Strong |
+| **Art. 11(Annex IV)** | Detailed technical documentation requirements | AC-2A, QC-4C, AC-2B | Annex IV lists 20+ documentation requirements (model card, SHAP values, confusion matrix, etc.); AC-2A collects; QC-4C validates; AC-2B archives versions. ✅ Strong |
+| **Art. 12** | Record-keeping for high-risk AI systems | GC-0A, GC-0B, GC-0D, RC-3A | GC-0A maintains immutable logs of all AI decisions; GC-0B documents risk assessment history; GC-0D tracks compliance evidence; RC-3A logs risk mitigation decisions. ✅ Strong |
+| **Art. 13** | Transparency to deployers | AC-2A | AC-2A requires providers to disclose model limitations, performance thresholds, accuracy metrics to deployers. ✅ Partial |
+| **Art. 14(1)** | Human oversight: capability requirements | AC-2A, SC-2B, QC-4B | AC-2A documents oversight mechanisms; SC-2B injects guardrails to ensure human can intervene; QC-4B validates accuracy thresholds. ✅ Partial |
+| **Art. 14(2–5)** | Human oversight: specific competencies, intervention procedures | — | **Org-level responsibility.** Entity determines who is competent to override AI decisions, when override is permitted, escalation procedures. A-SDLC documents the technical capability for human oversight (SC-2B); entity operationalizes who makes decisions. ℹ️ **Org-level execution** |
+| **Art. 15(1)** | Accuracy, robustness, cybersecurity: general requirement | QC-4A, QC-4B, AC-4A | QC-4A tests functional correctness; QC-4B tests AI output accuracy; AC-4A tests robustness to bias. ✅ Strong |
+| **Art. 15(2)** | Accuracy: performance thresholds and metrics | QC-4B, AC-4A | QC-4B establishes accuracy thresholds (precision, recall, F1); AC-4A validates across demographic subgroups. ✅ Strong |
+| **Art. 15(3)** | Robustness to distribution shifts | AC-4A, QC-4B | AC-4A tests adversarial robustness; QC-4B validates generalization. ✅ Partial |
+| **Art. 15(4)** | Cybersecurity: infrastructure and supply chain security | SC-1A, SC-3A, SC-3B, SC-3D, SC-3E, SC-5A, SC-5B, SC-5C | SC-1A gates pre-guardrails; SC-3A enforces access controls; SC-3B scans post-implementation; SC-3D/E scan dependencies and container security; SC-5A/B/C validate infrastructure and secrets baseline. ✅ Strong |
+| **Art. 15(5)** | Adversarial robustness testing | SC-4D, AC-4A | SC-4D performs adversarial attack testing (prompt injection, model inversion); AC-4A validates resistance to adversarial examples. ✅ Strong |
+| **Art. 16** | Conformity assessment for high-risk AI systems | QC-4C, AC-2A, GC-0D | QC-4C verifies technical documentation completeness; AC-2A provides evidence of risk management; GC-0D compiles compliance evidence. ✅ Partial |
+| **Art. 17** | Conformity assessment procedure: internal procedure | QC-4C, AC-2A, RC-4A, GC-0D | QC-4C and AC-2A compile evidence; RC-4A conducts risk-based gate approval; GC-0D automates compliance documentation. ✅ Partial |
+| **Art. 18** | Conformity assessment procedure: third-party assessment | — | **Org-level/Third-party function.** Notified Bodies (independent test labs) perform conformity assessment for high-risk AI systems. Financial entity may commission external assessment; A-SDLC provides evidence (AC-2A, QC-4C) for external auditor review. ℹ️ **Org-level execution** |
+| **Art. 19** | Quality management system | QC-1A, QC-1B, QC-2A, QC-3A, QC-3B, QC-4C, QC-5A, QC-6A | All QC controls implement quality management practices across the lifecycle. ✅ Strong |
+| **Art. 20** | Quality management system: documentation | QC-1A, GC-0A, GC-0B, GC-0D | QC-1A establishes feature specifications; GC-0A logs decisions; GC-0B documents change history; GC-0D automates compliance evidence. ✅ Strong |
+| **Art. 21** | Quality management system: procedures for addressing non-conformities | RC-4A, QC-3B | RC-4A gates risk acceptance; QC-3B enforces code quality standards. ✅ Partial |
+| **Art. 22** | Quality management system: evaluation and updates | QC-6A, RC-6A, AC-6A | QC-6A monitors SLOs; RC-6A monitors risk; AC-6A monitors AI performance. ✅ Strong |
+| **Art. 23** | Quality management system: supplier/sub-processor involvement | GC-0C, GC-3A, SC-3D | GC-0C tracks provider/model provenance; GC-3A logs code attribution; SC-3D scans supplier dependencies. ✅ Partial |
+| **Art. 24** | Documentation of compliance measures | GC-0A, GC-0D, QC-4C, AC-2A | GC-0A and GC-0D maintain evidence trail; QC-4C verifies completeness; AC-2A documents all compliance measures. ✅ Strong |
+| **Art. 25** | Post-market surveillance plan | AC-2A, AC-6A, GC-0D | AC-2A documents surveillance approach; AC-6A executes monitoring; GC-0D compiles evidence. ✅ Partial |
 
 #### EU AI Act Chapter IV: Transparency Obligations (Art. 50)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 50** | Transparency for certain AI systems | AC-2A for documentation and transparency | ✅ Partial |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 50(1)** | Transparency for certain AI systems (biometric, emotional recognition, etc.) | AC-2A | AC-2A documents that system uses biometric/emotional recognition; disclosures to users are entity responsibility. ✅ Partial |
+| **Art. 50(2)** | Disclosure content | AC-2A | AC-2A requires disclosure of AI system use, purpose, limitations. ✅ Partial |
+| **Art. 50(3)** | Disclosure format | — | **Org-level responsibility.** How entity discloses (UI notice, terms of service, signage) is operational execution. ℹ️ **Org-level execution** |
 
 #### EU AI Act Chapter V: General-Purpose AI Models (Arts. 51–56)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 51–56** | GPAI obligations, transparency, testing | AC-1B, AC-2A, AC-2B | ✅ Strong |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 51** | Transparency obligations for GPAI providers | AC-1B, AC-2A, AC-2B | AC-1B screens whether a change uses GPAI models; AC-2A documents model provenance; AC-2B tracks model versions and limitations. ✅ Strong |
+| **Art. 52** | GPAI transparency: disclosure of training data summary | AC-2A, AC-2B | AC-2A documents training data characteristics (domains, size, quality); AC-2B maintains model card with this data. ✅ Strong |
+| **Art. 53** | GPAI transparency: copyright safeguards | AC-2A, AC-2B | AC-2A documents model's handling of copyright data; AC-2B tracks model license and permitted uses. ✅ Partial |
+| **Art. 54** | GPAI system security measures | AC-2A, SC-5A, SC-5C | AC-2A includes security requirements in technical documentation; SC-5A validates GPAI inference infrastructure; SC-5C manages GPAI API keys. ✅ Partial |
+| **Art. 55** | Systemic risk assessment for GPAI | AC-1B | AC-1B classifies models as standard GPAI or systemic-risk GPAI (>10²⁵ FLOPs training compute); triggers additional monitoring. ✅ Partial |
+| **Art. 56** | GPAI governance and post-market surveillance | AC-1B, AC-2A, AC-2B, AC-6A | AC-1B identifies GPAI use cases; AC-2A documents fine-tuning changes; AC-2B tracks versions; AC-6A monitors performance drift. ✅ Strong |
 
 #### EU AI Act Chapter VI: Measures in Support of Innovation (Arts. 57–63)
 
-Regulatory sandboxes and innovation support — not subject to A-SDLC controls (optional opt-in programs).
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Arts. 57–63** | Regulatory sandbox, innovation support programs, guidance | — | **Org-level/Optional.** Regulatory sandboxes are voluntary programs where participants receive guidance on compliance. Not mandatory for A-SDLC execution; optional for entities seeking regulatory feedback during development. ℹ️ **Org-level execution** |
 
 #### EU AI Act Chapter VII: Governance (Arts. 64–70)
 
-AI Office, Board, and governance structures — regulatory authority responsibility, not SDLC-controlled.
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Arts. 64–70** | AI Office, AI Board, Transparency and Information Office | — | **Regulatory authority governance.** Articles 64–70 establish European AI Office and national AI Board structures for regulatory oversight. Regulators, not individual SDLCs, govern these institutions. ℹ️ **Regulatory authority function** |
 
 #### EU AI Act Chapter VIII: Post-Market Monitoring, Information Sharing, Market Surveillance (Arts. 71–80)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 71** | Post-market monitoring by deployers | *Operational monitoring by financial entity* | ℹ️ **Org-level execution** |
-| **Art. 72** | Post-market monitoring by providers | AC-6A | ✅ Partial |
-| **Art. 73** | Serious incident reporting | AC-6A, SC-6A | ✅ Partial |
-| **Art. 74–80** | Market surveillance, information sharing | *Regulatory authority and member state functions* | ℹ️ **Org-level compliance** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 71(1)** | Post-market monitoring by deployers: obligation | AC-6A, SC-6A, QC-6A, RC-6A | AC-6A monitors AI model performance post-deployment; SC-6A detects incidents; QC-6A monitors SLOs; RC-6A monitors operational risks. ✅ Strong |
+| **Art. 71(2)** | Post-market monitoring: collection and analysis of data | AC-6A, QC-6A, RC-6A | AC-6A collects model performance metrics; QC-6A collects SLO/availability metrics; RC-6A collects risk metrics. ✅ Strong |
+| **Art. 71(3)** | Post-market monitoring: procedures and tools | AC-6A, QC-6A | AC-6A and QC-6A establish monitoring tooling and alerting procedures. ✅ Partial |
+| **Art. 71(4)** | Post-market monitoring: reporting to provider | — | **Org-level responsibility.** Deployer reports findings to AI system provider via operational channels (support tickets, escalations). A-SDLC enables data collection (AC-6A); deployer operationally reports. ℹ️ **Org-level execution** |
+| **Art. 72(1)** | Post-market monitoring by providers: obligation | AC-6A, GC-0D | AC-6A provides tools for providers to gather deployer feedback on performance; GC-0D compiles evidence. ✅ Strong |
+| **Art. 72(2)** | Post-market monitoring: specific activities | AC-6A, AC-2B, QC-6A | AC-6A monitors for performance degradation; AC-2B tracks model versions; QC-6A monitors availability/SLOs. ✅ Strong |
+| **Art. 72(3)** | Post-market monitoring: procedures and documentation | AC-2A, AC-6A, GC-0D | AC-2A documents monitoring procedures; AC-6A executes monitoring; GC-0D maintains evidence. ✅ Strong |
+| **Art. 72(4)** | Post-market monitoring: information sharing with deployers | — | **Org-level responsibility.** Provider shares monitoring findings with deployers (security updates, model patches). A-SDLC enables this through AC-6A findings; provider operationally communicates. ℹ️ **Org-level execution** |
+| **Art. 73(1)** | Serious incident reporting: deployer to provider | AC-6A, SC-6A, GC-0A | AC-6A or SC-6A detects serious incident (e.g., major accuracy drop, security breach); GC-0A logs with timestamp; deployer reports to provider. ✅ Strong |
+| **Art. 73(2)** | Serious incident reporting: provider to member state authority | — | **Org-level/Provider responsibility.** Provider reports serious incidents to national AI authority. A-SDLC provides incident evidence (AC-6A, SC-6A, GC-0A); provider operationally reports. ℹ️ **Org-level execution** |
+| **Art. 73(3)** | Serious incident reporting: timeline | GC-0A | GC-0A provides timestamped incident logs to enable timely reporting. ✅ Partial |
+| **Art. 74** | Market surveillance: member state authorities | — | **Regulatory authority function.** Member state authorities conduct market surveillance of AI systems. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 75** | Market surveillance: powers | — | **Regulatory authority function.** Authorities have powers to require information, samples, testing. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 76** | Information sharing: national authorities & European Commission | — | **Regulatory authority function.** Authorities share surveillance findings with EC. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 77** | Information sharing: cross-border | — | **Regulatory authority function.** Authorities coordinate cross-border enforcement. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 78** | Serious incident information platform | — | **Regulatory authority function.** EC maintains platform for incident information sharing. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 79** | Notification procedures | — | **Org-level/Regulatory.** Entity and provider notify authorities per defined procedures. A-SDLC enables evidence (AC-6A, SC-6A); entity operationally notifies. ℹ️ **Org-level execution** |
+| **Art. 80** | Protection of confidential information | GC-0A | GC-0A manages audit logging with access controls; deployer/provider protect sensitive information during authority reporting. ✅ Partial |
 
 #### EU AI Act Chapter IX: Codes of Conduct and Guidelines (Arts. 81–83)
 
-Voluntary codes of conduct and authority guidance — not binding SDLC controls.
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 81** | Codes of conduct | — | **Voluntary industry standards.** Providers and deployers may adopt codes of conduct (best practices). Not mandatory; A-SDLC enables compliance to adopted codes through controls (SC, QC, AC). ℹ️ **Org-level execution** |
+| **Art. 82** | Guidance from competent authorities | — | **Regulatory guidance.** Authorities issue guidance on AI Act compliance. Not SDLC-controlled; guidance informs how entity deploys A-SDLC controls. ℹ️ **Regulatory authority function** |
+| **Art. 83** | EU guidelines | — | **Regulatory guidance.** EC issues guidelines on AI Act interpretation. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
 
 #### EU AI Act Chapter X: Confidentiality and Penalties (Arts. 84–99)
 
-| Article | Title | Primary Controls | Coverage |
-| ------- | ----- | ---------------- | -------- |
-| **Art. 84–88** | Confidentiality obligations | GC-0A for audit trail; operational confidentiality is entity responsibility | ℹ️ **Org-level execution** |
-| **Art. 89–99** | Administrative fines and penalties | *Enforcement by regulatory authorities* | ℹ️ **Regulatory authority functions** |
+| Article | Title | Primary Controls | Rationale |
+| ------- | ----- | -------- | --------- |
+| **Art. 84** | Confidentiality obligations: protection of information | GC-0A, SC-5C | GC-0A maintains audit confidentiality (restricted access logs); SC-5C manages secrets for provider/deployer interfaces. ✅ Partial |
+| **Art. 85** | Confidentiality obligations: authority proceedings | — | **Org-level/Regulatory.** Confidentiality during authority proceedings is legal/procedural. Not SDLC-controlled. ℹ️ **Org-level execution** |
+| **Art. 86** | Confidentiality obligations: reporting entities | — | **Org-level responsibility.** Entity determines what information to keep confidential. A-SDLC supports through GC-0A logging. ℹ️ **Org-level execution** |
+| **Art. 87** | Confidentiality: trade secrets protection | — | **Org-level/Legal responsibility.** Entity protects trade secrets (model weights, training data, proprietary architectures). A-SDLC enables through AC-2A documentation controls. ℹ️ **Org-level execution** |
+| **Art. 88** | Confidentiality: business information | — | **Org-level/Legal responsibility.** Entity protects confidential business information. A-SDLC enables through GC-0A access controls. ℹ️ **Org-level execution** |
+| **Art. 89** | Administrative fines: general provision | — | **Regulatory enforcement.** Authorities impose fines for violations. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 90** | Administrative fines: category 1 (general violations) | — | **Regulatory enforcement.** Up to €30M or 6% of global turnover. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 91** | Administrative fines: category 2 (prohibited practices, high-risk violations) | — | **Regulatory enforcement.** Up to €20M or 4% of global turnover. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 92** | Administrative fines: category 3 (transparency, documentation violations) | — | **Regulatory enforcement.** Up to €10M or 2% of global turnover. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 93** | Determination of fines: criteria | — | **Regulatory authority function.** Authorities assess severity, gravity, intent, economic benefit, obligations violated. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 94** | Right of appeal | — | **Legal/Procedural.** Entities may appeal administrative decisions. Not SDLC-controlled. ℹ️ **Org-level execution** |
+| **Art. 95** | Penalties for legal entities | — | **Regulatory enforcement.** Legal entities held liable for violations. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 96** | Penalties for natural persons | — | **Regulatory/Criminal.** Member states may impose penalties on individuals. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 97** | Penalties for repeated violations | — | **Regulatory enforcement.** Enhanced penalties for repeated violations. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 98** | Enforcement powers | — | **Regulatory authority function.** Authorities enforce AI Act provisions. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
+| **Art. 99** | Transitional provisions and repeal | — | **Regulatory/Historical.** Timeline for implementation and repeals of prior directives. Not SDLC-controlled. ℹ️ **Regulatory authority function** |
 
 ---
 
@@ -156,44 +267,11 @@ Voluntary codes of conduct and authority guidance — not binding SDLC controls.
 
 **✅ Partial:** Control(s) address part of the obligation; remaining aspects handled operationally
 
-**⚠️ Not Mapped:** Obligation exists but falls outside A-SDLC scope (see below)
+**⚠️ Not Mapped:** Obligation exists but falls outside A-SDLC scope
 
-**ℹ️ Org-level:** Obligation is non-technical or organizational governance (not lifecycle-controlled)
+**ℹ️ Org-level execution:** Obligation is non-technical or organizational governance (not lifecycle-controlled); entity determines policy, timeline, or enforcement
 
----
-
-### Why Certain Articles Don't Have Explicit A-SDLC Controls
-
-#### **DORA Art. 5: Governance and Organisation**
-
-**Obligation:** Board and senior management must maintain governance framework, define risk tolerance, ensure training on ICT risk.
-
-**Why not controlled:** Art. 5 is an **organizational governance obligation** that applies to the financial entity as a whole, not to the software development lifecycle. It requires:
-
-- Board-level decision-making and oversight (not an SDLC process gate)
-- Enterprise-wide governance framework (spans beyond development)
-- Training programme for all staff (not just development teams)
-
-**How it's enabled:** The A-SDLC framework assumes an underlying governance structure defined per Art. 5. All 51 controls execute within that framework. RC-2A (Design Approval) and RC-5A (CAB Approval) assume human decision-makers with appropriate authority, which is established by Art. 5 governance.
-
-#### **DORA Arts. 20–23, 26–27, 29–44: Procedural/Operational Governance**
-
-**Why not controlled:** These articles prescribe:
-
-- Incident classification criteria (Art. 20–22) — determined operationally per incident
-- Penetration testing oversight (Art. 26–27) — coordinated by financial entity's risk office
-- Vendor selection, contracting, SLA negotiation (Arts. 29–44) — procurement function
-
-These are executed outside the development lifecycle. SC-6A enables incident detection; the financial entity operationally applies Art. 20–23 classification and reporting rules.
-
-#### **EU AI Act Arts. 16–25, 74–102: Conformity Assessment, Enforcement**
-
-**Why not controlled:**
-
-- Conformity assessment (Art. 16) and quality management (Art. 22–25) produce documentation verified by QC-4C
-- Market surveillance (Art. 74+) and enforcement (Art. 85+) are regulatory authority functions
-
-The A-SDLC enables compliance; authorities execute enforcement.
+**ℹ️ Regulatory authority function:** Obligation is administered by competent authorities (ECB, EBA, national authorities, EC); outside SDLC control
 
 ---
 
