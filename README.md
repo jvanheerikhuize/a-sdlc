@@ -91,6 +91,19 @@ Every control is mapped to at least one of two regulatory frameworks:
 - **DORA** — Digital Operational Resilience Act (EU, effective January 2025): ICT risk management, incident reporting, operational resilience, third-party oversight
 - **EU AI Act** — Risk-tiered AI requirements: transparency, data governance, accuracy, robustness, human oversight
 
+### Moscow Prioritization
+
+Controls are prioritized using the MoSCoW framework:
+
+| Category | Count | Definition |
+| -------- | ----- | ---------- |
+| **Must** | 25 | Critical regulatory requirements and blocking controls |
+| **Should** | 12 | Important but non-blocking controls for quality/oversight |
+| **Could** | 2 | Phase 3 optimization controls |
+| **Won't** | 0 | — |
+
+See [regulatory/moscow/](regulatory/moscow/) for detailed prioritization analysis, implementation phases, and remediation roadmap.
+
 ---
 
 ## Repository Structure
@@ -99,42 +112,43 @@ Every control is mapped to at least one of two regulatory frameworks:
 a-sdlc/
 ├── AGENTS.md                          ← Agent entrypoint (read first if you are an agent)
 ├── README.md                          ← This file
-├── asdlc.yaml                     ← Machine-readable manifest of all stages and controls
+├── asdlc.yaml                         ← Machine-readable manifest of all stages and controls
 ├── schema/
 │   ├── control.schema.json            ← JSON Schema for control definitions
-│   └── feature-spec.schema.json      ← JSON Schema for feature specifications
+│   └── feature-spec.schema.json       ← JSON Schema for feature specifications
 ├── controls/
-│   ├── registry.yaml                 ← Flat index of all 39 controls (fast lookup by ID)
-│   ├── qc/                           ← Quality Control definitions (QC-1A … QC-6A)
-│   ├── rc/                           ← Risk Control definitions (RC-1A … RC-6A)
-│   ├── sc/                           ← Security Control definitions (SC-0D, SC-1A … SC-6B)
-│   ├── ac/                           ← AI Control definitions (AC-1A, AC-2A, AC-4A, AC-6A)
-│   └── gc/                           ← Governance Control definitions (GC-0A … GC-3A)
+│   ├── registry.yaml                  ← Flat index of all 39 controls (fast lookup by ID)
+│   ├── README.md                      ← Controls directory documentation
+│   ├── qc/                            ← Quality Control definitions (10 controls)
+│   ├── rc/                            ← Risk Control definitions (7 controls)
+│   ├── sc/                            ← Security Control definitions (13 controls)
+│   ├── ac/                            ← AI Control definitions (4 controls)
+│   └── gc/                            ← Governance Control definitions (5 controls)
+├── directives/
+│   ├── core/
+│   │   └── core-directives.yaml       ← Immutable core security directives (SC-0D payload)
+│   └── stages/                        ← Stage-specific directive payloads (SC-2B injection)
 ├── stages/
-│   ├── 01-intent-ingestion/          ← 01-intent-ingestion.yaml + README.md + process.md + artifacts/
-│   ├── 02-system-design/             ← 02-system-design.yaml + README.md + directives/
-│   ├── 03-coding-implementation/          ← 03-coding-implementation.yaml + README.md
-│   ├── 04-testing-documentation/          ← 04-testing-documentation.yaml + README.md
-│   ├── 05-deployment-release/             ← 05-deployment-release.yaml + README.md
-│   └── 06-observability-maintenance/ ← 06-observability-maintenance.yaml + README.md
+│   ├── 01-intent-ingestion/           ← Intent Ingestion stage (6 controls)
+│   ├── 02-system-design/              ← System Design stage (5 controls)
+│   ├── 03-coding-implementation/      ← Coding & Implementation stage (7 controls)
+│   ├── 04-testing-documentation/      ← Testing & Documentation stage (7 controls)
+│   ├── 05-deployment-release/         ← Deployment & Release stage (5 controls)
+│   └── 06-observability-maintenance/  ← Observability & Maintenance stage (5 controls)
 ├── feedbackloops/
-│   ├── README.md                     ← Feedback process documentation and decision tree
-│   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions
-└── regulatory/
-    ├── compliance-matrix.yaml        ← DORA / EU AI Act coverage map
-    ├── sources.yaml                  ← Official article texts and obligation summaries
-    ├── gapanalysis/                  ← Gap analysis deliverables
-    │   ├── ANALYSIS_INDEX.md         ← Navigation guide for all gap analysis documents
-    │   ├── GAP_ANALYSIS_README.md    ← Entry point with remediation roadmap (3-18 months)
-    │   ├── REGULATORY_COVERAGE_MATRIX.md ← Quick-reference tables by article
-    │   ├── GAP_ANALYSIS_SUMMARY.md   ← Comprehensive detailed analysis
-    │   └── gap-analysis-output.json  ← Machine-readable output for tooling
-    └── moscow/                       ← MoSCoW prioritization analysis
-        ├── MOSCOW-QUICK-REFERENCE.md ← Quick lookup guide (daily use)
-        ├── MOSCOW-PRIORITIZATION-README.md ← Comprehensive implementation roadmap
-        ├── MOSCOW-PRIORITIZATION-INDEX.md ← Master index and cross-references
-        ├── moscow-prioritization.csv ← Spreadsheet matrix for analysis
-        └── moscow-prioritization.json ← Machine-readable prioritization data
+│   ├── README.md                      ← Feedback process documentation
+│   ├── feedback-loops.yaml            ← Path A (quick fix) and Path B (full re-entry) definitions
+│   └── artifacts/                     ← Feedback loop templates and outputs
+├── regulatory/
+│   ├── sources.yaml                   ← Official DORA and EU AI Act article texts
+│   └── moscow/                        ← MoSCoW prioritization framework
+│       ├── MOSCOW-QUICK-REFERENCE.md  ← Quick lookup guide (daily use)
+│       ├── MOSCOW-PRIORITIZATION-README.md ← Implementation roadmap (Phase 1-3)
+│       ├── MOSCOW-PRIORITIZATION-INDEX.md ← Master index and cross-references
+│       ├── moscow-prioritization.csv  ← Prioritization matrix
+│       └── moscow-prioritization.json ← Machine-readable prioritization data
+├── scripts/                           ← Utility scripts (validation, analysis, etc.)
+└── initialcontext/                    ← Original regulatory source documents (MIME-encoded HTML)
 ```
 
 ---
