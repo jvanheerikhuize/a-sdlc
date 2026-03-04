@@ -28,6 +28,7 @@ Stage definition (required controls + exit criteria): [05-deployment-release.yam
 | [RC-5B](../../controls/rc/RC-5B.yaml) | Rollback Plan Validation | Verified rollback strategy with defined triggers, tested in pre-production, with clear decision authority. | Agent validates, REL approves | DORA: Art. 11(6) |
 | [SC-5A](../../controls/sc/SC-5A.yaml) | Infrastructure Security Baseline | Validates production environment: patching, access controls, network segmentation, IaC compliance. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(4) |
 | [SC-5B](../../controls/sc/SC-5B.yaml) | Deployment Integrity | Cryptographic verification that tested artefacts are exactly what gets deployed. No tampering. | Fully automated | DORA: Art. 9(2), Art. 28a; AI Act: Art. 15(3) |
+| [SC-5C](../../controls/sc/SC-5C.yaml) | Secrets & Key Management Lifecycle | Before deployment: verify all secrets in vault (not config); have defined rotation schedules; not exceeded max age; ACL-restricted; audit logging enabled. | Agent checks, human approves | DORA: Art. 9(4); AI Act: Art. 15(4) |
 
 ## Stage Exit Criteria
 
@@ -38,6 +39,7 @@ All of the following must be true before handing over to Stage 6:
 - [ ] RC-5B passed: rollback plan validated and tested in pre-production
 - [ ] SC-5A passed: production environment security baseline validated — no unresolved deviations
 - [ ] SC-5B passed: cryptographic integrity verified between tested and deployed artefacts
+- [ ] SC-5C passed: all secrets/keys validated for proper vaulting, rotation, and access control
 - [ ] Smoke tests passed post-deployment
 - [ ] Stage 6 monitoring activated; hypercare window entered
 

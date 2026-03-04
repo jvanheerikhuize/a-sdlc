@@ -80,7 +80,7 @@ Five control tracks run through the entire lifecycle:
 | [5 Deployment](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml), [SC-5C](controls/sc/SC-5C.yaml) | — | — |
 | [6 Observability](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml), [RC-6B](controls/rc/RC-6B.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
 
-**Total: 51 controls** across 5 tracks (QC: 10, RC: 8, SC: 16, AC: 6, GC: 6), including 5 cross-cutting controls: SC-0D, GC-0A, GC-0B, GC-0C, GC-0D; SC-2B is cross-cutting but executed at Stage 2. Full index in [controls/registry.yaml](controls/registry.yaml).
+**Total: 51 controls** across 5 tracks (QC: 10, RC: 9, SC: 20, AC: 6, GC: 6), including 6 cross-cutting controls: SC-0D, SC-2B, GC-0A, GC-0B, GC-0C, GC-0D. Full index in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 

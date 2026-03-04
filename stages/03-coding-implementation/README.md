@@ -25,6 +25,8 @@ Stage definition (required controls + exit criteria): [03-coding-implementation.
 | [SC-3A](../../controls/sc/SC-3A.yaml) | Permission Management | Enforces least-privilege on what the agent can access: files, APIs, data, and network resources. | Automated (policy-enforced) | DORA: Art. 9(4)(c); AI Act: Art. 15(4) |
 | [QC-3B](../../controls/qc/QC-3B.yaml) | Code Quality Standards | Automated linting, complexity thresholds, coding standards, and maintainability metrics. Runs on every commit. | Fully automated | DORA: Art. 8(4); AI Act: Art. 15(1) |
 | [SC-3C](../../controls/sc/SC-3C.yaml) | Secrets & Credentials Scanning | Real-time scanning for hardcoded secrets. Blocks commits containing exposed credentials. | Fully automated | DORA: Art. 9(4)(c) |
+| [SC-3D](../../controls/sc/SC-3D.yaml) | Software Composition Analysis & SBOM Generation | Scans dependencies, packages, and AI models against CVE databases (NVD, OSV). Generates SBOM (CycloneDX/SPDX). Blocks critical/high CVEs without exception. | Agent executes, human reviews | DORA: Art. 25(1); AI Act: Art. 15(4) |
+| [SC-3E](../../controls/sc/SC-3E.yaml) | Container & IaC Security Scanning | Scans container images, Dockerfiles, Kubernetes, Terraform, Helm against CVE databases and CIS benchmarks. Enforces policies: no critical-CVE images, no privileged containers. | Fully automated | DORA: Art. 9(2); Art. 25 |
 | [RC-3A](../../controls/rc/RC-3A.yaml) | Decision Log | Captures implementation decisions — especially agent autonomous choices. Records rationale and alternatives. | Agent logs, human reviews | DORA: Art. 8(6); AI Act: Art. 12(1) |
 | [GC-3A](../../controls/gc/GC-3A.yaml) | Code Provenance Tracking | Records human-written vs. agent-generated code. Immutable records for DORA accountability. | Fully automated | DORA: Art. 8(6); AI Act: Art. 12; Art. 17(1)(f) |
 | [SC-3B](../../controls/sc/SC-3B.yaml) | Post-Guardrails | Scans agent-generated code for malicious patterns, backdoors, and adversarial constructs. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(3) |
@@ -37,6 +39,8 @@ All of the following must be true before progressing to Stage 4:
 - [ ] SC-3A verified: agent operating within defined permission boundary
 - [ ] QC-3B passed: all commits passed quality gates (no threshold violations)
 - [ ] SC-3C passed: no secrets or credentials detected in committed code
+- [ ] SC-3D passed: SCA/SBOM passed — no critical/high vulnerabilities without documented exception
+- [ ] SC-3E passed: Container/IaC scan passed — no critical security misconfigurations
 - [ ] RC-3A completed: decision log up to date and reviewed by Tech Lead
 - [ ] GC-3A confirmed: all code tagged with provenance metadata
 - [ ] SC-3B passed: agent output scanned and clear of malicious patterns

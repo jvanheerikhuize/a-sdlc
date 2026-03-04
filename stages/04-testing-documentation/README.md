@@ -27,8 +27,10 @@ Stage definition (required controls + exit criteria): [04-testing-documentation.
 | [SC-4A](../../controls/sc/SC-4A.yaml) | SAST | Static security analysis of full codebase for CWE-mapped vulnerabilities. Heightened scrutiny on agent-generated code. | Fully automated | DORA: Art. 24; AI Act: Art. 15(2) |
 | [QC-4A](../../controls/qc/QC-4A.yaml) | Functional & Non-Functional Testing | Full test suite against Stage 1 acceptance criteria: functional, performance, load, accessibility, regression. | Agent executes, QA reviews | DORA: Art. 8(4); AI Act: Art. 15(1) |
 | [SC-4B](../../controls/sc/SC-4B.yaml) | DAST | Runtime security testing: injection attacks, auth flaws, session management, TLS configuration, OWASP Top 10. | Fully automated | DORA: Art. 24, Art. 25; AI Act: Art. 15(3) |
+| [SC-4C](../../controls/sc/SC-4C.yaml) | API Security Testing | Tests OWASP API Security Top 10: BOLA, BFLA, broken auth, SSRF, rate limiting, schema validation. Distinct from DAST which covers general OWASP. | Agent executes, human reviews | DORA: Art. 24–25; AI Act: Art. 15(3–5) |
 | [QC-4B](../../controls/qc/QC-4B.yaml) | AI Output Validation *(conditional)* | For AI components: hallucination detection, accuracy benchmarking, output consistency, and boundary testing. | Agent executes, AGL reviews | AI Act: Art. 15(1); Art. 9(7) |
 | [AC-4A](../../controls/ac/AC-4A.yaml) | Bias & Fairness Testing *(conditional)* | For AI components: tests for discriminatory outcomes across protected characteristics. | Agent executes, AGL reviews | AI Act: Art. 10(2)(f); Art. 10(5); Art. 15(1) |
+| [SC-4D](../../controls/sc/SC-4D.yaml) | Adversarial AI Robustness Testing *(conditional)* | For high-risk AI systems: tests resilience against adversarial attacks — prompt injection, data poisoning, model inversion, adversarial examples. | Agent executes, human reviews | EU AI Act: Art. 15(5); DORA: Art. 9(2) |
 | [QC-4C](../../controls/qc/QC-4C.yaml) | Documentation Completeness | Verifies runbooks, API docs, ADRs, and decision logs are present and current. | Agent checks, human approves | DORA: Art. 8(6); AI Act: Art. 11, Annex IV |
 | [RC-4A](../../controls/rc/RC-4A.yaml) | Risk Threshold Evaluation | Aggregates all Stage 4 results. Determines whether residual risk is within appetite. Formal go/no-go decision. | Agent calculates, RO decides | DORA: Art. 8(1); AI Act: Art. 9(2)(a) |
 
@@ -39,8 +41,10 @@ All of the following must be true before progressing to Stage 5:
 - [ ] SC-4A passed: no critical or high CWE-mapped vulnerabilities unresolved
 - [ ] QC-4A passed: all functional and NFR tests passing against Stage 1 acceptance criteria
 - [ ] SC-4B passed: no critical or high runtime security findings unresolved
+- [ ] SC-4C passed: no OWASP API Security Top 10 violations unresolved
 - [ ] QC-4B passed (if AI component): no hallucination or accuracy threshold breaches
 - [ ] AC-4A passed (if AI component): no discriminatory outcomes exceeding defined thresholds
+- [ ] SC-4D completed (if high-risk AI): adversarial robustness testing completed
 - [ ] QC-4C passed: all documentation complete and current
 - [ ] RC-4A completed: go/no-go decision is pass or approved conditional pass
 

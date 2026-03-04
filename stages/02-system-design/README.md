@@ -24,20 +24,26 @@ Stage definition (required controls + exit criteria): [02-system-design.yaml](02
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
 | [QC-2A](../../controls/qc/QC-2A.yaml) | Design Completeness & Standards | Validates design addresses all requirements, follows architectural patterns, and meets standards. | Agent validates, LAD approves | DORA: Art. 8(4) |
-| [SC-2A](../../controls/sc/SC-2A.yaml) | Threat Model Validation | STRIDE-based analysis verifying design does not introduce insecure patterns. | Agent generates, SA validates | DORA: Art. 8(3); AI Act: Art. 15(3) |
-| [AC-2A](../../controls/ac/AC-2A.yaml) | AI Component Design Review | For AI systems: validates model selection, data pipelines, explainability, and human oversight mechanisms. | Agent assists, AGL approves | AI Act: Art. 11, Annex IV; Art. 13; Art. 14 |
 | [RC-2A](../../controls/rc/RC-2A.yaml) | Design Approval | Consolidated governance gate: design approval with functional risk classification. Sign-off authority determined by risk tier. | Human required | DORA: Art. 8(1); AI Act: Art. 9 |
+| [RC-2B](../../controls/rc/RC-2B.yaml) | Privacy Impact Assessment Gate | For changes processing personal data or involving profiling: conduct PIA/DPIA and require DPO review. *(Conditional)* | Agent analyses, human resolves | EU AI Act: Art. 10(5); DORA: Art. 9(2) |
+| [SC-2A](../../controls/sc/SC-2A.yaml) | Threat Model Validation | STRIDE-based analysis verifying design does not introduce insecure patterns. | Agent generates, SA validates | DORA: Art. 8(3); AI Act: Art. 15(3) |
+| [SC-2C](../../controls/sc/SC-2C.yaml) | Zero-Trust Architecture Validation | Validates architecture applies zero-trust principles: mutual authentication, explicit deny-by-default, identity-based access. | Agent analyses, human resolves | DORA: Art. 9(4); Art. 9(2–3) |
 | [SC-2B](../../controls/sc/SC-2B.yaml) | Stage Directive Injection | Injects signed, immutable stage directive bundles (Stage 2 + Stage 3) into the agent before coding. Cannot be overridden by any instruction. | Fully automated (signed) | DORA: Art. 9(4)(c); AI Act: Art. 14(1) |
+| [AC-2A](../../controls/ac/AC-2A.yaml) | AI Component Design Review | For AI systems: validates model selection, data pipelines, explainability, and human oversight mechanisms. | Agent assists, AGL approves | AI Act: Art. 11, Annex IV; Art. 13; Art. 14 |
+| [AC-2B](../../controls/ac/AC-2B.yaml) | AI Model Governance & Version Control | Registers AI models in a model registry with version, provider, training data, bias results, performance benchmarks, license. | Agent creates, human reviews | EU AI Act: Art. 11 & Annex IV; Art. 72 |
 
 ## Stage Exit Criteria
 
 All of the following must be true before progressing to Stage 3:
 
 - [ ] QC-2A passed: design addresses all requirements and meets organisational standards
-- [ ] SC-2A passed: STRIDE threat model reviewed and all critical threats mitigated
-- [ ] AC-2A passed (if AI component): model selection, data governance, and explainability documented and approved
 - [ ] RC-2A passed: design approved by appropriate authority per risk classification
+- [ ] RC-2B completed (if applicable): Privacy Impact Assessment completed (if processing personal data or profiling)
+- [ ] SC-2A passed: STRIDE threat model reviewed and all critical threats mitigated
+- [ ] SC-2C passed: zero-trust architecture principles validated and documented
 - [ ] SC-2B executed: Stage 2 and Stage 3 directive bundles signed and injected into agent context
+- [ ] AC-2A passed (if AI component): model selection, data governance, and explainability documented and approved
+- [ ] AC-2B completed (if AI component): AI model registered in model registry with complete metadata
 
 ## Artifacts
 

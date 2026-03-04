@@ -6,7 +6,7 @@
 # track files. Full control definitions are in controls/[track]/[ID].yaml.
 #
 # Total controls: 51
-# QC: 10 | RC: 8 | SC: 16 | AC: 6 | GC: 6
+# QC: 10 | RC: 9 | SC: 20 | AC: 6 | GC: 6
 # =============================================================================
 
 registry:

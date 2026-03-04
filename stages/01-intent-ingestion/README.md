@@ -25,21 +25,25 @@ Stage definition (required controls + exit criteria): [01-intent-ingestion.yaml]
 | ID | Name | What It Does | Who Decides | Regulatory Mapping |
 | -- | ---- | ------------ | ----------- | ------------------ |
 | [SC-1A](../../controls/sc/SC-1A.yaml) | Pre-Guardrails | Screens incoming requests for prompt injection attacks that could manipulate agent interpretation. | Fully automated | DORA: Art. 9(2); AI Act: Art. 15(4) |
+| [SC-1B](../../controls/sc/SC-1B.yaml) | Data Classification & Sensitivity Screening | Classifies all data types referenced in the change (public/internal/confidential/restricted/PII). *(Conditional)* | Agent classifies, human validates | DORA: Art. 9(4); AI Act: Art. 10 |
 | [QC-1A](../../controls/qc/QC-1A.yaml) | Specification Validation | Confirms the request has been correctly captured with complete acceptance criteria and NFRs. | Agent drafts, human approves | DORA: Art. 8 |
 | [QC-1B](../../controls/qc/QC-1B.yaml) | Coherence & Conflict Resolution | Detects contradictions between requirements. Forces stakeholders to resolve trade-offs before design. | Agent analyses, human resolves | DORA: Art. 8; AI Act: Art. 9 |
 | [RC-1A](../../controls/rc/RC-1A.yaml) | Risk Classification | Classifies non-functional risk exposure and determines governance intensity for the entire change. | Agent classifies, human validates | DORA: Art. 8(1); AI Act: Art. 9(2) |
 | [AC-1A](../../controls/ac/AC-1A.yaml) | AI Risk Tier Classification | For AI changes: classifies EU AI Act risk tier and triggers corresponding compliance requirements. | Agent proposes, human confirms | AI Act: Art. 6, Annex III |
+| [AC-1B](../../controls/ac/AC-1B.yaml) | GPAI & Foundation Model Obligation Screening | Identifies GPAI model obligations and applicable EU AI Act Arts. 51–56. *(Conditional)* | Agent classifies, human validates | EU AI Act: Arts. 51–56 |
 | [GC-1A](../../controls/gc/GC-1A.yaml) | Intent Traceability | Logs original request, all agent transformations, and validated output. First link in the audit chain. | Fully automated | DORA: Art. 8(6); AI Act: Art. 12 |
 
 ## Stage Exit Criteria
 
 All of the following must be true before progressing to Stage 2:
 
+- [ ] SC-1A passed: no prompt injection detected in the incoming request
+- [ ] SC-1B completed (if applicable): data classification assigned
 - [ ] QC-1A passed: specification has complete acceptance criteria and NFRs
 - [ ] QC-1B passed: all blocking conflicts resolved by stakeholders
 - [ ] RC-1A completed: risk classification risk tier assigned and validated
-- [ ] SC-1A passed: no prompt injection detected in the incoming request
 - [ ] AC-1A completed (if AI component): EU AI Act risk tier classified and confirmed
+- [ ] AC-1B completed (if GPAI model): GPAI obligation screening completed
 - [ ] GC-1A confirmed: intent traceability record created
 
 ## Artifacts
