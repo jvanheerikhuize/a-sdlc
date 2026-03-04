@@ -118,10 +118,48 @@ a-sdlc/
 │   ├── feedback-loops.yaml            ← Path A (quick fix) and Path B (full re-entry) definitions
 │   └── artifacts/                     ← Feedback loop templates and outputs
 ├── regulatory/
-│   └── sources.yaml                   ← Regulatory source documents and frameworks
+│   ├── sources.yaml                   ← Regulatory source documents and frameworks
+│   ├── compliance-matrix.yaml         ← Complete control-to-article mappings
+│   └── README.md                      ← Regulatory coverage summary and strength areas
 ├── scripts/                           ← Utility scripts (validation, analysis, etc.)
 └── initialcontext/                    ← Original regulatory source documents (MIME-encoded HTML)
 ```
+
+---
+
+## Regulatory Compliance
+
+The A-SDLC framework is engineered for compliance with **DORA** (Digital Operational Resilience Act) and the **EU AI Act**. **All 51 controls have explicit regulatory mappings** to specific articles and requirements.
+
+### Coverage Summary
+
+| Framework | Controls Mapped | Coverage |
+| --------- | --------------- | -------- |
+| **DORA** | 43 / 51 | **84.3%** |
+| **EU AI Act** | 30 / 51 | **58.8%** |
+
+### Regulatory Strengths by Track
+
+- **RC (Risk Controls):** 100% DORA mapped — Risk identification, design approval, change management, CAB gates
+- **SC (Security Controls):** 100% DORA mapped — Comprehensive testing (SAST/DAST/API/adversarial), supply chain, incident management
+- **GC (Governance Controls):** 100% DORA & EU AI Act — Audit trails, traceability, compliance automation
+- **AC (AI Controls):** 100% EU AI Act — Risk classification, bias testing, model governance, post-market surveillance
+- **QC (Quality Controls):** 80% DORA, 50% EU AI Act — Documentation, testing, specification validation
+
+### Key Regulatory Areas Addressed
+
+| Area | DORA Articles | EU AI Act Articles | Key Controls |
+| ---- | ------------- | ------------------ | ------------ |
+| **Risk Management** | Art. 8–9 | Art. 6, 9, Annex III | RC-1A, AC-1A, RC-2A, RC-4A |
+| **Security Testing** | Art. 24–25 | Art. 15 | SC-4A, SC-4B, SC-4C, SC-4D, QC-4A |
+| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-3D, SC-3E, GC-0C, GC-3A |
+| **Change Management** | Art. 9(4) | Art. 9 | RC-2A, RC-5A, QC-3A, QC-3B |
+| **Documentation** | Art. 8(5-6) | Art. 11, Annex IV | QC-4C, AC-2A, AC-2B |
+| **Record-Keeping** | Art. 8(6) | Art. 12 | GC-0A, GC-0B, RC-3A, GC-0D |
+| **Incident Management** | Art. 17–19 | Art. 73 | SC-6A, SC-6B, GC-0A |
+| **GPAI Models** | — | Art. 51–56 | AC-1B, AC-2A, AC-2B |
+
+For detailed mappings of all 51 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
 
 ---
 

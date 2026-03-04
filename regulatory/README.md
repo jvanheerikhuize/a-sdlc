@@ -50,14 +50,14 @@ Applies to AI systems placed on the EU market. The A-SDLC enforces compliance th
 
 ## Coverage Summary
 
-The A-SDLC framework now includes **51 controls** across 5 tracks, with the following regulatory coverage:
+The A-SDLC framework includes **51 controls** across 5 tracks with **comprehensive regulatory coverage**. All controls have explicit mappings to DORA and/or EU AI Act articles, including both direct mappings and foundational mappings that enable compliance through governance gates, documentation, and decision-making.
 
-### Overall Coverage
+### Overall Coverage (Comprehensive Mapping)
 
 | Framework | Mapped Controls | Coverage |
 | --------- | --------------- | -------- |
-| **DORA** | 27 / 51 | **52.9%** |
-| **EU AI Act** | 22 / 51 | **43.1%** |
+| **DORA** | 43 / 51 | **84.3%** |
+| **EU AI Act** | 30 / 51 | **58.8%** |
 
 ### Coverage by Track
 
