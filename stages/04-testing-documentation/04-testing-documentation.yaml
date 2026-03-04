@@ -16,8 +16,12 @@ required_controls:
 - id: QC-4C
 - id: SC-4A
 - id: SC-4B
+- id: SC-4C
+  note: Test all exposed APIs against OWASP API Security Top 10
 - id: AC-4A
   note: Applicable when the change involves an AI component
+- id: SC-4D
+  note: Applicable for high-risk or security-critical AI deployments
 - id: RC-4A
   note: Final go/no-go gate — depends on all other Stage 4 controls
 exit_criteria:
@@ -26,7 +30,9 @@ exit_criteria:
 - 'QC-4C: Documentation completeness confirmed and approved'
 - 'SC-4A: SAST passed — no critical or high-severity findings unresolved'
 - 'SC-4B: DAST passed — no critical or high-severity findings unresolved'
+- 'SC-4C: API security testing passed — no OWASP API Top 10 violations unresolved'
 - 'AC-4A: Bias & fairness test passed within defined thresholds (or not-applicable)'
+- 'SC-4D: Adversarial robustness testing completed (if applicable for high-risk AI)'
 - 'RC-4A: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
 next_stage: 5
 process: process.md

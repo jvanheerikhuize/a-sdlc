@@ -16,12 +16,15 @@ required_controls:
 - id: SC-5A
 - id: SC-5B
   note: Must run immediately before deployment execution
+- id: SC-5C
+  note: Verify all secrets and keys are properly vaulted, rotated, and access-controlled
 exit_criteria:
 - 'QC-5A: Release readiness checklist completed — all prior controls evidenced'
 - 'RC-5A: CAB approval granted by appropriate authority'
 - 'RC-5B: Rollback plan validated and tested in pre-production'
 - 'SC-5A: Infrastructure security baseline validated — no unresolved deviations'
 - 'SC-5B: Deployment integrity verified — artefact checksums match tested build'
+- 'SC-5C: All secrets/keys validated for proper vaulting, rotation, and access control'
 next_stage: 6
 process: process.md
 artifacts:

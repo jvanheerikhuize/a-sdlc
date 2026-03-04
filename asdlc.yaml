@@ -96,6 +96,9 @@ cross_cutting:
     - id: GC-0C
       name: Agent Provenance Registry
       track: GC
+    - id: GC-0D
+      name: Compliance Evidence Automation
+      track: GC
 
 stages:
   - number: 1
@@ -123,8 +126,14 @@ stages:
       - id: SC-1A
         name: Pre-Guardrails
         track: SC
+      - id: SC-1B
+        name: Data Classification & Sensitivity Screening
+        track: SC
       - id: AC-1A
         name: AI Risk Tier Classification
+        track: AC
+      - id: AC-1B
+        name: GPAI & Foundation Model Obligation Screening
         track: AC
       - id: GC-1A
         name: Intent Traceability
@@ -147,14 +156,23 @@ stages:
       - id: RC-2A
         name: Design Approval
         track: RC
+      - id: RC-2B
+        name: Privacy Impact Assessment Gate
+        track: RC
       - id: SC-2A
         name: Threat Model Validation
         track: SC
       - id: SC-2B
         name: Directive Injection
         track: SC
+      - id: SC-2C
+        name: Zero-Trust Architecture Validation
+        track: SC
       - id: AC-2A
         name: AI Component Design Review
+        track: AC
+      - id: AC-2B
+        name: AI Model Governance & Version Control
         track: AC
 
   - number: 3
@@ -185,6 +203,12 @@ stages:
         track: SC
       - id: SC-3C
         name: Secrets & Credentials Scanning
+        track: SC
+      - id: SC-3D
+        name: Software Composition Analysis & SBOM Generation
+        track: SC
+      - id: SC-3E
+        name: Container & IaC Security Scanning
         track: SC
       - id: GC-3A
         name: Code Provenance Tracking
@@ -219,6 +243,12 @@ stages:
       - id: SC-4B
         name: DAST
         track: SC
+      - id: SC-4C
+        name: API Security Testing
+        track: SC
+      - id: SC-4D
+        name: Adversarial AI Robustness Testing
+        track: SC
       - id: AC-4A
         name: Bias & Fairness Testing
         track: AC
@@ -249,6 +279,9 @@ stages:
       - id: SC-5B
         name: Deployment Integrity
         track: SC
+      - id: SC-5C
+        name: Secrets & Key Management Lifecycle
+        track: SC
 
   - number: 6
     name: Observability & Maintenance
@@ -266,6 +299,9 @@ stages:
         track: QC
       - id: RC-6A
         name: Risk & Health Monitoring
+        track: RC
+      - id: RC-6B
+        name: Third-Party Continuous Risk Monitoring
         track: RC
       - id: SC-6A
         name: Incident Scanning & Detection

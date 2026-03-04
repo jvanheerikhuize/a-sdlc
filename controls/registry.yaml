@@ -1,12 +1,12 @@
 # =============================================================================
 # A-SDLC Control Registry
 # =============================================================================
-# Flat index of all 39 controls across the Agentic SDLC framework.
+# Flat index of all 51 controls across the Agentic SDLC framework.
 # Use this file for fast lookup by control ID without reading individual
 # track files. Full control definitions are in controls/[track]/[ID].yaml.
 #
-# Total controls: 39
-# QC: 10 | RC: 7 | SC: 13 | AC: 4 | GC: 5
+# Total controls: 51
+# QC: 10 | RC: 8 | SC: 16 | AC: 6 | GC: 6
 # =============================================================================
 
 registry:
@@ -52,6 +52,15 @@ registry:
     file: controls/gc/GC-0C.yaml
     owner_team: Governance & Compliance
 
+  - id: GC-0D
+    name: Compliance Evidence Automation
+    stage: 0
+    stage_name: Cross-Cutting
+    track: GC
+    delegation: agent_compiles_human_approves
+    file: controls/gc/GC-0D.yaml
+    owner_team: Governance & Compliance
+
   # ---------------------------------------------------------------------------
   # Stage 1 — Intent Ingestion
   # ---------------------------------------------------------------------------
@@ -92,6 +101,15 @@ registry:
     file: controls/sc/SC-1A.yaml
     owner_team: Security
 
+  - id: SC-1B
+    name: Data Classification & Sensitivity Screening
+    stage: 1
+    stage_name: Intent Ingestion
+    track: SC
+    delegation: agent_classifies_human_validates
+    file: controls/sc/SC-1B.yaml
+    owner_team: Security
+
   - id: AC-1A
     name: AI Risk Tier Classification
     stage: 1
@@ -99,6 +117,15 @@ registry:
     track: AC
     delegation: agent_proposes_human_confirms
     file: controls/ac/AC-1A.yaml
+    owner_team: AI Governance
+
+  - id: AC-1B
+    name: GPAI & Foundation Model Obligation Screening
+    stage: 1
+    stage_name: Intent Ingestion
+    track: AC
+    delegation: agent_classifies_human_validates
+    file: controls/ac/AC-1B.yaml
     owner_team: AI Governance
 
   - id: GC-1A
@@ -132,6 +159,15 @@ registry:
     file: controls/rc/RC-2A.yaml
     owner_team: Risk Management
 
+  - id: RC-2B
+    name: Privacy Impact Assessment Gate
+    stage: 2
+    stage_name: System Design
+    track: RC
+    delegation: agent_analyses_human_resolves
+    file: controls/rc/RC-2B.yaml
+    owner_team: Risk Management
+
   - id: SC-2A
     name: Threat Model Validation
     stage: 2
@@ -139,6 +175,15 @@ registry:
     track: SC
     delegation: agent_drafts_human_approves
     file: controls/sc/SC-2A.yaml
+    owner_team: Security
+
+  - id: SC-2C
+    name: Zero-Trust Architecture Validation
+    stage: 2
+    stage_name: System Design
+    track: SC
+    delegation: agent_analyses_human_resolves
+    file: controls/sc/SC-2C.yaml
     owner_team: Security
 
   - id: SC-2B
@@ -164,6 +209,15 @@ registry:
     track: AC
     delegation: agent_drafts_human_approves
     file: controls/ac/AC-2A.yaml
+    owner_team: AI Governance
+
+  - id: AC-2B
+    name: AI Model Governance & Version Control
+    stage: 2
+    stage_name: System Design
+    track: AC
+    delegation: agent_creates_human_reviews
+    file: controls/ac/AC-2B.yaml
     owner_team: AI Governance
 
   # ---------------------------------------------------------------------------
@@ -239,6 +293,24 @@ registry:
     feedback_loops:
       - path_a_autofix
       - path_b_quickfix
+
+  - id: SC-3D
+    name: Software Composition Analysis & SBOM Generation
+    stage: 3
+    stage_name: Coding & Implementation
+    track: SC
+    delegation: agent_executes_human_reviews
+    file: controls/sc/SC-3D.yaml
+    owner_team: Security
+
+  - id: SC-3E
+    name: Container & IaC Security Scanning
+    stage: 3
+    stage_name: Coding & Implementation
+    track: SC
+    delegation: fully_automated
+    file: controls/sc/SC-3E.yaml
+    owner_team: Security
 
   - id: GC-3A
     name: Code Provenance Tracking
@@ -328,6 +400,24 @@ registry:
     delegation: agent_executes_human_reviews
     file: controls/ac/AC-4A.yaml
     owner_team: AI Governance
+
+  - id: SC-4C
+    name: API Security Testing
+    stage: 4
+    stage_name: Testing & Documentation
+    track: SC
+    delegation: agent_executes_human_reviews
+    file: controls/sc/SC-4C.yaml
+    owner_team: Security
+
+  - id: SC-4D
+    name: Adversarial AI Robustness Testing
+    stage: 4
+    stage_name: Testing & Documentation
+    track: SC
+    delegation: agent_executes_human_reviews
+    file: controls/sc/SC-4D.yaml
+    owner_team: Security
     note: Applicable to AI components only
 
   # ---------------------------------------------------------------------------
@@ -384,6 +474,15 @@ registry:
       - path_a_autofix
       - path_b_quickfix
 
+  - id: SC-5C
+    name: Secrets & Key Management Lifecycle
+    stage: 5
+    stage_name: Deployment & Release
+    track: SC
+    delegation: agent_checks_human_approves
+    file: controls/sc/SC-5C.yaml
+    owner_team: Security
+
   # ---------------------------------------------------------------------------
   # Stage 6 — Observability & Maintenance
   # ---------------------------------------------------------------------------
@@ -432,4 +531,13 @@ registry:
     delegation: agent_monitors_human_reports
     file: controls/ac/AC-6A.yaml
     owner_team: AI Governance
+
+  - id: RC-6B
+    name: Third-Party Continuous Risk Monitoring
+    stage: 6
+    stage_name: Observability & Maintenance
+    track: RC
+    delegation: agent_monitors_human_reports
+    file: controls/rc/RC-6B.yaml
+    owner_team: Risk Management
     note: Applicable to AI components only

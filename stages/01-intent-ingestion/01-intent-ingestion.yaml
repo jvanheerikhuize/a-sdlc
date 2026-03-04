@@ -11,18 +11,24 @@ description: Capture, validate, and enrich an incoming change request into a str
 required_controls:
 - id: SC-1A
   note: Must run first — screens for adversarial inputs before any agent processing
+- id: SC-1B
+  note: Applicable when the change processes personal data or involves profiling
 - id: QC-1A
 - id: QC-1B
 - id: RC-1A
 - id: AC-1A
   note: Applicable when the change involves an AI component
+- id: AC-1B
+  note: Applicable when the change introduces or modifies use of a GPAI/foundation model
 - id: GC-1A
 exit_criteria:
 - 'SC-1A: Pre-guardrails passed — no injection patterns detected in incoming request'
+- 'SC-1B: Data classification assigned (if applicable to change)'
 - 'QC-1A: Feature specification approved by Product Owner'
 - 'QC-1B: All blocking conflicts resolved; non-blocking conflicts documented'
 - 'RC-1A: Risk classification tier assigned and logged'
 - 'AC-1A: AI Act risk tier confirmed (or not-applicable documented)'
+- 'AC-1B: GPAI obligation screening completed (if applicable)'
 - 'GC-1A: Intent audit record written to immutable log'
 next_stage: 2
 process: process.md

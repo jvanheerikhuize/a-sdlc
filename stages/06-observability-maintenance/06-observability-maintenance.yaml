@@ -13,6 +13,8 @@ required_controls:
   note: Continuous — runs throughout the operational lifetime
 - id: RC-6A
   note: Continuous — runs throughout the operational lifetime
+- id: RC-6B
+  note: Applicable for AI component deployments — monitors third-party provider risk posture
 - id: SC-6A
   note: Continuous — DORA Art. 17–19 reporting obligations
 - id: SC-6B

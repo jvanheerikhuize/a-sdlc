@@ -1,0 +1,115 @@
+# =============================================================================
+# Control: GC-0D — Compliance Evidence Automation
+# Track:   GC (Governance Controls)
+# Owner:   Compliance / Regulatory Affairs Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: GC-0D
+moscow_score: should
+name: Compliance Evidence Automation
+description: >-
+  Maintain a continuously updated regulatory compliance dashboard that automatically
+  maps every executed control's evidence output to the specific regulatory article it
+  satisfies. For each regulatory article in scope (DORA and EU AI Act), maintain:
+  real-time coverage indicator, links to most recent evidence artefacts, date of last
+  evidence update, and identified gaps. Generate on-demand regulatory self-assessment
+  reports (DORA examination pack, EU AI Act conformity documentation) from the evidence
+  store without manual compilation. Alert when evidence for any mandatory regulatory
+  article is older than defined thresholds (e.g., >90 days stale).
+required_in_stages:
+- number: 0
+  name: Cross-Cutting
+  mandatory: true
+  note: >-
+    GC-0D is cross-cutting and continuous. It aggregates evidence from GC-0A (audit trail)
+    and maps it to regulatory articles. Compliance dashboard is accessible to compliance
+    and audit teams on demand.
+track:
+  code: GC
+  name: Governance Controls
+delegation:
+  pattern: agent_compiles_human_approves
+  human_display: Agent compiles evidence, human approves and reviews
+  agent_role: >-
+    Continuously map control execution evidence (audit logs from GC-0A, control output
+    artefacts) to regulatory articles in the compliance-matrix.yaml. Update coverage
+    status for each article: compliant (recent evidence), non-compliant (missing or
+    stale evidence), or partial (some but not all sub-requirements covered). Generate
+    regulatory exam packs on request.
+  human_role: >-
+    Review compliance dashboard regularly. When evidence is stale, investigate why control
+    execution is not occurring and take corrective action. Approve regulatory exam packs
+    before submission to authorities. Sign off on compliance assertions.
+owner:
+  team: Compliance, Regulatory Affairs
+  role: Regulatory Affairs Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+    - article: "Art. 8(6)"
+      obligation: >-
+        Documentation and reporting requirements for ICT risk management must be
+        maintained and periodically updated
+    - article: "Art. 5(2)"
+      obligation: >-
+        Management body must have oversight of the ICT risk framework; real-time
+        compliance dashboard supports this oversight
+  eu_ai_act:
+    - article: "Art. 17(1)"
+      requirement: >-
+        Quality management system must include comprehensive record-keeping and
+        documentation of regulatory compliance
+inputs:
+- name: Audit trail (GC-0A)
+  source_control: GC-0A
+  description: Immutable timestamped log of all control execution and evidence production
+- name: Control output artefacts
+  description: Evidence produced by all 39+ controls (test reports, scan results, approvals, etc.)
+- name: Compliance matrix mapping
+  description: regulatory/compliance-matrix.yaml defining which controls satisfy which articles
+outputs:
+- name: Compliance Dashboard (real-time)
+  type: report
+  description: >-
+    Interactive dashboard showing: status of each regulatory article (compliant/non-compliant/partial),
+    links to most recent evidence, date of last update, and identified gaps. Updated continuously.
+  retention: Indefinite (ongoing compliance state)
+- name: DORA Examination Pack
+  type: report
+  description: >-
+    Self-assessment report mapping DORA Arts. 5-56 to executed controls and evidence.
+    Generated on-demand for regulatory submission.
+  retention: 7 years (post-submission archive)
+- name: EU AI Act Conformity Declaration
+  type: report
+  description: >-
+    Conformity documentation mapping EU AI Act Arts. 5-99 (applicable subset) to
+    controls and evidence. Generated on-demand for market surveillance or deployer reference.
+  retention: 7 years
+- name: Evidence staleness alerts
+  type: alert
+  description: >-
+    Automated notifications when evidence for a regulatory article exceeds defined
+    staleness threshold (default: >90 days), indicating control may not be executing
+  retention: Operational
+failure_behaviour:
+  action: escalate
+  escalation_target: Chief Compliance Officer
+  description: >-
+    If regulatory article remains non-compliant (no evidence) for >30 days, escalate
+    to CCO. Indicates a control is not executing or evidence is not being captured.
+automation:
+  tooling:
+    - Governance, Risk & Compliance (GRC) platform (ServiceNow, AuditBoard, Workiva)
+    - Custom compliance dashboard (connected to audit trail)
+    - Report generation engine
+  frequency: continuous
+  sla_minutes: 60 (for regulatory pack generation on request)
+dependencies:
+- GC-0A   # Audit Trail & Compliance Reporting (data source)
+- GC-0B   # End-to-End Traceability (provides context)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

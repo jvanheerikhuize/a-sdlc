@@ -1,0 +1,99 @@
+# =============================================================================
+# Control: SC-3D — Software Composition Analysis (SCA) & SBOM Generation
+# Track:   SC (Security Controls)
+# Owner:   Security / Application Security Engineer
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-3D
+moscow_score: must
+name: Software Composition Analysis (SCA) & SBOM Generation
+description: >-
+  Scan all third-party dependencies — application libraries, packages, container base images,
+  and AI model packages — against CVE databases (NVD, OSV) at every commit. Generate and
+  maintain a Software Bill of Materials (SBOM) in standard format (CycloneDX or SPDX).
+  Block commits that introduce critical/high-severity known vulnerabilities without
+  documented exception. Publish SBOM as a release artefact.
+required_in_stages:
+- number: 3
+  name: Coding & Implementation
+  mandatory: true
+  note: >-
+    SCA runs at commit time to catch vulnerable dependencies before they reach testing.
+    SBOM generation must capture the full dependency tree including transitive dependencies.
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Automated with human exception management
+  agent_role: >-
+    Execute SCA scanner (OWASP Dependency-Check, Trivy, Snyk, or equivalent) against
+    all dependency manifests and container images. Generate SBOM in CycloneDX or SPDX format.
+    Flag any critical or high-severity CVEs. Reject commits introducing new critical CVEs
+    unless an exception ticket is linked.
+  human_role: >-
+    Review flagged CVEs. Decide whether to: update the dependency to a patched version,
+    accept the risk and document the exception, or change the design to remove the
+    dependency. Sign off on exceptions with business justification.
+owner:
+  team: Security
+  role: Application Security Engineer
+  contact: ''
+regulatory_mapping:
+  dora:
+    - article: "Art. 25(1)"
+      obligation: Testing must include "open source analyses" as a required methodology
+    - article: "Art. 28"
+      obligation: ICT third-party risk management requires identification and assessment of third-party components
+    - article: "Art. 8(4-5)"
+      obligation: Identification and documentation of all ICT assets, including third-party dependencies
+  eu_ai_act:
+    - article: "Art. 15(3)"
+      requirement: Supply chain integrity — dependencies are supply chain components
+inputs:
+- name: Source code repository (pom.xml, package.json, requirements.txt, Dockerfile, etc.)
+  description: All dependency manifests and container image configurations
+- name: CVE database (NVD, OSV, GitHub Advisory)
+  description: Current vulnerability intelligence
+outputs:
+- name: SCA scan report
+  type: report
+  description: >-
+    Detailed list of all detected vulnerabilities with CVSS scores, affected components,
+    and remediation guidance
+  retention: 7 years (regulatory audit trail)
+- name: Software Bill of Materials (SBOM)
+  type: evidence
+  description: >-
+    Machine-readable SBOM (CycloneDX or SPDX format) capturing all direct and transitive
+    dependencies with versions, licences, and vulnerability status
+  retention: 7 years (regulatory audit trail)
+- name: Exception tickets (if any)
+  type: decision
+  description: >-
+    Documented exceptions for accepted vulnerabilities, including business justification
+    and approval sign-off
+  retention: 7 years
+failure_behaviour:
+  action: block
+  escalation_target: Security Team Lead
+  description: >-
+    Critical or high-severity CVEs block commit unless an exception ticket is linked.
+    If exception process cannot be completed in time, the commit is rejected and must
+    be resubmitted with dependency updates.
+automation:
+  tooling:
+    - OWASP Dependency-Check
+    - Trivy
+    - Snyk
+    - GitHub Advanced Security (Dependabot)
+  frequency: per_change
+  sla_minutes: 15
+dependencies:
+- QC-1A   # Specification Validation (to understand intended dependencies)
+- SC-3B   # Post-Guardrails (complements security scanning)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

@@ -72,15 +72,15 @@ Five control tracks run through the entire lifecycle:
 
 | Stage | QC | RC | SC | AC | GC |
 | ----- | -- | -- | -- | -- | -- |
-| Cross-cutting | — | — | [SC-0D](controls/sc/SC-0D.yaml) | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml) |
-| [1 Intent Ingestion](stages/01-intent-ingestion/README.md) | [QC-1A](controls/qc/QC-1A.yaml), [QC-1B](controls/qc/QC-1B.yaml) | [RC-1A](controls/rc/RC-1A.yaml) | [SC-1A](controls/sc/SC-1A.yaml) | [AC-1A](controls/ac/AC-1A.yaml) | [GC-1A](controls/gc/GC-1A.yaml) |
-| [2 System Design](stages/02-system-design/README.md) | [QC-2A](controls/qc/QC-2A.yaml) | [RC-2A](controls/rc/RC-2A.yaml) | [SC-2A](controls/sc/SC-2A.yaml), [SC-2B](controls/sc/SC-2B.yaml) | [AC-2A](controls/ac/AC-2A.yaml) | — |
-| [3 Coding & Impl](stages/03-coding-implementation/README.md) | [QC-3A](controls/qc/QC-3A.yaml), [QC-3B](controls/qc/QC-3B.yaml) | [RC-3A](controls/rc/RC-3A.yaml) | [SC-3A](controls/sc/SC-3A.yaml), [SC-3B](controls/sc/SC-3B.yaml), [SC-3C](controls/sc/SC-3C.yaml) | — | [GC-3A](controls/gc/GC-3A.yaml) |
-| [4 Testing & Docs](stages/04-testing-documentation/README.md) | [QC-4A](controls/qc/QC-4A.yaml), [QC-4B](controls/qc/QC-4B.yaml), [QC-4C](controls/qc/QC-4C.yaml) | [RC-4A](controls/rc/RC-4A.yaml) | [SC-4A](controls/sc/SC-4A.yaml), [SC-4B](controls/sc/SC-4B.yaml) | [AC-4A](controls/ac/AC-4A.yaml) | — |
-| [5 Deployment](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml) | — | — |
-| [6 Observability](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
+| Cross-cutting | — | — | [SC-0D](controls/sc/SC-0D.yaml) | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml), [GC-0D](controls/gc/GC-0D.yaml) |
+| [1 Intent Ingestion](stages/01-intent-ingestion/README.md) | [QC-1A](controls/qc/QC-1A.yaml), [QC-1B](controls/qc/QC-1B.yaml) | [RC-1A](controls/rc/RC-1A.yaml) | [SC-1A](controls/sc/SC-1A.yaml), [SC-1B](controls/sc/SC-1B.yaml) | [AC-1A](controls/ac/AC-1A.yaml), [AC-1B](controls/ac/AC-1B.yaml) | [GC-1A](controls/gc/GC-1A.yaml) |
+| [2 System Design](stages/02-system-design/README.md) | [QC-2A](controls/qc/QC-2A.yaml) | [RC-2A](controls/rc/RC-2A.yaml), [RC-2B](controls/rc/RC-2B.yaml) | [SC-2A](controls/sc/SC-2A.yaml), [SC-2B](controls/sc/SC-2B.yaml), [SC-2C](controls/sc/SC-2C.yaml) | [AC-2A](controls/ac/AC-2A.yaml), [AC-2B](controls/ac/AC-2B.yaml) | — |
+| [3 Coding & Impl](stages/03-coding-implementation/README.md) | [QC-3A](controls/qc/QC-3A.yaml), [QC-3B](controls/qc/QC-3B.yaml) | [RC-3A](controls/rc/RC-3A.yaml) | [SC-3A](controls/sc/SC-3A.yaml), [SC-3B](controls/sc/SC-3B.yaml), [SC-3C](controls/sc/SC-3C.yaml), [SC-3D](controls/sc/SC-3D.yaml), [SC-3E](controls/sc/SC-3E.yaml) | — | [GC-3A](controls/gc/GC-3A.yaml) |
+| [4 Testing & Docs](stages/04-testing-documentation/README.md) | [QC-4A](controls/qc/QC-4A.yaml), [QC-4B](controls/qc/QC-4B.yaml), [QC-4C](controls/qc/QC-4C.yaml) | [RC-4A](controls/rc/RC-4A.yaml) | [SC-4A](controls/sc/SC-4A.yaml), [SC-4B](controls/sc/SC-4B.yaml), [SC-4C](controls/sc/SC-4C.yaml), [SC-4D](controls/sc/SC-4D.yaml) | [AC-4A](controls/ac/AC-4A.yaml) | — |
+| [5 Deployment](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml), [SC-5C](controls/sc/SC-5C.yaml) | — | — |
+| [6 Observability](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml), [RC-6B](controls/rc/RC-6B.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
 
-**Total: 39 controls** (including 4 cross-cutting: SC-0D, GC-0A, GC-0B, GC-0C; SC-2B is cross-cutting but executed at Stage 2). Full index in [controls/registry.yaml](controls/registry.yaml).
+**Total: 51 controls** across 5 tracks (QC: 10, RC: 8, SC: 16, AC: 6, GC: 6), including 5 cross-cutting controls: SC-0D, GC-0A, GC-0B, GC-0C, GC-0D; SC-2B is cross-cutting but executed at Stage 2. Full index in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 
@@ -95,13 +95,13 @@ a-sdlc/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json       ← JSON Schema for feature specifications
 ├── controls/
-│   ├── registry.yaml                  ← Flat index of all 39 controls (fast lookup by ID)
+│   ├── registry.yaml                  ← Flat index of all 51 controls (fast lookup by ID)
 │   ├── README.md                      ← Controls directory documentation
 │   ├── qc/                            ← Quality Control definitions (10 controls)
-│   ├── rc/                            ← Risk Control definitions (7 controls)
-│   ├── sc/                            ← Security Control definitions (13 controls)
-│   ├── ac/                            ← AI Control definitions (4 controls)
-│   └── gc/                            ← Governance Control definitions (5 controls)
+│   ├── rc/                            ← Risk Control definitions (8 controls)
+│   ├── sc/                            ← Security Control definitions (16 controls)
+│   ├── ac/                            ← AI Control definitions (6 controls)
+│   └── gc/                            ← Governance Control definitions (6 controls)
 ├── directives/
 │   ├── core/
 │   │   └── core-directives.yaml       ← Immutable core security directives (SC-0D payload)

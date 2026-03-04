@@ -17,6 +17,10 @@ required_controls:
   note: Runs on all agent-generated code before PR creation
 - id: SC-3C
   note: Runs on every commit
+- id: SC-3D
+  note: Scans all third-party dependencies for known vulnerabilities
+- id: SC-3E
+  note: Scans all container images and IaC manifests for security misconfigurations
 - id: RC-3A
   note: Logged throughout; reviewed by Tech Lead
 - id: GC-3A
@@ -28,6 +32,8 @@ exit_criteria:
 - 'SC-3A: Permission enforcement log shows no out-of-boundary access'
 - 'SC-3B: Post-guardrail scan passed — no malicious patterns detected'
 - 'SC-3C: Secrets scan passed on all commits — no credentials found'
+- 'SC-3D: SCA scan passed — no critical/high vulnerabilities in dependencies without documented exception'
+- 'SC-3E: Container/IaC scan passed — no critical security misconfigurations'
 - 'RC-3A: Decision log complete and reviewed'
 - 'GC-3A: Code provenance tags applied to all contributions'
 - 'QC-3A: Pull request approved by required reviewers per risk tier'

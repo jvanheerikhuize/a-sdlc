@@ -12,17 +12,26 @@ required_controls:
 - id: QC-2A
 - id: RC-2A
   note: Human-required gate — cannot be delegated to an agent
+- id: RC-2B
+  note: Applicable when the change involves personal data, profiling, or high-risk AI systems
 - id: SC-2A
+- id: SC-2C
+  note: Validate zero-trust architecture principles in design
 - id: SC-2B
   note: Directive injection must be confirmed before Stage 3 begins
 - id: AC-2A
   note: Applicable when the change involves an AI component
+- id: AC-2B
+  note: Applicable when the change involves AI models — register in model registry
 exit_criteria:
 - 'QC-2A: Design validated and approved by Lead Architect'
 - 'RC-2A: Design approval granted and logged'
+- 'RC-2B: Privacy Impact Assessment completed (if applicable)'
 - 'SC-2A: STRIDE threat model validated and all critical threats mitigated'
+- 'SC-2C: Zero-trust architecture principles validated'
 - 'SC-2B: Stage 2 and Stage 3 directive bundles injected and acknowledged by agent'
 - 'AC-2A: AI component design review approved (or not-applicable documented)'
+- 'AC-2B: AI model registry entry created with version pinning (if applicable)'
 next_stage: 3
 process: process.md
 artifacts:

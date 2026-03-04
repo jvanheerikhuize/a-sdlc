@@ -1,7 +1,7 @@
 # =============================================================================
 # Regulatory Compliance Matrix — A-SDLC Framework
 # =============================================================================
-# This matrix maps all 39 A-SDLC controls to regulatory obligations across
+# This matrix maps all 51 A-SDLC controls to regulatory obligations across
 # DORA (Digital Operational Resilience Act) and EU AI Act.
 #
 # Purpose:
@@ -254,13 +254,13 @@ compliance_matrix:
 
 coverage_summary:
 
-  total_controls: 39
+  total_controls: 51
 
-  dora_mapped_controls: 19
-  dora_coverage_percentage: 48.7%
+  dora_mapped_controls: 27
+  dora_coverage_percentage: 52.9%
 
-  eu_ai_act_mapped_controls: 13
-  eu_ai_act_coverage_percentage: 33.3%
+  eu_ai_act_mapped_controls: 22
+  eu_ai_act_coverage_percentage: 43.1%
 
   coverage_by_track:
     QC:
@@ -268,20 +268,20 @@ coverage_summary:
       mapped: 4
       percentage: 40%
     RC:
-      total: 7
-      mapped: 4
-      percentage: 57%
+      total: 8
+      mapped: 5
+      percentage: 62.5%
     SC:
-      total: 13
-      mapped: 10
-      percentage: 77%
+      total: 16
+      mapped: 14
+      percentage: 87.5%
     AC:
-      total: 4
-      mapped: 4
+      total: 6
+      mapped: 6
       percentage: 100%
     GC:
-      total: 5
-      mapped: 5
+      total: 6
+      mapped: 6
       percentage: 100%
 
   unmapped_controls:
@@ -409,40 +409,3 @@ regulatory_areas:
       - RC-2A   # Design Approval (governance gate)
       - RC-5A   # CAB Approval (deployment gate)
     status: "Partial Coverage"
-
-# =============================================================================
-# IMPLEMENTATION ROADMAP
-# =============================================================================
-
-implementation_phases:
-
-  phase_1:
-    name: "Critical Regulatory Compliance (0-6 months)"
-    focus: "Must-have controls blocking regulatory violations"
-    must_have_controls: 23
-    priority_areas:
-      - Risk Identification & Assessment
-      - Security Testing & Verification
-      - Incident Detection & Reporting
-      - Documentation & Record-Keeping
-    estimated_coverage: "72% DORA, 65% EU AI Act"
-
-  phase_2:
-    name: "Comprehensive Oversight (6-12 months)"
-    focus: "Should-have controls for enhanced governance"
-    should_have_controls: 12
-    priority_areas:
-      - Supply Chain & Third-Party Risk
-      - Business Continuity & Recovery
-      - Access & Permission Management
-      - Human Oversight & Governance
-    estimated_coverage: "85% DORA, 82% EU AI Act"
-
-  phase_3:
-    name: "Optimization & Excellence (12-18 months)"
-    focus: "Could-have controls for advanced capabilities"
-    could_have_controls: 2
-    priority_areas:
-      - Advanced anomaly detection
-      - SLA/SLO optimization
-    estimated_coverage: "95%+ both frameworks"
