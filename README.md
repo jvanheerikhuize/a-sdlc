@@ -137,12 +137,13 @@ For detailed analysis, see:
 
 | Document                                     | Purpose                                                              | Audience                |
 | -------------------------------------------- | -------------------------------------------------------------------- | ----------------------- |
-| [GAP_ANALYSIS_README.md](GAP_ANALYSIS_README.md) | Gap analysis entry point with remediation roadmap (3-18 months) | Compliance, Executives  |
-| [REGULATORY_COVERAGE_MATRIX.md](REGULATORY_COVERAGE_MATRIX.md) | Quick-reference tables for coverage assessment by article | Architects, Auditors    |
-| [GAP_ANALYSIS_SUMMARY.md](GAP_ANALYSIS_SUMMARY.md) | Comprehensive detailed analysis with control mapping | Developers, Architects |
-| [gap-analysis-output.json](gap-analysis-output.json) | Machine-readable JSON for integration and tooling | DevOps, Automation      |
-| [regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml) | Control-to-requirement mapping by compliance area | Reference               |
-| [regulatory/sources.yaml](regulatory/sources.yaml) | Full text of all DORA and EU AI Act articles | Legal, Compliance       |
+| [ANALYSIS_INDEX.md](regulatory/gapanalysis/ANALYSIS_INDEX.md) | Navigation guide for all gap analysis deliverables | All Audiences           |
+| [GAP_ANALYSIS_README.md](regulatory/gapanalysis/GAP_ANALYSIS_README.md) | Gap analysis entry point with remediation roadmap (3-18 months) | Compliance, Executives  |
+| [REGULATORY_COVERAGE_MATRIX.md](regulatory/gapanalysis/REGULATORY_COVERAGE_MATRIX.md) | Quick-reference tables for coverage assessment by article | Architects, Auditors    |
+| [GAP_ANALYSIS_SUMMARY.md](regulatory/gapanalysis/GAP_ANALYSIS_SUMMARY.md) | Comprehensive detailed analysis with control mapping | Developers, Architects |
+| [gap-analysis-output.json](regulatory/gapanalysis/gap-analysis-output.json) | Machine-readable JSON for integration and tooling | DevOps, Automation      |
+| [compliance-matrix.yaml](regulatory/compliance-matrix.yaml) | Control-to-requirement mapping by compliance area | Reference               |
+| [sources.yaml](regulatory/sources.yaml) | Full text of all DORA and EU AI Act articles | Legal, Compliance       |
 
 ### Remediation Roadmap
 
@@ -204,7 +205,13 @@ a-sdlc/
 │   └── feedback-loops.yaml          ← Path A and Path B re-entry definitions
 └── regulatory/
     ├── compliance-matrix.yaml        ← DORA / EU AI Act coverage map
-    └── sources.yaml                  ← Official article texts and obligation summaries
+    ├── sources.yaml                  ← Official article texts and obligation summaries
+    └── gapanalysis/                  ← Gap analysis deliverables
+        ├── ANALYSIS_INDEX.md         ← Navigation guide for all gap analysis documents
+        ├── GAP_ANALYSIS_README.md    ← Entry point with remediation roadmap (3-18 months)
+        ├── REGULATORY_COVERAGE_MATRIX.md ← Quick-reference tables by article
+        ├── GAP_ANALYSIS_SUMMARY.md   ← Comprehensive detailed analysis
+        └── gap-analysis-output.json  ← Machine-readable output for tooling
 ```
 
 ---
