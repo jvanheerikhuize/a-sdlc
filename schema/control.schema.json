@@ -4,7 +4,7 @@
   "title": "A-SDLC Control Definition",
   "description": "Schema for Agentic SDLC control definitions. Regulatory scope: DORA · EU AI Act.",
   "type": "object",
-  "required": ["id", "name", "description", "required_in_stages", "track", "delegation", "regulatory_mapping", "moscow_score"],
+  "required": ["id", "name", "description", "required_in_stages", "track", "delegation", "moscow_score"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -149,7 +149,7 @@
     "regulatory_mapping": {
       "type": "object",
       "additionalProperties": false,
-      "description": "At least one framework must be populated.",
+      "description": "Optional: Regulatory framework mappings. Will be populated during regulatory context rebuild phase.",
       "properties": {
         "dora": {
           "type": "array",

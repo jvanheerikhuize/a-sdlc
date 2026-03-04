@@ -84,28 +84,6 @@ Five control tracks run through the entire lifecycle:
 
 ---
 
-## Regulatory Compliance
-
-Every control is mapped to at least one of two regulatory frameworks:
-
-- **DORA** — Digital Operational Resilience Act (EU, effective January 2025): ICT risk management, incident reporting, operational resilience, third-party oversight
-- **EU AI Act** — Risk-tiered AI requirements: transparency, data governance, accuracy, robustness, human oversight
-
-### Moscow Prioritization
-
-Controls are prioritized using the MoSCoW framework:
-
-| Category | Count | Definition |
-| -------- | ----- | ---------- |
-| **Must** | 25 | Critical regulatory requirements and blocking controls |
-| **Should** | 12 | Important but non-blocking controls for quality/oversight |
-| **Could** | 2 | Phase 3 optimization controls |
-| **Won't** | 0 | — |
-
-See [regulatory/moscow/](regulatory/moscow/) for detailed prioritization analysis, implementation phases, and remediation roadmap.
-
----
-
 ## Repository Structure
 
 ```text
@@ -140,13 +118,7 @@ a-sdlc/
 │   ├── feedback-loops.yaml            ← Path A (quick fix) and Path B (full re-entry) definitions
 │   └── artifacts/                     ← Feedback loop templates and outputs
 ├── regulatory/
-│   ├── sources.yaml                   ← Official DORA and EU AI Act article texts
-│   └── moscow/                        ← MoSCoW prioritization framework
-│       ├── MOSCOW-QUICK-REFERENCE.md  ← Quick lookup guide (daily use)
-│       ├── MOSCOW-PRIORITIZATION-README.md ← Implementation roadmap (Phase 1-3)
-│       ├── MOSCOW-PRIORITIZATION-INDEX.md ← Master index and cross-references
-│       ├── moscow-prioritization.csv  ← Prioritization matrix
-│       └── moscow-prioritization.json ← Machine-readable prioritization data
+│   └── sources.yaml                   ← Regulatory source documents and frameworks
 ├── scripts/                           ← Utility scripts (validation, analysis, etc.)
 └── initialcontext/                    ← Original regulatory source documents (MIME-encoded HTML)
 ```
