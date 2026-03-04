@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: AC-4A
+moscow_score: should
 name: Bias & Fairness Testing
 description: 'For changes involving AI systems: test for discriminatory outcomes across protected characteristics (e.g. age,
   gender, ethnicity, disability) as defined by applicable EU regulations. Results feed into RC-4A. Not applicable to changes

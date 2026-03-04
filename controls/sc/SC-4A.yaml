@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-4A
+moscow_score: must
 name: SAST
 description: 'Static Application Security Testing: analyse the full codebase for security vulnerabilities mapped to CWE (Common
   Weakness Enumeration) categories. Apply heightened scrutiny to agent-generated code. Block release of any critical or high-severity

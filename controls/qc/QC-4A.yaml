@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-4A
+moscow_score: should
 name: Functional & Non-Functional Testing
 description: 'Execute the full test suite covering: functional tests mapped to every Stage 1 acceptance criterion, regression
   tests, negative and boundary tests, performance tests, load tests, stress tests, accessibility tests, and resilience tests.

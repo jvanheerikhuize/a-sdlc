@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: AC-6A
+moscow_score: should
 name: AI Post-Market Surveillance
 description: 'Implement the EU AI Act Art. 72 post-market monitoring system for all deployed AI components: continuously track
   performance metrics, execute scheduled bias re-testing, maintain an incident log for serious AI incidents, and keep technical

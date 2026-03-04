@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-2B
+moscow_score: must
 name: Stage Directive Injection
 description: >-
   Inject the signed, immutable stage directive bundle into the agent context

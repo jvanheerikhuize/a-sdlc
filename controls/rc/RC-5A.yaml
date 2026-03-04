@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-5A
+moscow_score: must
 name: CAB Approval
 description: 'Formal change approval from the appropriate authority based on risk classification: high-risk changes require
   Change Advisory Board (CAB) approval; medium-risk requires line management; low-risk may use a pre-approved standard change

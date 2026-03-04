@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-6A
+moscow_score: should
 name: Risk & Health Monitoring
 description: 'Continuously monitor the system''s operational risk posture: configuration drift against approved baseline,
   new vulnerabilities in the SBOM, threat landscape changes, application health indicators, capacity trends, TLS certificate

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-3B
+moscow_score: should
 name: Code Quality Standards
 description: 'Enforce automated code quality standards continuously during implementation: linting, cyclomatic complexity
   thresholds, coding standards compliance, and maintainability metrics. Blocks commits that fall below defined quality thresholds.'

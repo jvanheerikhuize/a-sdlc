@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-4A
+moscow_score: must
 name: Risk Threshold Evaluation
 description: 'Aggregate all Stage 4 control results and determine whether the residual risk of the change falls within the
   organisation''s risk appetite. Produces one of three outcomes: pass (proceed to Stage 5), conditional pass (proceed with

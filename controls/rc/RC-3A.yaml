@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-3A
+moscow_score: should
 name: Decision Log
 description: Capture all significant implementation decisions — especially those made autonomously by agents — including the
   decision taken, rationale, alternatives considered, and the human who reviewed the decision. Provides the audit trail required

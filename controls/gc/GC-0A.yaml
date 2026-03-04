@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: GC-0A
+moscow_score: must
 name: Audit Trail & Compliance Reporting
 description: Log every control execution with timestamp, actor, outcome, and supporting evidence. Produce DORA
   examination artefacts on demand. The audit trail must be immutable and tamper-evident.

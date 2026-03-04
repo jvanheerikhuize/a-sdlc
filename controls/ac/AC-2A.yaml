@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: AC-2A
+moscow_score: must
 name: AI Component Design Review
 description: 'For changes involving AI systems: validate model selection rationale, data pipeline design, data governance
   approach, explainability mechanisms, and human oversight provisions. Ensures AI component design meets EU AI Act technical

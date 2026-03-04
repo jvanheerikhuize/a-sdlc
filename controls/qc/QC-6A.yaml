@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-6A
+moscow_score: could
 name: SLA/SLO Monitoring
 description: 'Continuously measure all defined Service Level Indicators (SLIs) against Service Level Objectives (SLOs): availability,
   latency percentiles, error rates, and throughput. Track error budget consumption rates and alert when burn rate exceeds

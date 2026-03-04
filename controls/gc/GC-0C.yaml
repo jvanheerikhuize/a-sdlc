@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: GC-0C
+moscow_score: must
 name: Agent Provenance Registry
 description: 'Maintain a centralised registry of all agent contributions across the lifecycle: what each agent produced, which
   decisions it made autonomously, and which humans reviewed and approved its output. Supports DORA third-party oversight and

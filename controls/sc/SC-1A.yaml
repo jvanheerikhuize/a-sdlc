@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-1A
+moscow_score: must
 name: Pre-Guardrails
 description: Screen all incoming change requests for prompt injection attacks and adversarial inputs that could manipulate
   agent interpretation of the requirements. Block manipulated inputs before they influence any downstream agent action.

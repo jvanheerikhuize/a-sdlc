@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-1A
+moscow_score: must
 name: Specification Validation
 description: Confirm the incoming change request has been correctly captured with complete acceptance criteria, non-functional
   requirements (NFRs), and measurable success conditions. Reject incomplete specifications before any design work begins.

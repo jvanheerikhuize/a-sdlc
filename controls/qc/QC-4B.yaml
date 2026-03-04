@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-4B
+moscow_score: should
 name: AI Output Validation
 description: 'For changes involving AI systems: execute hallucination detection tests, accuracy benchmarking against defined
   thresholds, output consistency tests across equivalent inputs, and boundary condition tests. Results feed into the RC-4A

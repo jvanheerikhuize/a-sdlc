@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: AC-1A
+moscow_score: must
 name: AI Risk Tier Classification
 description: 'For changes that introduce, modify, or interact with AI components: classify the EU AI Act risk tier (minimal/limited/high/unacceptable)
   and trigger the corresponding compliance requirements for all downstream stages. Not applicable to changes with no AI component.'

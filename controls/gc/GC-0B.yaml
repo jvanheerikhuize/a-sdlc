@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: GC-0B
+moscow_score: must
 name: End-to-End Traceability
 description: Maintain bidirectional traceability linking every deployment artefact back to its originating intent, and every
   intent forward to its resulting deployment and monitoring state. Supports impact analysis for proposed changes.

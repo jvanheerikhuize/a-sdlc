@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-2A
+moscow_score: must
 name: Threat Model Validation
 description: Perform STRIDE-based threat analysis across all trust boundaries in the design. Verify that the proposed architecture
   does not introduce insecure patterns and that identified threats have corresponding mitigations.

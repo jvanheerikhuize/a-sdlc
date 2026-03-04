@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-4B
+moscow_score: must
 name: DAST
 description: 'Dynamic Application Security Testing: execute runtime security tests against a deployed test instance including
   injection attack tests, authentication flaw detection, session management validation, TLS configuration checks, and other

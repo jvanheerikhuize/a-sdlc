@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-6A
+moscow_score: must
 name: Incident Scanning & Detection
 description: 'Real-time SIEM monitoring for security incidents using MITRE ATT&CK detection patterns. Classify all detected
   incidents per DORA Art. 18 taxonomy and trigger the appropriate reporting timelines: 4-hour initial notification, 72-hour

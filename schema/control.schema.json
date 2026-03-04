@@ -4,7 +4,7 @@
   "title": "A-SDLC Control Definition",
   "description": "Schema for Agentic SDLC control definitions. Regulatory scope: DORA · EU AI Act.",
   "type": "object",
-  "required": ["id", "name", "description", "required_in_stages", "track", "delegation", "regulatory_mapping"],
+  "required": ["id", "name", "description", "required_in_stages", "track", "delegation", "regulatory_mapping", "moscow_score"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -267,6 +267,11 @@
     "directive_payload": {
       "type": "string",
       "description": "Path to the directive payload file injected by this control. Used by SC-0D for the core directive bundle."
+    },
+    "moscow_score": {
+      "type": "string",
+      "enum": ["must", "should", "could", "wont"],
+      "description": "MoSCoW prioritization category: Must have (critical), Should have (important), Could have (nice-to-have), Won't have (out of scope)."
     },
     "metadata": {
       "type": "object",

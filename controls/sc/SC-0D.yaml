@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-0D
+moscow_score: must
 name: Core Directive Injection
 description: >-
   Inject the signed, immutable Core Directives bundle into every agent context

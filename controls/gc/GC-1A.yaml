@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: GC-1A
+moscow_score: must
 name: Intent Traceability
 description: Log the original change request, all agent transformations applied during Stage 1, intermediate states, stakeholder
   decisions, and the final validated specification. This record forms the first link in the end-to-end audit chain and must

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-2A
+moscow_score: must
 name: Design Completeness & Standards
 description: Validate that the proposed design addresses all requirements from the Stage 1 specification, follows organisational
   architectural patterns, meets technology standards, and is sufficiently detailed for implementation.

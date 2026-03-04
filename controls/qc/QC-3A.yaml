@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-3A
+moscow_score: should
 name: Pull Request Creation & Review
 description: All implementation work — whether produced by humans, agents, or both — converges into a pull request that includes
   evidence from every other Stage 3 control. The PR must be reviewed and approved by the appropriate number of reviewers before

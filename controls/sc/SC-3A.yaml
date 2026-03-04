@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-3A
+moscow_score: must
 name: Permission Management
 description: Enforce least-privilege access on all agent operations during implementation. Define and apply the permission
   boundary governing which files, APIs, databases, and network resources the agent may access. Any access attempt outside

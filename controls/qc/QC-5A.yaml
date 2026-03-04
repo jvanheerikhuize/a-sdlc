@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-5A
+moscow_score: should
 name: Release Readiness Checklist
 description: 'Compile and verify the complete release readiness package: confirm all prior stage controls have passed, all
   approvals are in place, documentation is current, and the release package is complete and matches what was tested. This

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-4C
+moscow_score: must
 name: Documentation Completeness
 description: 'Verify that all required documentation is present, current, and accurately reflects the implementation. Required
   documentation includes: runbooks, API documentation, Architecture Decision Records (ADRs), decision logs from Stage 3, and

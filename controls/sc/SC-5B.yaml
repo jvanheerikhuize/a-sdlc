@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-5B
+moscow_score: must
 name: Deployment Integrity
 description: Cryptographically verify that the artefacts being deployed to production are byte-for-byte identical to the artefacts
   that were tested in Stage 4. No tampering, substitution, or modification between test and production deployment is permitted.

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-2A
+moscow_score: should
 name: Design Approval
 description: 'Consolidated governance gate combining design approval with functional risk classification. Determines the appropriate
   sign-off authority based on the functional risk tier: high-risk requires senior architecture board approval; medium requires

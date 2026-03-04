@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: RC-5B
+moscow_score: should
 name: Rollback Plan Validation
 description: 'Verify the rollback strategy: define specific triggers that will initiate a rollback, test the rollback procedure
   in a pre-production environment, and confirm the decision authority for initiating rollback during a live deployment. The

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-3B
+moscow_score: must
 name: Post-Guardrails
 description: Scan all agent-generated code for malicious patterns, backdoors, supply chain attacks, and adversarial constructs
   before the code is included in a pull request. Apply heightened scrutiny to agent-generated code compared to human-written

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-3C
+moscow_score: must
 name: Secrets & Credentials Scanning
 description: Scan all code changes in real-time for hardcoded secrets, API keys, passwords, tokens, connection strings, and
   certificates. Block any commit containing exposed credentials before it enters version control history.

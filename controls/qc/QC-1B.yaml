@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: QC-1B
+moscow_score: should
 name: Coherence & Conflict Resolution
 description: Detect contradictions, competing priorities, and logical inconsistencies between requirements. Surface all conflicts
   with severity ratings and resolution options. Force stakeholders to resolve all blocking conflicts before design begins.

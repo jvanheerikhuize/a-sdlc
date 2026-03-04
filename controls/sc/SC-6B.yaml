@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-6B
+moscow_score: could
 name: Runtime Anomaly Detection
 description: 'Detect behavioural anomalies through statistical baseline monitoring: identify deviations in system behaviour
   patterns, detect AI model drift, identify adversarial input patterns, and surface any runtime behaviour inconsistent with

@@ -6,6 +6,7 @@
 # =============================================================================
 
 id: SC-5A
+moscow_score: must
 name: Infrastructure Security
 description: 'Validate the production environment security baseline immediately before deployment: verify patching status,
   access control configurations, network segmentation rules, infrastructure-as-code compliance, and absence of unexpected
