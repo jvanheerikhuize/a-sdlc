@@ -63,13 +63,20 @@ manifest/catalog.yaml                ← Master manifest with doc_generation spe
 Jinja2 templates that control how docs are generated:
 
 ```
-docs-templates/stage-readme.jinja2    ← Generate stages/NN-*/README.md
-docs-templates/controls-index.jinja2  ← Generate controls/README.md
-docs-templates/framework-overview.jinja2  ← Generate root README.md (todo)
-docs-templates/regulatory-index.jinja2    ← Generate regulatory/README.md (todo)
-docs-templates/feedback-loops-guide.jinja2 ← Generate feedbackloops/README.md (todo)
-docs-templates/README.md              ← Guide for creating templates
+docs-templates/stage-readme.jinja2         ← Generate stages/NN-*/README.md ✅
+docs-templates/controls-index.jinja2       ← Generate controls/README.md ✅
+docs-templates/framework-overview.jinja2   ← Generate root README.md ✅
+docs-templates/stages-overview.jinja2      ← Generate stages/README.md ✅
+docs-templates/agents.jinja2               ← Generate AGENTS.md ✅
+docs-templates/stage-context-bundle.jinja2 ← Generate context/stage-NN.md ✅
+docs-templates/feedback-loops-guide.jinja2 ← Generate feedbackloops/README.md ✅
+docs-templates/regulatory-index.jinja2     ← Generate regulatory/README.md ⏳ (awaiting data fix)
+docs-templates/README.md                   ← Guide for creating templates
 ```
+
+**Template Status Legend:**
+- `✅` = Implemented and working
+- `⏳` = Implemented but blocked on data validation issue
 
 ### Generator Script
 Python script that processes templates and generates docs:

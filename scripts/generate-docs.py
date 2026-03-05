@@ -578,6 +578,103 @@ class DocGenerator:
         lines.append("```")
         return "\n".join(lines)
 
+    def generate_regulatory_index(self):
+        """Generate regulatory/README.md from compliance-matrix.yaml and sources.yaml."""
+        matrix = self.load_yaml("regulatory/compliance-matrix.yaml") or {}
+        sources = self.load_yaml("regulatory/sources.yaml") or {}
+
+        if not matrix or not sources:
+            return False
+
+        compliance = matrix.get("compliance_matrix", {})
+        coverage_summary = matrix.get("coverage_summary", {})
+        regulatory_areas = matrix.get("regulatory_areas", [])
+
+        # Pre-render coverage by track table
+        track_coverage = coverage_summary.get("coverage_by_track", {})
+        track_rows = [
+            "| Track | Total | DORA Mapped | DORA % | EU AI Act Mapped | EU AI Act % |",
+            "|-------|-------|---|---|---|---|",
+        ]
+        for track_code in ["QC", "RC", "SC", "AC", "GC"]:
+            track_info = track_coverage.get(track_code, {})
+            total = track_info.get("total", 0)
+            dora_mapped = track_info.get("dora_mapped", 0)
+            dora_pct = track_info.get("percentage", "0%")
+            eu_ai_mapped = track_info.get("eu_ai_act_mapped", 0)
+            eu_ai_pct = track_info.get("percentage", "0%")
+            track_rows.append(f"| {track_code} | {total} | {dora_mapped} | {dora_pct} | {eu_ai_mapped} | {eu_ai_pct} |")
+        coverage_by_track_table = "\n".join(track_rows)
+
+        # Pre-render regulatory areas table
+        areas_rows = [
+            "| Area | DORA Articles | EU AI Act | A-SDLC Controls | Status |",
+            "|------|---|---|---|---|",
+        ]
+        for area in regulatory_areas:
+            area_name = area.get("area", "—")
+            dora_arts = ", ".join(area.get("dora_articles", []))[:40]
+            eu_arts = ", ".join(area.get("eu_ai_act_articles", []))[:40]
+            ctrls = ", ".join([c.split(" ")[0] for c in area.get("controls", [])])[:40]
+            status = area.get("status", "—")
+            areas_rows.append(f"| {area_name} | {dora_arts} | {eu_arts} | {ctrls} | {status} |")
+        regulatory_areas_table = "\n".join(areas_rows)
+
+        # Pre-render DORA article mappings
+        dora_articles = compliance.get("dora", {}).get("articles", [])
+        dora_rows = [
+            "| Article | Title | A-SDLC Controls | Coverage & Rationale |",
+            "|---------|-------|---|---|",
+        ]
+        for article in dora_articles:
+            article_id = article.get("article", "—")
+            title = article.get("title", "")
+            controls = ", ".join(article.get("controls", []))
+            coverage = article.get("coverage", "—")
+            dora_rows.append(f"| {article_id} | {title} | {controls} | {coverage} |")
+        dora_article_table = "\n".join(dora_rows)
+
+        # Pre-render EU AI Act article/annex mappings
+        eu_articles = compliance.get("eu_ai_act", {}).get("articles", [])
+        eu_annexes = compliance.get("eu_ai_act", {}).get("annexes", [])
+        eu_all = eu_articles + eu_annexes
+        eu_rows = [
+            "| Article / Annex | Title | A-SDLC Controls | Coverage & Rationale |",
+            "|---|---|---|---|",
+        ]
+        for item in eu_all:
+            article_id = item.get("article") or item.get("annex") or "—"
+            title = item.get("title", "")
+            controls = ", ".join(item.get("controls", []))
+            coverage = item.get("coverage", "—")
+            eu_rows.append(f"| {article_id} | {title} | {controls} | {coverage} |")
+        eu_article_table = "\n".join(eu_rows)
+
+        # Prepare template context
+        context = {
+            "coverage_by_track_rows": coverage_by_track_table,
+            "regulatory_areas_rows": regulatory_areas_table,
+            "dora_article_rows": dora_article_table,
+            "eu_ai_act_rows": eu_article_table,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("regulatory-index.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: regulatory-index.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "regulatory" / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def generate_all(self):
         """Generate all documentation targets."""
         targets = self.manifest.get("doc_generation", {}).get("targets", [])
@@ -612,6 +709,12 @@ class DocGenerator:
             elif template == "stage-context-bundle":
                 if self.generate_stage_context_bundles(source):
                     count += 1
+            elif template == "regulatory-index":
+                # TODO: compliance-matrix.yaml has YAML syntax errors (mixed scalars + list).
+                # Temporarily skip until data is fixed.
+                # if self.generate_regulatory_index():
+                #     count += 1
+                print(f"⏸ Skipped (data validation needed): {output} ({template})")
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")
 

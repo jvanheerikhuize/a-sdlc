@@ -74,32 +74,155 @@ Generates `controls/README.md` from the control registry.
 - Flat index for fast lookup
 - Schema validation reference
 
-### `framework-overview.jinja2`
+### `framework-overview.jinja2` ✅
 
-Generates `README.md` from `asdlc.yaml`.
+Generates root `README.md` from `asdlc.yaml`.
 
 **Input:** `asdlc.yaml`
 **Output:** `README.md`
 
-(To be implemented)
+**Variables:**
 
-### `regulatory-index.jinja2`
+- `framework` — Framework metadata (name, tagline, narrative, value propositions)
+- `stages` — List of all 6 stages with numbers, names, descriptions
+- `control_matrix_rows` — Pre-rendered markdown table of all controls by track
+- `track_counts` — Control counts per track (QC, RC, SC, AC, GC)
+- `last_updated` — Timestamp
 
-Generates `regulatory/README.md` from `regulatory/` files.
+**Sections generated:**
 
-**Input:** `regulatory/sources.yaml` + `regulatory/compliance-matrix.yaml`
-**Output:** `regulatory/README.md`
+- What is the A-SDLC (narrative, properties, value propositions)
+- The six stages (diagram and control distribution table)
+- Control framework (tracks and all-controls matrix)
+- Repository structure (directory tree with annotations)
+- Regulatory compliance summary (DORA and EU AI Act coverage)
+- Agent entrypoint reference
 
-(To be implemented)
+### `agents.jinja2` ✅
 
-### `feedback-loops-guide.jinja2`
+Generates `AGENTS.md` from `asdlc.yaml` and `tasks.yaml`.
+
+**Input:** `asdlc.yaml`, `tasks.yaml`, control YAML files
+**Output:** `AGENTS.md`
+
+**Variables:**
+
+- `framework` — Framework definition and agent directives
+- `stages` — All stages with workflow DAGs
+- `controls` — All controls with execution rules
+- `tasks` — Navigation index mapping "what am I doing?" to stages/controls
+- `directives` — Core and stage-specific security directives (SC-0D, SC-2B)
+- `last_updated` — Timestamp
+
+**Sections generated:**
+
+- Agent operating instructions (mandatory rules)
+- Navigation map (stages, controls, tasks)
+- Control execution rules (actor, gate criteria, success conditions)
+- Directive injection rules (SC-0D at session start, SC-2B at stage entry)
+- Feedback loop decision tree
+- Delegation patterns
+
+### `stages-overview.jinja2` ✅
+
+Generates `stages/README.md` overview from `asdlc.yaml`.
+
+**Input:** `asdlc.yaml`
+**Output:** `stages/README.md`
+
+**Variables:**
+
+- `stages` — All 6 stages with numbers, names, descriptions, control counts
+- `all_controls` — Flattened list of controls with stage requirements
+- `stage_links` — Pre-rendered navigation table to each stage's README
+- `last_updated` — Timestamp
+
+**Sections generated:**
+
+- Stages directory overview
+- Six-stage lifecycle diagram
+- Stage navigation table (number, name, description, control count)
+- Control cross-reference (which controls appear in which stages)
+- Feedback loop entry points
+
+### `stage-context-bundle.jinja2` ✅
+
+Generates `context/stage-NN-name.md` context bundles from individual stage YAMLs.
+
+**Input:** `stages/NN-name/NN-name.yaml`
+**Output:** `context/stage-NN-name.md`
+
+**Variables:**
+
+- `stage` — The stage YAML object
+- `stage_file` — Path to source YAML
+- `quick_load_files` — Pre-rendered list of files to load for this stage
+- `workflow_table` — Pre-rendered markdown table of execution order
+- `controls_table` — Pre-rendered markdown table of controls with actors
+- `exit_criteria_checklist` — Pre-rendered checklist of exit conditions
+- `input_artifacts` — Pre-rendered artifact list from prior stage
+- `output_artifacts` — Pre-rendered artifact list to next stage
+- `feedback_triggers` — Pre-rendered list of feedback loop triggers
+- `last_updated` — Timestamp
+
+**Sections generated:**
+
+- Stage overview and description
+- Quick load file list
+- Execution workflow (DAG in execution order)
+- Control definitions (what agent does, what human verifies)
+- Exit criteria checklist
+- Input/output artifacts
+- Feedback loop trigger reference
+
+### `feedback-loops-guide.jinja2` ✅
 
 Generates `feedbackloops/README.md` from `feedbackloops/feedback-loops.yaml`.
 
 **Input:** `feedbackloops/feedback-loops.yaml`
 **Output:** `feedbackloops/README.md`
 
-(To be implemented)
+**Variables:**
+
+- `feedback_loops` — Path A and Path B loop definitions from YAML
+- `path_a_controls` — Controls re-executed in Path A (quick fix)
+- `path_b_description` — Path B full re-entry from Stage 1
+- `decision_tree` — Pre-rendered decision flow for path selection
+- `last_updated` — Timestamp
+
+**Sections generated:**
+
+- Feedback loop overview (when they trigger)
+- Path A quick-fix flow (Stage 4/6 → Stage 3)
+- Path B full re-entry (Stage 4/6 → Stage 1)
+- Decision tree for path selection (approvers, criteria)
+- Control re-execution tables
+- Artifact propagation
+
+### `regulatory-index.jinja2` ⏳
+
+Generates `regulatory/README.md` from regulatory compliance data.
+
+**Input:** `regulatory/sources.yaml` + `regulatory/compliance-matrix.yaml`
+**Output:** `regulatory/README.md`
+
+**Variables:**
+
+- `coverage_by_track_rows` — Pre-rendered table of DORA/EU AI Act coverage by track
+- `regulatory_areas_rows` — Pre-rendered table of regulatory areas with mapped controls
+- `dora_article_rows` — Pre-rendered table of all DORA articles cross-referenced to controls
+- `eu_ai_act_rows` — Pre-rendered table of all EU AI Act articles/annexes cross-referenced to controls
+- `last_updated` — Timestamp
+
+**Sections generated:**
+
+- Coverage summary (DORA 84.3%, EU AI Act 58.8%)
+- Track coverage (controls mapped per track)
+- Regulatory areas (risk management, testing, supply chain, etc.)
+- DORA article mappings
+- EU AI Act article/annex mappings
+
+**Status:** ⏳ Blocked on data validation. Source file `regulatory/compliance-matrix.yaml` has YAML syntax error (scalar fields followed by list at same indentation). When fixed, uncomment dispatch in `scripts/generate-docs.py` line ~675.
 
 ## Running the Generator
 
