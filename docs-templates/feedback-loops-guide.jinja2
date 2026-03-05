@@ -1,0 +1,219 @@
+{# Template for generating feedbackloops/README.md from feedback-loops.yaml #}
+{# Usage: generate-docs.py uses this to create feedbackloops/README.md #}
+# Feedback Loops
+
+When Stage 4 (Testing & Documentation) or Stage 6 (Observability & Maintenance) detects an issue requiring a code change, work re-enters the lifecycle through one of two defined paths. These paths ensure no change bypasses governance controls — even under urgency.
+
+Full process with roles, steps, and decision points: This document (auto-generated from feedback-loops.yaml)
+
+Full path definitions and minimum control sets: [feedback-loops.yaml](feedback-loops.yaml)
+
+---
+
+## Roles
+
+| Role | Code | Feedback Loop Responsibilities |
+|------|------|-------------------------------|
+{% for role in roles %}
+| {{ role.role_name }} | {{ role.role_code }} | {{ role.responsibilities }} |
+{% endfor %}
+
+---
+
+## Steps Overview
+
+| Step | Name | Delegation | When |
+|------|------|------------|------|
+{% for step in steps %}
+| [{{ step.id }}](#step-{{ step.id | lower }}) | {{ step.name }} | {{ step.delegation_description.split('—')[0] | trim }} | {{ step.runs }} |
+{% endfor %}
+
+---
+
+## Path A — Quick Fix → Stage 3
+
+**Re-entry point:** Stage 3 (Coding & Implementation)
+
+For easy, obvious, low-risk issues with a clear root cause. Re-enters directly at Stage 3 with a minimum control set. If any eligibility condition is not met, Path B is mandatory — no exceptions.
+
+{% set path_a = feedback_loops[0] %}
+
+**Eligibility — when triggered from Stage 6:**
+
+{% for cond in path_a.trigger_sources[0].eligibility %}
+- {{ cond }}
+{% endfor %}
+
+**Eligibility — when triggered from Stage 4:**
+
+{% for cond in path_a.trigger_sources[1].eligibility %}
+- {{ cond }}
+{% endfor %}
+
+**Minimum controls required:**
+
+{{ path_a_minimum_controls_table }}
+
+> When triggered from Stage 4, also re-execute the specific Stage 4 control(s) that raised the issue.
+
+**Regulatory basis:** DORA Art. 8(5), Art. 17(3)
+
+---
+
+## Path B — Full Re-entry → Stage 1
+
+**Re-entry point:** Stage 1 (Intent Ingestion)
+
+For any issue not meeting Path A eligibility: complex bugs, new functionality requirements, architectural changes, or cases where root cause is unclear. No controls are skipped. The change is treated as a new feature request and goes through all six stages in sequence.
+
+**Regulatory basis:** DORA Art. 8(1)
+
+---
+
+## Decision Tree
+
+```mermaid
+flowchart TD
+    START(["Issue detected<br/>(Stage 4 or Stage 6)"])
+    Q1{"Easy, obvious, low-risk?<br/>Root cause clear?<br/>No architectural changes?"}
+    PA["Path A — Quick Fix<br/>Re-enter at Stage 3<br/>Minimum control set"]
+    Q2{"Deviation from expected<br/>scope during execution?"}
+    DONE([Activation record complete])
+    PB["Path B — Full Re-entry<br/>Re-enter at Stage 1<br/>Full lifecycle — all controls"]
+
+    START --> Q1
+    Q1 -- Yes --> PA
+    Q1 -- No --> PB
+    PA --> Q2
+    Q2 -- No --> DONE
+    Q2 -- "Yes — upgrade immediately" --> PB
+    PB --> DONE
+```
+
+---
+
+## Step FL.1 — Path Classification
+
+**Delegation:** Human required — Runs first — blocks re-entry until path is formally approved
+
+{% set fl1 = steps[0] %}
+
+**Actor / Action:**
+
+{{ fl1_actions_table }}
+
+**Path A eligibility — when triggered from Stage 6 (ALL conditions must be true):**
+
+| Condition | Check |
+|-----------|-------|
+{% for cond in fl1.eligibility_stage6 %}
+| {{ cond.condition }} | {{ cond.check }} |
+{% endfor %}
+
+**Path A eligibility — when triggered from Stage 4 (ALL conditions must be true):**
+
+| Condition | Check |
+|-----------|-------|
+{% for cond in fl1.eligibility_stage4 %}
+| {{ cond.condition }} | {{ cond.check }} |
+{% endfor %}
+
+If any condition is not met, Path B is mandatory. Do not attempt a partial Path A.
+
+| | |
+| --- | --- |
+| **Input** | {{ fl1.inputs[0] }} |
+| **Output** | {{ fl1.outputs[0] }} |
+| **On ambiguity** | {{ fl1.on_ambiguity }} |
+
+---
+
+## Step FL.2A — Path A: Quick Fix
+
+**Delegation:** Agent executes minimum control set, OPS/QA monitors — Runs after FL.1 (Path A selected)
+
+{% set fl2a = steps[1] %}
+
+**Actor / Action:**
+
+{{ fl2a_actions_table }}
+
+**Minimum control set (in execution order):**
+
+{{ path_a_minimum_controls_table }}
+
+| | |
+| --- | --- |
+| **Input** | {{ fl2a.inputs[0] }} |
+| **Output** | {{ fl2a.outputs[0] }} |
+| **On deviation** | {{ fl2a.on_deviation }} |
+
+---
+
+## Step FL.2B — Path B: Full Re-entry
+
+**Delegation:** Full lifecycle from Stage 1 — Runs after FL.1 (Path B selected) or upgrade from FL.2A
+
+{% set fl2b = steps[2] %}
+
+**Actor / Action:**
+
+{{ fl2b_actions_table }}
+
+| | |
+| --- | --- |
+| **Input** | {{ fl2b.inputs[0] }} |
+| **Output** | {{ fl2b.outputs[0] }} |
+| **Linkage** | {{ fl2b.linkage }} |
+| **On ambiguity** | {{ fl2b.on_ambiguity }} |
+
+---
+
+## Step FL.3 — Activation Record & Handover
+
+**Delegation:** Agent creates, CO reviews — Runs at completion of every path
+
+{% set fl3 = steps[3] %}
+
+**Actor / Action:**
+
+{{ fl3_actions_table }}
+
+| | |
+| --- | --- |
+| **Output** | {{ fl3.outputs[0] }} |
+| **Retention** | {{ fl3.retention }} |
+
+---
+
+## Input Artifacts
+
+**From Stage 4:**
+
+| Artifact | Source Control | Source Step |
+|----------|-----------------|-------------|
+{% for artifact in input_artifacts.stage4 %}
+| {{ artifact.artifact }} | {{ artifact.source_control }} | {{ artifact.source_step }} |
+{% endfor %}
+
+**From Stage 6:**
+
+| Artifact | Source Control | Source Step |
+|----------|-----------------|-------------|
+{% for artifact in input_artifacts.stage6 %}
+| {{ artifact.artifact }} | {{ artifact.source_control }} | {{ artifact.source_step }} |
+{% endfor %}
+
+---
+
+## Output Artifacts
+
+| Artifact | Produced at | Template |
+|----------|-------------|----------|
+{% for artifact in output_artifacts %}
+| {{ artifact.artifact }} | {{ artifact.produced_at }} | [{{ artifact.template }}]({{ artifact.template }}) |
+{% endfor %}
+
+---
+
+**Last Updated:** {{ last_updated }}

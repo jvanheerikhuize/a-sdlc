@@ -351,6 +351,80 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_feedback_loops_guide(self, source_file):
+        """Generate feedbackloops/README.md from feedback-loops.yaml."""
+        loaded = self.load_yaml(source_file) or {}
+        roles = loaded.get("roles", [])
+        steps = loaded.get("steps", [])
+        input_artifacts = loaded.get("input_artifacts", {})
+        output_artifacts = loaded.get("output_artifacts", [])
+        feedback_loops = loaded.get("feedback_loops", [])
+
+        # Pre-render minimum controls table for Path A
+        path_a = feedback_loops[0] if feedback_loops else {}
+        path_a_min_ctrls = path_a.get("minimum_controls", [])
+        path_a_table_rows = [
+            "| Control | Stage | Rationale |",
+            "| ------- | ----- | --------- |",
+        ]
+        for ctrl in path_a_min_ctrls:
+            ctrl_id = ctrl.get("id", "")
+            # Parse stage from control ID (QC-3A → 3, SC-4A → 4, SC-5B → 5, etc.)
+            # Format: [TRACK]-[STAGE][LETTER], e.g., QC-3A, SC-4A, SC-5B
+            stage = "?"
+            if "-" in ctrl_id:
+                parts = ctrl_id.split("-")
+                if len(parts) > 1 and len(parts[1]) > 0:
+                    stage = parts[1][0]  # Get first char after dash (the stage digit)
+            rationale = ctrl.get("rationale", "")
+            path_a_table_rows.append(f"| {ctrl_id} | {stage} | {rationale} |")
+
+        # Pre-render actor/action tables for each step
+        def render_actions_table(actions):
+            rows = ["| Actor | Action |", "| ----- | ------ |"]
+            for action_item in actions:
+                actor = action_item.get("actor", "")
+                action = action_item.get("action", "")
+                rows.append(f"| {actor} | {action} |")
+            return "\n".join(rows)
+
+        fl1_actions = render_actions_table(steps[0].get("actions", [])) if steps else ""
+        fl2a_actions = render_actions_table(steps[1].get("actions", [])) if len(steps) > 1 else ""
+        fl2b_actions = render_actions_table(steps[2].get("actions", [])) if len(steps) > 2 else ""
+        fl3_actions = render_actions_table(steps[3].get("actions", [])) if len(steps) > 3 else ""
+
+        # Prepare context
+        context = {
+            "roles": roles,
+            "steps": steps,
+            "feedback_loops": feedback_loops,
+            "input_artifacts": input_artifacts,
+            "output_artifacts": output_artifacts,
+            "path_a": path_a,
+            "path_a_minimum_controls_table": "\n".join(path_a_table_rows),
+            "fl1_actions_table": fl1_actions,
+            "fl2a_actions_table": fl2a_actions,
+            "fl2b_actions_table": fl2b_actions,
+            "fl3_actions_table": fl3_actions,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("feedback-loops-guide.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: feedback-loops-guide.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "feedbackloops" / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def _generate_workflow_diagram(self, stage_yaml):
         """Convert workflow DAG to markdown diagram."""
         workflow = stage_yaml.get("workflow", {})
@@ -403,6 +477,9 @@ class DocGenerator:
                     count += 1
             elif template == "agents":
                 if self.generate_agents_md(source):
+                    count += 1
+            elif template == "feedback-loops-guide":
+                if self.generate_feedback_loops_guide(source):
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")

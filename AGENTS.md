@@ -163,4 +163,4 @@ This framework enforces compliance with two regulatory frameworks. Every control
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.
 
-**Last Updated:** 2026-03-05 20:58 UTC
+**Last Updated:** 2026-03-05 21:08 UTC

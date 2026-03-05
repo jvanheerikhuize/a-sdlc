@@ -16,7 +16,160 @@
 #   DORA Art. 17(3) — Incident response and recovery requirements.
 # =============================================================================
 
-process: process.md
+process: feedback-loops.yaml
+
+roles:
+  - role_code: AGT
+    role_name: Agent
+    responsibilities: "Detects Stage 4 or Stage 6 trigger; prepares activation record; re-executes minimum controls on Path A"
+  - role_code: OPS
+    role_name: "Operations / SRE"
+    responsibilities: "First responder to Stage 6 alerts; co-classifies path; monitors Path A execution"
+  - role_code: QA
+    role_name: QA Lead
+    responsibilities: "First responder to Stage 4 failures; co-classifies path; confirms root cause from test output"
+  - role_code: SA
+    role_name: Security Architect
+    responsibilities: "Validates path classification for SC-4A, SC-4B, SC-6A, and SC-6B triggers; confirms root cause before Path A is approved"
+  - role_code: RO
+    role_name: Risk Officer
+    responsibilities: "Makes the formal path selection and classification decisions; provides signed approval for any Path B selection"
+  - role_code: CO
+    role_name: Compliance Officer
+    responsibilities: "Reviews activation record; confirms DORA Art. 8 reporting obligations are documented"
+
+input_artifacts:
+  stage4:
+    - artifact: SAST scan report
+      source_control: SC-4A
+      source_step: "Step 4.1"
+    - artifact: Test results report
+      source_control: QC-4A
+      source_step: "Step 4.2"
+    - artifact: DAST scan report
+      source_control: SC-4B
+      source_step: "Step 4.3"
+    - artifact: Risk threshold evaluation
+      source_control: RC-4A
+      source_step: "Step 4.7"
+  stage6:
+    - artifact: SLO monitoring record
+      source_control: QC-6A
+      source_step: "Step 6.2"
+    - artifact: Risk & health monitoring record
+      source_control: RC-6A
+      source_step: "Step 6.3"
+    - artifact: Incident detection record
+      source_control: SC-6A
+      source_step: "Step 6.4"
+    - artifact: Anomaly detection record
+      source_control: SC-6B
+      source_step: "Step 6.5"
+    - artifact: AI post-market surveillance report
+      source_control: AC-6A
+      source_step: "Step 6.6"
+
+steps:
+  - id: FL.1
+    name: Path Classification
+    delegation: human_required
+    delegation_description: "Human required — Runs first — blocks re-entry until path is formally approved"
+    runs: "Every activation"
+    actions:
+      - actor: "AGT"
+        action: "Retrieve the trigger: source stage (4 or 6), originating control, alert or finding ID, issue description"
+      - actor: "OPS / QA"
+        action: "Assess issue scope, urgency, and affected components; provide initial path recommendation"
+      - actor: "SA"
+        action: "For SC-4A, SC-4B, SC-6A, or SC-6B triggers: confirm root cause is understood before any path is approved"
+      - actor: "RO"
+        action: "Make the formal path selection decision: Path A or Path B"
+      - actor: "RO"
+        action: "Record identity, role, timestamp, rationale, and selected path in the activation record"
+    eligibility_stage6:
+      - condition: "Issue matches a pre-approved autofix template exactly (no partial matches)"
+        check: "AGT verifies against template registry"
+      - condition: "Risk classification of the issue is low"
+        check: "RO confirms"
+      - condition: "No new architectural changes are required"
+        check: "OPS confirms"
+      - condition: "Root cause is understood (for security-triggered issues: SA confirms)"
+        check: "SA / OPS confirms"
+    eligibility_stage4:
+      - condition: "Root cause is unambiguous from the failing control output"
+        check: "QA / SA confirms"
+      - condition: "Risk classification is low"
+        check: "RO confirms"
+      - condition: "No new architectural changes are required"
+        check: "QA confirms"
+      - condition: "Fix is isolated to code only — no schema, API, or contract changes"
+        check: "QA confirms"
+    inputs:
+      - "Stage 4 or Stage 6 trigger record"
+    outputs:
+      - "Signed path selection (Path A or Path B) recorded in the activation record"
+    on_ambiguity: "Default to Path B — never assume Path A eligibility under uncertainty"
+
+  - id: FL.2A
+    name: "Path A: Quick Fix"
+    delegation_description: "Agent executes minimum control set, OPS/QA monitors — Runs after FL.1 (Path A selected)"
+    runs: "Path A selected"
+    path_ref: path_a
+    actions:
+      - actor: "AGT"
+        action: "For Stage 6 triggers: retrieve the matched pre-approved autofix template; verify exact signature match"
+      - actor: "AGT"
+        action: "Execute minimum controls in sequence: Stage 3 group, then Stage 4 group, then Stage 5 check"
+      - actor: "AGT"
+        action: "For Stage 4 triggers: additionally re-execute the specific Stage 4 control(s) that raised the issue"
+      - actor: "AGT"
+        action: "At any deviation from expected scope during execution: stop immediately; escalate to OPS/QA; upgrade to Path B"
+      - actor: "OPS / QA"
+        action: "Monitor execution continuously; validate no out-of-scope actions are taken"
+    inputs:
+      - "Stage 4 failing control output or matched Stage 6 autofix template + trigger record"
+    outputs:
+      - "All minimum controls passed; change deployed via SC-5B; activation record updated"
+    on_deviation: "Immediately upgrade to Path B — do not attempt to continue with modifications"
+
+  - id: FL.2B
+    name: "Path B: Full Re-entry"
+    delegation_description: "Full lifecycle from Stage 1 — Runs after FL.1 (Path B selected) or upgrade from FL.2A"
+    runs: "Path B selected or FL.2A deviation"
+    path_ref: path_b
+    actions:
+      - actor: "OPS / QA"
+        action: "Initiate Stage 1 re-entry; create a new FEAT-XXXX change request referencing the Stage 4 or Stage 6 trigger"
+      - actor: "All actors"
+        action: "Execute the full lifecycle: Stages 1 → 2 → 3 → 4 → 5 → Stage 6 monitoring re-activation"
+    inputs:
+      - "Path B selection from FL.1 (or deviation upgrade from FL.2A)"
+    outputs:
+      - "New FEAT-XXXX proceeding through full lifecycle; Stage 4/6 trigger linked in feature specification"
+    linkage: "The trigger record ID must appear in the FEAT-XXXX feature specification's dependencies field"
+    on_ambiguity: "Default to Path B — the full lifecycle is always the safe choice"
+
+  - id: FL.3
+    name: "Activation Record & Handover"
+    delegation_description: "Agent creates, CO reviews — Runs at completion of every path"
+    runs: "Every activation"
+    actions:
+      - actor: "AGT"
+        action: "Complete the feedback-loop activation record: trigger source (Stage 4 or 6), control ID, path selected, approvals, re-entry ID, outcome"
+      - actor: "AGT"
+        action: "Link activation record to the GC-0A audit trail and to the resulting change's Stage 3 or Stage 1 evidence package"
+      - actor: "CO"
+        action: "Review activation record; confirm DORA Art. 8 documentation obligations are met"
+      - actor: "CO"
+        action: "For SC-6A-triggered loops: confirm DORA Art. 19 reporting timelines are not impacted by the re-entry"
+    outputs:
+      - "Activation record (artifacts/outputs/feedback-loop-activation-record.yaml)"
+    retention: "7 years (DORA Art. 8(6))"
+
+output_artifacts:
+  - artifact: Feedback Loop Activation Record
+    produced_at: Step FL.3
+    template: artifacts/outputs/feedback-loop-activation-record.yaml
 
 artifacts:
   outputs:
