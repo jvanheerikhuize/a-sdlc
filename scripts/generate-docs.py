@@ -590,12 +590,9 @@ class DocGenerator:
         coverage_summary = matrix.get("coverage_summary", {})
         regulatory_areas = matrix.get("regulatory_areas", [])
 
-        # Pre-render coverage by track table
+        # Pre-render coverage by track table (without headers, already in template)
         track_coverage = coverage_summary.get("coverage_by_track", {})
-        track_rows = [
-            "| Track | Total | DORA Mapped | DORA % | EU AI Act Mapped | EU AI Act % |",
-            "|-------|-------|---|---|---|---|",
-        ]
+        track_rows = []
         for track_code in ["QC", "RC", "SC", "AC", "GC"]:
             track_info = track_coverage.get(track_code, {})
             total = track_info.get("total", 0)
@@ -606,11 +603,8 @@ class DocGenerator:
             track_rows.append(f"| {track_code} | {total} | {dora_mapped} | {dora_pct} | {eu_ai_mapped} | {eu_ai_pct} |")
         coverage_by_track_table = "\n".join(track_rows)
 
-        # Pre-render regulatory areas table
-        areas_rows = [
-            "| Area | DORA Articles | EU AI Act | A-SDLC Controls | Status |",
-            "|------|---|---|---|---|",
-        ]
+        # Pre-render regulatory areas table (without headers, already in template)
+        areas_rows = []
         for area in regulatory_areas:
             area_name = area.get("area", "—")
             dora_arts = ", ".join(area.get("dora_articles", []))[:40]
@@ -620,12 +614,9 @@ class DocGenerator:
             areas_rows.append(f"| {area_name} | {dora_arts} | {eu_arts} | {ctrls} | {status} |")
         regulatory_areas_table = "\n".join(areas_rows)
 
-        # Pre-render DORA article mappings
+        # Pre-render DORA article mappings (without headers, already in template)
         dora_articles = compliance.get("dora", {}).get("articles", [])
-        dora_rows = [
-            "| Article | Title | A-SDLC Controls | Coverage & Rationale |",
-            "|---------|-------|---|---|",
-        ]
+        dora_rows = []
         for article in dora_articles:
             article_id = article.get("article", "—")
             title = article.get("title", "")
@@ -634,15 +625,11 @@ class DocGenerator:
             dora_rows.append(f"| {article_id} | {title} | {controls} | {coverage} |")
         dora_article_table = "\n".join(dora_rows)
 
-        # Pre-render EU AI Act article/annex mappings
+        # Pre-render EU AI Act article/annex mappings (without headers, already in template)
         eu_articles = compliance.get("eu_ai_act", {}).get("articles", [])
-        eu_annexes = compliance.get("eu_ai_act", {}).get("annexes", [])
-        eu_all = eu_articles + eu_annexes
-        eu_rows = [
-            "| Article / Annex | Title | A-SDLC Controls | Coverage & Rationale |",
-            "|---|---|---|---|",
-        ]
-        for item in eu_all:
+        eu_rows = []
+        for item in eu_articles:
+            # Handle both article and annex keys
             article_id = item.get("article") or item.get("annex") or "—"
             title = item.get("title", "")
             controls = ", ".join(item.get("controls", []))
@@ -710,11 +697,8 @@ class DocGenerator:
                 if self.generate_stage_context_bundles(source):
                     count += 1
             elif template == "regulatory-index":
-                # TODO: compliance-matrix.yaml has YAML syntax errors (mixed scalars + list).
-                # Temporarily skip until data is fixed.
-                # if self.generate_regulatory_index():
-                #     count += 1
-                print(f"⏸ Skipped (data validation needed): {output} ({template})")
+                if self.generate_regulatory_index():
+                    count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")
 

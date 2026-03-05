@@ -25,140 +25,141 @@ compliance_matrix:
     effective_date: "2025-01-17"
     scope: Financial entities and ICT service providers
 
-    # --------- CHAPTER II: ICT Risk Management ---------
+    articles:
+      # --------- CHAPTER II: ICT Risk Management ---------
 
-    - article: "Art. 8"
-      title: Identification of ICT risk
-      scope: Identify all ICT-supported functions, roles, information assets, risks, and interdependencies
-      controls:
-        - RC-1A   # Risk Classification (identify risks)
-        - GC-0B   # End-to-End Traceability (map functions and assets)
-        - QC-1A   # Specification Validation (document intent and requirements)
-        - QC-2A   # Design Completeness (document design decisions)
-        - RC-3A   # Decision Log (document risk/technical decisions)
-      coverage: "Strong - Risk identification and documentation controls present"
+      - article: "Art. 8"
+        title: Identification of ICT risk
+        scope: Identify all ICT-supported functions, roles, information assets, risks, and interdependencies
+        controls:
+          - RC-1A   # Risk Classification (identify risks)
+          - GC-0B   # End-to-End Traceability (map functions and assets)
+          - QC-1A   # Specification Validation (document intent and requirements)
+          - QC-2A   # Design Completeness (document design decisions)
+          - RC-3A   # Decision Log (document risk/technical decisions)
+        coverage: "Strong - Risk identification and documentation controls present"
 
-    - article: "Art. 8(5) & Art. 8(6)"
-      title: Documentation of ICT risk management procedures and changes
-      scope: Document procedures for expedited ICT changes and maintain comprehensive documentation
-      controls:
-        - QC-1A   # Specification Validation (document incoming changes)
-        - QC-1B   # Coherence & Conflict Resolution (resolve competing requirements)
-        - QC-3A   # PR Creation & Review (document code changes)
-        - RC-3A   # Decision Log (document decision rationale)
-        - GC-0A   # Audit Trail & Compliance Reporting (maintain records)
-      coverage: "Strong - Comprehensive change and documentation controls"
+      - article: "Art. 8(5) & Art. 8(6)"
+        title: Documentation of ICT risk management procedures and changes
+        scope: Document procedures for expedited ICT changes and maintain comprehensive documentation
+        controls:
+          - QC-1A   # Specification Validation (document incoming changes)
+          - QC-1B   # Coherence & Conflict Resolution (resolve competing requirements)
+          - QC-3A   # PR Creation & Review (document code changes)
+          - RC-3A   # Decision Log (document decision rationale)
+          - GC-0A   # Audit Trail & Compliance Reporting (maintain records)
+        coverage: "Strong - Comprehensive change and documentation controls"
 
-    - article: "Art. 9"
-      title: Protection and prevention
-      scope: ICT security policies, access controls, authentication, patch management, change management
-      controls:
-        - SC-0D   # Core Directive Injection (immutable policies)
-        - SC-1A   # Pre-Guardrails (prevent prohibited systems)
-        - SC-2B   # Directive Injection (stage-specific policies)
-        - SC-3A   # Permission Management (access controls)
-        - SC-3B   # Post-Guardrails (prevent malicious code)
-        - SC-1B   # Data Classification (basis for encryption/access control requirements)
-        - SC-5C   # Secrets & Key Management Lifecycle (key management per Art. 9(4))
-      coverage: "Strong - Multiple control layers with cryptography and data protection"
+      - article: "Art. 9"
+        title: Protection and prevention
+        scope: ICT security policies, access controls, authentication, patch management, change management
+        controls:
+          - SC-0D   # Core Directive Injection (immutable policies)
+          - SC-1A   # Pre-Guardrails (prevent prohibited systems)
+          - SC-2B   # Directive Injection (stage-specific policies)
+          - SC-3A   # Permission Management (access controls)
+          - SC-3B   # Post-Guardrails (prevent malicious code)
+          - SC-1B   # Data Classification (basis for encryption/access control requirements)
+          - SC-5C   # Secrets & Key Management Lifecycle (key management per Art. 9(4))
+        coverage: "Strong - Multiple control layers with cryptography and data protection"
 
-    - article: "Art. 9(4) Change Management"
-      title: Change management, including for ICT-related patches
-      scope: Procedures for managing changes to ICT systems, including testing and approval
-      controls:
-        - RC-2A   # Design Approval (design change approval gate)
-        - RC-5A   # CAB Approval (change advisory board approval)
-        - QC-3A   # PR Creation & Review (code change review)
-        - QC-3B   # Code Quality Standards (quality gates for changes)
-        - RC-3A   # Decision Log (document change decisions)
-      coverage: "Strong - Comprehensive change management gates and approvals"
+      - article: "Art. 9(4) Change Management"
+        title: Change management, including for ICT-related patches
+        scope: Procedures for managing changes to ICT systems, including testing and approval
+        controls:
+          - RC-2A   # Design Approval (design change approval gate)
+          - RC-5A   # CAB Approval (change advisory board approval)
+          - QC-3A   # PR Creation & Review (code change review)
+          - QC-3B   # Code Quality Standards (quality gates for changes)
+          - RC-3A   # Decision Log (document change decisions)
+        coverage: "Strong - Comprehensive change management gates and approvals"
 
-    # --------- CHAPTER III: Incident Management ---------
+      # --------- CHAPTER III: Incident Management ---------
 
-    - article: "Art. 17"
-      title: ICT-related incident management process
-      scope: Define processes for detection, management, and notification of ICT incidents
-      controls:
-        - GC-0A   # Audit Trail & Compliance Reporting (incident documentation)
-        - SC-6A   # Incident Scanning & Detection (detection mechanisms)
-      coverage: "Partial - Detection and reporting controls present"
+      - article: "Art. 17"
+        title: ICT-related incident management process
+        scope: Define processes for detection, management, and notification of ICT incidents
+        controls:
+          - GC-0A   # Audit Trail & Compliance Reporting (incident documentation)
+          - SC-6A   # Incident Scanning & Detection (detection mechanisms)
+        coverage: "Partial - Detection and reporting controls present"
 
-    - article: "Art. 18"
-      title: Classification of ICT-related incidents
-      scope: Categorise incidents and determine major status based on impact criteria
-      controls:
-        - SC-6A   # Incident Scanning & Detection (classification capability)
-      coverage: "Partial - Detection prerequisite for classification"
+      - article: "Art. 18"
+        title: Classification of ICT-related incidents
+        scope: Categorise incidents and determine major status based on impact criteria
+        controls:
+          - SC-6A   # Incident Scanning & Detection (classification capability)
+        coverage: "Partial - Detection prerequisite for classification"
 
-    - article: "Art. 19"
-      title: Reporting of major incidents
-      scope: Report to authorities within 4 hours (initial), 72 hours (intermediate), 1 month (final)
-      controls:
-        - GC-0A   # Audit Trail & Compliance Reporting (incident reporting)
-        - SC-6A   # Incident Scanning & Detection (incident identification)
-      coverage: "Partial - Reporting infrastructure in place"
+      - article: "Art. 19"
+        title: Reporting of major incidents
+        scope: Report to authorities within 4 hours (initial), 72 hours (intermediate), 1 month (final)
+        controls:
+          - GC-0A   # Audit Trail & Compliance Reporting (incident reporting)
+          - SC-6A   # Incident Scanning & Detection (incident identification)
+        coverage: "Partial - Reporting infrastructure in place"
 
-    # --------- CHAPTER IV: Testing ---------
+      # --------- CHAPTER IV: Testing ---------
 
-    - article: "Art. 24"
-      title: General requirements for digital operational resilience testing
-      scope: Create comprehensive testing programme covering vulnerabilities, penetration testing, etc.
-      controls:
-        - SC-4A   # SAST (static application security testing)
-        - SC-4B   # DAST (dynamic application security testing)
-        - SC-5A   # Infrastructure Security (test infrastructure)
-        - QC-4A   # Functional & Non-Functional Testing (acceptance testing)
-        - QC-4B   # AI Output Validation (AI-specific testing)
-      coverage: "Strong - Comprehensive testing programme covering functional and security aspects"
+      - article: "Art. 24"
+        title: General requirements for digital operational resilience testing
+        scope: Create comprehensive testing programme covering vulnerabilities, penetration testing, etc.
+        controls:
+          - SC-4A   # SAST (static application security testing)
+          - SC-4B   # DAST (dynamic application security testing)
+          - SC-5A   # Infrastructure Security (test infrastructure)
+          - QC-4A   # Functional & Non-Functional Testing (acceptance testing)
+          - QC-4B   # AI Output Validation (AI-specific testing)
+        coverage: "Strong - Comprehensive testing programme covering functional and security aspects"
 
-    - article: "Art. 25"
-      title: Testing of ICT tools and systems
-      scope: Vulnerability assessments, penetration testing, source code reviews, end-to-end testing
-      controls:
-        - SC-4A   # SAST (source code analysis)
-        - SC-4B   # DAST (runtime testing)
-        - SC-5A   # Infrastructure Security (infrastructure testing)
-        - SC-3D   # SCA & SBOM Generation (supply chain vulnerability assessment)
-        - SC-3E   # Container & IaC Security Scanning (infrastructure-as-code assessment)
-        - SC-4C   # API Security Testing (API vulnerability assessment)
-        - QC-4A   # Functional & Non-Functional Testing (end-to-end testing)
-      coverage: "Strong - Testing controls cover all key methodologies including supply chain"
+      - article: "Art. 25"
+        title: Testing of ICT tools and systems
+        scope: Vulnerability assessments, penetration testing, source code reviews, end-to-end testing
+        controls:
+          - SC-4A   # SAST (source code analysis)
+          - SC-4B   # DAST (runtime testing)
+          - SC-5A   # Infrastructure Security (infrastructure testing)
+          - SC-3D   # SCA & SBOM Generation (supply chain vulnerability assessment)
+          - SC-3E   # Container & IaC Security Scanning (infrastructure-as-code assessment)
+          - SC-4C   # API Security Testing (API vulnerability assessment)
+          - QC-4A   # Functional & Non-Functional Testing (end-to-end testing)
+        coverage: "Strong - Testing controls cover all key methodologies including supply chain"
 
-    # --------- CHAPTER V: Third-Party Risk ---------
+      # --------- CHAPTER V: Third-Party Risk ---------
 
-    - article: "Art. 28"
-      title: General principles of sound management of ICT third-party risk
-      scope: Manage third-party risk through due diligence, contracting, monitoring, and exit strategies
-      controls:
-        - GC-0C   # Agent Provenance Registry (third-party registry)
-        - SC-3A   # Permission Management (access controls for third parties)
-        - GC-3A   # Code Provenance Tracking (track third-party code)
-        - SC-5B   # Deployment Integrity (prevent tampering)
-      coverage: "Partial - Oversight and provenance controls present"
+      - article: "Art. 28"
+        title: General principles of sound management of ICT third-party risk
+        scope: Manage third-party risk through due diligence, contracting, monitoring, and exit strategies
+        controls:
+          - GC-0C   # Agent Provenance Registry (third-party registry)
+          - SC-3A   # Permission Management (access controls for third parties)
+          - GC-3A   # Code Provenance Tracking (track third-party code)
+          - SC-5B   # Deployment Integrity (prevent tampering)
+        coverage: "Partial - Oversight and provenance controls present"
 
-    # --------- DORA: Business Continuity & Response ---------
+      # --------- DORA: Business Continuity & Response ---------
 
-    - article: "Art. 11"
-      title: Response and recovery
-      scope: Implement business continuity and recovery procedures, test annually
-      controls:
-        - RC-5B   # Rollback Plan Validation (recovery procedures)
-        - QC-6A   # SLA/SLO Monitoring (operational health)
-        - RC-6A   # Risk & Health Monitoring (continuous monitoring)
-        - QC-5A   # Release Readiness Checklist (pre-deployment validation of recovery capability)
-      coverage: "Strong - Recovery, testing, and monitoring controls present"
+      - article: "Art. 11"
+        title: Response and recovery
+        scope: Implement business continuity and recovery procedures, test annually
+        controls:
+          - RC-5B   # Rollback Plan Validation (recovery procedures)
+          - QC-6A   # SLA/SLO Monitoring (operational health)
+          - RC-6A   # Risk & Health Monitoring (continuous monitoring)
+          - QC-5A   # Release Readiness Checklist (pre-deployment validation of recovery capability)
+        coverage: "Strong - Recovery, testing, and monitoring controls present"
 
-    # --------- DORA: Detection & Monitoring ---------
+      # --------- DORA: Detection & Monitoring ---------
 
-    - article: "Art. 10"
-      title: Detection
-      scope: Establish mechanisms to promptly detect anomalous activities and incidents
-      controls:
-        - SC-6A   # Incident Scanning & Detection (detection mechanisms)
-        - SC-6B   # Runtime Anomaly Detection (advanced detection)
-        - QC-6A   # SLA/SLO Monitoring (operational health tracking)
-        - RC-6A   # Risk & Health Monitoring (risk monitoring)
-      coverage: "Strong - Multiple detection and monitoring controls"
+      - article: "Art. 10"
+        title: Detection
+        scope: Establish mechanisms to promptly detect anomalous activities and incidents
+        controls:
+          - SC-6A   # Incident Scanning & Detection (detection mechanisms)
+          - SC-6B   # Runtime Anomaly Detection (advanced detection)
+          - QC-6A   # SLA/SLO Monitoring (operational health tracking)
+          - RC-6A   # Risk & Health Monitoring (risk monitoring)
+        coverage: "Strong - Multiple detection and monitoring controls"
 
   # =========================================================================
   # EU AI Act — Artificial Intelligence Act (EU 2024/1689)
@@ -169,126 +170,127 @@ compliance_matrix:
     effective_date: "2024-08-01"
     scope: AI system providers, deployers, importers in EU market
 
-    # --------- CHAPTER III: High-Risk AI Systems ---------
+    articles:
+      # --------- CHAPTER III: High-Risk AI Systems ---------
 
-    - article: "Art. 6"
-      title: Classification rules for high-risk AI systems
-      scope: Classify AI systems according to Annex III high-risk categories
-      controls:
-        - AC-1A   # AI Risk Tier Classification (classification control)
-      coverage: "Partial - Classification control present"
+      - article: "Art. 6"
+        title: Classification rules for high-risk AI systems
+        scope: Classify AI systems according to Annex III high-risk categories
+        controls:
+          - AC-1A   # AI Risk Tier Classification (classification control)
+        coverage: "Partial - Classification control present"
 
-    - article: "Art. 9"
-      title: Risk management system
-      scope: Establish continuous risk management throughout AI system lifecycle
-      controls:
-        - AC-1A   # AI Risk Tier Classification (risk identification)
-        - RC-4A   # Risk Threshold Evaluation (risk evaluation gate)
-        - AC-6A   # AI Post-Market Surveillance (post-market risk monitoring)
-        - RC-2A   # Design Approval (design-phase risk approval)
-        - QC-1B   # Coherence & Conflict Resolution (identify conflicting requirements as risks)
-        - RC-3A   # Decision Log (document risk decisions)
-      coverage: "Strong - Risk management system with gates at design, implementation, and post-market phases"
+      - article: "Art. 9"
+        title: Risk management system
+        scope: Establish continuous risk management throughout AI system lifecycle
+        controls:
+          - AC-1A   # AI Risk Tier Classification (risk identification)
+          - RC-4A   # Risk Threshold Evaluation (risk evaluation gate)
+          - AC-6A   # AI Post-Market Surveillance (post-market risk monitoring)
+          - RC-2A   # Design Approval (design-phase risk approval)
+          - QC-1B   # Coherence & Conflict Resolution (identify conflicting requirements as risks)
+          - RC-3A   # Decision Log (document risk decisions)
+        coverage: "Strong - Risk management system with gates at design, implementation, and post-market phases"
 
-    - article: "Art. 10"
-      title: Data and data governance
-      scope: Govern training data quality, bias detection, data management
-      controls:
-        - AC-2A   # AI Component Design Review (data governance design)
-        - AC-4A   # Bias & Fairness Testing (bias detection and mitigation)
-      coverage: "Partial - Data governance and bias testing controls present"
+      - article: "Art. 10"
+        title: Data and data governance
+        scope: Govern training data quality, bias detection, data management
+        controls:
+          - AC-2A   # AI Component Design Review (data governance design)
+          - AC-4A   # Bias & Fairness Testing (bias detection and mitigation)
+        coverage: "Partial - Data governance and bias testing controls present"
 
-    - article: "Art. 11"
-      title: Technical documentation
-      scope: Prepare and maintain comprehensive technical documentation per Annex IV
-      controls:
-        - QC-4C   # Documentation Completeness (documentation gate)
-        - AC-2A   # AI Component Design Review (AI documentation review)
-      coverage: "Partial - Documentation controls present"
+      - article: "Art. 11"
+        title: Technical documentation
+        scope: Prepare and maintain comprehensive technical documentation per Annex IV
+        controls:
+          - QC-4C   # Documentation Completeness (documentation gate)
+          - AC-2A   # AI Component Design Review (AI documentation review)
+        coverage: "Partial - Documentation controls present"
 
-    - article: "Art. 12"
-      title: Record-keeping
-      scope: Implement automatic logging and traceability throughout AI system lifetime
-      controls:
-        - GC-0A   # Audit Trail & Compliance Reporting (logging)
-        - GC-0B   # End-to-End Traceability (traceability infrastructure)
-        - RC-3A   # Decision Log (document decisions and risk assessments)
-        - GC-0D   # Compliance Evidence Automation (automated evidence compilation)
-      coverage: "Strong - Comprehensive logging, traceability, and decision documentation"
+      - article: "Art. 12"
+        title: Record-keeping
+        scope: Implement automatic logging and traceability throughout AI system lifetime
+        controls:
+          - GC-0A   # Audit Trail & Compliance Reporting (logging)
+          - GC-0B   # End-to-End Traceability (traceability infrastructure)
+          - RC-3A   # Decision Log (document decisions and risk assessments)
+          - GC-0D   # Compliance Evidence Automation (automated evidence compilation)
+        coverage: "Strong - Comprehensive logging, traceability, and decision documentation"
 
-    - article: "Art. 13"
-      title: Transparency and provision of information to deployers
-      scope: Ensure appropriate transparency and information provision to deployers
-      controls:
-        - AC-2A   # AI Component Design Review (transparency assessment)
-      coverage: "Partial - Design review includes transparency"
+      - article: "Art. 13"
+        title: Transparency and provision of information to deployers
+        scope: Ensure appropriate transparency and information provision to deployers
+        controls:
+          - AC-2A   # AI Component Design Review (transparency assessment)
+        coverage: "Partial - Design review includes transparency"
 
-    - article: "Art. 14"
-      title: Human oversight
-      scope: Design systems for effective human oversight during use
-      controls:
-        - SC-2B   # Directive Injection (human oversight mechanism)
-        - AC-2A   # AI Component Design Review (oversight design)
-      coverage: "Partial - Oversight mechanisms present"
+      - article: "Art. 14"
+        title: Human oversight
+        scope: Design systems for effective human oversight during use
+        controls:
+          - SC-2B   # Directive Injection (human oversight mechanism)
+          - AC-2A   # AI Component Design Review (oversight design)
+        coverage: "Partial - Oversight mechanisms present"
 
-    - article: "Art. 15"
-      title: Accuracy, robustness and cybersecurity
-      scope: Ensure appropriate accuracy, robustness, and resilience against manipulation
-      controls:
-        - AC-4A   # Bias & Fairness Testing (accuracy and robustness testing)
-        - SC-1A   # Pre-Guardrails (prevent manipulation)
-        - SC-3B   # Post-Guardrails (prevent manipulation)
-        - SC-5B   # Deployment Integrity (prevent tampering)
-        - QC-4A   # Functional & Non-Functional Testing (validate functional correctness)
-        - QC-4B   # AI Output Validation (validate AI accuracy thresholds)
-        - SC-4D   # Adversarial AI Robustness Testing (test against adversarial attacks)
-      coverage: "Strong - Comprehensive accuracy, robustness, and security controls"
+      - article: "Art. 15"
+        title: Accuracy, robustness and cybersecurity
+        scope: Ensure appropriate accuracy, robustness, and resilience against manipulation
+        controls:
+          - AC-4A   # Bias & Fairness Testing (accuracy and robustness testing)
+          - SC-1A   # Pre-Guardrails (prevent manipulation)
+          - SC-3B   # Post-Guardrails (prevent manipulation)
+          - SC-5B   # Deployment Integrity (prevent tampering)
+          - QC-4A   # Functional & Non-Functional Testing (validate functional correctness)
+          - QC-4B   # AI Output Validation (validate AI accuracy thresholds)
+          - SC-4D   # Adversarial AI Robustness Testing (test against adversarial attacks)
+        coverage: "Strong - Comprehensive accuracy, robustness, and security controls"
 
-    - article: "Art. 17"
-      title: Quality management system
-      scope: Implement documented quality management system for high-risk AI
-      controls:
-        - GC-0C   # Agent Provenance Registry (quality tracking)
-        - GC-3A   # Code Provenance Tracking (quality audit trail)
-      coverage: "Partial - Quality tracking controls present"
+      - article: "Art. 17"
+        title: Quality management system
+        scope: Implement documented quality management system for high-risk AI
+        controls:
+          - GC-0C   # Agent Provenance Registry (quality tracking)
+          - GC-3A   # Code Provenance Tracking (quality audit trail)
+        coverage: "Partial - Quality tracking controls present"
 
-    - article: "Art. 26"
-      title: Obligations of deployers
-      scope: Monitor AI system operation and report incidents
-      controls:
-        - GC-0C   # Agent Provenance Registry (deployer registry)
-        - AC-6A   # AI Post-Market Surveillance (monitoring obligation)
-      coverage: "Partial - Deployer monitoring controls present"
+      - article: "Art. 26"
+        title: Obligations of deployers
+        scope: Monitor AI system operation and report incidents
+        controls:
+          - GC-0C   # Agent Provenance Registry (deployer registry)
+          - AC-6A   # AI Post-Market Surveillance (monitoring obligation)
+        coverage: "Partial - Deployer monitoring controls present"
 
-    - article: "Art. 72"
-      title: Post-market monitoring
-      scope: Actively collect and analyse performance data throughout AI system lifetime
-      controls:
-        - AC-6A   # AI Post-Market Surveillance (post-market monitoring)
-      coverage: "Partial - Post-market surveillance control present"
+      - article: "Art. 72"
+        title: Post-market monitoring
+        scope: Actively collect and analyse performance data throughout AI system lifetime
+        controls:
+          - AC-6A   # AI Post-Market Surveillance (post-market monitoring)
+        coverage: "Partial - Post-market surveillance control present"
 
-    - article: "Art. 73"
-      title: Reporting of serious incidents
-      scope: Report serious AI incidents within defined timelines (10-15 days)
-      controls:
-        - AC-6A   # AI Post-Market Surveillance (incident identification)
-        - SC-6A   # Incident Scanning & Detection (incident detection)
-      coverage: "Partial - Incident detection controls present"
+      - article: "Art. 73"
+        title: Reporting of serious incidents
+        scope: Report serious AI incidents within defined timelines (10-15 days)
+        controls:
+          - AC-6A   # AI Post-Market Surveillance (incident identification)
+          - SC-6A   # Incident Scanning & Detection (incident detection)
+        coverage: "Partial - Incident detection controls present"
 
-    - annex: "Annex III"
-      title: High-risk AI systems
-      scope: Classification and identification of high-risk AI categories
-      controls:
-        - AC-1A   # AI Risk Tier Classification (tier classification)
-      coverage: "Partial - Classification control present"
+      - annex: "Annex III"
+        title: High-risk AI systems
+        scope: Classification and identification of high-risk AI categories
+        controls:
+          - AC-1A   # AI Risk Tier Classification (tier classification)
+        coverage: "Partial - Classification control present"
 
-    - annex: "Annex IV"
-      title: Technical documentation
-      scope: Minimum elements of technical documentation
-      controls:
-        - QC-4C   # Documentation Completeness (completeness gate)
-        - AC-2A   # AI Component Design Review (documentation review)
-      coverage: "Partial - Documentation controls present"
+      - annex: "Annex IV"
+        title: Technical documentation
+        scope: Minimum elements of technical documentation
+        controls:
+          - QC-4C   # Documentation Completeness (completeness gate)
+          - AC-2A   # AI Component Design Review (documentation review)
+        coverage: "Partial - Documentation controls present"
 
 # =============================================================================
 # COVERAGE SUMMARY
