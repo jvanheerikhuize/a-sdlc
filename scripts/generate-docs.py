@@ -18,11 +18,34 @@ import json
 from pathlib import Path
 from datetime import datetime
 
+# Add repo root to path for imports
+_repo_root = Path(__file__).parent.parent
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
+
 try:
     from jinja2 import Environment, FileSystemLoader, TemplateNotFound
 except ImportError:
     print("ERROR: Jinja2 not installed. Install with: pip install jinja2")
     sys.exit(1)
+
+try:
+    from .shared import (
+        load_yaml_safe,
+        render_template_safe,
+        find_control_in_registry,
+        build_markdown_table,
+        get_repo_root,
+    )
+except ImportError:
+    # Fallback for direct script execution
+    from scripts.shared import (
+        load_yaml_safe,
+        render_template_safe,
+        find_control_in_registry,
+        build_markdown_table,
+        get_repo_root,
+    )
 
 
 class DocGenerator:
@@ -38,7 +61,7 @@ class DocGenerator:
 
         # Load framework (single source of truth for shared context)
         # Note: asdlc.yaml has a root 'framework:' key, extract just the inner object
-        loaded = self.load_yaml("asdlc.yaml") or {}
+        loaded = load_yaml_safe(self.repo_root / "asdlc.yaml") or {}
         self.framework = loaded.get("framework", {})
 
         # Setup Jinja2
@@ -48,43 +71,76 @@ class DocGenerator:
             lstrip_blocks=True
         )
 
-    def load_yaml(self, file_path):
-        """Load a YAML file relative to repo root."""
-        full_path = self.repo_root / file_path
-        if not full_path.exists():
-            print(f"WARNING: File not found: {file_path}")
-            return None
-        with open(full_path) as f:
-            return yaml.safe_load(f)
+    def _load_yaml(self, file_path: str) -> dict:
+        """Load YAML file relative to repo root using shared utility.
+
+        Args:
+            file_path: Path relative to repo root.
+
+        Returns:
+            Parsed YAML as dict, or empty dict if file not found.
+        """
+        return load_yaml_safe(self.repo_root / file_path) or {}
+
+    def _get_control_registry(self) -> list:
+        """Load control registry from controls/registry.yaml.
+
+        Returns:
+            List of control entries from registry, or empty list if not found.
+        """
+        registry_data = self._load_yaml("controls/registry.yaml")
+        return registry_data.get("registry", [])
+
+    def _find_control(self, control_id: str, registry: list) -> dict:
+        """Find a control in the registry by ID using shared utility.
+
+        Args:
+            control_id: Control ID to find (e.g., "SC-2B").
+            registry: List of control entries from registry.
+
+        Returns:
+            Control entry dict if found, empty dict if not found.
+        """
+        control = find_control_in_registry(control_id, registry)
+        return control if control else {}
+
+    def _build_control_lookup_dict(self, registry: list) -> dict:
+        """Build a dict mapping control ID to registry entry.
+
+        Args:
+            registry: List of control entries from registry.
+
+        Returns:
+            Dict mapping control_id -> control_entry.
+        """
+        return {c.get("id"): c for c in registry}
 
     def generate_stage_readme(self, stage_file):
         """Generate README.md for a stage."""
-        stage_yaml = self.load_yaml(stage_file)
+        stage_yaml = self._load_yaml(stage_file)
         if not stage_yaml:
             return False
 
         # Load control registry for lookup
-        registry = self.load_yaml("controls/registry.yaml")
-        registry_controls = registry.get("registry", []) if registry else []
+        registry_controls = self._get_control_registry()
 
         # Load control definitions for this stage
         required_controls = []
         for control in stage_yaml.get("required_controls", []):
             control_id = control.get("id")
-            # Find control in registry
-            for reg_control in registry_controls:
-                if reg_control.get("id") == control_id:
-                    control_file = reg_control.get("file")
-                    control_data = self.load_yaml(control_file) if control_file else None
-                    required_controls.append({
-                        "id": control_id,
-                        "name": reg_control.get("name"),
-                        "track": reg_control.get("track"),
-                        "delegation": control_data.get("delegation") if control_data else {},
-                        "note": control.get("note"),
-                        "file": control_file
-                    })
-                    break
+            # Find control in registry using shared utility
+            reg_control = self._find_control(control_id, registry_controls)
+            if reg_control:
+                control_file = reg_control.get("file")
+                control_data = self._load_yaml(control_file) if control_file else {}
+                required_controls.append({
+                    "id": control_id,
+                    "name": reg_control.get("name"),
+                    "track": reg_control.get("track"),
+                    "delegation": control_data.get("delegation") if control_data else {},
+                    "note": control.get("note"),
+                    "file": control_file
+                })
 
         # Prepare template context
         context = {
@@ -97,10 +153,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("stage-readme.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "stage-readme.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: stage-readme.jinja2")
             return False
 
@@ -117,7 +171,7 @@ class DocGenerator:
 
     def generate_controls_index(self):
         """Generate controls/README.md from registry."""
-        registry = self.load_yaml("controls/registry.yaml")
+        registry = self._load_yaml("controls/registry.yaml")
         if not registry:
             return False
 
@@ -139,10 +193,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("controls-index.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "controls-index.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: controls-index.jinja2")
             return False
 
@@ -156,20 +208,20 @@ class DocGenerator:
 
     def generate_stages_overview(self, source_file):
         """Generate stages/README.md from asdlc.yaml + per-stage YAMLs."""
-        loaded = self.load_yaml(source_file) or {}
+        loaded = self._load_yaml(source_file) or {}
         fw = loaded.get("framework", {})
 
         # Load each stage YAML for full detail (stages are at root level, not in framework)
         stages_data = []
         for entry in loaded.get("stages", []):
-            stage_yaml = self.load_yaml(entry["stage_file"])
+            stage_yaml = self._load_yaml(entry["stage_file"])
             stages_data.append({
                 "entry": entry,
                 "yaml": stage_yaml or {}
             })
 
         # Load feedback loops for summary
-        feedback = self.load_yaml("feedbackloops/feedback-loops.yaml") or {}
+        feedback = self._load_yaml("feedbackloops/feedback-loops.yaml") or {}
 
         # Prepare context: merge framework, roles, and cross_cutting for template
         context = {
@@ -182,10 +234,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("stages-overview.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "stages-overview.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: stages-overview.jinja2")
             return False
 
@@ -199,12 +249,12 @@ class DocGenerator:
 
     def generate_framework_overview(self, source_file):
         """Generate root README.md from asdlc.yaml + controls registry."""
-        loaded = self.load_yaml(source_file) or {}
+        loaded = self._load_yaml(source_file) or {}
         fw = loaded.get("framework", {})
         stages = loaded.get("stages", [])
 
         # Load control registry for "All Controls at a Glance" matrix
-        registry = self.load_yaml("controls/registry.yaml") or {}
+        registry = self._load_yaml("controls/registry.yaml") or {}
         controls = registry.get("registry", [])
 
         # Build control matrix: {stage_number: {track: [control_objects]}}
@@ -264,10 +314,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("framework-overview.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "framework-overview.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: framework-overview.jinja2")
             return False
 
@@ -281,15 +329,14 @@ class DocGenerator:
 
     def generate_agents_md(self, source_file):
         """Generate AGENTS.md from asdlc.yaml + registry + feedback loops."""
-        loaded = self.load_yaml(source_file) or {}
+        loaded = self._load_yaml(source_file) or {}
         fw = loaded.get("framework", {})
         stages = loaded.get("stages", [])
         cross_cutting = loaded.get("cross_cutting", {})
 
         # Control registry for file path lookup
-        registry = self.load_yaml("controls/registry.yaml") or {}
-        all_controls = registry.get("registry", [])
-        ctrl_by_id = {c.get("id"): c for c in all_controls}
+        all_controls = self._get_control_registry()
+        ctrl_by_id = self._build_control_lookup_dict(all_controls)
 
         # Build cc_controls_with_paths for "Always Load" block
         cc_controls_with_paths = []
@@ -322,7 +369,7 @@ class DocGenerator:
             table_rows.append(f"| {num} — {name} | `{sf}` | {ctrl_list} |")
 
         # Load feedback loops
-        feedback = self.load_yaml("feedbackloops/feedback-loops.yaml") or {}
+        feedback = self._load_yaml("feedbackloops/feedback-loops.yaml") or {}
 
         context = {
             "framework": fw,
@@ -336,10 +383,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("agents.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "agents.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: agents.jinja2")
             return False
 
@@ -353,7 +398,7 @@ class DocGenerator:
 
     def generate_feedback_loops_guide(self, source_file):
         """Generate feedbackloops/README.md from feedback-loops.yaml."""
-        loaded = self.load_yaml(source_file) or {}
+        loaded = self._load_yaml(source_file) or {}
         roles = loaded.get("roles", [])
         steps = loaded.get("steps", [])
         input_artifacts = loaded.get("input_artifacts", {})
@@ -410,10 +455,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("feedback-loops-guide.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "feedback-loops-guide.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: feedback-loops-guide.jinja2")
             return False
 
@@ -427,13 +470,12 @@ class DocGenerator:
 
     def generate_stage_context_bundles(self, source_file):
         """Generate context/stage-NN-name.md bundles from stage YAML."""
-        stage_yaml = self.load_yaml(source_file) or {}
+        stage_yaml = self._load_yaml(source_file) or {}
         if not stage_yaml:
             return False
 
         # Load control registry for lookup
-        registry = self.load_yaml("controls/registry.yaml")
-        registry_controls = registry.get("registry", []) if registry else []
+        registry_controls = self._get_control_registry()
 
         stage_num = stage_yaml.get("number")
         stage_name = stage_yaml.get("name", "")
@@ -462,16 +504,12 @@ class DocGenerator:
         controls_rows = ["| ID | Name | Delegation | Agent Does | Human Does |", "| -- | ---- | ---------- | ---------- | ---------- |"]
         for ctrl_spec in required_controls:
             control_id = ctrl_spec.get("id")
-            # Find control in registry
-            reg_entry = None
-            for reg in registry_controls:
-                if reg.get("id") == control_id:
-                    reg_entry = reg
-                    break
+            # Find control in registry using shared utility
+            reg_entry = self._find_control(control_id, registry_controls)
 
             if reg_entry:
                 ctrl_file = reg_entry.get("file")
-                ctrl_data = self.load_yaml(ctrl_file) if ctrl_file else {}
+                ctrl_data = self._load_yaml(ctrl_file) if ctrl_file else {}
                 ctrl_name = reg_entry.get("name", control_id)
                 delegation_pat = reg_entry.get("delegation", "—")
                 delegation_desc = ctrl_data.get("delegation", {}).get("human_display", delegation_pat) if ctrl_data else delegation_pat
@@ -510,14 +548,13 @@ class DocGenerator:
         feedback_triggers_lines = []
         for ctrl_spec in required_controls:
             control_id = ctrl_spec.get("id")
-            # Check registry for feedback_loops field
-            for reg in registry_controls:
-                if reg.get("id") == control_id:
-                    triggers = reg.get("feedback_loops", [])
-                    if triggers:
-                        triggers_str = " or ".join(f"Path {t}" if t in ["a", "b"] else t for t in triggers)
-                        feedback_triggers_lines.append(f"- {control_id} → {triggers_str}")
-                    break
+            # Check registry for feedback_loops field using shared utility
+            reg = self._find_control(control_id, registry_controls)
+            if reg:
+                triggers = reg.get("feedback_loops", [])
+                if triggers:
+                    triggers_str = " or ".join(f"Path {t}" if t in ["a", "b"] else t for t in triggers)
+                    feedback_triggers_lines.append(f"- {control_id} → {triggers_str}")
 
         feedback_triggers = "\n".join(feedback_triggers_lines) if feedback_triggers_lines else "None"
 
@@ -536,10 +573,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("stage-context-bundle.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "stage-context-bundle.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: stage-context-bundle.jinja2")
             return False
 
@@ -580,8 +615,8 @@ class DocGenerator:
 
     def generate_regulatory_index(self):
         """Generate regulatory/README.md from compliance-matrix.yaml and sources.yaml."""
-        matrix = self.load_yaml("regulatory/compliance-matrix.yaml") or {}
-        sources = self.load_yaml("regulatory/sources.yaml") or {}
+        matrix = self._load_yaml("regulatory/compliance-matrix.yaml") or {}
+        sources = self._load_yaml("regulatory/sources.yaml") or {}
 
         if not matrix or not sources:
             return False
@@ -647,10 +682,8 @@ class DocGenerator:
         }
 
         # Render template
-        try:
-            template = self.jinja_env.get_template("regulatory-index.jinja2")
-            content = template.render(context)
-        except TemplateNotFound:
+        content = render_template_safe(self.jinja_env, "regulatory-index.jinja2", context)
+        if content is None:
             print(f"ERROR: Template not found: regulatory-index.jinja2")
             return False
 
