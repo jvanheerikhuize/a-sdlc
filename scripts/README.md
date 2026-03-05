@@ -384,8 +384,7 @@ tests/
 
 ## See Also
 
-- **[DOCUMENTATION-GENERATION.md](../DOCUMENTATION-GENERATION.md)** — Detailed doc generation architecture
-- **[scripts/templates/README.md](../scripts/templates/README.md)** — Template authoring guide
+- **[scripts/templates/README.md](templates/README.md)** — Template authoring guide
 - **[asdlc.yaml](../asdlc.yaml)** — Framework manifest (source of truth)
 - **[manifest/catalog.yaml](../manifest/catalog.yaml)** — Doc generation orchestration spec
 
