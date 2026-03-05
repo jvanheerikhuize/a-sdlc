@@ -90,6 +90,12 @@ doc_generation:
       output: stages/06-observability-maintenance/README.md
       description: "Stage 6 overview, workflow, and controls"
 
+    # Stages overview documentation
+    - source: asdlc.yaml
+      template: stages-overview
+      output: stages/README.md
+      description: "Lifecycle stages overview, roles, and directory structure"
+
     # Control track documentation
     - source: controls/registry.yaml
       template: controls-index

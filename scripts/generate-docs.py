@@ -36,6 +36,11 @@ class DocGenerator:
         with open(self.manifest_file) as f:
             self.manifest = yaml.safe_load(f)
 
+        # Load framework (single source of truth for shared context)
+        # Note: asdlc.yaml has a root 'framework:' key, extract just the inner object
+        loaded = self.load_yaml("asdlc.yaml") or {}
+        self.framework = loaded.get("framework", {})
+
         # Setup Jinja2
         self.jinja_env = Environment(
             loader=FileSystemLoader(str(self.templates_dir)),
@@ -83,6 +88,7 @@ class DocGenerator:
 
         # Prepare template context
         context = {
+            "framework": self.framework,
             "stage": stage_yaml,
             "stage_file": stage_file,
             "required_controls": required_controls,
@@ -124,6 +130,7 @@ class DocGenerator:
 
         # Prepare context
         context = {
+            "framework": self.framework,
             "total_controls": len(controls),
             "tracks": self.manifest.get("tracks", []),
             "controls_by_track": controls_by_track,
@@ -141,6 +148,49 @@ class DocGenerator:
 
         # Write output
         output_file = self.repo_root / "controls" / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
+    def generate_stages_overview(self, source_file):
+        """Generate stages/README.md from asdlc.yaml + per-stage YAMLs."""
+        loaded = self.load_yaml(source_file) or {}
+        fw = loaded.get("framework", {})
+
+        # Load each stage YAML for full detail (stages are at root level, not in framework)
+        stages_data = []
+        for entry in loaded.get("stages", []):
+            stage_yaml = self.load_yaml(entry["stage_file"])
+            stages_data.append({
+                "entry": entry,
+                "yaml": stage_yaml or {}
+            })
+
+        # Load feedback loops for summary
+        feedback = self.load_yaml("feedbackloops/feedback-loops.yaml") or {}
+
+        # Prepare context: merge framework, roles, and cross_cutting for template
+        context = {
+            "framework": fw,
+            "roles": loaded.get("roles", {}),
+            "cross_cutting": loaded.get("cross_cutting", {}),
+            "stages_data": stages_data,
+            "feedback_loops": feedback.get("feedback_loops", []),
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("stages-overview.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: stages-overview.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "stages" / "README.md"
         with open(output_file, "w") as f:
             f.write(content)
 
@@ -190,6 +240,9 @@ class DocGenerator:
                     count += 1
             elif template == "controls-index":
                 if self.generate_controls_index():
+                    count += 1
+            elif template == "stages-overview":
+                if self.generate_stages_overview(source):
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")
