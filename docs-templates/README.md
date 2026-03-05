@@ -199,7 +199,7 @@ Generates `feedbackloops/README.md` from `feedbackloops/feedback-loops.yaml`.
 - Control re-execution tables
 - Artifact propagation
 
-### `regulatory-index.jinja2` ⏳
+### `regulatory-index.jinja2` ✅
 
 Generates `regulatory/README.md` from regulatory compliance data.
 
@@ -221,8 +221,6 @@ Generates `regulatory/README.md` from regulatory compliance data.
 - Regulatory areas (risk management, testing, supply chain, etc.)
 - DORA article mappings
 - EU AI Act article/annex mappings
-
-**Status:** ⏳ Blocked on data validation. Source file `regulatory/compliance-matrix.yaml` has YAML syntax error (scalar fields followed by list at same indentation). When fixed, uncomment dispatch in `scripts/generate-docs.py` line ~675.
 
 ## Running the Generator
 
