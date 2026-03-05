@@ -8,6 +8,43 @@ number: 5
 name: Deployment & Release
 description: Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact
   integrity checking. RC-5A CAB Approval is a mandatory human gate that cannot be delegated.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# QC-5A compiles release package. RC-5A is the CAB approval gate (human-required).
+# Steps 5.3–5.4 (RC-5B, SC-5A) run in parallel after approval.
+# SC-5B (deployment integrity) runs immediately before deployment.
+# SC-5C (secrets management) runs in parallel with RC-5B/SC-5A.
+workflow:
+  nodes:
+    - id: n-qc5a
+      control: QC-5A
+      description: Release readiness checklist
+      depends_on: []
+    - id: n-rc5a
+      control: RC-5A
+      description: CAB (Change Advisory Board) approval (human-required gate)
+      depends_on: [n-qc5a]
+    - id: n-rc5b
+      control: RC-5B
+      description: Rollback plan validation
+      depends_on: [n-rc5a]
+    - id: n-sc5a
+      control: SC-5A
+      description: Infrastructure security baseline validation
+      depends_on: [n-rc5a]
+    - id: n-sc5c
+      control: SC-5C
+      description: Secrets and key management lifecycle validation
+      depends_on: [n-rc5a]
+    - id: n-sc5b
+      control: SC-5B
+      description: Deployment integrity verification (immediately before deploy)
+      depends_on: [n-rc5b, n-sc5a, n-sc5c]
+  parallelism:
+    max_concurrent: 3
+    groups:
+      - [n-rc5b, n-sc5a, n-sc5c]
+
 required_controls:
 - id: QC-5A
 - id: RC-5A
@@ -18,6 +55,8 @@ required_controls:
   note: Must run immediately before deployment execution
 - id: SC-5C
   note: Verify all secrets and keys are properly vaulted, rotated, and access-controlled
+- id: AC-2B
+  note: Applicable when change involves AI models — verify deployed model version matches registry
 exit_criteria:
 - 'QC-5A: Release readiness checklist completed — all prior controls evidenced'
 - 'RC-5A: CAB approval granted by appropriate authority'

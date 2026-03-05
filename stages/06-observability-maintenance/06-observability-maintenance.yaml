@@ -8,6 +8,66 @@ number: 6
 name: Observability & Maintenance
 description: Operate, monitor, and maintain the deployed system. Controls in this stage run continuously, not per-change.
   Escalations from Stage 6 controls may trigger feedback loops back into earlier stages for remediation.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# Stage 6 is continuous operational monitoring. Initial handover activates monitoring (implicit S1).
+# QC-6A, RC-6A, RC-6B, SC-6A, SC-6B, AC-6A all run continuously in parallel.
+# SC-6B (anomaly detection) feeds alerts into SC-6A (incident detection).
+# Any control may escalate to feedback loops (Path A or Path B) based on findings.
+workflow:
+  nodes:
+    - id: n-handover
+      control: null
+      description: System handover (handoff from Stage 5 - triggers all monitoring)
+      depends_on: []
+    - id: n-qc6a
+      control: QC-6A
+      description: SLA/SLO monitoring (continuous)
+      depends_on: [n-handover]
+      frequency: continuous
+    - id: n-rc6a
+      control: RC-6A
+      description: Risk and health monitoring (continuous)
+      depends_on: [n-handover]
+      frequency: continuous
+    - id: n-rc6b
+      control: RC-6B
+      description: Third-party continuous risk monitoring (continuous)
+      depends_on: [n-handover]
+      frequency: continuous
+    - id: n-sc6a
+      control: SC-6A
+      description: Incident scanning and detection (continuous, DORA Art. 17-19 reporting)
+      depends_on: [n-handover, n-sc6b]
+      frequency: continuous
+    - id: n-sc6b
+      control: SC-6B
+      description: Runtime anomaly detection (continuous, feeds into SC-6A)
+      depends_on: [n-handover]
+      frequency: continuous
+    - id: n-ac6a
+      control: AC-6A
+      description: AI post-market surveillance (continuous, conditional on ai_component)
+      depends_on: [n-handover]
+      frequency: continuous
+  parallelism:
+    max_concurrent: 6
+    groups:
+      - [n-qc6a, n-rc6a, n-rc6b, n-sc6a, n-sc6b, n-ac6a]
+  escalation_paths:
+    - source_control: n-qc6a
+      condition: slo_breach
+      target_path: feedback_loop_path_a_or_b
+    - source_control: n-rc6a
+      condition: risk_escalation
+      target_path: feedback_loop_path_a_or_b
+    - source_control: n-sc6a
+      condition: major_incident
+      target_path: feedback_loop_path_a_or_b
+    - source_control: n-ac6a
+      condition: performance_degradation
+      target_path: feedback_loop_path_a_or_b
+
 required_controls:
 - id: QC-6A
   note: Continuous — runs throughout the operational lifetime

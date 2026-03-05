@@ -54,7 +54,7 @@ automation:
 dependencies:
 - QC-5A
 feedback_loops:
-- path: path_b_quickfix
+- path: path_b
   required_in_path: true
 metadata:
   version: '1.0'

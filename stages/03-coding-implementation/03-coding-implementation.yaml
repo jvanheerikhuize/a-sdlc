@@ -8,6 +8,53 @@ number: 3
 name: Coding & Implementation
 description: Implement the approved design under continuous automated quality and security controls. All implementation —
   human, agent, or co-authored — converges into a reviewed and approved pull request before Stage 4 begins.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# SC-3A runs first (load permissions). Then QC-3B, SC-3C, SC-3D, SC-3E, RC-3A, GC-3A run continuously in parallel per-commit.
+# SC-3B (post-guardrails) runs on agent output before PR creation. QC-3A is the final gate.
+workflow:
+  nodes:
+    - id: n-sc3a
+      control: SC-3A
+      description: Verify prerequisites and load permissions
+      depends_on: []
+    - id: n-qc3b
+      control: QC-3B
+      description: Code quality standards (per-commit)
+      depends_on: [n-sc3a]
+    - id: n-sc3c
+      control: SC-3C
+      description: Secrets and credentials scanning (per-commit)
+      depends_on: [n-sc3a]
+    - id: n-sc3d
+      control: SC-3D
+      description: Software Composition Analysis and SBOM generation
+      depends_on: [n-sc3a]
+    - id: n-sc3e
+      control: SC-3E
+      description: Container and IaC security scanning
+      depends_on: [n-sc3a]
+    - id: n-rc3a
+      control: RC-3A
+      description: Decision log (logged throughout)
+      depends_on: [n-sc3a]
+    - id: n-gc3a
+      control: GC-3A
+      description: Code provenance tracking (per-commit)
+      depends_on: [n-sc3a]
+    - id: n-sc3b
+      control: SC-3B
+      description: Post-guardrails scan on agent-generated code
+      depends_on: [n-qc3b, n-sc3c, n-sc3d, n-sc3e, n-rc3a, n-gc3a]
+    - id: n-qc3a
+      control: QC-3A
+      description: Pull request creation and review (final gate)
+      depends_on: [n-sc3b]
+  parallelism:
+    max_concurrent: 6
+    groups:
+      - [n-qc3b, n-sc3c, n-sc3d, n-sc3e, n-rc3a, n-gc3a]
+
 required_controls:
 - id: QC-3B
   note: Runs continuously on every commit

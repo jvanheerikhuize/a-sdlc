@@ -46,7 +46,7 @@ failure_behaviour:
 automation:
   frequency: per_change
 feedback_loops:
-- path: path_b_quickfix
+- path: path_b
   required_in_path: true
 metadata:
   version: '1.0'

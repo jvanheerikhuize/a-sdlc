@@ -1,7 +1,7 @@
 # =============================================================================
 # Feedback Loop Activation Record Template
 # =============================================================================
-# Produced during Step FL.5 when any feedback loop path is activated.
+# Produced during Step FL.3 when any feedback loop path is activated.
 # Records the full lifecycle of a feedback loop event: trigger, path
 # classification, approvals, re-entry, and outcome. IMMUTABLE after CO review.
 #

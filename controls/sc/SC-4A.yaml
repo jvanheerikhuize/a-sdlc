@@ -48,9 +48,9 @@ automation:
   - SAST tool (language-specific)
   frequency: per_release
 feedback_loops:
-- path: path_a_autofix
+- path: path_a
   required_in_path: true
-- path: path_b_quickfix
+- path: path_b
   required_in_path: true
 metadata:
   version: '1.0'

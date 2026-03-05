@@ -8,6 +8,44 @@ number: 1
 name: Intent Ingestion
 description: Capture, validate, and enrich an incoming change request into a structured, approved feature specification. All
   downstream stages depend on this specification as their source of truth. No design work begins until Stage 1 is complete.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# Steps 1.3, 1.4, 1.5 (QC-1B, RC-1A, AC-1A) run in parallel after QC-1A completes
+workflow:
+  nodes:
+    - id: n-sc1a
+      control: SC-1A
+      description: Screen incoming request for adversarial patterns
+      depends_on: []
+    - id: n-qc1a
+      control: QC-1A
+      description: Draft and validate feature specification
+      depends_on: [n-sc1a]
+    - id: n-qc1b
+      control: QC-1B
+      description: Identify and resolve conflicts in specification
+      depends_on: [n-qc1a]
+    - id: n-rc1a
+      control: RC-1A
+      description: Classify risk tier
+      depends_on: [n-qc1a]
+    - id: n-ac1a
+      control: AC-1A
+      description: Classify AI Act risk tier (conditional on ai_component)
+      depends_on: [n-qc1a]
+    - id: n-sc1b
+      control: SC-1B
+      description: Data classification screening (conditional on processes_personal_data)
+      depends_on: [n-sc1a]
+    - id: n-gc1a
+      control: GC-1A
+      description: Write intent audit trail entry
+      depends_on: [n-qc1b, n-rc1a, n-ac1a]
+  parallelism:
+    max_concurrent: 3
+    groups:
+      - [n-qc1b, n-rc1a, n-ac1a]
+
 required_controls:
 - id: SC-1A
   note: Must run first — screens for adversarial inputs before any agent processing

@@ -9,6 +9,54 @@ name: Testing & Documentation
 description: Validate the implementation against all acceptance criteria, security requirements, and documentation standards.
   RC-4A is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted
   RC-4A result.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# SC-4A (SAST) runs first. Steps 4.2–4.6 (QC-4A, SC-4B, QC-4B, AC-4A, QC-4C) run in parallel.
+# SC-4C (API security) and SC-4D (adversarial robustness) run with the parallel group.
+# RC-4A (go/no-go gate) runs last, depends on all others.
+workflow:
+  nodes:
+    - id: n-sc4a
+      control: SC-4A
+      description: SAST (static application security testing)
+      depends_on: []
+    - id: n-qc4a
+      control: QC-4A
+      description: Functional and non-functional testing
+      depends_on: [n-sc4a]
+    - id: n-sc4b
+      control: SC-4B
+      description: DAST (dynamic application security testing)
+      depends_on: [n-sc4a]
+    - id: n-qc4b
+      control: QC-4B
+      description: AI output validation (conditional on ai_component)
+      depends_on: [n-sc4a]
+    - id: n-ac4a
+      control: AC-4A
+      description: Bias and fairness testing (conditional on ai_component)
+      depends_on: [n-sc4a]
+    - id: n-qc4c
+      control: QC-4C
+      description: Documentation completeness
+      depends_on: [n-sc4a]
+    - id: n-sc4c
+      control: SC-4C
+      description: API security testing (OWASP API Top 10)
+      depends_on: [n-sc4a]
+    - id: n-sc4d
+      control: SC-4D
+      description: Adversarial AI robustness testing (conditional on high-risk AI)
+      depends_on: [n-sc4a]
+    - id: n-rc4a
+      control: RC-4A
+      description: Risk threshold evaluation and go/no-go gate
+      depends_on: [n-qc4a, n-sc4b, n-qc4b, n-ac4a, n-qc4c, n-sc4c, n-sc4d]
+  parallelism:
+    max_concurrent: 7
+    groups:
+      - [n-qc4a, n-sc4b, n-qc4b, n-ac4a, n-qc4c, n-sc4c, n-sc4d]
+
 required_controls:
 - id: QC-4A
 - id: QC-4B

@@ -8,6 +8,52 @@ number: 2
 name: System Design
 description: Translate the approved specification into a complete, approved system design. Security directives are injected
   before coding begins. No implementation may start without RC-2A (design approval) and SC-2B directive injection confirmation.
+
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# Steps 2.2, 2.3, 2.4 (plus SC-2C, RC-2B) run in parallel after QC-2A draft completes
+workflow:
+  nodes:
+    - id: n-qc2a-draft
+      control: QC-2A
+      description: Draft system design
+      depends_on: []
+    - id: n-qc2a-validate
+      control: QC-2A
+      description: Validate design completeness and standards
+      depends_on: [n-qc2a-draft]
+    - id: n-sc2a
+      control: SC-2A
+      description: Generate and validate STRIDE threat model
+      depends_on: [n-qc2a-draft]
+    - id: n-ac2a
+      control: AC-2A
+      description: AI component design review (conditional on ai_component)
+      depends_on: [n-qc2a-draft]
+    - id: n-rc2b
+      control: RC-2B
+      description: Privacy Impact Assessment (conditional on processes_personal_data)
+      depends_on: [n-qc2a-draft]
+    - id: n-sc2c
+      control: SC-2C
+      description: Zero-trust architecture validation
+      depends_on: [n-qc2a-draft]
+    - id: n-rc2a
+      control: RC-2A
+      description: Design approval (human-required gate)
+      depends_on: [n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c]
+    - id: n-ac2b
+      control: AC-2B
+      description: AI model governance and version control (conditional on ai_component)
+      depends_on: [n-rc2a]
+    - id: n-sc2b
+      control: SC-2B
+      description: Stage directive injection confirmation
+      depends_on: [n-rc2a, n-ac2b]
+  parallelism:
+    max_concurrent: 5
+    groups:
+      - [n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c]
+
 required_controls:
 - id: QC-2A
 - id: RC-2A

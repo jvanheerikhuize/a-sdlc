@@ -1,0 +1,201 @@
+# =============================================================================
+# A-SDLC Framework Catalog & Document Generation Specification
+# =============================================================================
+# This is the master discovery index for the Agentic SDLC framework.
+# It is the single source of truth for:
+#   - All control definitions and their locations
+#   - All stage definitions and their locations
+#   - Document generation specifications (what to generate, from what, to where)
+#   - Load protocol for agents
+#
+# DO NOT edit README.md files directly. They are generated from this spec.
+# To update documentation, edit the YAML sources and run the generator.
+# =============================================================================
+
+framework:
+  id: asdlc-v1
+  name: Agentic Software Development Life Cycle
+  version: "1.0"
+  description: Framework defining how software is built, tested, and released with AI agents
+  last_updated: "2026-03-05"
+  regulatory_scope:
+    - DORA (EU 2022/2554)
+    - EU AI Act (EU 2024/1689)
+
+# Agent load protocol: what agents load and in what order
+load_order:
+  session_start:
+    - directives/core/core-directives.yaml
+  per_stage:
+    stage_1:
+      - stages/01-intent-ingestion/01-intent-ingestion.yaml
+      - directives/stages/01-intent-ingestion.yaml
+    stage_2:
+      - stages/02-system-design/02-system-design.yaml
+      - directives/stages/02-system-design.yaml
+    stage_3:
+      - stages/03-coding-implementation/03-coding-implementation.yaml
+      - directives/stages/03-coding-implementation.yaml
+    stage_4:
+      - stages/04-testing-documentation/04-testing-documentation.yaml
+      - directives/stages/04-testing-documentation.yaml
+    stage_5:
+      - stages/05-deployment-release/05-deployment-release.yaml
+      - directives/stages/05-deployment-release.yaml
+    stage_6:
+      - stages/06-observability-maintenance/06-observability-maintenance.yaml
+      - directives/stages/06-observability-maintenance.yaml
+
+# Document generation specification
+# These files are GENERATED from YAML sources. Do not edit them directly.
+# To update: edit the source YAML, then run: python3 scripts/generate-docs.py
+doc_generation:
+  templates_dir: docs-templates/
+  generator_script: scripts/generate-docs.py
+  targets:
+    # Root documentation
+    - source: asdlc.yaml
+      template: framework-overview
+      output: README.md
+      description: "Framework overview and control summary"
+
+    # Stage-specific documentation
+    - source: stages/01-intent-ingestion/01-intent-ingestion.yaml
+      template: stage-readme
+      output: stages/01-intent-ingestion/README.md
+      description: "Stage 1 overview, workflow, and controls"
+
+    - source: stages/02-system-design/02-system-design.yaml
+      template: stage-readme
+      output: stages/02-system-design/README.md
+      description: "Stage 2 overview, workflow, and controls"
+
+    - source: stages/03-coding-implementation/03-coding-implementation.yaml
+      template: stage-readme
+      output: stages/03-coding-implementation/README.md
+      description: "Stage 3 overview, workflow, and controls"
+
+    - source: stages/04-testing-documentation/04-testing-documentation.yaml
+      template: stage-readme
+      output: stages/04-testing-documentation/README.md
+      description: "Stage 4 overview, workflow, and controls"
+
+    - source: stages/05-deployment-release/05-deployment-release.yaml
+      template: stage-readme
+      output: stages/05-deployment-release/README.md
+      description: "Stage 5 overview, workflow, and controls"
+
+    - source: stages/06-observability-maintenance/06-observability-maintenance.yaml
+      template: stage-readme
+      output: stages/06-observability-maintenance/README.md
+      description: "Stage 6 overview, workflow, and controls"
+
+    # Control track documentation
+    - source: controls/registry.yaml
+      template: controls-index
+      output: controls/README.md
+      description: "Control registry and navigation guide"
+
+    # Regulatory documentation
+    - source: regulatory/
+      template: regulatory-index
+      output: regulatory/README.md
+      description: "Regulatory compliance mapping and obligations"
+
+    # Feedback loops documentation
+    - source: feedbackloops/feedback-loops.yaml
+      template: feedback-loops-guide
+      output: feedbackloops/README.md
+      description: "Feedback loop paths and re-entry procedures"
+
+# Control registry (flat index for O(1) lookup)
+# Full definitions in: controls/[track]/[ID].yaml
+controls:
+  # Cross-Cutting (Stage 0)
+  - id: SC-0D
+    name: Core Directive Injection
+    track: SC
+    stage: 0
+    file: controls/sc/SC-0D.yaml
+
+  - id: SC-2B
+    name: Stage Directive Injection
+    track: SC
+    stage: 0
+    file: controls/sc/SC-2B.yaml
+
+  - id: GC-0A
+    name: Audit Trail & Compliance Reporting
+    track: GC
+    stage: 0
+    file: controls/gc/GC-0A.yaml
+
+  - id: GC-0B
+    name: End-to-End Traceability
+    track: GC
+    stage: 0
+    file: controls/gc/GC-0B.yaml
+
+  - id: GC-0C
+    name: Agent Provenance Registry
+    track: GC
+    stage: 0
+    file: controls/gc/GC-0C.yaml
+
+  - id: GC-0D
+    name: Compliance Evidence Automation
+    track: GC
+    stage: 0
+    file: controls/gc/GC-0D.yaml
+
+# Track definitions
+tracks:
+  - code: QC
+    name: Quality Controls
+    description: Ensure work meets standards
+    control_count: 10
+
+  - code: RC
+    name: Risk Controls
+    description: Identify and manage what can go wrong
+    control_count: 9
+
+  - code: SC
+    name: Security Controls
+    description: Protect against threats and vulnerabilities
+    control_count: 20
+
+  - code: AC
+    name: AI Controls
+    description: Address EU AI Act requirements
+    control_count: 6
+
+  - code: GC
+    name: Governance Controls
+    description: Maintain the audit trail
+    control_count: 6
+
+# Regulatory mappings (references only; full mappings in control files)
+regulatory:
+  dora:
+    file: regulatory/sources.yaml
+    articles: 51
+    controls_mapped: 51
+  eu_ai_act:
+    file: regulatory/sources.yaml
+    articles: 17
+    controls_mapped: 40
+
+# Schemas (machine-readable control validation)
+schemas:
+  control: schema/control.schema.json
+  stage: schema/stage.schema.json
+  feature_spec: schema/feature-spec.schema.json
+
+# Metadata
+metadata:
+  created: "2025-08-15"
+  last_updated: "2026-03-05"
+  status: approved
+  maintainer: Architecture Team
+  review_cycle_months: 12

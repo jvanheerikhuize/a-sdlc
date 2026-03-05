@@ -81,6 +81,7 @@ controls/sc/SC-2B.yaml      # Stage Directive Injection (inject directives/stage
 controls/gc/GC-0A.yaml      # Audit Trail & Compliance Reporting
 controls/gc/GC-0B.yaml      # End-to-End Traceability
 controls/gc/GC-0C.yaml      # Agent Provenance Registry
+controls/gc/GC-0D.yaml      # Compliance Evidence Automation
 feedbackloops/feedback-loops.yaml  # Re-entry paths for incidents and changes
 ```
 

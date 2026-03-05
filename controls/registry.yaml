@@ -233,8 +233,8 @@ registry:
     file: controls/qc/QC-3A.yaml
     owner_team: Engineering
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: QC-3B
     name: Code Quality Standards
@@ -245,8 +245,8 @@ registry:
     file: controls/qc/QC-3B.yaml
     owner_team: Engineering
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: RC-3A
     name: Decision Log
@@ -279,8 +279,8 @@ registry:
     file: controls/sc/SC-3B.yaml
     owner_team: Security
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: SC-3C
     name: Secrets & Credentials Scanning
@@ -291,15 +291,15 @@ registry:
     file: controls/sc/SC-3C.yaml
     owner_team: Security
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: SC-3D
     name: Software Composition Analysis & SBOM Generation
     stage: 3
     stage_name: Coding & Implementation
     track: SC
-    delegation: agent_executes_human_reviews
+    delegation: fully_automated
     file: controls/sc/SC-3D.yaml
     owner_team: Security
 
@@ -321,8 +321,8 @@ registry:
     file: controls/gc/GC-3A.yaml
     owner_team: Governance & Compliance
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   # ---------------------------------------------------------------------------
   # Stage 4 — Testing & Documentation
@@ -337,8 +337,8 @@ registry:
     file: controls/qc/QC-4A.yaml
     owner_team: Quality Assurance
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: QC-4B
     name: AI Output Validation
@@ -368,8 +368,8 @@ registry:
     file: controls/rc/RC-4A.yaml
     owner_team: Risk Management
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: SC-4A
     name: SAST
@@ -380,8 +380,8 @@ registry:
     file: controls/sc/SC-4A.yaml
     owner_team: Security
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: SC-4B
     name: DAST
@@ -471,8 +471,8 @@ registry:
     file: controls/sc/SC-5B.yaml
     owner_team: Security / Release Management
     feedback_loops:
-      - path_a_autofix
-      - path_b_quickfix
+      - path_a
+      - path_b
 
   - id: SC-5C
     name: Secrets & Key Management Lifecycle

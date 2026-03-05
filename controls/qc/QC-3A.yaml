@@ -6,7 +6,7 @@
 # =============================================================================
 
 id: QC-3A
-moscow_score: should
+moscow_score: must
 name: Pull Request Creation & Review
 description: All implementation work — whether produced by humans, agents, or both — converges into a pull request that includes
   evidence from every other Stage 3 control. The PR must be reviewed and approved by the appropriate number of reviewers before
@@ -55,9 +55,9 @@ dependencies:
 - SC-3C
 - GC-3A
 feedback_loops:
-- path: path_a_autofix
+- path: path_a
   required_in_path: true
-- path: path_b_quickfix
+- path: path_b
   required_in_path: true
 metadata:
   version: '1.0'

@@ -235,7 +235,7 @@
         },
         "frequency": {
           "type": "string",
-          "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered", "per_stage_entry", "per_session"]
+          "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered", "per_stage_entry", "per_session", "per_model_change"]
         },
         "sla_minutes": { "type": "integer", "minimum": 0 }
       }
