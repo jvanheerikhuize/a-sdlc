@@ -36,7 +36,7 @@ Every control in this framework belongs to one of five tracks:
 | `RC` | Risk Controls | Identify and manage what can go wrong |
 | `SC` | Security Controls | Protect against threats and vulnerabilities |
 | `AC` | AI Controls | Address EU AI Act requirements |
-| `GC` | Governance Controls | Maintain the audit trail |
+| `GC` | Governance Controls | Maintain the audit trail across everything |
 
 Control IDs follow the format `[Track]-[Stage][Letter]` (e.g. `SC-2B`, `QC-3A`, `GC-0A`).
 
@@ -48,22 +48,22 @@ Each control specifies who performs it and who decides. The patterns you will en
 
 | Pattern | Meaning |
 |---------|---------|
-| `fully_automated` | You execute; no human judgement required |
-| `automated_policy_enforced` | You execute via policy engine; no human intervention |
-| `automated_with_human_escalation` | You execute; escalate to human on anomaly |
-| `agent_drafts_human_approves` | You produce a draft; human must validate before proceeding |
-| `agent_analyses_human_resolves` | You surface findings; human makes the decision |
-| `agent_executes_human_reviews` | You run the process; human reviews results |
-| `agent_classifies_human_validates` | You classify; human confirms classification |
-| `agent_proposes_human_confirms` | You propose an option; human confirms |
-| `agent_calculates_human_decides` | You compute the outcome; human makes go/no-go |
-| `agent_validates_human_approves` | You check completeness; human signs off |
-| `agent_monitors_human_reports` | You detect; human files the report |
-| `agent_creates_human_reviews` | You create the artefact; human reviews |
-| `agent_logs_human_reviews` | You write the log; human reviews it |
-| `agent_compiles_human_approves` | You compile the checklist; human approves |
-| `agent_checks_human_approves` | You verify; human approves |
-| `human_required` | You CANNOT make this decision. Stop and escalate to a human. |
+| `fully_automated` | Agent executes; no human judgement required |
+| `automated_policy_enforced` | Agent executes via policy engine; no human intervention |
+| `automated_with_human_escalation` | Agent executes; human escalated on anomaly |
+| `agent_drafts_human_approves` | Agent produces draft; human validates before proceeding |
+| `agent_analyses_human_resolves` | Agent surfaces findings; human makes the decision |
+| `agent_executes_human_reviews` | Agent runs the process; human reviews results |
+| `agent_classifies_human_validates` | Agent classifies; human confirms classification |
+| `agent_proposes_human_confirms` | Agent proposes option; human confirms |
+| `agent_calculates_human_decides` | Agent computes outcome; human makes go/no-go |
+| `agent_validates_human_approves` | Agent checks completeness; human signs off |
+| `agent_monitors_human_reports` | Agent detects; human files the report |
+| `agent_creates_human_reviews` | Agent creates artefact; human reviews |
+| `agent_logs_human_reviews` | Agent writes log; human reviews it |
+| `agent_compiles_human_approves` | Agent compiles checklist; human approves |
+| `agent_checks_human_approves` | Agent verifies; human approves |
+| `human_required` | Cannot be delegated. Human must decide. Agent must stop and escalate. |
 
 > **Critical:** For any control with `human_required`, you must not proceed, assume, simulate, or forge the human decision. Present your analysis and wait.
 
@@ -76,8 +76,8 @@ Load only the files relevant to the stage you are operating in. Cross-cutting co
 ### Always Load (Cross-Cutting)
 
 ```text
-controls/sc/SC-0D.yaml      # Core Directive Injection (load first — directives/core/core-directives.yaml)
-controls/sc/SC-2B.yaml      # Stage Directive Injection (inject directives/stages/NN-name.yaml at each stage entry)
+controls/sc/SC-0D.yaml      # Core Directive Injection
+controls/sc/SC-2B.yaml      # Stage Directive Injection
 controls/gc/GC-0A.yaml      # Audit Trail & Compliance Reporting
 controls/gc/GC-0B.yaml      # End-to-End Traceability
 controls/gc/GC-0C.yaml      # Agent Provenance Registry
@@ -91,12 +91,12 @@ For each stage, load the lightweight stage definition and then the individual co
 
 | Stage | Stage definition | Controls |
 | --- | --- | --- |
-| 1 — Intent Ingestion | `stages/01-intent-ingestion/01-intent-ingestion.yaml` | QC-1A, QC-1B, RC-1A, SC-1A, AC-1A, GC-1A |
-| 2 — System Design | `stages/02-system-design/02-system-design.yaml` | QC-2A, RC-2A, SC-2A, SC-2B, AC-2A |
-| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, GC-3A |
-| 4 — Testing & Documentation | `stages/04-testing-documentation/04-testing-documentation.yaml` | QC-4A, QC-4B, QC-4C, RC-4A, SC-4A, SC-4B, AC-4A |
-| 5 — Deployment & Release | `stages/05-deployment-release/05-deployment-release.yaml` | QC-5A, RC-5A, RC-5B, SC-5A, SC-5B |
-| 6 — Observability & Maintenance | `stages/06-observability-maintenance/06-observability-maintenance.yaml` | QC-6A, RC-6A, SC-6A, SC-6B, AC-6A |
+| 1 — Intent Ingestion | `stages/01-intent-ingestion/01-intent-ingestion.yaml` | QC-1A, QC-1B, RC-1A, SC-1A, SC-1B, AC-1A, AC-1B, GC-1A |
+| 2 — System Design | `stages/02-system-design/02-system-design.yaml` | QC-2A, RC-2A, RC-2B, SC-2A, SC-2B, SC-2C, AC-2A, AC-2B |
+| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-3A, QC-3B, RC-3A, SC-3A, SC-3B, SC-3C, SC-3D, SC-3E, GC-3A |
+| 4 — Testing & Documentation | `stages/04-testing-documentation/04-testing-documentation.yaml` | QC-4A, QC-4B, QC-4C, RC-4A, SC-4A, SC-4B, SC-4C, SC-4D, AC-4A |
+| 5 — Deployment & Release | `stages/05-deployment-release/05-deployment-release.yaml` | QC-5A, RC-5A, RC-5B, SC-5A, SC-5B, SC-5C |
+| 6 — Observability & Maintenance | `stages/06-observability-maintenance/06-observability-maintenance.yaml` | QC-6A, RC-6A, RC-6B, SC-6A, SC-6B, AC-6A |
 
 Individual control definitions live in:
 
@@ -136,8 +136,10 @@ controls/registry.yaml    # Flat index of all 51 controls — fast lookup by ID 
 
 When Stage 4 or Stage 6 detects an issue requiring code changes, re-entry occurs via one of two paths defined in `feedbackloops/feedback-loops.yaml`:
 
-- **Path A — Quick Fix:** Easy, obvious, low-risk issue with a clear root cause. Re-enters Stage 3 with a minimum control set. Stage 6: must match a pre-approved autofix template exactly. Stage 4: root cause must be unambiguous from failing control output, fix is code-only.
-- **Path B — Full Re-entry:** Any issue not meeting Path A eligibility. Re-enters Stage 1 for the complete lifecycle — no controls skipped.
+- **Path A — Quick Fix → Stage 3** — For easy, obvious, low-risk issues with a clear root cause. Re-enters directly at Stage 3. If any eligibility condition is not met, Path B is mandatory — no exceptions. When triggered from Stage 4, the specific Stage 4 control(s) that raised the issue must be re-executed in addition to the minimum control set below. Re-enters at Stage 3.
+
+- **Path B — Full Re-entry → Stage 1** — For any issue not meeting Path A eligibility: complex bugs, new functionality requirements, architectural changes, or cases where root cause is unclear. Re-enters at Stage 1 for complete processing through all six stages. No controls are skipped. The change is treated as a new feature request. Re-enters at Stage 1.
+
 
 If a Path A execution deviates from expected scope, upgrade to Path B immediately.
 
@@ -160,3 +162,5 @@ This framework enforces compliance with two regulatory frameworks. Every control
 - **EU AI Act** — Risk-tiered requirements for AI systems in financial services
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.
+
+**Last Updated:** 2026-03-05 20:58 UTC

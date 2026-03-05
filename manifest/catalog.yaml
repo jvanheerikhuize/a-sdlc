@@ -59,6 +59,11 @@ doc_generation:
       output: README.md
       description: "Root README: framework overview, stages, control framework, and regulatory compliance"
 
+    - source: asdlc.yaml
+      template: agents
+      output: AGENTS.md
+      description: "Agent entrypoint: controls, delegation patterns, lifecycle navigation"
+
     # Stage-specific documentation
     - source: stages/01-intent-ingestion/01-intent-ingestion.yaml
       template: stage-readme

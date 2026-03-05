@@ -279,6 +279,78 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_agents_md(self, source_file):
+        """Generate AGENTS.md from asdlc.yaml + registry + feedback loops."""
+        loaded = self.load_yaml(source_file) or {}
+        fw = loaded.get("framework", {})
+        stages = loaded.get("stages", [])
+        cross_cutting = loaded.get("cross_cutting", {})
+
+        # Control registry for file path lookup
+        registry = self.load_yaml("controls/registry.yaml") or {}
+        all_controls = registry.get("registry", [])
+        ctrl_by_id = {c.get("id"): c for c in all_controls}
+
+        # Build cc_controls_with_paths for "Always Load" block
+        cc_controls_with_paths = []
+        for ctrl in cross_cutting.get("controls", []):
+            ctrl_id = ctrl.get("id")
+            reg_entry = ctrl_by_id.get(ctrl_id, {})
+            cc_controls_with_paths.append({
+                "id": ctrl_id,
+                "name": ctrl.get("name"),
+                "file": reg_entry.get("file", ""),
+            })
+
+        # Pre-render "Always Load" code block
+        always_load_lines = []
+        for ctrl in cc_controls_with_paths:
+            always_load_lines.append(f"{ctrl['file']}      # {ctrl['name']}")
+        fl_def = cross_cutting.get("feedback_loops", {}).get("definition", "")
+        always_load_lines.append(f"{fl_def}  # Re-entry paths for incidents and changes")
+
+        # Pre-render Stage-Specific Files table
+        table_rows = [
+            "| Stage | Stage definition | Controls |",
+            "| --- | --- | --- |",
+        ]
+        for stage in stages:
+            num = stage["number"]
+            name = stage["name"]
+            sf = stage["stage_file"]
+            ctrl_list = ", ".join(c["id"] for c in stage.get("controls", []))
+            table_rows.append(f"| {num} — {name} | `{sf}` | {ctrl_list} |")
+
+        # Load feedback loops
+        feedback = self.load_yaml("feedbackloops/feedback-loops.yaml") or {}
+
+        context = {
+            "framework": fw,
+            "stages": stages,
+            "cross_cutting": cross_cutting,
+            "always_load_block": "\n".join(always_load_lines),
+            "stage_files_table": "\n".join(table_rows),
+            "feedback_loops": feedback.get("feedback_loops", []),
+            "total_controls": len(all_controls),
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("agents.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: agents.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "AGENTS.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def _generate_workflow_diagram(self, stage_yaml):
         """Convert workflow DAG to markdown diagram."""
         workflow = stage_yaml.get("workflow", {})
@@ -328,6 +400,9 @@ class DocGenerator:
                     count += 1
             elif template == "framework-overview":
                 if self.generate_framework_overview(source):
+                    count += 1
+            elif template == "agents":
+                if self.generate_agents_md(source):
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")
