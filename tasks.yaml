@@ -1,0 +1,251 @@
+# tasks.yaml — Agent Task Navigation Index
+#
+# Maps common agent tasks to the controls, stages, and entry files they require.
+# This enables agents to discover relevant framework guidance based on "what am I doing?"
+# rather than just "what stage am I in?" or "what control am I executing?"
+#
+# Format: each task specifies a unique id, human-readable name, associated stage,
+# relevant controls, and the entry file to load first.
+
+version: "1.0"
+description: "Agent task index — maps common tasks to stages, controls, and entry files"
+
+tasks:
+  # ===== Stage 1: Intent Ingestion =====
+
+  - id: ingest-feature-request
+    name: Ingest a new feature request
+    stage: 1
+    description: Capture, disambiguate, and structure a new business requirement into a feature specification
+    controls: [QC-1A, QC-1B, RC-1A, SC-1A, SC-1B, AC-1A, AC-1B, GC-1A]
+    entry_file: context/stage-01-intent-ingestion.md
+
+  - id: classify-ai-risk
+    name: Classify AI risk level for a new system
+    stage: 1
+    description: Determine risk tier under EU AI Act; impacts testing, controls, and documentation
+    controls: [AC-1A, AC-1B]
+    entry_file: controls/ac/AC-1A.yaml
+
+  - id: validate-feature-intent
+    name: Validate and refine feature intent
+    stage: 1
+    description: Confirm that business requirements are unambiguous and architecturally feasible
+    controls: [QC-1A, QC-1B]
+    entry_file: controls/qc/QC-1A.yaml
+
+  # ===== Stage 2: System Design =====
+
+  - id: create-system-design
+    name: Create system design and architecture
+    stage: 2
+    description: Translate validated intent into architecture, data flows, and technical specifications
+    controls: [QC-2A, RC-2A, RC-2B, SC-2A, SC-2C, AC-2A, AC-2B]
+    entry_file: context/stage-02-system-design.md
+
+  - id: threat-model
+    name: Run threat modelling
+    stage: 2
+    description: Identify potential security threats and design mitigations before coding begins
+    controls: [SC-2A]
+    entry_file: controls/sc/SC-2A.yaml
+
+  - id: design-review
+    name: Hold design review with stakeholders
+    stage: 2
+    description: Validate architecture and risk profile before proceeding to implementation
+    controls: [RC-2B]
+    entry_file: controls/rc/RC-2B.yaml
+
+  # ===== Stage 3: Coding & Implementation =====
+
+  - id: write-code
+    name: Write or generate code
+    stage: 3
+    description: Produce code by human developers, AI agents, or both. Enforce quality and security scanning
+    controls: [SC-3A, QC-3B, SC-3C, SC-3D, SC-3E, RC-3A, GC-3A, SC-3B, QC-3A]
+    entry_file: context/stage-03-coding-and-implementation.md
+
+  - id: review-pull-request
+    name: Review a pull request
+    stage: 3
+    description: Human code review of changes before merge; check quality gates and security scan results
+    controls: [QC-3A]
+    entry_file: controls/qc/QC-3A.yaml
+
+  - id: scan-for-malicious-code
+    name: Scan agent-generated code for malicious patterns
+    stage: 3
+    description: Automated scan to prevent injection, backdoors, and policy violations in AI-generated code
+    controls: [SC-3B]
+    entry_file: controls/sc/SC-3B.yaml
+
+  - id: scan-for-exposed-credentials
+    name: Scan for exposed credentials or secrets
+    stage: 3
+    description: Detect hardcoded API keys, passwords, and other sensitive data before commit
+    controls: [SC-3C]
+    entry_file: controls/sc/SC-3C.yaml
+
+  - id: validate-agent-permissions
+    name: Validate agent permission boundaries
+    stage: 3
+    description: Ensure agent has not exceeded scoped permissions during code generation
+    controls: [SC-3A]
+    entry_file: controls/sc/SC-3A.yaml
+
+  - id: log-code-provenance
+    name: Log code provenance and authorship
+    stage: 3
+    description: Track whether code was human-written, AI-generated, or hybrid; maintain attribution
+    controls: [GC-3A]
+    entry_file: controls/gc/GC-3A.yaml
+
+  # ===== Stage 4: Testing & Documentation =====
+
+  - id: run-tests
+    name: Run automated tests
+    stage: 4
+    description: Execute unit, integration, and end-to-end tests; validate coverage
+    controls: [QC-4A, QC-4B]
+    entry_file: controls/qc/QC-4A.yaml
+
+  - id: run-sast
+    name: Run static security analysis (SAST)
+    stage: 4
+    description: Scan code for common vulnerabilities, policy violations, and insecure patterns
+    controls: [SC-4A]
+    entry_file: controls/sc/SC-4A.yaml
+
+  - id: run-dast
+    name: Run dynamic security analysis (DAST)
+    stage: 4
+    description: Test running application for runtime vulnerabilities, API issues, and data flow problems
+    controls: [SC-4B]
+    entry_file: controls/sc/SC-4B.yaml
+
+  - id: run-api-security-testing
+    name: Run API-specific security testing
+    stage: 4
+    description: Test API endpoints for injection, authentication bypass, and data exposure
+    controls: [SC-4C]
+    entry_file: controls/sc/SC-4C.yaml
+
+  - id: evaluate-risk-threshold
+    name: Evaluate risk threshold before deployment
+    stage: 4
+    description: Assess residual risk against organizational tolerance; gate progression to Stage 5
+    controls: [RC-4A]
+    entry_file: controls/rc/RC-4A.yaml
+
+  - id: write-documentation
+    name: Write technical and operational documentation
+    stage: 4
+    description: Create README, API docs, runbooks, and operational guides
+    controls: [QC-4C, AC-4A]
+    entry_file: controls/qc/QC-4C.yaml
+
+  - id: validate-ai-testing
+    name: Validate AI component testing
+    stage: 4
+    description: Run bias tests, adversarial tests, and data validation for AI-based systems
+    controls: [AC-4A]
+    entry_file: controls/ac/AC-4A.yaml
+
+  # ===== Stage 5: Deployment & Release =====
+
+  - id: deploy-to-production
+    name: Deploy to production
+    stage: 5
+    description: Promote tested artefact to production with governance, rollback readiness, and monitoring setup
+    controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B, SC-5C]
+    entry_file: context/stage-05-deployment-and-release.md
+
+  - id: verify-deployment-integrity
+    name: Verify deployed artefact integrity
+    stage: 5
+    description: Cryptographic verification that the deployed code matches the tested version
+    controls: [SC-5B]
+    entry_file: controls/sc/SC-5B.yaml
+
+  - id: prepare-rollback-plan
+    name: Prepare and test rollback plan
+    stage: 5
+    description: Document and execute dry-run of rollback procedure before go-live
+    controls: [RC-5B]
+    entry_file: controls/rc/RC-5B.yaml
+
+  # ===== Stage 6: Observability & Maintenance =====
+
+  - id: monitor-production
+    name: Monitor production health and SLOs
+    stage: 6
+    description: Observe system health, error rates, latency, and SLO compliance in real time
+    controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
+    entry_file: context/stage-06-observability-and-maintenance.md
+
+  - id: detect-security-incident
+    name: Detect and triage security incident
+    stage: 6
+    description: Identify potential security compromise, data breach, or attack
+    controls: [SC-6A, SC-6B]
+    entry_file: feedbackloops/feedback-loops.yaml
+    note: "Classify as Path A (quick fix) or Path B (full re-entry) via Step FL.1"
+
+  - id: detect-model-anomaly
+    name: Detect AI model anomaly or drift
+    stage: 6
+    description: Identify unexpected AI model behavior, performance degradation, or bias drift
+    controls: [SC-6B, AC-6A]
+    entry_file: controls/ac/AC-6A.yaml
+
+  - id: conduct-ai-post-market-surveillance
+    name: Conduct AI post-market surveillance
+    stage: 6
+    description: Monitor AI system for regulatory compliance, bias, and out-of-distribution behavior
+    controls: [AC-6A]
+    entry_file: controls/ac/AC-6A.yaml
+
+  # ===== Cross-Cutting =====
+
+  - id: feedback-loop-classification
+    name: Classify incident for feedback loop re-entry
+    stage: 0
+    description: Determine if a Stage 4 or Stage 6 issue requires Path A (quick fix) or Path B (full re-entry)
+    controls: []
+    entry_file: feedbackloops/feedback-loops.yaml
+    note: "Execute Step FL.1 to classify and get RO approval before proceeding to Path A or Path B"
+
+  - id: execute-path-a-quick-fix
+    name: Execute Path A quick-fix flow
+    stage: 0
+    description: Re-execute minimum control set for easy, obvious, low-risk issues at Stage 3
+    controls: [QC-3A, QC-3B, SC-3B, SC-3C, GC-3A, QC-4A, SC-4A, RC-4A, SC-5B]
+    entry_file: feedbackloops/feedback-loops.yaml
+    note: "Follow Steps FL.1 → FL.2A. If any deviation, upgrade to Path B immediately"
+
+  - id: execute-path-b-full-reentry
+    name: Execute Path B full re-entry flow
+    stage: 0
+    description: Re-enter at Stage 1 and process through full lifecycle (Stages 1→6) for complex issues
+    controls: []
+    entry_file: feedbackloops/feedback-loops.yaml
+    note: "Follow Steps FL.1 → FL.2B. Creates new FEAT-XXXX and runs all controls"
+
+  # ===== Notes on Using This Index =====
+  #
+  # HOW TO USE:
+  # 1. Agent identifies the task it needs to perform (e.g., "write code")
+  # 2. Look up task ID in this file (e.g., write-code)
+  # 3. Load the entry_file (e.g., context/stage-03-coding-and-implementation.md)
+  # 4. The entry file provides workflow, controls, actors, exit criteria, and artifacts
+  # 5. For any specific control listed, load: controls/[track]/[CONTROL-ID].yaml
+  #
+  # TASK DEFINITION FIELDS:
+  # - id: Machine-readable unique identifier (lowercase, hyphens)
+  # - name: Human-readable task name
+  # - stage: Stage number (1-6) or 0 for cross-cutting; affects which stage files to load
+  # - description: What the task accomplishes and why it matters
+  # - controls: Array of control IDs that apply to this task
+  # - entry_file: Primary file to load first (usually a context bundle or control file)
+  # - note: Optional clarification or special instructions

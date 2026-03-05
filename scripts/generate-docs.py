@@ -425,6 +425,134 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_stage_context_bundles(self, source_file):
+        """Generate context/stage-NN-name.md bundles from stage YAML."""
+        stage_yaml = self.load_yaml(source_file) or {}
+        if not stage_yaml:
+            return False
+
+        # Load control registry for lookup
+        registry = self.load_yaml("controls/registry.yaml")
+        registry_controls = registry.get("registry", []) if registry else []
+
+        stage_num = stage_yaml.get("number")
+        stage_name = stage_yaml.get("name", "")
+
+        # Compute quick load paths
+        stage_slug = stage_name.lower().replace(" & ", "-and-").replace(" ", "-").replace("&", "and")
+        directive_file = f"directives/stages/{stage_num:02d}-{stage_slug}.yaml"
+        quick_load_files = [source_file, directive_file]
+
+        # Pre-render workflow table
+        workflow = stage_yaml.get("workflow", {})
+        nodes = workflow.get("nodes", [])
+        workflow_rows = ["| Step | Title | Control | Actors | Delegation | Depends On |", "| ---- | ----- | ------- | ------ | ---------- | ---------- |"]
+        for node in nodes:
+            step = node.get("step_number", "?")
+            title = node.get("title", "")
+            control = node.get("control", "—")
+            actors = ", ".join(a.get("role", "?") for a in node.get("actors", []))
+            delegation = node.get("delegation", "—")
+            depends_on = ", ".join(node.get("depends_on", [])) if node.get("depends_on") else "—"
+            workflow_rows.append(f"| {step} | {title} | {control} | {actors} | {delegation} | {depends_on} |")
+        workflow_table = "\n".join(workflow_rows)
+
+        # Pre-render controls table
+        required_controls = stage_yaml.get("required_controls", [])
+        controls_rows = ["| ID | Name | Delegation | Agent Does | Human Does |", "| -- | ---- | ---------- | ---------- | ---------- |"]
+        for ctrl_spec in required_controls:
+            control_id = ctrl_spec.get("id")
+            # Find control in registry
+            reg_entry = None
+            for reg in registry_controls:
+                if reg.get("id") == control_id:
+                    reg_entry = reg
+                    break
+
+            if reg_entry:
+                ctrl_file = reg_entry.get("file")
+                ctrl_data = self.load_yaml(ctrl_file) if ctrl_file else {}
+                ctrl_name = reg_entry.get("name", control_id)
+                delegation_pat = reg_entry.get("delegation", "—")
+                delegation_desc = ctrl_data.get("delegation", {}).get("human_display", delegation_pat) if ctrl_data else delegation_pat
+
+                # Extract agent and human actions from the delegation block
+                delegation_block = ctrl_data.get("delegation", {}) if ctrl_data else {}
+                agent_action = delegation_block.get("agent_role", "—") if isinstance(delegation_block, dict) else "—"
+                human_action = delegation_block.get("human_role", "—") if isinstance(delegation_block, dict) else "—"
+
+                controls_rows.append(f"| {control_id} | {ctrl_name} | {delegation_pat} | {agent_action} | {human_action} |")
+
+        controls_table = "\n".join(controls_rows)
+
+        # Pre-render exit criteria as checklist
+        exit_criteria = stage_yaml.get("exit_criteria", [])
+        exit_checklist_lines = []
+        for criterion in exit_criteria:
+            exit_checklist_lines.append(f"- [ ] {criterion}")
+        exit_criteria_checklist = "\n".join(exit_checklist_lines) if exit_checklist_lines else "No exit criteria defined"
+
+        # Pre-render input artifacts
+        input_artifacts_list = stage_yaml.get("artifacts", {}).get("inputs", [])
+        input_artifacts_lines = []
+        for artifact in input_artifacts_list:
+            input_artifacts_lines.append(f"- {artifact}")
+        input_artifacts = "\n".join(input_artifacts_lines) if input_artifacts_lines else "None"
+
+        # Pre-render output artifacts
+        output_artifacts_list = stage_yaml.get("artifacts", {}).get("outputs", [])
+        output_artifacts_lines = []
+        for artifact in output_artifacts_list:
+            output_artifacts_lines.append(f"- {artifact}")
+        output_artifacts = "\n".join(output_artifacts_lines) if output_artifacts_list else "None"
+
+        # Pre-render feedback loop triggers
+        feedback_triggers_lines = []
+        for ctrl_spec in required_controls:
+            control_id = ctrl_spec.get("id")
+            # Check registry for feedback_loops field
+            for reg in registry_controls:
+                if reg.get("id") == control_id:
+                    triggers = reg.get("feedback_loops", [])
+                    if triggers:
+                        triggers_str = " or ".join(f"Path {t}" if t in ["a", "b"] else t for t in triggers)
+                        feedback_triggers_lines.append(f"- {control_id} → {triggers_str}")
+                    break
+
+        feedback_triggers = "\n".join(feedback_triggers_lines) if feedback_triggers_lines else "None"
+
+        # Prepare template context
+        context = {
+            "stage": stage_yaml,
+            "stage_file": source_file,
+            "quick_load_files": "\n".join(f"- {f}" for f in quick_load_files),
+            "workflow_table": workflow_table,
+            "controls_table": controls_table,
+            "exit_criteria_checklist": exit_criteria_checklist,
+            "input_artifacts": input_artifacts,
+            "output_artifacts": output_artifacts,
+            "feedback_triggers": feedback_triggers,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("stage-context-bundle.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: stage-context-bundle.jinja2")
+            return False
+
+        # Determine output file path
+        output_file = self.repo_root / "context" / f"stage-{stage_num:02d}-{stage_slug}.md"
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def _generate_workflow_diagram(self, stage_yaml):
         """Convert workflow DAG to markdown diagram."""
         workflow = stage_yaml.get("workflow", {})
@@ -480,6 +608,9 @@ class DocGenerator:
                     count += 1
             elif template == "feedback-loops-guide":
                 if self.generate_feedback_loops_guide(source):
+                    count += 1
+            elif template == "stage-context-bundle":
+                if self.generate_stage_context_bundles(source):
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")

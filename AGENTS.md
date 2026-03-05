@@ -14,6 +14,25 @@ You are part of the **Agentic Software Development Life Cycle (A-SDLC)** — a f
 
 ---
 
+## Quick Navigation
+
+Use these entry points based on what you need:
+
+| I need to... | Load this |
+|-------------|-----------|
+| Start a new session | This file + `directives/core/core-directives.yaml` |
+| Work on **Stage 1** (Intent Ingestion) | `context/stage-01-intent-ingestion.md` |
+| Work on **Stage 2** (System Design) | `context/stage-02-system-design.md` |
+| Work on **Stage 3** (Coding & Implementation) | `context/stage-03-coding-and-implementation.md` |
+| Work on **Stage 4** (Testing & Documentation) | `context/stage-04-testing-and-documentation.md` |
+| Work on **Stage 5** (Deployment & Release) | `context/stage-05-deployment-and-release.md` |
+| Work on **Stage 6** (Observability & Maintenance) | `context/stage-06-observability-and-maintenance.md` |
+| Navigate by **task** | `tasks.yaml` |
+| Look up a **control** by ID | `controls/registry.yaml` → `controls/[track]/[ID].yaml` |
+| Handle an **incident** or **re-entry** | `feedbackloops/feedback-loops.yaml` |
+
+---
+
 ## Your Mandatory Starting Point: Core Directives
 
 Before performing any work, you MUST load and internalize the Core Directives (SC-0D):
@@ -163,4 +182,4 @@ This framework enforces compliance with two regulatory frameworks. Every control
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.
 
-**Last Updated:** 2026-03-05 21:08 UTC
+**Last Updated:** 2026-03-05 21:28 UTC

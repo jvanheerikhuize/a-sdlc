@@ -1,0 +1,59 @@
+{# Template for generating stage context bundles from stage YAML #}
+{# Usage: generate-docs.py uses this to create context/stage-NN-name.md #}
+{# Optimized for agent consumption: terse, actionable, single-file context #}
+# Stage {{ stage.number }} — {{ stage.name }}
+
+> **Auto-generated from `{{ stage_file }}`** · Agent context bundle · All controls and workflow in one file
+
+{{ stage.description }}
+
+---
+
+## Quick Load
+
+Load these files for this stage:
+
+```
+{{ quick_load_files }}
+```
+
+---
+
+## Workflow — Execution Order
+
+{{ workflow_table }}
+
+---
+
+## Controls — What Agent and Human Do
+
+{{ controls_table }}
+---
+
+## Exit Criteria (Stage {{ stage.number }} Complete When)
+
+{{ exit_criteria_checklist }}
+
+---
+
+## Artifact I/O
+
+**Inputs from Prior Stage:**
+{{ input_artifacts }}
+
+**Outputs to Next Stage:**
+{{ output_artifacts }}
+
+---
+
+## Feedback Loop Triggers
+
+Controls in this stage that can trigger re-entry:
+
+{{ feedback_triggers }}
+
+For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](../../feedbackloops/feedback-loops.yaml).
+
+---
+
+**Last Updated:** {{ last_updated }}
