@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/artifact.schema.json",
+  "title": "Artifact Output Template Schema",
+  "description": "Validates stages/*/artifacts/outputs/*.yaml — all artifact output templates produced during the A-SDLC",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/classification_record"
+    },
+    {
+      "$ref": "#/$defs/lifecycle_record"
+    },
+    {
+      "$ref": "#/$defs/scan_report"
+    },
+    {
+      "$ref": "#/$defs/feature_spec"
+    }
+  ],
+  "$defs": {
+    "artifact_envelope": {
+      "type": "object",
+      "required": ["feat_id", "stage", "control"],
+      "properties": {
+        "feat_id": {
+          "type": "string",
+          "pattern": "^FEAT-[0-9]{4}$"
+        },
+        "stage": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number"
+        },
+        "control": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+        },
+        "immutable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "classification_record": {
+      "type": "object",
+      "required": ["feat_id", "stage", "control", "tier", "rationale", "criteria"],
+      "properties": {
+        "feat_id": {
+          "type": "string",
+          "pattern": "^FEAT-[0-9]{4}$"
+        },
+        "stage": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number"
+        },
+        "control": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+        },
+        "classified_at": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "tier": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/risk_tier"
+        },
+        "governance_intensity": {
+          "type": "string",
+          "enum": ["standard", "enhanced", "full"]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "criteria": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "rating": {
+                "type": "string"
+              },
+              "justification": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "classification": {
+          "type": "object",
+          "properties": {
+            "proposed_by_agent": {
+              "type": "boolean"
+            },
+            "validated_by": {
+              "type": "string"
+            },
+            "validated_at": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+            },
+            "override": {
+              "type": "boolean"
+            },
+            "override_rationale": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "lifecycle_record": {
+      "type": "object",
+      "required": ["feat_id", "stage", "control"],
+      "properties": {
+        "feat_id": {
+          "type": "string",
+          "pattern": "^FEAT-[0-9]{4}$"
+        },
+        "stage": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number"
+        },
+        "control": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+        },
+        "immutable": {
+          "type": "boolean"
+        },
+        "pull_request": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "title": {
+              "type": "string"
+            },
+            "branch_source": {
+              "type": "string"
+            },
+            "branch_target": {
+              "type": "string"
+            },
+            "created_by": {
+              "type": "string"
+            },
+            "created_at": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+            }
+          }
+        },
+        "risk_tier": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/risk_tier"
+        },
+        "reviewers_required": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_attached": {
+          "type": "object"
+        },
+        "decision": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["approved", "rejected", "pending"]
+            },
+            "merged_at": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+            },
+            "merged_by": {
+              "type": "string"
+            },
+            "rejection_reason": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "scan_report": {
+      "type": "object",
+      "required": ["feat_id", "stage", "control", "findings", "summary"],
+      "properties": {
+        "feat_id": {
+          "type": "string",
+          "pattern": "^FEAT-[0-9]{4}$"
+        },
+        "stage": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number"
+        },
+        "control": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+        },
+        "scanned_at": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "tooling": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "files_scanned": {
+              "type": "integer"
+            },
+            "lines_scanned": {
+              "type": "integer"
+            },
+            "agent_generated_files": {
+              "type": "integer"
+            }
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "file", "category", "description", "severity"],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "line": {
+                "type": "integer"
+              },
+              "category": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "severity": {
+                "$ref": "https://asdlc/schema/common.schema.json#/$defs/severity"
+              },
+              "resolved": {
+                "type": "boolean"
+              },
+              "resolved_at": {
+                "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+              },
+              "resolution": {
+                "type": "string"
+              },
+              "reviewed_by": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "summary": {
+          "type": "object",
+          "required": ["total_findings", "status"],
+          "properties": {
+            "total_findings": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "by_severity": {
+              "type": "object",
+              "properties": {
+                "critical": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "high": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "medium": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "low": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "unresolved_critical": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unresolved_high": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "status": {
+              "type": "string",
+              "enum": ["pass", "fail", "warning"]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "feature_spec": {
+      "type": "object",
+      "required": ["metadata", "description"],
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "required": ["id", "title", "version"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^FEAT-[0-9]{4}$"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["draft", "review", "approved", "implemented", "deprecated"]
+            },
+            "priority": {
+              "type": "string",
+              "enum": ["critical", "high", "medium", "low"]
+            },
+            "author": {
+              "type": "string"
+            },
+            "created": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+            },
+            "updated": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+            }
+          }
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "problem_statement": {
+              "type": "string"
+            },
+            "proposed_solution": {
+              "type": "string"
+            },
+            "out_of_scope": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "given", "when", "then"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^AC-[0-9]{3}$"
+              },
+              "given": {
+                "type": "string"
+              },
+              "when": {
+                "type": "string"
+              },
+              "then": {
+                "type": "string"
+              },
+              "and": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "technical_requirements": {
+          "type": "object",
+          "properties": {
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "performance": {
+              "type": "object"
+            },
+            "security": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scalability": {
+              "type": "string"
+            }
+          }
+        },
+        "api_changes": {
+          "type": "object",
+          "properties": {
+            "new_endpoints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+                  },
+                  "path": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "modified_endpoints": {
+              "type": "array"
+            },
+            "breaking_changes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "risk_classification": {
+          "type": "object",
+          "properties": {
+            "risk_tier": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/risk_tier"
+            },
+            "ai_act_tier": {
+              "type": "string",
+              "enum": ["minimal", "limited", "high", "unacceptable", "not_applicable"]
+            },
+            "governance_intensity": {
+              "type": "string",
+              "enum": ["standard", "enhanced", "full"]
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

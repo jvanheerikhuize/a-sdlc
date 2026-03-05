@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/common.schema.json",
+  "title": "A-SDLC Common Schema Definitions",
+  "description": "Shared definitions used across all A-SDLC schemas to eliminate duplication",
+  "$defs": {
+    "control_id": {
+      "type": "string",
+      "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+      "description": "Control identifier: [Track]-[Stage][Letter] (e.g., SC-2B, QC-1A). Stage 0 is cross-cutting."
+    },
+    "track_code": {
+      "type": "string",
+      "enum": ["QC", "RC", "SC", "AC", "GC"],
+      "description": "Control track code: QC=Quality, RC=Risk, SC=Security, AC=AI, GC=Governance"
+    },
+    "stage_number": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6,
+      "description": "Stage number: 0=cross-cutting, 1-6=specific stages"
+    },
+    "stage_name": {
+      "type": "string",
+      "enum": [
+        "Intent Ingestion",
+        "System Design",
+        "Coding & Implementation",
+        "Testing & Documentation",
+        "Deployment & Release",
+        "Observability & Maintenance"
+      ],
+      "description": "Stage name matching stage number"
+    },
+    "role_code": {
+      "type": "string",
+      "enum": ["REQ", "AGT", "PO", "RO", "SA", "AGL", "LAD", "DEV", "QA", "REL", "OPS", "CO"],
+      "description": "Actor role code (REQ=Requester, AGT=Agent, PO=Product Owner, etc.)"
+    },
+    "delegation_pattern": {
+      "type": "string",
+      "enum": [
+        "fully_automated",
+        "automated_policy_enforced",
+        "automated_with_human_escalation",
+        "agent_drafts_human_approves",
+        "agent_analyses_human_resolves",
+        "agent_executes_human_reviews",
+        "agent_classifies_human_validates",
+        "agent_proposes_human_confirms",
+        "agent_calculates_human_decides",
+        "agent_validates_human_approves",
+        "agent_monitors_human_reports",
+        "agent_creates_human_reviews",
+        "agent_logs_human_reviews",
+        "agent_compiles_human_approves",
+        "agent_checks_human_approves",
+        "human_required"
+      ],
+      "description": "How control execution is delegated between agent and human"
+    },
+    "automation_frequency": {
+      "type": "string",
+      "enum": [
+        "per_change",
+        "per_release",
+        "continuous",
+        "scheduled",
+        "on_demand",
+        "event_triggered",
+        "per_stage_entry",
+        "per_session",
+        "per_model_change"
+      ],
+      "description": "How often a control is executed"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Issue or finding severity level"
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Risk classification level"
+    },
+    "iso_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO 8601 date string (YYYY-MM-DD)"
+    },
+    "artifact_envelope": {
+      "type": "object",
+      "required": ["feat_id", "stage", "control"],
+      "properties": {
+        "feat_id": {
+          "type": "string",
+          "pattern": "^FEAT-[0-9]{4}$",
+          "description": "Feature identifier (FEAT-XXXX)"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_number"
+        },
+        "control": {
+          "$ref": "#/$defs/control_id"
+        },
+        "immutable": {
+          "type": "boolean",
+          "description": "Whether this artifact should not be edited after creation"
+        }
+      },
+      "description": "Common header shared by all artifact output templates"
+    },
+    "feedback_path_id": {
+      "type": "string",
+      "enum": ["path_a", "path_b"],
+      "description": "Feedback loop path: path_a=quick fix to Stage 3, path_b=full re-entry to Stage 1"
+    },
+    "feedback_step_id": {
+      "type": "string",
+      "pattern": "^FL\\.[0-9][AB]?$",
+      "description": "Feedback loop step ID (FL.1, FL.2A, FL.2B, FL.3)"
+    }
+  }
+}

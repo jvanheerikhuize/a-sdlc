@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/tasks.schema.json",
+  "title": "Task Navigation Schema",
+  "description": "Validates tasks.yaml — task-to-control mapping for agent navigation",
+  "type": "object",
+  "required": ["version", "description", "tasks"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version (e.g., 1.0.0)"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Purpose of this task navigation index"
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Array of task definitions",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "stage", "description", "controls", "entry_file"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "Task identifier (lowercase, hyphenated)"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable task name"
+          },
+          "stage": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number",
+            "description": "Which stage(s) this task applies to (0=cross-cutting, 1-6=specific)"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What this task accomplishes"
+          },
+          "controls": {
+            "type": "array",
+            "description": "Controls required for this task (can be empty for cross-cutting tasks)",
+            "items": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+            }
+          },
+          "entry_file": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Path to context file with task instructions (e.g., context/stage-01-*.md)"
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional: clarification or special instructions for this task"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

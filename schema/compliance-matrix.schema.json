@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/compliance-matrix.schema.json",
+  "title": "Regulatory Compliance Matrix Schema",
+  "description": "Validates regulatory/compliance-matrix.yaml — mapping of A-SDLC controls to regulatory framework articles",
+  "type": "object",
+  "required": ["compliance_matrix"],
+  "properties": {
+    "compliance_matrix": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Compliance mappings by regulatory framework",
+      "properties": {
+        "dora": {
+          "$ref": "#/$defs/framework_mapping"
+        },
+        "eu_ai_act": {
+          "$ref": "#/$defs/framework_mapping"
+        }
+      },
+      "additionalProperties": false
+    },
+    "coverage_summary": {
+      "type": "object",
+      "description": "Optional: summary of coverage statistics",
+      "properties": {
+        "total_controls": {
+          "type": "integer"
+        },
+        "coverage_by_track": {
+          "type": "object"
+        }
+      }
+    },
+    "regulatory_areas": {
+      "type": "array",
+      "description": "Optional: regulatory areas and their control mappings",
+      "items": {
+        "type": "object",
+        "required": ["area"],
+        "properties": {
+          "area": {
+            "type": "string"
+          },
+          "dora_articles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "eu_ai_act": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "controls": {
+            "type": "array",
+            "items": {
+              "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "framework_mapping": {
+      "type": "object",
+      "required": ["framework_name", "effective_date", "articles"],
+      "properties": {
+        "framework_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_date": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "articles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["article", "title", "controls", "coverage"],
+            "properties": {
+              "article": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Article identifier (e.g., Art. 8, Art. 8(5))"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "string"
+              },
+              "controls": {
+                "type": "array",
+                "description": "A-SDLC controls addressing this article",
+                "items": {
+                  "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+                }
+              },
+              "coverage": {
+                "type": "string",
+                "pattern": "^(Strong|Partial).*",
+                "description": "Coverage level: 'Strong - description' or 'Partial - description'"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/doc-generation.schema.json",
+  "title": "Documentation Generation Configuration Schema",
+  "description": "Validates manifest/catalog.yaml — documentation generation orchestration",
+  "type": "object",
+  "required": ["doc_generation", "metadata"],
+  "properties": {
+    "doc_generation": {
+      "type": "object",
+      "required": ["templates_dir", "generator_script", "targets"],
+      "properties": {
+        "templates_dir": {
+          "type": "string",
+          "description": "Directory containing Jinja2 templates"
+        },
+        "generator_script": {
+          "type": "string",
+          "description": "Path to documentation generation script"
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Documentation generation targets",
+          "items": {
+            "type": "object",
+            "required": ["source", "template", "output", "description"],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source YAML file or directory"
+              },
+              "template": {
+                "type": "string",
+                "enum": [
+                  "framework-overview",
+                  "agents",
+                  "stage-readme",
+                  "stages-overview",
+                  "controls-index",
+                  "regulatory-index",
+                  "feedback-loops-guide",
+                  "stage-context-bundle"
+                ],
+                "description": "Jinja2 template name (without .jinja2 extension)"
+              },
+              "output": {
+                "type": "string",
+                "description": "Output file path (relative to repo root)"
+              },
+              "description": {
+                "type": "string",
+                "description": "What this target generates"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "controls": {
+      "type": "array",
+      "description": "Optional: cross-cutting controls referenced in catalog",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "track"],
+        "properties": {
+          "id": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "track": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/track_code"
+          },
+          "stage": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "description": "Optional: control track definitions",
+      "items": {
+        "type": "object",
+        "required": ["code", "name"],
+        "properties": {
+          "code": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/track_code"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "control_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "regulatory": {
+      "type": "object",
+      "description": "Optional: regulatory framework summary",
+      "properties": {
+        "dora": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "articles": {
+              "type": "integer"
+            },
+            "controls_mapped": {
+              "type": "integer"
+            }
+          }
+        },
+        "eu_ai_act": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "articles": {
+              "type": "integer"
+            },
+            "controls_mapped": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "schemas": {
+      "type": "object",
+      "description": "Optional: schema file references",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["created", "last_updated", "status"],
+      "properties": {
+        "created": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "last_updated": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "review", "approved"],
+          "description": "Catalog status"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "review_cycle_months": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

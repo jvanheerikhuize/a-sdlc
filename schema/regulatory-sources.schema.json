@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/regulatory-sources.schema.json",
+  "title": "Regulatory Framework Sources Schema",
+  "description": "Validates regulatory/sources.yaml — authoritative texts and obligation summaries for regulatory frameworks",
+  "type": "object",
+  "minProperties": 1,
+  "description": "At least one regulatory framework (dora or eu_ai_act) must be present",
+  "properties": {
+    "dora": {
+      "$ref": "#/$defs/regulatory_framework"
+    },
+    "eu_ai_act": {
+      "$ref": "#/$defs/regulatory_framework"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "regulatory_framework": {
+      "type": "object",
+      "required": ["name", "regulation", "articles"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Framework name"
+        },
+        "regulation": {
+          "type": "string",
+          "description": "Official regulation reference (e.g., Regulation (EU) 2022/2554)"
+        },
+        "celex": {
+          "type": "string",
+          "description": "CELEX number for EU legislation"
+        },
+        "oj_reference": {
+          "type": "string",
+          "description": "Official Journal reference"
+        },
+        "date_adopted": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "date_published": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "effective_date": {
+          "$ref": "https://asdlc/schema/common.schema.json#/$defs/iso_date"
+        },
+        "scope": {
+          "type": "string",
+          "description": "Scope of the regulation"
+        },
+        "official_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "reference_site": {
+          "type": "string",
+          "format": "uri"
+        },
+        "wikipedia": {
+          "type": "string",
+          "format": "uri"
+        },
+        "structure": {
+          "type": "object",
+          "properties": {
+            "chapters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["number", "title"],
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "description": "Chapter number (Roman numeral or integer)"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "articles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "paragraph_summary"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Article identifier (e.g., Art. 5, Art. 8(6))"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paragraph_summary": {
+                "type": "object",
+                "description": "Article content by paragraph (string-keyed: '1', '2', '3', etc.)",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "controls_mapped": {
+                "type": "array",
+                "description": "A-SDLC controls addressing this article",
+                "items": {
+                  "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "annexes": {
+          "type": "array",
+          "description": "Optional: regulation annexes (e.g., EU AI Act Annexes I-III)",
+          "items": {
+            "type": "object",
+            "required": ["id", "title"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Annex identifier (e.g., Annex I)"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "controls_mapped": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/registry.schema.json",
+  "title": "Control Registry Schema",
+  "description": "Validates controls/registry.yaml — the master index of all 51 A-SDLC controls",
+  "type": "object",
+  "required": ["registry"],
+  "properties": {
+    "registry": {
+      "type": "array",
+      "minItems": 51,
+      "maxItems": 51,
+      "description": "Array of all 51 controls in the framework",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "stage", "stage_name", "track", "delegation", "file", "owner_team"],
+        "properties": {
+          "id": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/control_id",
+            "description": "Unique control identifier"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable control name"
+          },
+          "stage": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_number",
+            "description": "Stage where this control is required (0=cross-cutting)"
+          },
+          "stage_name": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/stage_name",
+            "description": "Stage name (must match stage number)"
+          },
+          "track": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/track_code",
+            "description": "Control track"
+          },
+          "delegation": {
+            "$ref": "https://asdlc/schema/common.schema.json#/$defs/delegation_pattern",
+            "description": "How this control is delegated between agent and human"
+          },
+          "file": {
+            "type": "string",
+            "pattern": "^controls/[a-z]{2}/[A-Z]{2}-[0-9][A-Z]?\\.yaml$",
+            "description": "Path to control YAML file (relative to repo root)"
+          },
+          "owner_team": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Team responsible for this control"
+          },
+          "directive_payload": {
+            "type": "string",
+            "description": "Optional: path to directive payload file (only for SC-0D)"
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional: additional notes about this control"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -479,6 +479,171 @@ def check_feedback_loops(checker, registry_ids: list) -> None:
 
 # ── section 7: stage structure ────────────────────────────────────────────────
 
+def _validate_with_refs(data, schema, schema_path):
+    """Validate data against schema, resolving $refs to common.schema.json."""
+    try:
+        # Load common schema for reference resolution
+        common_schema = load_json_safe(SCHEMA_DIR / "common.schema.json")
+        if common_schema is None:
+            raise ValueError("common.schema.json failed to load")
+
+        # Define handler for asdlc:// URIs to point to local files
+        def asdlc_handler(uri):
+            # URI looks like: https://asdlc/schema/common.schema.json
+            filename = uri.split("/")[-1]
+            common_file = SCHEMA_DIR / filename
+            loaded = load_json_safe(common_file)
+            if loaded is None:
+                raise ValueError(f"Failed to load {filename}")
+            return loaded
+
+        # Create resolver with custom handler
+        resolver = jsonschema.RefResolver(
+            f"file://{schema_path}",
+            schema,
+            handlers={"https": asdlc_handler}
+        )
+
+        # Validate using the resolver
+        validator = jsonschema.Draft202012Validator(schema, resolver=resolver)
+        validator.validate(data)
+        return True, None
+    except jsonschema.ValidationError as e:
+        return False, f"Schema validation: {e.message}"
+    except Exception as e:
+        return False, f"Validation error: {str(e)}"
+
+
+def check_infrastructure_files(checker) -> None:
+    """Check 8/10: Validate infrastructure YAML files against their schemas."""
+    checker.section("8/10  Infrastructure files — asdlc.yaml, registry.yaml, tasks.yaml, catalog.yaml")
+
+    if not HAS_JSONSCHEMA:
+        checker.warn("jsonschema not installed — infrastructure schema validation skipped")
+        return
+
+    infrastructure_files = [
+        (REPO / "asdlc.yaml", "framework.schema.json"),
+        (REPO / "controls" / "registry.yaml", "registry.schema.json"),
+        (REPO / "tasks.yaml", "tasks.schema.json"),
+        (REPO / "manifest" / "catalog.yaml", "doc-generation.schema.json"),
+    ]
+
+    for filepath, schema_name in infrastructure_files:
+        if not filepath.exists():
+            checker.warn(f"{rel(filepath)}: file not found")
+            continue
+
+        schema_path = SCHEMA_DIR / schema_name
+        if not schema_path.exists():
+            checker.warn(f"{schema_name}: schema not found")
+            continue
+
+        try:
+            data = load_yaml_safe(filepath)
+            schema = load_json_safe(schema_path)
+            if data is None or schema is None:
+                checker.warn(f"{rel(filepath)}: failed to load (invalid YAML/JSON)")
+                continue
+
+            valid, error = _validate_with_refs(data, schema, schema_path)
+            if valid:
+                checker.ok(f"{rel(filepath)}: schema valid")
+            else:
+                checker.fail(f"{rel(filepath)}: {error}")
+        except Exception as e:
+            checker.fail(f"{rel(filepath)}: validation error — {str(e)}")
+
+
+def check_regulatory_files(checker) -> None:
+    """Check 9/10: Validate regulatory YAML files against their schemas."""
+    checker.section("9/10  Regulatory files — compliance-matrix.yaml, sources.yaml")
+
+    if not HAS_JSONSCHEMA:
+        checker.warn("jsonschema not installed — regulatory schema validation skipped")
+        return
+
+    regulatory_files = [
+        (REPO / "regulatory" / "compliance-matrix.yaml", "compliance-matrix.schema.json"),
+        (REPO / "regulatory" / "sources.yaml", "regulatory-sources.schema.json"),
+    ]
+
+    for filepath, schema_name in regulatory_files:
+        if not filepath.exists():
+            checker.warn(f"{rel(filepath)}: file not found")
+            continue
+
+        schema_path = SCHEMA_DIR / schema_name
+        if not schema_path.exists():
+            checker.warn(f"{schema_name}: schema not found")
+            continue
+
+        try:
+            data = load_yaml_safe(filepath)
+            schema = load_json_safe(schema_path)
+            if data is None or schema is None:
+                checker.warn(f"{rel(filepath)}: failed to load (invalid YAML/JSON)")
+                continue
+
+            valid, error = _validate_with_refs(data, schema, schema_path)
+            if valid:
+                checker.ok(f"{rel(filepath)}: schema valid")
+            else:
+                checker.fail(f"{rel(filepath)}: {error}")
+        except Exception as e:
+            checker.fail(f"{rel(filepath)}: validation error — {str(e)}")
+
+
+def check_artifact_templates(checker) -> None:
+    """Check 10/10: Validate artifact output templates against artifact schema."""
+    checker.section("10/10  Artifact templates — stages/*/artifacts/outputs/*.yaml")
+
+    if not HAS_JSONSCHEMA:
+        checker.warn("jsonschema not installed — artifact schema validation skipped")
+        return
+
+    schema_path = SCHEMA_DIR / "artifact.schema.json"
+    if not schema_path.exists():
+        checker.warn("artifact.schema.json: schema not found")
+        return
+
+    try:
+        schema = load_json_safe(schema_path)
+        if schema is None:
+            checker.warn("artifact.schema.json: failed to load (invalid JSON)")
+            return
+    except Exception as e:
+        checker.fail(f"artifact.schema.json: error loading schema — {str(e)}")
+        return
+
+    # Validate all artifact templates in all stages
+    artifact_files = list(STAGES_DIR.glob("*/artifacts/outputs/*.yaml"))
+    if not artifact_files:
+        checker.warn("No artifact templates found in stages/*/artifacts/outputs/")
+        return
+
+    valid_count = 0
+    for filepath in sorted(artifact_files):
+        try:
+            data = load_yaml_safe(filepath)
+            if data is None:
+                checker.warn(f"{rel(filepath)}: failed to load (invalid YAML)")
+                continue
+
+            valid, error = _validate_with_refs(data, schema, schema_path)
+            if valid:
+                valid_count += 1
+            else:
+                checker.fail(f"{rel(filepath)}: {error}")
+        except Exception as e:
+            checker.fail(f"{rel(filepath)}: validation error — {str(e)}")
+
+    if valid_count == len(artifact_files):
+        checker.ok(f"All {len(artifact_files)} artifact templates are valid")
+    else:
+        checker.ok(f"{valid_count}/{len(artifact_files)} artifact templates are valid")
+
+
 def check_stage_structure(checker) -> None:
     checker.section("7/7  Stage directory structure — README + process.md presence")
 
@@ -548,6 +713,9 @@ def main():
     if not args.no_schema:
         check_directive_files(checker)
         check_stage_files(checker, registry_ids)
+        check_infrastructure_files(checker)
+        check_regulatory_files(checker)
+        check_artifact_templates(checker)
 
     if not args.no_xref:
         check_control_dependencies(checker, registry_ids)
