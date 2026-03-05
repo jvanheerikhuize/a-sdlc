@@ -1,0 +1,58 @@
+# SC-3E Container & IaC Security Report
+# Produced by: SC-3E (Container & IaC Security Scanning)
+#
+# Security scanning results for container images and Infrastructure-as-Code configurations.
+# Validates container image integrity, base image vulnerabilities, and IaC misconfigurations.
+
+metadata:
+  control: SC-3E
+  stage: 3
+  timestamp: null
+
+container_scanning:
+  image_name: null
+  image_digest: null
+  scan_tool: null
+  scan_timestamp: null
+
+  base_image_analysis:
+    base_image: null
+    base_image_vulnerabilities: []
+    recommendation: null
+
+  layers_analysis:
+    - layer_index: 0
+      vulnerabilities: []
+
+  vulnerabilities_summary:
+    critical: []
+    high: []
+    medium: []
+    low: []
+
+iac_scanning:
+  files_scanned: []
+
+  misconfigurations:
+    - file: null
+      line_number: null
+      rule: null
+      severity: null  # critical, high, medium, low
+      remediation: null
+
+  compliance_frameworks:
+    - framework: null  # CIS, NIST, etc.
+      passed_checks: 0
+      failed_checks: 0
+      notes: null
+
+remediation_status:
+  critical_issues_resolved: true
+  high_issues_resolved: false
+  outstanding_issues: []
+  exception_approvals: []
+
+notes: |
+  This report covers both container image scanning and Infrastructure-as-Code (IaC) validation.
+  All critical and high-severity issues must be remediated before Stage 4.
+  Base image updates and layer vulnerabilities are tracked separately.

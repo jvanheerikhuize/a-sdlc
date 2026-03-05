@@ -313,7 +313,7 @@ Maximum concurrent controls: **6**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../05-deployment-release/artifacts/outputs/deployment-integrity-record.yaml`](../05-deployment-release/artifacts/outputs/deployment-integrity-record.yaml)
+- [`../05-deployment-release/artifacts/outputs/SC-5B-deployment-integrity-record.yaml`](../05-deployment-release/artifacts/outputs/SC-5B-deployment-integrity-record.yaml)
 
 ---
 
@@ -321,11 +321,12 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/slo-monitoring-record.yaml`](artifacts/outputs/slo-monitoring-record.yaml)
-- [`artifacts/outputs/risk-health-monitoring-record.yaml`](artifacts/outputs/risk-health-monitoring-record.yaml)
-- [`artifacts/outputs/incident-detection-record.yaml`](artifacts/outputs/incident-detection-record.yaml)
-- [`artifacts/outputs/anomaly-detection-record.yaml`](artifacts/outputs/anomaly-detection-record.yaml)
-- [`artifacts/outputs/ai-surveillance-report.yaml`](artifacts/outputs/ai-surveillance-report.yaml)
+- [`artifacts/outputs/QC-6A-slo-monitoring-record.yaml`](artifacts/outputs/QC-6A-slo-monitoring-record.yaml)
+- [`artifacts/outputs/RC-6A-risk-health-monitoring-record.yaml`](artifacts/outputs/RC-6A-risk-health-monitoring-record.yaml)
+- [`artifacts/outputs/SC-6A-incident-detection-record.yaml`](artifacts/outputs/SC-6A-incident-detection-record.yaml)
+- [`artifacts/outputs/SC-6B-anomaly-detection-record.yaml`](artifacts/outputs/SC-6B-anomaly-detection-record.yaml)
+- [`artifacts/outputs/AC-6A-ai-surveillance-report.yaml`](artifacts/outputs/AC-6A-ai-surveillance-report.yaml)
+- [`artifacts/outputs/RC-6B-third-party-risk-monitoring.yaml`](artifacts/outputs/RC-6B-third-party-risk-monitoring.yaml)
 
 ---
 
@@ -350,4 +351,4 @@ For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](..
 ---
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

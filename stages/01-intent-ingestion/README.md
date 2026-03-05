@@ -319,14 +319,15 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/feature-spec.yaml`](artifacts/outputs/feature-spec.yaml)
-- [`artifacts/outputs/conflict-resolution-record.yaml`](artifacts/outputs/conflict-resolution-record.yaml)
-- [`artifacts/outputs/risk-classification.yaml`](artifacts/outputs/risk-classification.yaml)
-- [`artifacts/outputs/ai-tier-classification.yaml`](artifacts/outputs/ai-tier-classification.yaml)
-- [`artifacts/outputs/intent-audit-record.yaml`](artifacts/outputs/intent-audit-record.yaml)
+- [`artifacts/outputs/QC-1A-feature-spec.yaml`](artifacts/outputs/QC-1A-feature-spec.yaml)
+- [`artifacts/outputs/QC-1B-conflict-resolution-record.yaml`](artifacts/outputs/QC-1B-conflict-resolution-record.yaml)
+- [`artifacts/outputs/RC-1A-risk-classification.yaml`](artifacts/outputs/RC-1A-risk-classification.yaml)
+- [`artifacts/outputs/AC-1A-ai-tier-classification.yaml`](artifacts/outputs/AC-1A-ai-tier-classification.yaml)
+- [`artifacts/outputs/SC-1B-data-classification-record.yaml`](artifacts/outputs/SC-1B-data-classification-record.yaml)
+- [`artifacts/outputs/GC-1A-intent-audit-record.yaml`](artifacts/outputs/GC-1A-intent-audit-record.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

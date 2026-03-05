@@ -385,8 +385,8 @@ Maximum concurrent controls: **6**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../02-system-design/artifacts/outputs/design-document.yaml`](../02-system-design/artifacts/outputs/design-document.yaml)
-- [`../02-system-design/artifacts/outputs/directive-injection-confirmation.yaml`](../02-system-design/artifacts/outputs/directive-injection-confirmation.yaml)
+- [`../02-system-design/artifacts/outputs/QC-2A-design-document.yaml`](../02-system-design/artifacts/outputs/QC-2A-design-document.yaml)
+- [`../02-system-design/artifacts/outputs/SC-2B-directive-injection-confirmation.yaml`](../02-system-design/artifacts/outputs/SC-2B-directive-injection-confirmation.yaml)
 
 ---
 
@@ -394,15 +394,18 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/permission-enforcement-log.yaml`](artifacts/outputs/permission-enforcement-log.yaml)
-- [`artifacts/outputs/quality-gate-report.yaml`](artifacts/outputs/quality-gate-report.yaml)
-- [`artifacts/outputs/decision-log.yaml`](artifacts/outputs/decision-log.yaml)
-- [`artifacts/outputs/post-guardrail-scan.yaml`](artifacts/outputs/post-guardrail-scan.yaml)
-- [`artifacts/outputs/secrets-scan-report.yaml`](artifacts/outputs/secrets-scan-report.yaml)
-- [`artifacts/outputs/pull-request-record.yaml`](artifacts/outputs/pull-request-record.yaml)
+- [`artifacts/outputs/QC-3A-pull-request-record.yaml`](artifacts/outputs/QC-3A-pull-request-record.yaml)
+- [`artifacts/outputs/QC-3B-quality-gate-report.yaml`](artifacts/outputs/QC-3B-quality-gate-report.yaml)
+- [`artifacts/outputs/SC-3A-permission-enforcement-log.yaml`](artifacts/outputs/SC-3A-permission-enforcement-log.yaml)
+- [`artifacts/outputs/SC-3B-post-guardrail-scan.yaml`](artifacts/outputs/SC-3B-post-guardrail-scan.yaml)
+- [`artifacts/outputs/SC-3C-secrets-scan-report.yaml`](artifacts/outputs/SC-3C-secrets-scan-report.yaml)
+- [`artifacts/outputs/RC-3A-decision-log.yaml`](artifacts/outputs/RC-3A-decision-log.yaml)
+- [`artifacts/outputs/SC-3D-sca-report.yaml`](artifacts/outputs/SC-3D-sca-report.yaml)
+- [`artifacts/outputs/SC-3E-container-iac-security-report.yaml`](artifacts/outputs/SC-3E-container-iac-security-report.yaml)
+- [`artifacts/outputs/GC-3A-code-provenance-record.yaml`](artifacts/outputs/GC-3A-code-provenance-record.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

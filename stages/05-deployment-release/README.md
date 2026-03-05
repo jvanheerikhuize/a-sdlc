@@ -316,8 +316,8 @@ Maximum concurrent controls: **3**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../04-testing-documentation/artifacts/outputs/risk-threshold-evaluation.yaml`](../04-testing-documentation/artifacts/outputs/risk-threshold-evaluation.yaml)
-- [`../03-coding-implementation/artifacts/outputs/pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/pull-request-record.yaml)
+- [`../04-testing-documentation/artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml`](../04-testing-documentation/artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml)
+- [`../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml)
 
 ---
 
@@ -325,14 +325,15 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/release-readiness-checklist.yaml`](artifacts/outputs/release-readiness-checklist.yaml)
-- [`artifacts/outputs/change-approval-record.yaml`](artifacts/outputs/change-approval-record.yaml)
-- [`artifacts/outputs/rollback-plan.yaml`](artifacts/outputs/rollback-plan.yaml)
-- [`artifacts/outputs/infrastructure-security-report.yaml`](artifacts/outputs/infrastructure-security-report.yaml)
-- [`artifacts/outputs/deployment-integrity-record.yaml`](artifacts/outputs/deployment-integrity-record.yaml)
+- [`artifacts/outputs/QC-5A-release-readiness-checklist.yaml`](artifacts/outputs/QC-5A-release-readiness-checklist.yaml)
+- [`artifacts/outputs/RC-5A-change-approval-record.yaml`](artifacts/outputs/RC-5A-change-approval-record.yaml)
+- [`artifacts/outputs/RC-5B-rollback-plan.yaml`](artifacts/outputs/RC-5B-rollback-plan.yaml)
+- [`artifacts/outputs/SC-5A-infrastructure-security-report.yaml`](artifacts/outputs/SC-5A-infrastructure-security-report.yaml)
+- [`artifacts/outputs/SC-5B-deployment-integrity-record.yaml`](artifacts/outputs/SC-5B-deployment-integrity-record.yaml)
+- [`artifacts/outputs/SC-5C-secrets-management-report.yaml`](artifacts/outputs/SC-5C-secrets-management-report.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

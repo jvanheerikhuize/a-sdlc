@@ -378,7 +378,8 @@ Maximum concurrent controls: **5**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../01-intent-ingestion/artifacts/outputs/feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/feature-spec.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/RC-1A-risk-classification.yaml`](../01-intent-ingestion/artifacts/outputs/RC-1A-risk-classification.yaml)
 
 ---
 
@@ -386,11 +387,14 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/design-document.yaml`](artifacts/outputs/design-document.yaml)
-- [`artifacts/outputs/stride-threat-model.yaml`](artifacts/outputs/stride-threat-model.yaml)
-- [`artifacts/outputs/design-approval-decision.yaml`](artifacts/outputs/design-approval-decision.yaml)
-- [`artifacts/outputs/directive-injection-confirmation.yaml`](artifacts/outputs/directive-injection-confirmation.yaml)
-- [`artifacts/outputs/ai-component-design-review.yaml`](artifacts/outputs/ai-component-design-review.yaml)
+- [`artifacts/outputs/QC-2A-design-document.yaml`](artifacts/outputs/QC-2A-design-document.yaml)
+- [`artifacts/outputs/SC-2A-stride-threat-model.yaml`](artifacts/outputs/SC-2A-stride-threat-model.yaml)
+- [`artifacts/outputs/RC-2A-design-approval-decision.yaml`](artifacts/outputs/RC-2A-design-approval-decision.yaml)
+- [`artifacts/outputs/SC-2B-directive-injection-confirmation.yaml`](artifacts/outputs/SC-2B-directive-injection-confirmation.yaml)
+- [`artifacts/outputs/AC-2A-ai-component-design-review.yaml`](artifacts/outputs/AC-2A-ai-component-design-review.yaml)
+- [`artifacts/outputs/RC-2B-privacy-impact-assessment.yaml`](artifacts/outputs/RC-2B-privacy-impact-assessment.yaml)
+- [`artifacts/outputs/SC-2C-zero-trust-validation.yaml`](artifacts/outputs/SC-2C-zero-trust-validation.yaml)
+- [`artifacts/outputs/AC-2B-ai-model-governance-record.yaml`](artifacts/outputs/AC-2B-ai-model-governance-record.yaml)
 
 ---
 
@@ -406,4 +410,4 @@ The following directives are injected at the entry to this stage:
 
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

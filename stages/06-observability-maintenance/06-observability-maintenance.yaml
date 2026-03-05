@@ -255,10 +255,11 @@ exit_criteria:
 next_stage: null
 artifacts:
   inputs:
-    - ../05-deployment-release/artifacts/outputs/deployment-integrity-record.yaml
+    - ../05-deployment-release/artifacts/outputs/SC-5B-deployment-integrity-record.yaml
   outputs:
-    - artifacts/outputs/slo-monitoring-record.yaml
-    - artifacts/outputs/risk-health-monitoring-record.yaml
-    - artifacts/outputs/incident-detection-record.yaml
-    - artifacts/outputs/anomaly-detection-record.yaml
-    - artifacts/outputs/ai-surveillance-report.yaml
+    - artifacts/outputs/QC-6A-slo-monitoring-record.yaml
+    - artifacts/outputs/RC-6A-risk-health-monitoring-record.yaml
+    - artifacts/outputs/SC-6A-incident-detection-record.yaml
+    - artifacts/outputs/SC-6B-anomaly-detection-record.yaml
+    - artifacts/outputs/AC-6A-ai-surveillance-report.yaml
+    - artifacts/outputs/RC-6B-third-party-risk-monitoring.yaml

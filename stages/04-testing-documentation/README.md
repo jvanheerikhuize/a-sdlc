@@ -383,9 +383,9 @@ Maximum concurrent controls: **7**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../01-intent-ingestion/artifacts/outputs/feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/feature-spec.yaml)
-- [`../01-intent-ingestion/artifacts/outputs/ai-tier-classification.yaml`](../01-intent-ingestion/artifacts/outputs/ai-tier-classification.yaml)
-- [`../03-coding-implementation/artifacts/outputs/pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/pull-request-record.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/AC-1A-ai-tier-classification.yaml`](../01-intent-ingestion/artifacts/outputs/AC-1A-ai-tier-classification.yaml)
+- [`../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml)
 
 ---
 
@@ -393,16 +393,18 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/test-results-report.yaml`](artifacts/outputs/test-results-report.yaml)
-- [`artifacts/outputs/sast-scan-report.yaml`](artifacts/outputs/sast-scan-report.yaml)
-- [`artifacts/outputs/dast-scan-report.yaml`](artifacts/outputs/dast-scan-report.yaml)
-- [`artifacts/outputs/documentation-completeness-report.yaml`](artifacts/outputs/documentation-completeness-report.yaml)
-- [`artifacts/outputs/ai-output-validation-report.yaml`](artifacts/outputs/ai-output-validation-report.yaml)
-- [`artifacts/outputs/bias-fairness-report.yaml`](artifacts/outputs/bias-fairness-report.yaml)
-- [`artifacts/outputs/risk-threshold-evaluation.yaml`](artifacts/outputs/risk-threshold-evaluation.yaml)
+- [`artifacts/outputs/QC-4A-test-results-report.yaml`](artifacts/outputs/QC-4A-test-results-report.yaml)
+- [`artifacts/outputs/SC-4A-sast-scan-report.yaml`](artifacts/outputs/SC-4A-sast-scan-report.yaml)
+- [`artifacts/outputs/SC-4B-dast-scan-report.yaml`](artifacts/outputs/SC-4B-dast-scan-report.yaml)
+- [`artifacts/outputs/QC-4C-documentation-completeness-report.yaml`](artifacts/outputs/QC-4C-documentation-completeness-report.yaml)
+- [`artifacts/outputs/QC-4B-ai-output-validation-report.yaml`](artifacts/outputs/QC-4B-ai-output-validation-report.yaml)
+- [`artifacts/outputs/AC-4A-bias-fairness-report.yaml`](artifacts/outputs/AC-4A-bias-fairness-report.yaml)
+- [`artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml`](artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml)
+- [`artifacts/outputs/SC-4C-api-security-report.yaml`](artifacts/outputs/SC-4C-api-security-report.yaml)
+- [`artifacts/outputs/SC-4D-adversarial-robustness-report.yaml`](artifacts/outputs/SC-4D-adversarial-robustness-report.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-05 20:22 UTC
+**Last Updated:** 2026-03-05 20:32 UTC

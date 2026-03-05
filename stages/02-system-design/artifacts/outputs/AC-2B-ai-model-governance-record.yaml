@@ -1,0 +1,46 @@
+# AC-2B AI Model Governance Record
+# Produced by: AC-2B (AI Model Governance & GPAI Mapping)
+#
+# Documents AI model governance decisions, GPAI provider mappings, and compliance with AI Act.
+
+metadata:
+  control: AC-2B
+  stage: 2
+  timestamp: null
+
+ai_components_identified: []
+
+for_each_ai_component:
+  - model_id: null
+    model_name: null
+    model_provider: null
+    is_gpai: false  # General Purpose AI model
+    ai_act_high_risk: false
+    purpose: null
+    training_data_source: null
+
+gpai_obligations:
+  - model: null
+    gpai_provider: null
+    disclosure_obligation: false  # Art. 6(2)
+    systemic_risk_obligation: false  # Art. 58
+    enforcement_authority: null
+    notification_required: false
+
+high_risk_ai_classification:
+  - model: null
+    risk_tier: null  # Prohibited, High-risk, Limited-risk, Minimal-risk
+    required_controls: []
+    documentation_references: []
+
+governance_framework:
+  model_registry_location: null
+  version_control_system: null
+  approval_authority: null
+  retraining_triggers: []
+  monitoring_strategy: null
+
+notes: |
+  This record is required when the design includes AI components.
+  GPAI obligations apply to general-purpose AI models used in the system.
+  High-risk AI requires additional governance controls and documentation.

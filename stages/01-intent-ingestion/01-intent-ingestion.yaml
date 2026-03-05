@@ -191,8 +191,9 @@ artifacts:
   inputs:
     - artifacts/inputs/change-request.yaml
   outputs:
-    - artifacts/outputs/feature-spec.yaml
-    - artifacts/outputs/conflict-resolution-record.yaml
-    - artifacts/outputs/risk-classification.yaml
-    - artifacts/outputs/ai-tier-classification.yaml
-    - artifacts/outputs/intent-audit-record.yaml
+    - artifacts/outputs/QC-1A-feature-spec.yaml
+    - artifacts/outputs/QC-1B-conflict-resolution-record.yaml
+    - artifacts/outputs/RC-1A-risk-classification.yaml
+    - artifacts/outputs/AC-1A-ai-tier-classification.yaml
+    - artifacts/outputs/SC-1B-data-classification-record.yaml
+    - artifacts/outputs/GC-1A-intent-audit-record.yaml

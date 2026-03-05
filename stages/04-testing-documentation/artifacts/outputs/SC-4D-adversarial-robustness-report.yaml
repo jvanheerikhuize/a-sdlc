@@ -1,0 +1,46 @@
+# SC-4D Adversarial AI Robustness Report
+# Produced by: SC-4D (Adversarial AI Robustness Testing)
+#
+# Adversarial testing results for high-risk AI deployments.
+# Tests AI model robustness against adversarial inputs and attacks.
+# Conditional: only for high-risk or security-critical AI systems.
+
+metadata:
+  control: SC-4D
+  stage: 4
+  timestamp: null
+  applicable: false  # true if deployment includes high-risk AI
+
+ai_model:
+  model_name: null
+  model_version: null
+  risk_classification: null  # high-risk, moderate-risk, low-risk
+
+adversarial_test_results:
+  test_type: null  # perturbation, poisoning, evasion, etc.
+  test_count: 0
+  success_rate: null  # % of adversarial inputs that caused misclassification
+
+robustness_findings:
+  - attack_vector: null
+    severity: null  # critical, high, medium, low
+    description: null
+    impact: null
+    remediation: null
+
+model_confidence:
+  baseline_confidence: null  # % confidence on clean inputs
+  adversarial_confidence: null  # % confidence on adversarial inputs
+  confidence_drop: null  # percentage
+
+mitigation_strategies:
+  - strategy: null
+    effectiveness: null  # estimated % improvement
+    implementation_effort: null
+
+overall_assessment: null  # robust, requires-mitigation, not-robust
+
+notes: |
+  This testing is required for high-risk AI deployments per SC-4D.
+  If deployment does not include high-risk AI, mark applicable: false.
+  Robustness assessment informs risk acceptance decisions in RC-4A.

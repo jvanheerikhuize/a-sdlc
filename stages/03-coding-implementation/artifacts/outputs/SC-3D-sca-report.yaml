@@ -1,0 +1,47 @@
+# SC-3D SCA Report (Software Composition Analysis)
+# Produced by: SC-3D (SCA — Supply Chain & Dependency Security)
+#
+# Software Composition Analysis with SBOM (Software Bill of Materials).
+# Identifies all direct and transitive dependencies, licenses, and known vulnerabilities.
+
+metadata:
+  control: SC-3D
+  stage: 3
+  timestamp: null
+
+sbom:
+  format: cyclonedx  # or spdx
+  version: null
+  generated_timestamp: null
+
+dependencies:
+  - name: null
+    version: null
+    license: null
+    source: null  # npm, pip, maven, etc.
+    is_direct: true
+    vulnerabilities: []
+
+vulnerability_summary:
+  total_dependencies: 0
+  dependencies_with_cves: 0
+  critical_cves: []
+  high_severity_cves: []
+  medium_severity_cves: []
+  low_severity_cves: []
+
+license_compliance:
+  - dependency: null
+    license: null
+    license_type: null  # permissive, copyleft, proprietary
+    compliance_status: null  # approved, requires-review, denied
+    notes: null
+
+remediation:
+  required_updates: []
+  deferred_cves: []
+
+notes: |
+  This report is produced by automated SCA tools and reviewed during Stage 3 code review.
+  All critical and high-severity CVEs must be remediated before Stage 4.
+  License compliance is verified before merging.
