@@ -9,6 +9,26 @@ name: Observability & Maintenance
 description: Operate, monitor, and maintain the deployed system. Controls in this stage run continuously, not per-change.
   Escalations from Stage 6 controls may trigger feedback loops back into earlier stages for remediation.
 
+roles:
+  - code: AGT
+    name: Agent
+    responsibilities: Executes continuous monitoring; detects anomalies; classifies incidents; prepares regulatory reports; triggers alerts
+  - code: OPS
+    name: Operations / SRE
+    responsibilities: Activates monitoring at handover; responds to SLO and health alerts; initiates feedback loops for code changes
+  - code: SA
+    name: Security Architect
+    responsibilities: Responds to incident and anomaly escalations; approves DORA Art. 19 classification; investigates security events
+  - code: RO
+    name: Risk Officer
+    responsibilities: Responds to risk escalations from RC-6A; makes risk acceptance decisions; approves feedback loop triggers
+  - code: AGL
+    name: AI Governance Lead
+    responsibilities: Reviews AI post-market surveillance results; files serious AI incident reports per Art. 73
+  - code: CO
+    name: Compliance Officer
+    responsibilities: Reviews all regulatory incident reports; ensures DORA and AI Act reporting obligations are met
+
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # Stage 6 is continuous operational monitoring. Initial handover activates monitoring (implicit S1).
 # QC-6A, RC-6A, RC-6B, SC-6A, SC-6B, AC-6A all run continuously in parallel.
@@ -17,39 +37,157 @@ description: Operate, monitor, and maintain the deployed system. Controls in thi
 workflow:
   nodes:
     - id: n-handover
+      step_number: "6.1"
+      title: Activate Monitoring
       control: null
       description: System handover (handoff from Stage 5 - triggers all monitoring)
+      delegation: Fully automated
       depends_on: []
+      actors:
+        - role: OPS
+          action: Confirm Stage 5 deployment integrity record is present and status is verified
+        - role: AGT
+          action: Activate all monitoring profiles — SLO dashboards, health checks, SIEM rules, anomaly baselines
+        - role: AGT
+          action: Confirm all monitoring channels are emitting data; alert on any silent channel
+        - role: OPS
+          action: Confirm monitoring activation and enter hypercare window
+      input: "Deployment integrity record (Stage 5 SC-5B output)"
+      output: "Monitoring activation confirmed; all Stage 6 controls enter continuous operation"
+      on_failure: "If any monitoring channel fails to activate, do not leave Stage 5 hypercare. Resolve and retry"
     - id: n-qc6a
+      step_number: "6.2"
+      title: SLA/SLO Monitoring
       control: QC-6A
       description: SLA/SLO monitoring (continuous)
+      delegation: "Agent monitors, OPS responds"
       depends_on: [n-handover]
       frequency: continuous
+      actors:
+        - role: AGT
+          action: "Continuously measure all defined SLIs against SLOs: availability, latency, error rate, throughput"
+        - role: AGT
+          action: Compute error budget consumption rate; alert when burn rate exceeds defined thresholds
+        - role: OPS
+          action: Respond to burn rate alerts; make decisions on service degradation
+        - role: OPS
+          action: Initiate feedback loop if SLO degradation requires a code change
+      output: "SLO monitoring record (artifacts/outputs/slo-monitoring-record.yaml) — continuously updated"
+      note: "Runs continuously throughout the operational lifetime"
+      on_failure: "Immediate escalation to OPS; may trigger Path B (Quickfix → Stage 3) feedback loop"
     - id: n-rc6a
+      step_number: "6.3"
+      title: Risk & Health Monitoring
       control: RC-6A
       description: Risk and health monitoring (continuous)
+      delegation: "Automated with human escalation"
       depends_on: [n-handover]
       frequency: continuous
+      actors:
+        - role: AGT
+          action: Monitor configuration drift against approved baseline
+        - role: AGT
+          action: "Cross-reference SBOM against vulnerability databases; alert on new CVEs affecting dependencies"
+        - role: AGT
+          action: Monitor application health indicators, capacity trends, certificate expiry, dependency health
+        - role: RO
+          action: Respond to risk threshold escalations; make risk acceptance or remediation decisions
+        - role: RO
+          action: Initiate feedback loop if risk requires a code or configuration change
+      output: "Risk & health monitoring record (artifacts/outputs/risk-health-monitoring-record.yaml) — continuously updated"
+      note: "Runs continuously throughout the operational lifetime"
+      on_failure: "RO reviews; may trigger Path A (Autofix), Path B (Quickfix → Stage 3), or Path B (Feature → Stage 1)"
     - id: n-rc6b
+      step_number: "6.3-3rd-party"
+      title: Third-Party Risk Monitoring
       control: RC-6B
       description: Third-party continuous risk monitoring (continuous)
+      delegation: Fully automated
       depends_on: [n-handover]
       frequency: continuous
+      condition: "Applicable for AI component deployments — monitors third-party provider risk posture"
+      actors:
+        - role: AGT
+          action: Monitor third-party providers (cloud vendors, SaaS platforms) for compliance and security events
+        - role: AGT
+          action: Track provider security posture, incident reports, and compliance changes
+        - role: RO
+          action: Escalate if provider risk exceeds acceptable thresholds
+      output: "Third-party risk monitoring record (artifacts/outputs/third-party-risk-monitoring.yaml)"
+      note: "Continuous monitoring of external dependencies and providers"
     - id: n-sc6a
+      step_number: "6.4"
+      title: Incident Scanning & Detection
       control: SC-6A
       description: Incident scanning and detection (continuous, DORA Art. 17-19 reporting)
+      delegation: "Automated with human escalation"
       depends_on: [n-handover, n-sc6b]
       frequency: continuous
+      actors:
+        - role: AGT
+          action: Monitor SIEM continuously using MITRE ATT&CK detection patterns
+        - role: AGT
+          action: Detect and classify all security events per DORA Art. 18 taxonomy
+        - role: AGT
+          action: "For major incidents: start reporting timelines and prepare initial notification"
+        - role: SA
+          action: Validate incident classification; approve escalation decisions
+        - role: CO
+          action: Approve and submit regulatory incident reports per DORA Art. 19 timelines
+      output: "Incident detection record (artifacts/outputs/incident-detection-record.yaml) — continuously updated"
+      note: "Continuous security monitoring with regulatory reporting obligations"
+      tables:
+        - title: "DORA Art. 19 reporting timelines on major incident declaration"
+          columns: [Report, Deadline]
+          rows:
+            - [Initial notification, "Within 4 hours"]
+            - [Intermediate report, "Within 72 hours"]
+            - [Final report, "Within 1 month of resolution"]
     - id: n-sc6b
+      step_number: "6.5"
+      title: Runtime Anomaly Detection
       control: SC-6B
       description: Runtime anomaly detection (continuous, feeds into SC-6A)
+      delegation: "Automated with human escalation"
       depends_on: [n-handover]
       frequency: continuous
+      actors:
+        - role: AGT
+          action: Maintain statistical behavioural baselines for all system components
+        - role: AGT
+          action: "Detect deviations: AI model drift, adversarial inputs, abnormal resource patterns, unexpected call graphs"
+        - role: AGT
+          action: Escalate anomalies exceeding defined thresholds to SC-6A (Step 6.4) incident process
+        - role: SA
+          action: "Investigate high-severity anomalies; determine whether anomaly is a security incident or requires code change"
+      output: "Anomaly detection record (artifacts/outputs/anomaly-detection-record.yaml) — continuously updated"
+      note: "Continuous runtime monitoring; feeds into SC-6A incident detection"
+      on_failure: "Feeds into SC-6A (Step 6.4); may trigger feedback loop if code change is needed"
     - id: n-ac6a
+      step_number: "6.6"
+      title: AI Post-Market Surveillance
       control: AC-6A
       description: AI post-market surveillance (continuous, conditional on ai_component)
+      delegation: "Agent monitors, AGL reports"
       depends_on: [n-handover]
       frequency: continuous
+      condition: "Only applicable when the deployed system includes AI components."
+      actors:
+        - role: AGT
+          action: Continuously track AI performance metrics against Stage 4 QC-4B baselines
+        - role: AGT
+          action: Execute scheduled bias re-testing at defined intervals
+        - role: AGT
+          action: Maintain incident log for any serious AI incidents
+        - role: AGT
+          action: Keep AI Act technical documentation current
+        - role: AGL
+          action: "Review surveillance reports; make decisions on retraining or rollback"
+        - role: AGL
+          action: File serious AI incident reports to relevant authorities per Art. 73
+      output: "AI post-market surveillance report (artifacts/outputs/ai-surveillance-report.yaml) — periodic"
+      note: "Continuous monitoring of AI systems; compliance with EU AI Act Art. 73 reporting"
+      on_failure: "AGL reviews; may trigger feedback loop for retraining (Stage 1 Feature path) or rollback"
   parallelism:
     max_concurrent: 6
     groups:
@@ -68,6 +206,36 @@ workflow:
       condition: performance_degradation
       target_path: feedback_loop_path_a_or_b
 
+feedback_loop_summary:
+  - trigger: SLO burn rate exceeds threshold
+    control: QC-6A
+    path: Path B — Quickfix
+    re_entry_stage: 3
+  - trigger: Low-risk issue matching pre-approved template
+    control: RC-6A
+    path: Path A — Autofix
+    re_entry_stage: 3
+  - trigger: Vulnerability in SBOM dependency
+    control: RC-6A
+    path: Path B — Quickfix
+    re_entry_stage: 3
+  - trigger: Major security incident requiring code change
+    control: SC-6A
+    path: Path B — Quickfix or Feature
+    re_entry_stage: 3
+  - trigger: Anomaly caused by implementation defect
+    control: SC-6B
+    path: Path B — Quickfix
+    re_entry_stage: 3
+  - trigger: AI performance degradation
+    control: AC-6A
+    path: Path B — Feature
+    re_entry_stage: 1
+  - trigger: Scope requires new functionality
+    control: Any
+    path: Path B — Feature
+    re_entry_stage: 1
+
 required_controls:
 - id: QC-6A
   note: Continuous — runs throughout the operational lifetime
@@ -85,7 +253,6 @@ exit_criteria:
 - Not a time-bounded stage — exits only when the system is decommissioned.
 - Escalations from any Stage 6 control may trigger a feedback loop into earlier stages.
 next_stage: null
-process: process.md
 artifacts:
   inputs:
     - ../05-deployment-release/artifacts/outputs/deployment-integrity-record.yaml

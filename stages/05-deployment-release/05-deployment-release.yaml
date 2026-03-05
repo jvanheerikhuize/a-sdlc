@@ -9,6 +9,26 @@ name: Deployment & Release
 description: Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact
   integrity checking. RC-5A CAB Approval is a mandatory human gate that cannot be delegated.
 
+roles:
+  - code: AGT
+    name: Agent
+    responsibilities: Compiles release readiness checklist; prepares CAB submission; validates rollback; runs infrastructure and integrity checks
+  - code: REL
+    name: Release Manager
+    responsibilities: Reviews and approves release readiness checklist and rollback plan; orchestrates deployment execution
+  - code: RO
+    name: Risk Officer
+    responsibilities: Makes the formal CAB approval decision for high-risk changes
+  - code: SA
+    name: Security Architect
+    responsibilities: Reviews infrastructure security baseline deviations; investigates deployment integrity failures
+  - code: OPS
+    name: Operations / SRE
+    responsibilities: Executes deployment pipeline; monitors smoke tests; manages hypercare window; confirms Stage 6 handover
+  - code: CO
+    name: Compliance Officer
+    responsibilities: Reviews approval records during regulatory audits
+
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # QC-5A compiles release package. RC-5A is the CAB approval gate (human-required).
 # Steps 5.3–5.4 (RC-5B, SC-5A) run in parallel after approval.
@@ -17,29 +37,147 @@ description: Execute the approved deployment with formal CAB sign-off, verified 
 workflow:
   nodes:
     - id: n-qc5a
+      step_number: "5.1"
+      title: Release Readiness Checklist
       control: QC-5A
       description: Release readiness checklist
+      delegation: "Agent compiles, REL approves"
       depends_on: []
+      actors:
+        - role: AGT
+          action: Query audit trail (GC-0A) to confirm all prior stage controls were executed and passed
+        - role: AGT
+          action: Confirm Stage 4 RC-4A result is pass or approved conditional pass
+        - role: AGT
+          action: Verify documentation is current and release package is complete
+        - role: AGT
+          action: Flag any gaps in control evidence
+        - role: REL
+          action: Review completed checklist; approve release package or require resolution of gaps
+      input: "Audit trail (GC-0A) + Stage 4 risk threshold evaluation (RC-4A output)"
+      output: "Release readiness checklist (artifacts/outputs/release-readiness-checklist.yaml)"
+      on_failure: "Gaps in prior control evidence block the release; must be resolved before seeking CAB approval"
     - id: n-rc5a
+      step_number: "5.2"
+      title: CAB Approval
       control: RC-5A
       description: CAB (Change Advisory Board) approval (human-required gate)
+      delegation: Human required
       depends_on: [n-qc5a]
+      actors:
+        - role: AGT
+          action: Prepare change approval request with full release readiness package; schedule CAB slot if required
+        - role: RO
+          action: Review the full evidence package and make the formal approval decision
+        - role: RO
+          action: "Approve: record identity, role, and timestamp; advance to Steps 5.3 and 5.4"
+        - role: RO
+          action: "Reject: document rejection reason; work may return to any required stage"
+      input: "Release readiness checklist (Step 5.1 output) + Stage 1 risk classification"
+      output: "Change approval record (artifacts/outputs/change-approval-record.yaml)"
+      on_failure: "Deployment blocked; rejection reason documented; escalate to determine required remediation"
+      tables:
+        - title: "Approval authority by risk tier"
+          columns: [Risk Tier, Required Approval Authority]
+          rows:
+            - [critical, "Change Advisory Board (full CAB)"]
+            - [high, "Change Advisory Board (full CAB)"]
+            - [medium, "Line management"]
+            - [low, "Pre-approved standard change procedure"]
     - id: n-rc5b
+      step_number: "5.3"
+      title: Rollback Plan Validation
       control: RC-5B
       description: Rollback plan validation
+      delegation: "Agent validates, REL approves"
       depends_on: [n-rc5a]
+      actors:
+        - role: AGT
+          action: "Validate rollback plan completeness: triggers, procedure steps, decision authority, time window"
+        - role: AGT
+          action: Execute rollback procedure test in pre-production environment; record execution time
+        - role: AGT
+          action: Report test results
+        - role: REL
+          action: Review rollback test results; approve plan or require improvements before deployment
+      input: "Rollback plan draft + pre-production environment access"
+      output: "Rollback plan validation report (artifacts/outputs/rollback-plan.yaml)"
+      on_failure: "Deployment blocked if rollback cannot be validated in pre-production"
     - id: n-sc5a
+      step_number: "5.4"
+      title: Infrastructure Security Baseline
       control: SC-5A
       description: Infrastructure security baseline validation
+      delegation: Fully automated
       depends_on: [n-rc5a]
+      actors:
+        - role: AGT
+          action: Scan production environment configuration against approved security baseline
+        - role: AGT
+          action: "Check: patching status, access control configurations, network segmentation, IaC compliance, configuration drift"
+        - role: SA
+          action: Review any deviations; resolve before deployment or provide documented risk acceptance
+      input: "Production environment + approved security baseline configuration"
+      output: "Infrastructure security baseline report (artifacts/outputs/infrastructure-security-report.yaml)"
+      on_failure: "Deviations block deployment until resolved or formally accepted by SA"
     - id: n-sc5c
+      step_number: "5.4-secrets"
+      title: Secrets & Key Management Lifecycle
       control: SC-5C
       description: Secrets and key management lifecycle validation
+      delegation: Fully automated
       depends_on: [n-rc5a]
+      actors:
+        - role: AGT
+          action: Verify all secrets and encryption keys for the deployment are properly vaulted and accessible
+        - role: AGT
+          action: Validate key rotation schedules and access control policies
+        - role: SA
+          action: Review vaulting configuration; approve or require remediation
+      input: "Deployment configuration + secret vault configuration"
+      output: "Secrets management validation report (artifacts/outputs/secrets-management-report.yaml)"
+      on_failure: "Deployment blocked if secrets are not properly vaulted or access-controlled"
     - id: n-sc5b
+      step_number: "5.5"
+      title: Deployment Integrity Verification
       control: SC-5B
       description: Deployment integrity verification (immediately before deploy)
+      delegation: Fully automated
       depends_on: [n-rc5b, n-sc5a, n-sc5c]
+      actors:
+        - role: AGT
+          action: Compute cryptographic checksums of artefacts staged for production deployment
+        - role: AGT
+          action: Compare against checksums of artefacts tested in Stage 4
+        - role: AGT
+          action: "Match: record verification and advance to Step 5.6"
+        - role: AGT
+          action: "Mismatch: block deployment immediately; notify SA; initiate security incident process"
+      input: "Staged deployment artefacts + Stage 4 tested artefact checksums"
+      output: "Deployment integrity verification record (artifacts/outputs/deployment-integrity-record.yaml)"
+      on_failure: "Deployment immediately blocked; security incident process initiated; SA investigates before any retry"
+      note: "This check runs immediately before deployment execution. Any integrity failure halts the deployment and initiates a security incident process."
+    - id: n-handover
+      step_number: "5.6"
+      title: Deploy & Handover
+      control: null
+      description: Deployment execution and Stage 6 handover
+      delegation: "Agent executes pipeline, OPS confirms"
+      depends_on: [n-sc5b]
+      actors:
+        - role: AGT
+          action: Execute deployment via approved pipeline
+        - role: OPS
+          action: Execute smoke tests against production
+        - role: OPS
+          action: Confirm service health and enter hypercare window
+        - role: OPS
+          action: Activate Stage 6 monitoring profile
+        - role: OPS
+          action: Confirm Stage 6 handover; record handover timestamp
+      input: "Verified deployment artefacts (Step 5.5 output)"
+      output: "Handover confirmation recorded in deployment integrity record"
+      on_failure: "Initiate rollback per validated rollback plan (Step 5.3 output); do not remain in partial deployment state"
   parallelism:
     max_concurrent: 3
     groups:
@@ -65,7 +203,6 @@ exit_criteria:
 - 'SC-5B: Deployment integrity verified — artefact checksums match tested build'
 - 'SC-5C: All secrets/keys validated for proper vaulting, rotation, and access control'
 next_stage: 6
-process: process.md
 artifacts:
   inputs:
     - ../04-testing-documentation/artifacts/outputs/risk-threshold-evaluation.yaml

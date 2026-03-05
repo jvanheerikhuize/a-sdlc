@@ -9,47 +9,199 @@ name: Coding & Implementation
 description: Implement the approved design under continuous automated quality and security controls. All implementation —
   human, agent, or co-authored — converges into a reviewed and approved pull request before Stage 4 begins.
 
+roles:
+  - code: AGT
+    name: Agent
+    responsibilities: Writes code; logs decisions (RC-3A); tags provenance (GC-3A); scans output (SC-3B); creates pull request (QC-3A)
+  - code: DEV
+    name: Developer
+    responsibilities: Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk tiers
+  - code: SA
+    name: Security Architect
+    responsibilities: Defines and maintains agent permission policy (SC-3A); reviews violation logs; escalation target for SC-3B and SC-3C findings
+  - code: CO
+    name: Compliance Officer
+    responsibilities: Reviews code provenance records and audit artefacts during regulatory audits
+
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # SC-3A runs first (load permissions). Then QC-3B, SC-3C, SC-3D, SC-3E, RC-3A, GC-3A run continuously in parallel per-commit.
 # SC-3B (post-guardrails) runs on agent output before PR creation. QC-3A is the final gate.
 workflow:
   nodes:
     - id: n-sc3a
+      step_number: "3.1"
+      title: Verify Prerequisites & Load Permissions
       control: SC-3A
       description: Verify prerequisites and load permissions
+      delegation: Fully automated
       depends_on: []
+      actors:
+        - role: AGT
+          action: Verify that SC-2B directive injection confirmation exists and covers Stage 3 directives
+        - role: AGT
+          action: Load agent trust tier and permission policy from SC-3A
+        - role: AGT
+          action: Confirm that directives/stages/03-coding-implementation.yaml has been acknowledged
+        - role: SA
+          action: Confirms permission policy is up to date for the agent trust tier
+      input: "Directive injection confirmation (Stage 2 SC-2B output)"
+      output: "Permission enforcement log started (artifacts/outputs/permission-enforcement-log.yaml)"
+      on_failure: "Stage 3 cannot begin. Missing directive confirmation or invalid permission policy must be resolved before any coding starts"
     - id: n-qc3b
+      step_number: "3.2"
+      title: Implementation Loop
       control: QC-3B
       description: Code quality standards (per-commit)
+      delegation: "Agent implements, DEV authors"
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Implement code against the approved Stage 2 design document"
+        - role: AGT
+          action: "Tag all agent-generated code with provenance metadata at point of generation (GC-3A → GC-0C registry)"
+        - role: AGT
+          action: "Commit; QC-3B runs quality gates and SC-3C scans for secrets automatically"
+        - role: AGT
+          action: "Log all significant autonomous decisions to the decision log (RC-3A): rationale, alternatives considered"
+        - role: DEV
+          action: "Review and triage any QC-3B violations or SC-3C blocked commits; resolve before re-committing"
+        - role: AGT
+          action: "Repeat until all design requirements are implemented"
+      input: "Approved design document"
+      output: "Quality gate report (artifacts/outputs/quality-gate-report.yaml) · Secrets scan report (artifacts/outputs/secrets-scan-report.yaml) · Decision log (artifacts/outputs/decision-log.yaml)"
+      on_failure: "Commit blocked; developer resolves violations and re-commits"
+      note: "This step is the main implementation loop. All four controls run continuously — QC-3B and SC-3C on every commit, GC-3A at the point of generation, RC-3A whenever a significant decision is made. Repeats on every commit."
     - id: n-sc3c
+      step_number: "3.2-sc3c"
+      title: Secrets Scanning
       control: SC-3C
       description: Secrets and credentials scanning (per-commit)
+      delegation: Fully automated
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Scan every commit for exposed secrets, API keys, and credentials"
+        - role: DEV
+          action: "On secret detection: remove secret, rotate the credential, and re-commit"
+      input: "Code commits"
+      output: "Secrets scan report (artifacts/outputs/secrets-scan-report.yaml)"
+      on_failure: "Commit blocked; secrets must be removed before committing"
     - id: n-sc3d
+      step_number: "3.2-sc3d"
+      title: Software Composition Analysis
       control: SC-3D
       description: Software Composition Analysis and SBOM generation
+      delegation: Fully automated
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Generate SBOM; scan all third-party dependencies for known CVEs"
+        - role: SA
+          action: "Review critical/high findings; document risk acceptance if needed"
+      input: "Dependency manifests (package.json, requirements.txt, etc.)"
+      output: "SCA report with SBOM (artifacts/outputs/sca-report.yaml)"
+      on_failure: "Critical or unaccepted dependencies block progression"
     - id: n-sc3e
+      step_number: "3.2-sc3e"
+      title: Container & IaC Security Scanning
       control: SC-3E
       description: Container and IaC security scanning
+      delegation: Fully automated
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Scan all container images and IaC manifests (Terraform, CloudFormation, etc.) for misconfigurations"
+        - role: SA
+          action: "Triage findings; remediate or document risk acceptance"
+      input: "Container images and IaC manifests"
+      output: "Container and IaC security report (artifacts/outputs/container-iac-security-report.yaml)"
+      on_failure: "Critical misconfigurations block progression"
     - id: n-rc3a
+      step_number: "3.2-rc3a"
+      title: Decision Logging
       control: RC-3A
       description: Decision log (logged throughout)
+      delegation: "Agent logs, DEV reviews"
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Log all significant autonomous decisions: rationale, alternatives considered, decision owner"
+        - role: DEV
+          action: "Review decision log; flag any gaps or unexplained decisions"
+      input: "Implementation activities"
+      output: "Decision log (artifacts/outputs/decision-log.yaml)"
+      on_failure: "Unresolved decision log gaps block Stage 3 exit"
     - id: n-gc3a
+      step_number: "3.2-gc3a"
+      title: Code Provenance Tracking
       control: GC-3A
       description: Code provenance tracking (per-commit)
+      delegation: Fully automated
       depends_on: [n-sc3a]
+      actors:
+        - role: AGT
+          action: "Tag all agent-generated code with provenance metadata (author, model, date, commitment) at point of generation"
+        - role: AGT
+          action: "Register tags in GC-0C provenance registry"
+      input: "Generated code"
+      output: "Provenance registry entries"
+      note: "Runs continuously throughout implementation; all code must be tagged"
     - id: n-sc3b
+      step_number: "3.3"
+      title: Agent Output Scan
       control: SC-3B
       description: Post-guardrails scan on agent-generated code
+      delegation: Fully automated
       depends_on: [n-qc3b, n-sc3c, n-sc3d, n-sc3e, n-rc3a, n-gc3a]
+      actors:
+        - role: AGT
+          action: "Trigger SC-3B scan across all agent-generated code in the branch"
+        - role: AGT
+          action: "Report findings: file, line, category, severity"
+        - role: SA
+          action: "Review any flagged findings; determine resolution"
+        - role: AGT
+          action: "Block PR creation if any critical or high findings remain unresolved"
+      input: "All agent-generated code on the branch"
+      output: "Post-guardrail scan result (artifacts/outputs/post-guardrail-scan.yaml)"
+      on_failure: "PR creation is blocked (Step 3.4 cannot begin); SA reviews and remediates findings"
     - id: n-qc3a
+      step_number: "3.4"
+      title: Pull Request Creation
       control: QC-3A
       description: Pull request creation and review (final gate)
+      delegation: "Agent creates, humans review"
       depends_on: [n-sc3b]
+      actors:
+        - role: AGT
+          action: "Assemble evidence package: all Stage 3 control outputs"
+        - role: AGT
+          action: "Create pull request from feature branch to target branch"
+        - role: AGT
+          action: "Attach all evidence artefacts to the PR"
+        - role: AGT
+          action: "Assign reviewers per risk tier from Stage 1 RC-1A"
+        - role: DEV
+          action: "Review code changes against the approved design document"
+        - role: DEV
+          action: "Review all Stage 3 evidence artefacts (quality gate report, decision log, scan results)"
+        - role: DEV
+          action: "Request changes or approve; all requested changes must be resolved before re-review"
+        - role: DEV
+          action: "Approve: record identity and timestamp; PR is eligible for merge"
+        - role: AGT
+          action: "Update pull request record with approval details"
+      input: "All Stage 3 control outputs + approved design document"
+      output: "Pull request record (artifacts/outputs/pull-request-record.yaml) — status: approved"
+      on_failure: "If PR cannot be created or is rejected, return to Step 3.2 for remediation"
+      tables:
+        - title: "Reviewer assignment by risk tier"
+          columns: [Risk Tier, Required Reviewers]
+          rows:
+            - [critical, "Lead Architect + Security Architect (minimum 2)"]
+            - [high, "Lead Architect + 1 peer developer (minimum 2)"]
+            - [medium, "2 peer developers"]
+            - [low, "1 peer developer"]
   parallelism:
     max_concurrent: 6
     groups:
@@ -85,7 +237,6 @@ exit_criteria:
 - 'GC-3A: Code provenance tags applied to all contributions'
 - 'QC-3A: Pull request approved by required reviewers per risk tier'
 next_stage: 4
-process: process.md
 artifacts:
   inputs:
     - ../02-system-design/artifacts/outputs/design-document.yaml

@@ -24,6 +24,18 @@
 
 ---
 
+## Roles
+
+The following roles participate in this stage:
+
+| Role | Full Name | Responsibilities |
+|------|-----------|------------------|
+{% for role in stage.roles -%}
+| {{ role.code }} | {{ role.name }} | {{ role.responsibilities }} |
+{% endfor %}
+
+---
+
 ## Execution Workflow
 
 The controls in this stage execute in the following order:
@@ -44,6 +56,73 @@ Maximum concurrent controls: **{{ stage.workflow.parallelism.max_concurrent }}**
 
 ---
 
+## Step-by-Step Process
+
+{% for node in stage.workflow.nodes %}
+
+### Step {{ node.step_number|default("N/A") }}{{ " — " + node.title if node.title else "" }}
+
+{% if node.control %}
+**Control:** [`{{ node.control }}`](../../controls/{{ node.control[0:2]|lower }}/{{ node.control }}.yaml) · **Delegation:** {{ node.delegation }}
+{% else %}
+**No control** (procedural step) · **Delegation:** {{ node.delegation }}
+{% endif %}
+
+{% if node.condition %}
+**Condition:** {{ node.condition }}
+
+{% endif %}
+
+#### Actors and Actions
+
+| Actor | Action |
+|-------|--------|
+{% for actor in node.actors %}
+| {{ actor.role }} | {{ actor.action }} |
+{% endfor %}
+
+#### Inputs and Outputs
+
+| Property | Value |
+|----------|-------|
+{% if node.input %}
+| **Input** | {{ node.input }} |
+{% endif %}
+{% if node.output %}
+| **Output** | {{ node.output }} |
+{% endif %}
+{% if node.on_failure %}
+| **On Failure** | {{ node.on_failure }} |
+{% endif %}
+{% if node.on_uncertainty %}
+| **On Uncertainty** | {{ node.on_uncertainty }} |
+{% endif %}
+{% if node.on_changes_requested %}
+| **On Changes Requested** | {{ node.on_changes_requested }} |
+{% endif %}
+{% if node.note %}
+| **Note** | {{ node.note }} |
+{% endif %}
+
+{% if node.tables %}
+{% for table in node.tables %}
+
+**{{ table.title }}**
+
+| {{ table.columns|join(" | ") }} |
+|{% for col in table.columns %} --- |{% endfor %}
+
+{% for row in table.rows %}
+| {{ row|join(" | ") }} |
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+---
+
 ## Required Controls
 
 {% for control in required_controls %}
@@ -58,36 +137,6 @@ Maximum concurrent controls: **{{ stage.workflow.parallelism.max_concurrent }}**
 {% endif %}
 
 {% endfor %}
-
----
-
-## Entry Gate
-
-{% if stage.gates.entry %}
-To enter this stage, the following conditions must be satisfied:
-
-{% for condition in stage.gates.entry.conditions %}
-- {{ condition.type }}: {{ condition.description or condition }}
-{% endfor %}
-
-**Failure Action:** {{ stage.gates.entry.failure_action }}
-**Waiver Authority:** {{ stage.gates.entry.waiver_authority }}
-{% endif %}
-
----
-
-## Exit Gate
-
-{% if stage.gates.exit %}
-To exit this stage, the following conditions must be satisfied:
-
-{% for condition in stage.gates.exit.conditions %}
-- {{ condition.type }}: {{ condition.description or condition }}
-{% endfor %}
-
-**Failure Action:** {{ stage.gates.exit.failure_action }}
-**Waiver Authority:** {{ stage.gates.exit.waiver_authority }}
-{% endif %}
 
 ---
 
@@ -111,6 +160,8 @@ This stage produces the following artifacts:
 
 ---
 
+{% if stage.directives %}
+
 ## Directives
 
 The following directives are injected at the entry to this stage:
@@ -121,12 +172,24 @@ The following directives are injected at the entry to this stage:
 
 ---
 
-## Process Documentation
+{% endif %}
 
-For human-readable step-by-step processes, see [`process.md`](process.md).
+{% if stage.feedback_loop_summary %}
 
-**Note:** Agents should use the `workflow` DAG above for execution ordering, not the `process.md` file.
+## Feedback Loop Summary
+
+The following escalations from this stage may trigger feedback loops back into earlier stages:
+
+| Trigger | Originating Control | Path | Re-Entry Stage |
+|---------|-------------------|------|-----------------|
+{% for feedback in stage.feedback_loop_summary %}
+| {{ feedback.trigger }} | {{ feedback.control }} | {{ feedback.path }} | Stage {{ feedback.re_entry_stage }} |
+{% endfor %}
+
+For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](../../feedbackloops/feedback-loops.yaml).
 
 ---
+
+{% endif %}
 
 **Last Updated:** {{ last_updated }}

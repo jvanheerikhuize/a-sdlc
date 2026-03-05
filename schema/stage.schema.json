@@ -4,7 +4,7 @@
   "title": "A-SDLC Stage Definition",
   "description": "Schema for per-stage definition files (stages/NN-name/NN-name.yaml). Lists required controls, exit criteria, and artifact paths for one lifecycle stage.",
   "type": "object",
-  "required": ["number", "name", "description", "required_controls", "exit_criteria", "process"],
+  "required": ["number", "name", "description", "required_controls", "exit_criteria", "workflow", "roles"],
   "additionalProperties": false,
   "properties": {
     "number": {
@@ -63,9 +63,233 @@
       "maximum": 6,
       "description": "Stage number that follows this one. Null for Stage 6 (no bounded exit)."
     },
-    "process": {
-      "type": "string",
-      "description": "Relative path to the process.md file for this stage (always 'process.md')."
+    "workflow": {
+      "type": "object",
+      "description": "Execution DAG: nodes (control execution steps) and parallelism metadata.",
+      "required": ["nodes"],
+      "additionalProperties": false,
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Ordered list of execution nodes with step details.",
+          "items": {
+            "type": "object",
+            "required": ["id", "control", "depends_on"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^n-[a-z0-9]+$",
+                "description": "Unique node identifier within the DAG."
+              },
+              "step_number": {
+                "type": "string",
+                "pattern": "^[1-6]\\.[0-9]+$",
+                "description": "Human step label (e.g., '1.1', '1.2')."
+              },
+              "title": {
+                "type": "string",
+                "description": "Human-readable step title."
+              },
+              "control": {
+                "type": ["string", "null"],
+                "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$|^null$",
+                "description": "Control ID (or null for handover/meta steps)."
+              },
+              "description": {
+                "type": "string",
+                "description": "Brief description of what happens in this node."
+              },
+              "delegation": {
+                "type": "string",
+                "description": "Human-readable delegation pattern (e.g., 'Fully automated', 'Agent drafts → human approves')."
+              },
+              "condition": {
+                "type": ["string", "null"],
+                "description": "Condition text for conditional steps (null if unconditional)."
+              },
+              "depends_on": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "List of node IDs this step depends on."
+              },
+              "actors": {
+                "type": "array",
+                "description": "List of {role, action} pairs.",
+                "items": {
+                  "type": "object",
+                  "required": ["role", "action"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "description": "Actor role code (AGT, DEV, QA, SA, etc.)."
+                    },
+                    "action": {
+                      "type": "string",
+                      "description": "Action this actor takes in this step."
+                    }
+                  }
+                }
+              },
+              "input": {
+                "type": ["string", "null"],
+                "description": "What the step takes as input."
+              },
+              "output": {
+                "type": ["string", "null"],
+                "description": "What the step produces as output."
+              },
+              "on_failure": {
+                "type": ["string", "null"],
+                "description": "What happens if the step fails."
+              },
+              "on_uncertainty": {
+                "type": ["string", "null"],
+                "description": "What happens if the step result is uncertain."
+              },
+              "on_changes_requested": {
+                "type": ["string", "null"],
+                "description": "What happens if changes are requested during review."
+              },
+              "note": {
+                "type": ["string", "null"],
+                "description": "Additional note about the step."
+              },
+              "frequency": {
+                "type": "string",
+                "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered", "per_stage_entry", "per_session", "per_model_change"],
+                "description": "Automation frequency (Stage 6 only)."
+              },
+              "tables": {
+                "type": "array",
+                "description": "Supplementary tables (approval authorities, timelines, etc.).",
+                "items": {
+                  "type": "object",
+                  "required": ["title", "columns", "rows"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "Table title."
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Column headers."
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "description": "Table rows as arrays of strings."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parallelism": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_concurrent": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Maximum nodes that can run concurrently."
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "description": "Groups of node IDs that run in parallel."
+            }
+          }
+        },
+        "escalation_paths": {
+          "type": "array",
+          "description": "Escalation paths (Stage 6 only).",
+          "items": {
+            "type": "object",
+            "required": ["source_control", "condition", "target_path"],
+            "additionalProperties": false,
+            "properties": {
+              "source_control": {
+                "type": "string",
+                "description": "Node ID that triggers escalation."
+              },
+              "condition": {
+                "type": "string",
+                "description": "Condition that triggers escalation."
+              },
+              "target_path": {
+                "type": "string",
+                "description": "Target feedback loop path."
+              }
+            }
+          }
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Stage-specific role definitions with responsibilities.",
+      "items": {
+        "type": "object",
+        "required": ["code", "name", "responsibilities"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z]{2,3}$",
+            "description": "Role code abbreviation (REQ, AGT, PO, DEV, etc.)."
+          },
+          "name": {
+            "type": "string",
+            "description": "Full role name."
+          },
+          "responsibilities": {
+            "type": "string",
+            "description": "Stage-specific responsibilities for this role."
+          }
+        }
+      }
+    },
+    "feedback_loop_summary": {
+      "type": "array",
+      "description": "Feedback loop triggers and re-entry stages (Stage 6 only).",
+      "items": {
+        "type": "object",
+        "required": ["trigger", "control", "path", "re_entry_stage"],
+        "additionalProperties": false,
+        "properties": {
+          "trigger": {
+            "type": "string",
+            "description": "What event triggers this feedback loop."
+          },
+          "control": {
+            "type": "string",
+            "description": "Originating control ID."
+          },
+          "path": {
+            "type": "string",
+            "description": "Feedback loop path (Path A / Path B)."
+          },
+          "re_entry_stage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "Which stage the feedback re-enters."
+          }
+        }
+      }
     },
     "artifacts": {
       "type": "object",

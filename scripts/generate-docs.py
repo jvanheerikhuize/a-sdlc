@@ -58,21 +58,26 @@ class DocGenerator:
         if not stage_yaml:
             return False
 
+        # Load control registry for lookup
+        registry = self.load_yaml("controls/registry.yaml")
+        registry_controls = registry.get("registry", []) if registry else []
+
         # Load control definitions for this stage
         required_controls = []
         for control in stage_yaml.get("required_controls", []):
             control_id = control.get("id")
             # Find control in registry
-            for reg_control in self.manifest.get("controls", []):
+            for reg_control in registry_controls:
                 if reg_control.get("id") == control_id:
-                    control_data = self.load_yaml(reg_control.get("file"))
+                    control_file = reg_control.get("file")
+                    control_data = self.load_yaml(control_file) if control_file else None
                     required_controls.append({
                         "id": control_id,
                         "name": reg_control.get("name"),
                         "track": reg_control.get("track"),
                         "delegation": control_data.get("delegation") if control_data else {},
                         "note": control.get("note"),
-                        "file": reg_control.get("file")
+                        "file": control_file
                     })
                     break
 
@@ -93,8 +98,9 @@ class DocGenerator:
             print(f"ERROR: Template not found: stage-readme.jinja2")
             return False
 
-        # Write output
-        output_file = self.repo_root / stage_file.replace(".yaml", "").split("/")[0] / "README.md"
+        # Write output (stage_file is like "stages/01-intent-ingestion/01-intent-ingestion.yaml")
+        stage_dir = Path(stage_file).parent
+        output_file = self.repo_root / stage_dir / "README.md"
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(output_file, "w") as f:

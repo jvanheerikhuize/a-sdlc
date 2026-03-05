@@ -9,46 +9,198 @@ name: System Design
 description: Translate the approved specification into a complete, approved system design. Security directives are injected
   before coding begins. No implementation may start without RC-2A (design approval) and SC-2B directive injection confirmation.
 
+roles:
+  - code: AGT
+    name: Agent
+    responsibilities: Drafts system design; generates threat model; injects directives
+  - code: LAD
+    name: Lead Architect
+    responsibilities: Validates and approves design completeness and standards compliance
+  - code: SA
+    name: Security Architect
+    responsibilities: Validates STRIDE threat model; signs and publishes directive payload
+  - code: RO
+    name: Risk Officer
+    responsibilities: Makes formal design approval decision; determines sign-off authority by risk tier
+  - code: AGL
+    name: AI Governance Lead
+    responsibilities: Reviews and approves AI component design (if AI component involved)
+  - code: CO
+    name: Compliance Officer
+    responsibilities: Reviews design records during regulatory audits
+
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # Steps 2.2, 2.3, 2.4 (plus SC-2C, RC-2B) run in parallel after QC-2A draft completes
 workflow:
   nodes:
     - id: n-qc2a-draft
+      step_number: "2.1"
+      title: Draft System Design
       control: QC-2A
       description: Draft system design
+      delegation: "Agent drafts"
       depends_on: []
+      actors:
+        - role: AGT
+          action: Parse approved feature specification; translate requirements into architecture
+        - role: AGT
+          action: Produce component diagram, integration map, data flow diagram, and technology decisions
+        - role: AGT
+          action: Map every requirement to a specific architectural component; flag any unmapped requirements
+        - role: AGT
+          action: Validate design coverage against organisational patterns; flag gaps and standards deviations
+      input: "Approved feature specification (FEAT-XXXX)"
+      output: "Draft design document (artifacts/outputs/design-document.yaml)"
+      note: "Lead Architect review is at Step 2.2; this step only produces the draft"
     - id: n-qc2a-validate
+      step_number: "2.2"
+      title: Design Validation
       control: QC-2A
       description: Validate design completeness and standards
+      delegation: "Agent validates, LAD approves"
       depends_on: [n-qc2a-draft]
+      actors:
+        - role: LAD
+          action: Review draft design; verify all requirements are mapped to architectural components
+        - role: LAD
+          action: Confirm design follows organisational architectural patterns and technology standards
+        - role: LAD
+          action: "Approve: advance to Step 2.5 package. Reject: return to Step 2.1 with documented gaps"
+      input: "Draft design document"
+      output: "Approved design document (artifacts/outputs/design-document.yaml — status: approved)"
+      on_failure: "Design returned to Step 2.1; LAD documents required changes"
     - id: n-sc2a
+      step_number: "2.3"
+      title: STRIDE Threat Modelling
       control: SC-2A
       description: Generate and validate STRIDE threat model
+      delegation: "Agent generates, SA validates"
       depends_on: [n-qc2a-draft]
+      actors:
+        - role: AGT
+          action: Identify all trust boundaries in the design
+        - role: AGT
+          action: "Generate STRIDE threat analysis across each trust boundary; propose mitigations for each threat"
+        - role: SA
+          action: Review threat model for completeness; validate proposed mitigations
+        - role: SA
+          action: "Accept: advance to Step 2.5 package. Reject: require design revision to address unmitigated threats"
+      input: "Draft design document"
+      output: "STRIDE threat model (artifacts/outputs/stride-threat-model.yaml)"
+      on_failure: "Unmitigated critical or high threats block Stage 2. Design must be revised"
     - id: n-ac2a
+      step_number: "2.4"
+      title: AI Component Design Review
       control: AC-2A
       description: AI component design review (conditional on ai_component)
+      delegation: "Agent assists, AGL approves"
       depends_on: [n-qc2a-draft]
+      condition: "Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document as not_applicable and skip human confirmation."
+      actors:
+        - role: AGT
+          action: Analyse design for AI component involvement
+        - role: AGT
+          action: "Validate model selection, data pipeline design, explainability mechanisms, and human oversight provisions against AI Act requirements"
+        - role: AGL
+          action: Review AI design validation; confirm or require revisions
+      input: "Draft design document + AI tier classification from Stage 1"
+      output: "AI component design review (artifacts/outputs/ai-component-design-review.yaml)"
+      on_uncertainty: "Default to most restrictive AI Act obligations pending AGL resolution"
     - id: n-rc2b
+      step_number: "2.3b"
+      title: Privacy Impact Assessment
       control: RC-2B
       description: Privacy Impact Assessment (conditional on processes_personal_data)
+      delegation: "Agent generates, LAD reviews"
       depends_on: [n-qc2a-draft]
+      condition: "Only applicable when the change processes personal data, involves profiling, or high-risk AI processing. If not applicable, document as not_applicable."
+      actors:
+        - role: AGT
+          action: Identify all personal data processing activities in the design
+        - role: AGT
+          action: "Assess privacy risks across: lawfulness, necessity, minimization, retention, recipient access"
+        - role: LAD
+          action: "Review PIA; confirm privacy safeguards are adequate"
+      input: "Draft design document"
+      output: "Privacy Impact Assessment (artifacts/outputs/privacy-impact-assessment.yaml)"
+      on_failure: "Unacceptable privacy risks block Stage 2; design must be revised"
     - id: n-sc2c
+      step_number: "2.3c"
+      title: Zero-Trust Architecture Validation
       control: SC-2C
       description: Zero-trust architecture validation
+      delegation: Fully automated
       depends_on: [n-qc2a-draft]
+      actors:
+        - role: AGT
+          action: Validate design against zero-trust principles; verify all network segments require authentication
+        - role: AGT
+          action: Check encryption of all data in motion and at rest; verify principle of least privilege
+        - role: SA
+          action: Review validation results; approve or require mitigations
+      input: "Draft design document"
+      output: "Zero-trust validation report (artifacts/outputs/zero-trust-validation.yaml)"
+      on_failure: "Critical deviations from zero-trust architecture block Stage 2"
     - id: n-rc2a
+      step_number: "2.5"
+      title: Design Approval
       control: RC-2A
       description: Design approval (human-required gate)
+      delegation: Human required
       depends_on: [n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c]
+      actors:
+        - role: AGT
+          action: "Assemble approval package: design document, threat model, AI review (if applicable), risk tier"
+        - role: RO
+          action: Review approval package; make formal approval decision
+        - role: RO
+          action: "Approve: record decision with identity and timestamp; advance to Step 2.6"
+        - role: RO
+          action: "Reject: return to Step 2.1 with documented reasons; no coding may begin"
+      input: "Approved design doc + STRIDE threat model + AI review + Stage 1 risk classification"
+      output: "Design approval decision (artifacts/outputs/design-approval-decision.yaml)"
+      on_failure: "Return to Step 2.1; document reason; revise design and restart parallel steps"
+      tables:
+        - title: "Sign-off authority by risk tier"
+          columns: [Risk Tier, Required Authority]
+          rows:
+            - [critical, Senior Architecture Board]
+            - [high, Senior Architecture Board]
+            - [medium, Lead Architect]
+            - [low, "Lead Architect (may be pre-approved)"]
     - id: n-ac2b
+      step_number: "2.6"
+      title: AI Model Governance and Version Control
       control: AC-2B
       description: AI model governance and version control (conditional on ai_component)
+      delegation: "Agent registers, AGL approves"
       depends_on: [n-rc2a]
+      condition: "Only applicable when the change introduces or modifies use of a GPAI or foundation model. If not applicable, document as not_applicable."
+      actors:
+        - role: AGT
+          action: Register all models in the model registry with versioning metadata
+        - role: AGT
+          action: Record model lineage, data sources, training dates, and performance baselines
+        - role: AGL
+          action: Approve model registry entries and version pinning
+      input: "Approved design document + AI component design review"
+      output: "AI model governance record (artifacts/outputs/ai-model-governance-record.yaml)"
+      note: "Runs after design approval (RC-2A)"
     - id: n-sc2b
+      step_number: "2.7"
+      title: Stage Directive Injection
       control: SC-2B
       description: Stage directive injection confirmation
+      delegation: Fully automated
       depends_on: [n-rc2a, n-ac2b]
+      actors:
+        - role: AGT
+          action: Receive signed Stage 2 and Stage 3 directive payloads; load into agent context
+        - role: AGT
+          action: Acknowledge receipt of both payloads with confirmation
+      input: "directives/stages/02-system-design.yaml · directives/stages/03-coding-implementation.yaml"
+      output: "Directive injection confirmation (artifacts/outputs/directive-injection-confirmation.yaml)"
+      on_failure: "Stage 2 completion is blocked; Stage 3 cannot begin until injection is confirmed"
   parallelism:
     max_concurrent: 5
     groups:
@@ -79,7 +231,6 @@ exit_criteria:
 - 'AC-2A: AI component design review approved (or not-applicable documented)'
 - 'AC-2B: AI model registry entry created with version pinning (if applicable)'
 next_stage: 3
-process: process.md
 artifacts:
   inputs:
     - ../01-intent-ingestion/artifacts/outputs/feature-spec.yaml
