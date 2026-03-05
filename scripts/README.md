@@ -181,7 +181,7 @@ Current targets in `manifest/catalog.yaml`:
 
 1. Create new Jinja2 template:
    ```bash
-   vim docs-templates/my-template.jinja2
+   vim scripts/templates/my-template.jinja2
    ```
 
 2. Add generation target to `manifest/catalog.yaml`:
@@ -199,7 +199,7 @@ Current targets in `manifest/catalog.yaml`:
    python3 scripts/generate-docs.py
    ```
 
-For detailed template authoring, see: [`docs-templates/README.md`](../docs-templates/README.md)
+For detailed template authoring, see: [`scripts/templates/README.md`](../scripts/templates/README.md)
 
 ## Architecture
 
@@ -318,7 +318,7 @@ pip install jsonschema>=4.18.0
 ### generate-docs.py Issues
 
 **Error: "Template not found: my-template.jinja2"**
-- Check template filename in `docs-templates/` directory
+- Check template filename in `scripts/templates/` directory
 - Verify template name matches `template` field in `manifest/catalog.yaml`
 - Ensure `.jinja2` extension is correct
 
@@ -385,7 +385,7 @@ tests/
 ## See Also
 
 - **[DOCUMENTATION-GENERATION.md](../DOCUMENTATION-GENERATION.md)** — Detailed doc generation architecture
-- **[docs-templates/README.md](../docs-templates/README.md)** — Template authoring guide
+- **[scripts/templates/README.md](../scripts/templates/README.md)** — Template authoring guide
 - **[asdlc.yaml](../asdlc.yaml)** — Framework manifest (source of truth)
 - **[manifest/catalog.yaml](../manifest/catalog.yaml)** — Doc generation orchestration spec
 

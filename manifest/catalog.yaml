@@ -25,7 +25,7 @@
 # =============================================================================
 
 doc_generation:
-  templates_dir: docs-templates/
+  templates_dir: scripts/templates/
   generator_script: scripts/generate-docs.py
   targets:
     # Root documentation

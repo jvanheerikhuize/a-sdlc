@@ -99,7 +99,7 @@ class TestTemplateRendering:
 
     def test_jinja_environment_can_load_templates(self, repo_root):
         """Test that Jinja2 environment can load templates."""
-        templates_dir = repo_root / "docs-templates"
+        templates_dir = repo_root / "scripts/templates"
         env = Environment(
             loader=FileSystemLoader(str(templates_dir)),
             trim_blocks=True,
@@ -111,7 +111,7 @@ class TestTemplateRendering:
 
     def test_template_file_exists(self, repo_root):
         """Test that expected template files exist."""
-        templates_dir = repo_root / "docs-templates"
+        templates_dir = repo_root / "scripts/templates"
         expected_templates = [
             "stage-readme.jinja2",
             "controls-index.jinja2",
@@ -126,7 +126,7 @@ class TestTemplateRendering:
 
     def test_render_template_safe_with_nonexistent_template(self, repo_root):
         """Test that render_template_safe handles missing templates gracefully."""
-        templates_dir = repo_root / "docs-templates"
+        templates_dir = repo_root / "scripts/templates"
         env = Environment(loader=FileSystemLoader(str(templates_dir)))
 
         result = render_template_safe(env, "nonexistent.jinja2", {})
@@ -134,7 +134,7 @@ class TestTemplateRendering:
 
     def test_render_template_safe_with_valid_template(self, repo_root):
         """Test that render_template_safe can render valid templates."""
-        templates_dir = repo_root / "docs-templates"
+        templates_dir = repo_root / "scripts/templates"
 
         # Create a simple test template
         test_template = templates_dir / "_test_simple.jinja2"
@@ -284,7 +284,7 @@ class TestDocGenerationEdgeCases:
 
     def test_empty_context_dictionary_renders(self, repo_root):
         """Test that rendering with empty context doesn't crash."""
-        templates_dir = repo_root / "docs-templates"
+        templates_dir = repo_root / "scripts/templates"
         env = Environment(loader=FileSystemLoader(str(templates_dir)))
 
         # Should not raise exception

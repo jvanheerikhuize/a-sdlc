@@ -26,7 +26,7 @@ def repo_root(tmp_path) -> Path:
       - controls/registry.yaml (with 5 sample controls)
       - controls/qc/, controls/sc/, etc. directories
       - stages/01-intent-ingestion/ directory
-      - docs-templates/ directory
+      - scripts/templates/ directory
 
     Args:
         tmp_path: Pytest temporary directory fixture.
@@ -42,7 +42,7 @@ def repo_root(tmp_path) -> Path:
     (tmp_path / "controls" / "ac").mkdir(parents=True)
     (tmp_path / "controls" / "gc").mkdir(parents=True)
     (tmp_path / "stages" / "01-intent-ingestion").mkdir(parents=True)
-    (tmp_path / "docs-templates").mkdir(parents=True)
+    (tmp_path / "scripts/templates").mkdir(parents=True)
     (tmp_path / "regulatory").mkdir(parents=True)
     (tmp_path / "feedbackloops").mkdir(parents=True)
     (tmp_path / "directives" / "core").mkdir(parents=True)
@@ -147,7 +147,7 @@ def jinja_env(repo_root: Path) -> Environment:
         Configured Jinja2 Environment instance.
     """
     env = Environment(
-        loader=FileSystemLoader(repo_root / "docs-templates"),
+        loader=FileSystemLoader(repo_root / "scripts/templates"),
         autoescape=True,
         trim_blocks=True,
         lstrip_blocks=True,
@@ -171,7 +171,7 @@ def manifest_yaml(repo_root: Path) -> dict:
             "version": "1.0.0",
         },
         "doc_generation": {
-            "templates_dir": "docs-templates",
+            "templates_dir": "scripts/templates",
             "generator_script": "scripts/generate-docs.py",
             "targets": [
                 {

@@ -54,7 +54,7 @@ This defines what gets generated and from what:
 ```
 manifest/catalog.yaml                ← Master manifest with doc_generation spec
   └── doc_generation:
-      ├── templates_dir: docs-templates/
+      ├── templates_dir: scripts/templates/
       ├── generator_script: scripts/generate-docs.py
       └── targets: [...]              ← List of what to generate
 ```
@@ -63,15 +63,15 @@ manifest/catalog.yaml                ← Master manifest with doc_generation spe
 Jinja2 templates that control how docs are generated:
 
 ```
-docs-templates/stage-readme.jinja2         ← Generate stages/NN-*/README.md ✅
-docs-templates/controls-index.jinja2       ← Generate controls/README.md ✅
-docs-templates/framework-overview.jinja2   ← Generate root README.md ✅
-docs-templates/stages-overview.jinja2      ← Generate stages/README.md ✅
-docs-templates/agents.jinja2               ← Generate AGENTS.md ✅
-docs-templates/stage-context-bundle.jinja2 ← Generate context/stage-NN.md ✅
-docs-templates/feedback-loops-guide.jinja2 ← Generate feedbackloops/README.md ✅
-docs-templates/regulatory-index.jinja2     ← Generate regulatory/README.md ⏳ (awaiting data fix)
-docs-templates/README.md                   ← Guide for creating templates
+scripts/templates/stage-readme.jinja2         ← Generate stages/NN-*/README.md ✅
+scripts/templates/controls-index.jinja2       ← Generate controls/README.md ✅
+scripts/templates/framework-overview.jinja2   ← Generate root README.md ✅
+scripts/templates/stages-overview.jinja2      ← Generate stages/README.md ✅
+scripts/templates/agents.jinja2               ← Generate AGENTS.md ✅
+scripts/templates/stage-context-bundle.jinja2 ← Generate context/stage-NN.md ✅
+scripts/templates/feedback-loops-guide.jinja2 ← Generate feedbackloops/README.md ✅
+scripts/templates/regulatory-index.jinja2     ← Generate regulatory/README.md ⏳ (awaiting data fix)
+scripts/templates/README.md                   ← Guide for creating templates
 ```
 
 **Template Status Legend:**
@@ -199,7 +199,7 @@ Current targets in `manifest/catalog.yaml`:
 
 1. Create a new template file:
    ```bash
-   vim docs-templates/my-template.jinja2
+   vim scripts/templates/my-template.jinja2
    ```
 
 2. Add a generation target to `manifest/catalog.yaml`:
@@ -217,7 +217,7 @@ Current targets in `manifest/catalog.yaml`:
    python3 scripts/generate-docs.py
    ```
 
-See [`docs-templates/README.md`](docs-templates/README.md) for detailed template authoring guide.
+See [`scripts/templates/README.md`](scripts/templates/README.md) for detailed template authoring guide.
 
 ## Integration
 
@@ -317,10 +317,10 @@ python3 scripts/generate-docs.py
 A: No, they will be overwritten next time you run the generator. Edit the YAML source instead.
 
 **Q: How do I add new documentation?**
-A: Create a new Jinja2 template in `docs-templates/`, add a target to `manifest/catalog.yaml`, update the generator script, and run it.
+A: Create a new Jinja2 template in `scripts/templates/`, add a target to `manifest/catalog.yaml`, update the generator script, and run it.
 
 **Q: Can I customize the generated output?**
-A: Yes, by editing the Jinja2 templates. See `docs-templates/README.md` for details.
+A: Yes, by editing the Jinja2 templates. See `scripts/templates/README.md` for details.
 
 **Q: What if I want different docs for different audiences?**
 A: Create separate templates (e.g., `stage-readme-technical.jinja2`, `stage-readme-business.jinja2`) and add both as generation targets.

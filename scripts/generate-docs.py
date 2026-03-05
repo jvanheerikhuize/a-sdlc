@@ -53,7 +53,7 @@ class DocGenerator:
         """Initialize the documentation generator."""
         self.repo_root = Path(repo_root or os.getcwd())
         self.manifest_file = self.repo_root / "manifest" / "catalog.yaml"
-        self.templates_dir = self.repo_root / "docs-templates"
+        self.templates_dir = self.repo_root / "scripts" / "templates"
 
         # Load manifest
         with open(self.manifest_file) as f:
