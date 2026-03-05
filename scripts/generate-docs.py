@@ -197,6 +197,88 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_framework_overview(self, source_file):
+        """Generate root README.md from asdlc.yaml + controls registry."""
+        loaded = self.load_yaml(source_file) or {}
+        fw = loaded.get("framework", {})
+        stages = loaded.get("stages", [])
+
+        # Load control registry for "All Controls at a Glance" matrix
+        registry = self.load_yaml("controls/registry.yaml") or {}
+        controls = registry.get("registry", [])
+
+        # Build control matrix: {stage_number: {track: [control_objects]}}
+        # stage 0 = cross-cutting
+        control_matrix = {}
+        for ctrl in controls:
+            stage_num = ctrl.get("stage", 0)
+            track = ctrl.get("track", "")
+            if stage_num not in control_matrix:
+                control_matrix[stage_num] = {}
+            if track not in control_matrix[stage_num]:
+                control_matrix[stage_num][track] = []
+            control_matrix[stage_num][track].append({
+                "id": ctrl.get("id"),
+                "file": ctrl.get("file"),
+            })
+
+        # Count totals per track
+        track_counts = {}
+        for ctrl in controls:
+            t = ctrl.get("track", "")
+            track_counts[t] = track_counts.get(t, 0) + 1
+
+        # Pre-render control matrix rows as formatted strings to avoid Jinja2 whitespace issues
+        matrix_rows = ["| Stage | QC | RC | SC | AC | GC |",
+                       "| ----- | -- | -- | -- | -- | -- |"]
+
+        for stage_num in range(0, 7):
+            cells = []
+
+            # Stage label
+            if stage_num == 0:
+                cells.append("Cross-cutting")
+            else:
+                stage = stages[stage_num - 1]
+                cells.append(f"[{stage_num} {stage['name']}](stages/{stage['slug']}/README.md)")
+
+            # Controls per track
+            for track in ["QC", "RC", "SC", "AC", "GC"]:
+                if stage_num in control_matrix and track in control_matrix[stage_num]:
+                    ctrls = control_matrix[stage_num][track]
+                    ctrl_links = [f"[{c['id']}](controls/{track.lower()}/{c['id']}.yaml)" for c in ctrls]
+                    cells.append(", ".join(ctrl_links))
+                else:
+                    cells.append("—")
+
+            matrix_rows.append("| " + " | ".join(cells) + " |")
+
+        # Prepare context
+        context = {
+            "framework": fw,
+            "stages": stages,
+            "controls": controls,
+            "control_matrix_rows": "\n".join(matrix_rows),
+            "track_counts": track_counts,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        # Render template
+        try:
+            template = self.jinja_env.get_template("framework-overview.jinja2")
+            content = template.render(context)
+        except TemplateNotFound:
+            print(f"ERROR: Template not found: framework-overview.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def _generate_workflow_diagram(self, stage_yaml):
         """Convert workflow DAG to markdown diagram."""
         workflow = stage_yaml.get("workflow", {})
@@ -243,6 +325,9 @@ class DocGenerator:
                     count += 1
             elif template == "stages-overview":
                 if self.generate_stages_overview(source):
+                    count += 1
+            elif template == "framework-overview":
+                if self.generate_framework_overview(source):
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")

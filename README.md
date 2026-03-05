@@ -6,19 +6,19 @@
 
 ## What Is the A-SDLC?
 
-The Agentic SDLC is a paradigm shift where AI agents evolve from passive coding assistants to autonomous owners of specific lifecycle phases. It moves the human role from **granular execution** to **high-level orchestration**, decoupling output from headcount and eliminating the "wait states" inherent in manual hand-offs.
+The Agentic SDLC is a paradigm shift where AI agents evolve from passive coding assistants to autonomous owners of specific lifecycle phases. It moves the human role from granular execution to high-level orchestration, decoupling output from headcount and eliminating the "wait states" inherent in manual hand-offs.
 
 The framework:
 
-- **Replaces the traditional SDLC** — backwards- and forwards-compatible
-- **Is solution, model, and toolchain agnostic** — works with any agent or stack
-- **Is usable by both humans and agents** at every step and task
+- **Replaces the traditional SDLC — backwards- and forwards-compatible**
+- **Is solution, model, and toolchain agnostic — works with any agent or stack**
+- **Is usable by both humans and agents at every step and task**
 
 ### Key Value Propositions
 
 | Benefit | Target | Mechanism |
 | ------- | ------ | --------- |
-| **Velocity** | 20–30% faster delivery | Agents handle "in-between" work: environment setup, triage, PR descriptions |
+| **Velocity** | 20–30% faster delivery | Agents handle "in-between" work — environment setup, triage, PR descriptions |
 | **Quality** | 70% fewer production defects | Deep-context testing; programmatically enforced standards during coding |
 | **Governance** | Non-negotiable compliance | Immutable Core Security Directives injected into every agent context |
 | **Role Evolution** | Developer → System Orchestrator | Agents own repetitive tasks; engineers focus on architectural innovation |
@@ -45,12 +45,12 @@ flowchart LR
 
 | Stage | Name | Purpose |
 | ----- | ---- | ------- |
-| [Stage 1](stages/01-intent-ingestion/README.md) | Intent Ingestion | Capture, disambiguate, and structure incoming change requests |
-| [Stage 2](stages/02-system-design/README.md) | System Design | Translate intent into architecture; inject security directives |
-| [Stage 3](stages/03-coding-implementation/README.md) | Coding & Implementation | Produce, review, and verify code; most control-dense stage |
-| [Stage 4](stages/04-testing-documentation/README.md) | Testing & Documentation | Verify correctness, safety, and completeness before release |
-| [Stage 5](stages/05-deployment-release/README.md) | Deployment & Release | Promote to production with maximum governance controls |
-| [Stage 6](stages/06-observability-maintenance/README.md) | Observability & Maintenance | Continuous monitoring; the only stage that never ends |
+| [Stage 1](stages/01-intent-ingestion/README.md) | Intent Ingestion | High-level business goals are captured, disambiguated, and transformed into structured technical requirements. Establishes the source of truth for all subsequent agentic actions. |
+| [Stage 2](stages/02-system-design/README.md) | System Design | Validated intent is translated into architecture and technical specifications. Threat modelling and stage directive injection occur here before any coding begins. |
+| [Stage 3](stages/03-coding-implementation/README.md) | Coding & Implementation | Code is produced by human developers, AI agents, or both. The most control-dense stage: enforces quality, controls agent permissions, scans for security issues, tracks provenance, and converges into a reviewed PR. |
+| [Stage 4](stages/04-testing-documentation/README.md) | Testing & Documentation | The verification gate. Answers "does it work correctly?" and "is it safe to release?" Culminates in a risk threshold evaluation that opens or blocks the door to deployment. |
+| [Stage 5](stages/05-deployment-release/README.md) | Deployment & Release | Promotion to production. Carries the strongest governance requirements. Ensures everything prior is complete, the deployment is trustworthy, and there is a verified rollback path. |
+| [Stage 6](stages/06-observability-maintenance/README.md) | Observability & Maintenance | The only stage that never ends. Continuous monitoring of operational health, security posture, risk evolution, and AI behaviour. Feeds back into the lifecycle through defined re-entry paths. |
 
 When Stage 4 or Stage 6 detects an issue requiring a code change, work re-enters via the [Feedback Loops](feedbackloops/README.md): **Path A** (easy/obvious/low-risk → Stage 3) or **Path B** (otherwise → Stage 1).
 
@@ -62,25 +62,25 @@ Five control tracks run through the entire lifecycle:
 
 | Track | Code | Focus |
 | ----- | ---- | ----- |
-| [Quality Controls](controls/qc/) | `QC` | Work meets standards |
+| [Quality Controls](controls/qc/) | `QC` | Ensure work meets standards |
 | [Risk Controls](controls/rc/) | `RC` | Identify and manage what can go wrong |
 | [Security Controls](controls/sc/) | `SC` | Protect against threats and vulnerabilities |
-| [AI Controls](controls/ac/) | `AC` | EU AI Act requirements |
-| [Governance Controls](controls/gc/) | `GC` | Audit trail across everything |
+| [AI Controls](controls/ac/) | `AC` | Address EU AI Act requirements |
+| [Governance Controls](controls/gc/) | `GC` | Maintain the audit trail across everything |
 
 ### All Controls at a Glance
 
 | Stage | QC | RC | SC | AC | GC |
 | ----- | -- | -- | -- | -- | -- |
-| Cross-cutting | — | — | [SC-0D](controls/sc/SC-0D.yaml) | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml), [GC-0D](controls/gc/GC-0D.yaml) |
+| Cross-cutting | — | — | [SC-0D](controls/sc/SC-0D.yaml), [SC-2B](controls/sc/SC-2B.yaml) | — | [GC-0A](controls/gc/GC-0A.yaml), [GC-0B](controls/gc/GC-0B.yaml), [GC-0C](controls/gc/GC-0C.yaml), [GC-0D](controls/gc/GC-0D.yaml) |
 | [1 Intent Ingestion](stages/01-intent-ingestion/README.md) | [QC-1A](controls/qc/QC-1A.yaml), [QC-1B](controls/qc/QC-1B.yaml) | [RC-1A](controls/rc/RC-1A.yaml) | [SC-1A](controls/sc/SC-1A.yaml), [SC-1B](controls/sc/SC-1B.yaml) | [AC-1A](controls/ac/AC-1A.yaml), [AC-1B](controls/ac/AC-1B.yaml) | [GC-1A](controls/gc/GC-1A.yaml) |
-| [2 System Design](stages/02-system-design/README.md) | [QC-2A](controls/qc/QC-2A.yaml) | [RC-2A](controls/rc/RC-2A.yaml), [RC-2B](controls/rc/RC-2B.yaml) | [SC-2A](controls/sc/SC-2A.yaml), [SC-2B](controls/sc/SC-2B.yaml), [SC-2C](controls/sc/SC-2C.yaml) | [AC-2A](controls/ac/AC-2A.yaml), [AC-2B](controls/ac/AC-2B.yaml) | — |
-| [3 Coding & Impl](stages/03-coding-implementation/README.md) | [QC-3A](controls/qc/QC-3A.yaml), [QC-3B](controls/qc/QC-3B.yaml) | [RC-3A](controls/rc/RC-3A.yaml) | [SC-3A](controls/sc/SC-3A.yaml), [SC-3B](controls/sc/SC-3B.yaml), [SC-3C](controls/sc/SC-3C.yaml), [SC-3D](controls/sc/SC-3D.yaml), [SC-3E](controls/sc/SC-3E.yaml) | — | [GC-3A](controls/gc/GC-3A.yaml) |
-| [4 Testing & Docs](stages/04-testing-documentation/README.md) | [QC-4A](controls/qc/QC-4A.yaml), [QC-4B](controls/qc/QC-4B.yaml), [QC-4C](controls/qc/QC-4C.yaml) | [RC-4A](controls/rc/RC-4A.yaml) | [SC-4A](controls/sc/SC-4A.yaml), [SC-4B](controls/sc/SC-4B.yaml), [SC-4C](controls/sc/SC-4C.yaml), [SC-4D](controls/sc/SC-4D.yaml) | [AC-4A](controls/ac/AC-4A.yaml) | — |
-| [5 Deployment](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml), [SC-5C](controls/sc/SC-5C.yaml) | — | — |
-| [6 Observability](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml), [RC-6B](controls/rc/RC-6B.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
+| [2 System Design](stages/02-system-design/README.md) | [QC-2A](controls/qc/QC-2A.yaml) | [RC-2A](controls/rc/RC-2A.yaml), [RC-2B](controls/rc/RC-2B.yaml) | [SC-2A](controls/sc/SC-2A.yaml), [SC-2C](controls/sc/SC-2C.yaml) | [AC-2A](controls/ac/AC-2A.yaml), [AC-2B](controls/ac/AC-2B.yaml) | — |
+| [3 Coding & Implementation](stages/03-coding-implementation/README.md) | [QC-3A](controls/qc/QC-3A.yaml), [QC-3B](controls/qc/QC-3B.yaml) | [RC-3A](controls/rc/RC-3A.yaml) | [SC-3A](controls/sc/SC-3A.yaml), [SC-3B](controls/sc/SC-3B.yaml), [SC-3C](controls/sc/SC-3C.yaml), [SC-3D](controls/sc/SC-3D.yaml), [SC-3E](controls/sc/SC-3E.yaml) | — | [GC-3A](controls/gc/GC-3A.yaml) |
+| [4 Testing & Documentation](stages/04-testing-documentation/README.md) | [QC-4A](controls/qc/QC-4A.yaml), [QC-4B](controls/qc/QC-4B.yaml), [QC-4C](controls/qc/QC-4C.yaml) | [RC-4A](controls/rc/RC-4A.yaml) | [SC-4A](controls/sc/SC-4A.yaml), [SC-4B](controls/sc/SC-4B.yaml), [SC-4C](controls/sc/SC-4C.yaml), [SC-4D](controls/sc/SC-4D.yaml) | [AC-4A](controls/ac/AC-4A.yaml) | — |
+| [5 Deployment & Release](stages/05-deployment-release/README.md) | [QC-5A](controls/qc/QC-5A.yaml) | [RC-5A](controls/rc/RC-5A.yaml), [RC-5B](controls/rc/RC-5B.yaml) | [SC-5A](controls/sc/SC-5A.yaml), [SC-5B](controls/sc/SC-5B.yaml), [SC-5C](controls/sc/SC-5C.yaml) | — | — |
+| [6 Observability & Maintenance](stages/06-observability-maintenance/README.md) | [QC-6A](controls/qc/QC-6A.yaml) | [RC-6A](controls/rc/RC-6A.yaml), [RC-6B](controls/rc/RC-6B.yaml) | [SC-6A](controls/sc/SC-6A.yaml), [SC-6B](controls/sc/SC-6B.yaml) | [AC-6A](controls/ac/AC-6A.yaml) | — |
 
-**Total: 51 controls** across 5 tracks (QC: 10, RC: 9, SC: 20, AC: 6, GC: 6), including 6 cross-cutting controls: SC-0D, SC-2B, GC-0A, GC-0B, GC-0C, GC-0D. Full index in [controls/registry.yaml](controls/registry.yaml).
+**Total: 51 controls** across 5 tracks (QC: 10, RC: 9, SC: 20, AC: 6, GC: 6), including cross-cutting controls. Full index in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 
@@ -166,3 +166,5 @@ For detailed mappings of all 51 controls to regulatory articles, see: **[regulat
 ## If You Are an Agent
 
 Start with [AGENTS.md](AGENTS.md). It contains your mandatory operating instructions, navigation map, delegation pattern definitions, and behavioural rules.
+
+**Last Updated:** 2026-03-05 20:53 UTC

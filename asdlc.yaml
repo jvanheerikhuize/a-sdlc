@@ -14,9 +14,49 @@ framework:
   abbreviation: A-SDLC
   version: "1.0"
   status: approved
+  tagline: >-
+    A framework that defines how software is built, tested, and released when AI agents
+    work alongside human developers.
+  narrative:
+    what_is_it: >-
+      The Agentic SDLC is a paradigm shift where AI agents evolve from passive coding
+      assistants to autonomous owners of specific lifecycle phases. It moves the human role
+      from granular execution to high-level orchestration, decoupling output from headcount
+      and eliminating the "wait states" inherent in manual hand-offs.
+    properties:
+      - Replaces the traditional SDLC — backwards- and forwards-compatible
+      - Is solution, model, and toolchain agnostic — works with any agent or stack
+      - Is usable by both humans and agents at every step and task
+    value_propositions:
+      - benefit: Velocity
+        target: "20–30% faster delivery"
+        mechanism: Agents handle "in-between" work — environment setup, triage, PR descriptions
+      - benefit: Quality
+        target: "70% fewer production defects"
+        mechanism: Deep-context testing; programmatically enforced standards during coding
+      - benefit: Governance
+        target: Non-negotiable compliance
+        mechanism: Immutable Core Security Directives injected into every agent context
+      - benefit: Role Evolution
+        target: Developer → System Orchestrator
+        mechanism: Agents own repetitive tasks; engineers focus on architectural innovation
   regulatory_scope:
     - DORA
     - EU AI Act
+  regulatory_summary:
+    frameworks:
+      - name: DORA
+        full_name: "Digital Operational Resilience Act"
+        regulation: "EU 2022/2554"
+        controls_mapped: 43
+        total_controls: 51
+        coverage_pct: "84.3%"
+      - name: EU AI Act
+        full_name: "EU AI Act"
+        regulation: "EU 2024/1689"
+        controls_mapped: 30
+        total_controls: 51
+        coverage_pct: "58.8%"
 
   control_tracks:
     - code: QC

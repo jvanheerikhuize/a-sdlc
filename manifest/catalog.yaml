@@ -57,7 +57,7 @@ doc_generation:
     - source: asdlc.yaml
       template: framework-overview
       output: README.md
-      description: "Framework overview and control summary"
+      description: "Root README: framework overview, stages, control framework, and regulatory compliance"
 
     # Stage-specific documentation
     - source: stages/01-intent-ingestion/01-intent-ingestion.yaml
