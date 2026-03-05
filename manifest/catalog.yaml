@@ -1,54 +1,29 @@
 # =============================================================================
-# A-SDLC Framework Catalog & Document Generation Specification
+# A-SDLC Framework Documentation Generation Catalog
 # =============================================================================
-# This is the master discovery index for the Agentic SDLC framework.
-# It is the single source of truth for:
-#   - All control definitions and their locations
-#   - All stage definitions and their locations
-#   - Document generation specifications (what to generate, from what, to where)
-#   - Load protocol for agents
 #
-# DO NOT edit README.md files directly. They are generated from this spec.
-# To update documentation, edit the YAML sources and run the generator.
+# Orchestration specification for automated documentation generation.
+#
+# SINGLE SOURCE OF TRUTH:
+#   asdlc.yaml is the authoritative framework definition, including:
+#   - Framework metadata (id, name, version, regulatory scope)
+#   - Stages (number, name, workflow, controls, artifacts, directives)
+#   - Control tracks, delegation patterns, roles
+#   - Cross-cutting controls and feedback loops
+#
+# This file (catalog.yaml) defines:
+#   - doc_generation targets: what to generate, from what source, using what template
+#
+# Load protocol (agent load sequence) is derived from asdlc.yaml:stages during generation.
+#
+# To update documentation:
+#   1. Edit the YAML sources (asdlc.yaml, stages/*.yaml, controls/*.yaml)
+#   2. Run: python3 scripts/generate-docs.py
+#   3. Generated files (README.md, AGENTS.md, context/*.md) are updated automatically
+#
+# DO NOT edit generated .md files directly.
 # =============================================================================
 
-framework:
-  id: asdlc-v1
-  name: Agentic Software Development Life Cycle
-  version: "1.0"
-  description: Framework defining how software is built, tested, and released with AI agents
-  last_updated: "2026-03-05"
-  regulatory_scope:
-    - DORA (EU 2022/2554)
-    - EU AI Act (EU 2024/1689)
-
-# Agent load protocol: what agents load and in what order
-load_order:
-  session_start:
-    - directives/core/core-directives.yaml
-  per_stage:
-    stage_1:
-      - stages/01-intent-ingestion/01-intent-ingestion.yaml
-      - directives/stages/01-intent-ingestion.yaml
-    stage_2:
-      - stages/02-system-design/02-system-design.yaml
-      - directives/stages/02-system-design.yaml
-    stage_3:
-      - stages/03-coding-implementation/03-coding-implementation.yaml
-      - directives/stages/03-coding-implementation.yaml
-    stage_4:
-      - stages/04-testing-documentation/04-testing-documentation.yaml
-      - directives/stages/04-testing-documentation.yaml
-    stage_5:
-      - stages/05-deployment-release/05-deployment-release.yaml
-      - directives/stages/05-deployment-release.yaml
-    stage_6:
-      - stages/06-observability-maintenance/06-observability-maintenance.yaml
-      - directives/stages/06-observability-maintenance.yaml
-
-# Document generation specification
-# These files are GENERATED from YAML sources. Do not edit them directly.
-# To update: edit the source YAML, then run: python3 scripts/generate-docs.py
 doc_generation:
   templates_dir: docs-templates/
   generator_script: scripts/generate-docs.py
