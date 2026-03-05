@@ -23,6 +23,11 @@ import re
 import argparse
 from pathlib import Path
 
+# Add repo root to path for imports
+_repo_root = Path(__file__).parent.parent
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
+
 # ── dependency check ──────────────────────────────────────────────────────────
 
 try:
@@ -37,6 +42,22 @@ try:
     HAS_JSONSCHEMA = True
 except ImportError:
     HAS_JSONSCHEMA = False
+
+try:
+    from scripts.shared import (
+        load_yaml_safe,
+        load_json_safe,
+        rel_path,
+        extract_control_id_from_string,
+    )
+except ImportError:
+    # Fallback for module imports
+    from .shared import (
+        load_yaml_safe,
+        load_json_safe,
+        rel_path,
+        extract_control_id_from_string,
+    )
 
 # ── paths ─────────────────────────────────────────────────────────────────────
 
@@ -86,23 +107,48 @@ class Checker:
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
-def load_yaml(path):
-    with open(path, encoding="utf-8") as f:
-        return yaml.safe_load(f)
+def load_yaml(path: Path) -> dict:
+    """Load YAML file using shared utility.
 
-def load_json(path):
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    Args:
+        path: Path to YAML file.
 
-def rel(path):
-    """Return path relative to REPO root for display."""
-    try:
-        return str(Path(path).relative_to(REPO))
-    except ValueError:
-        return str(path)
+    Returns:
+        Parsed YAML as dict, or empty dict if not found.
+    """
+    return load_yaml_safe(Path(path)) or {}
 
-def validate_schema(data, schema, path, checker):
-    """Validate data against a JSON Schema. Reports pass/fail."""
+def load_json(path: Path) -> dict:
+    """Load JSON file using shared utility.
+
+    Args:
+        path: Path to JSON file.
+
+    Returns:
+        Parsed JSON as dict, or empty dict if not found.
+    """
+    return load_json_safe(Path(path)) or {}
+
+def rel(path: Path) -> str:
+    """Return path relative to REPO root for display.
+
+    Args:
+        path: Path to convert.
+
+    Returns:
+        Relative path string.
+    """
+    return rel_path(Path(path), REPO)
+
+def validate_schema(data: dict, schema: dict, path: Path, checker) -> None:
+    """Validate data against a JSON Schema. Reports pass/fail.
+
+    Args:
+        data: Data to validate.
+        schema: JSON Schema to validate against.
+        path: Path to file (for error messages).
+        checker: Checker instance for result tracking.
+    """
     if not HAS_JSONSCHEMA:
         checker.warn(f"jsonschema not installed — skipping: {rel(path)}")
         return
@@ -120,7 +166,15 @@ def validate_schema(data, schema, path, checker):
 
 # ── section 1: control files ──────────────────────────────────────────────────
 
-def check_control_files(checker):
+def check_control_files(checker) -> list:
+    """Check control files for schema compliance and ID alignment.
+
+    Args:
+        checker: Checker instance for result tracking.
+
+    Returns:
+        List of found control IDs.
+    """
     checker.section("1/7  Control files — schema + filename alignment")
     schema = load_json(SCHEMA_DIR / "control.schema.json")
 
@@ -158,7 +212,7 @@ def check_control_files(checker):
 
 # ── section 2: registry ───────────────────────────────────────────────────────
 
-def check_registry(checker, found_control_ids):
+def check_registry(checker, found_control_ids: list) -> list:
     checker.section("2/7  Registry — completeness + file existence")
 
     if not REGISTRY_FILE.exists():
@@ -221,7 +275,7 @@ def check_registry(checker, found_control_ids):
 
 # ── section 3: stage files ────────────────────────────────────────────────────
 
-def check_stage_files(checker, registry_ids):
+def check_stage_files(checker, registry_ids: list) -> None:
     checker.section("3/7  Stage files — schema + control + artifact references")
     schema = load_json(SCHEMA_DIR / "stage.schema.json")
 
@@ -277,7 +331,7 @@ def check_stage_files(checker, registry_ids):
 
 # ── section 4: directive files ────────────────────────────────────────────────
 
-def check_directive_files(checker):
+def check_directive_files(checker) -> None:
     checker.section("4/7  Directive files — schema validation")
     schema = load_json(SCHEMA_DIR / "directive.schema.json")
 
@@ -298,7 +352,7 @@ def check_directive_files(checker):
 
 # ── section 5: control dependencies ──────────────────────────────────────────
 
-def check_control_dependencies(checker, registry_ids):
+def check_control_dependencies(checker, registry_ids: list) -> None:
     checker.section("5/7  Control dependency chains")
 
     for path in sorted(CONTROLS_DIR.glob("*/*.yaml")):
@@ -341,7 +395,7 @@ def check_control_dependencies(checker, registry_ids):
 
 # ── section 6: feedback loops ─────────────────────────────────────────────────
 
-def check_feedback_loops(checker, registry_ids):
+def check_feedback_loops(checker, registry_ids: list) -> None:
     checker.section("6/7  Feedback loops — structure + control reference validation")
 
     if not FEEDBACK_FILE.exists():
@@ -425,7 +479,7 @@ def check_feedback_loops(checker, registry_ids):
 
 # ── section 7: stage structure ────────────────────────────────────────────────
 
-def check_stage_structure(checker):
+def check_stage_structure(checker) -> None:
     checker.section("7/7  Stage directory structure — README + process.md presence")
 
     for stage_num in range(1, 7):
