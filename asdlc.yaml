@@ -159,22 +159,22 @@ cross_cutting:
     core: directives/core/core-directives.yaml
     stages: directives/stages/
   controls:
-    - id: SC-0D
+    - id: SC-01
       name: Core Directive Injection
       track: SC
-    - id: SC-2B
+    - id: SC-02
       name: Stage Directive Injection
       track: SC
-    - id: GC-0A
+    - id: GC-01
       name: Audit Trail & Compliance Reporting
       track: GC
-    - id: GC-0B
+    - id: GC-02
       name: End-to-End Traceability
       track: GC
-    - id: GC-0C
+    - id: GC-03
       name: Agent Provenance Registry
       track: GC
-    - id: GC-0D
+    - id: GC-04
       name: Compliance Evidence Automation
       track: GC
 
@@ -191,28 +191,28 @@ stages:
       into structured technical requirements. Establishes the source of truth
       for all subsequent agentic actions.
     controls:
-      - id: QC-1A
+      - id: QC-01
         name: Specification Validation
         track: QC
-      - id: QC-1B
+      - id: QC-02
         name: Coherence & Conflict Resolution
         track: QC
-      - id: RC-1A
+      - id: RC-01
         name: Risk Classification
         track: RC
-      - id: SC-1A
+      - id: SC-03
         name: Pre-Guardrails
         track: SC
-      - id: SC-1B
+      - id: SC-04
         name: Data Classification & Sensitivity Screening
         track: SC
-      - id: AC-1A
+      - id: AC-01
         name: AI Risk Tier Classification
         track: AC
-      - id: AC-1B
+      - id: AC-02
         name: GPAI & Foundation Model Obligation Screening
         track: AC
-      - id: GC-1A
+      - id: GC-05
         name: Intent Traceability
         track: GC
 
@@ -227,28 +227,28 @@ stages:
       specifications. Threat modelling and stage directive injection
       occur here before any coding begins.
     controls:
-      - id: QC-2A
+      - id: QC-03
         name: Design Completeness & Standards
         track: QC
-      - id: RC-2A
+      - id: RC-02
         name: Design Approval
         track: RC
-      - id: RC-2B
+      - id: RC-03
         name: Privacy Impact Assessment Gate
         track: RC
-      - id: SC-2A
+      - id: SC-05
         name: Threat Model Validation
         track: SC
-      - id: SC-2B
+      - id: SC-02
         name: Directive Injection
         track: SC
-      - id: SC-2C
+      - id: SC-06
         name: Zero-Trust Architecture Validation
         track: SC
-      - id: AC-2A
+      - id: AC-03
         name: AI Component Design Review
         track: AC
-      - id: AC-2B
+      - id: AC-04
         name: AI Model Governance & Version Control
         track: AC
 
@@ -263,31 +263,31 @@ stages:
       control-dense stage: enforces quality, controls agent permissions, scans
       for security issues, tracks provenance, and converges into a reviewed PR.
     controls:
-      - id: QC-3A
+      - id: QC-04
         name: Pull Request Creation & Review
         track: QC
-      - id: QC-3B
+      - id: QC-05
         name: Code Quality Standards
         track: QC
-      - id: RC-3A
+      - id: RC-04
         name: Decision Log
         track: RC
-      - id: SC-3A
+      - id: SC-07
         name: Permission Management
         track: SC
-      - id: SC-3B
+      - id: SC-08
         name: Post-Guardrails
         track: SC
-      - id: SC-3C
+      - id: SC-09
         name: Secrets & Credentials Scanning
         track: SC
-      - id: SC-3D
+      - id: SC-10
         name: Software Composition Analysis & SBOM Generation
         track: SC
-      - id: SC-3E
+      - id: SC-11
         name: Container & IaC Security Scanning
         track: SC
-      - id: GC-3A
+      - id: GC-06
         name: Code Provenance Tracking
         track: GC
 
@@ -302,31 +302,31 @@ stages:
       to release?" Culminates in a risk threshold evaluation that opens or
       blocks the door to deployment.
     controls:
-      - id: QC-4A
+      - id: QC-06
         name: Functional & Non-Functional Testing
         track: QC
-      - id: QC-4B
+      - id: QC-07
         name: AI Output Validation
         track: QC
-      - id: QC-4C
+      - id: QC-08
         name: Documentation Completeness
         track: QC
-      - id: RC-4A
+      - id: RC-05
         name: Risk Threshold Evaluation
         track: RC
-      - id: SC-4A
+      - id: SC-12
         name: SAST
         track: SC
-      - id: SC-4B
+      - id: SC-13
         name: DAST
         track: SC
-      - id: SC-4C
+      - id: SC-14
         name: API Security Testing
         track: SC
-      - id: SC-4D
+      - id: SC-15
         name: Adversarial AI Robustness Testing
         track: SC
-      - id: AC-4A
+      - id: AC-05
         name: Bias & Fairness Testing
         track: AC
 
@@ -341,22 +341,22 @@ stages:
       Ensures everything prior is complete, the deployment is trustworthy, and
       there is a verified rollback path.
     controls:
-      - id: QC-5A
+      - id: QC-09
         name: Release Readiness Checklist
         track: QC
-      - id: RC-5A
+      - id: RC-06
         name: CAB Approval
         track: RC
-      - id: RC-5B
+      - id: RC-07
         name: Rollback Plan Validation
         track: RC
-      - id: SC-5A
+      - id: SC-16
         name: Infrastructure Security
         track: SC
-      - id: SC-5B
+      - id: SC-17
         name: Deployment Integrity
         track: SC
-      - id: SC-5C
+      - id: SC-18
         name: Secrets & Key Management Lifecycle
         track: SC
 
@@ -371,22 +371,22 @@ stages:
       health, security posture, risk evolution, and AI behaviour. Feeds back
       into the lifecycle through defined re-entry paths.
     controls:
-      - id: QC-6A
+      - id: QC-10
         name: SLA/SLO Monitoring
         track: QC
-      - id: RC-6A
+      - id: RC-08
         name: Risk & Health Monitoring
         track: RC
-      - id: RC-6B
+      - id: RC-09
         name: Third-Party Continuous Risk Monitoring
         track: RC
-      - id: SC-6A
+      - id: SC-19
         name: Incident Scanning & Detection
         track: SC
-      - id: SC-6B
+      - id: SC-20
         name: Runtime Anomaly Detection
         track: SC
-      - id: AC-6A
+      - id: AC-06
         name: AI Post-Market Surveillance
         track: AC
 

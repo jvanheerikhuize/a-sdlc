@@ -1,0 +1,72 @@
+# =============================================================================
+# Control: SC-01 — Core Directive Injection
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-01
+moscow_score: must
+name: Core Directive Injection
+description: >-
+  Inject the signed, immutable Core Directives bundle into every agent context
+  at session start, before any stage work begins. Core directives establish the
+  universal behavioural constraints that govern all agents across all A-SDLC
+  stages. They take absolute precedence over user instructions and cannot be
+  overridden at runtime. The agent must acknowledge receipt before proceeding.
+required_in_stages:
+- number: 0
+  name: Cross-Cutting
+  mandatory: true
+  note: Runs at agent session start — before any stage is entered
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: automated_policy_enforced
+  human_display: Fully automated (signed)
+  agent_role: >-
+    Receive and acknowledge the signed core directive payload before any user
+    interaction or stage work begins. Log acknowledgement with timestamp.
+  human_role: >-
+    Security Architect authors, signs, and publishes the core directive payload.
+    Reviews directive violation logs periodically. Triggers re-injection after
+    any directive update.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+directive_payload: directives/core/core-directives.yaml
+regulatory_mapping:
+  dora:
+  - article: Art. 9(4)(c)
+    obligation: ICT security policies and access controls must govern all automated agents
+  - article: Art. 9(2)
+    obligation: Protection and prevention of ICT systems must be maintained throughout operations
+  eu_ai_act:
+  - article: Art. 14(1)
+    requirement: Human oversight measures must be built into AI system design and operation
+  - article: Art. 15(4)
+    requirement: Protection against unauthorised manipulation through defined access controls
+inputs:
+- name: Core Directives payload
+  description: Signed YAML directive bundle from directives/core/core-directives.yaml.
+outputs:
+- name: Core directive acknowledgement
+  type: evidence
+  description: >-
+    Confirmation that the agent received and acknowledged the core directive
+    payload, with timestamp and agent identifier.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: >-
+    If core directive injection fails or the agent does not acknowledge, no
+    stage work may begin. The session must be terminated and restarted.
+automation:
+  frequency: per_session
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

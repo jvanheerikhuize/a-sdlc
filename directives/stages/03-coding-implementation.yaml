@@ -3,7 +3,7 @@
 # =============================================================================
 # Scope:          Stage 3 only
 # Classification: IMMUTABLE
-# Injected by:    SC-2B (Stage Directive Injection) at Stage 3 entry
+# Injected by:    SC-02 (Stage Directive Injection) at Stage 3 entry
 #
 # These directives govern agent behaviour during code generation, dependency
 # management, and pull request creation. They layer on top of
@@ -105,7 +105,7 @@ categories:
 
       - id: PERM-01
         text: >-
-          Operate strictly within the permission boundary defined by SC-3A
+          Operate strictly within the permission boundary defined by SC-07
           (Permission Management). Never attempt to access files, APIs,
           databases, network resources, or cloud services outside your granted
           permission scope during the implementation session.
@@ -113,5 +113,5 @@ categories:
       - id: PERM-02
         text: >-
           Tag all agent-generated code with provenance metadata at the point of
-          generation, per GC-3A (Code Provenance Tracking). Code without
+          generation, per GC-06 (Code Provenance Tracking). Code without
           provenance tags cannot be included in a pull request.

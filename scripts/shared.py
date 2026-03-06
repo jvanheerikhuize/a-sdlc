@@ -73,16 +73,16 @@ def load_json_safe(path: Path) -> dict:
 def extract_control_id_from_string(text: str) -> Optional[str]:
     """Extract control ID from text using regex pattern.
 
-    Control ID format: [TRACK]-[STAGE][LETTER]
-    Examples: SC-2B, QC-1A, RC-5B
+    Control ID format: [TRACK]-[NN]
+    Examples: SC-02, QC-01, RC-07
 
     Args:
         text: Text to search for control ID.
 
     Returns:
-        Control ID string (e.g., 'SC-2B'), or None if not found.
+        Control ID string (e.g., 'SC-02'), or None if not found.
     """
-    pattern = r'([A-Z]{2})-(\d[A-Z])'
+    pattern = r'(QC|RC|SC|AC|GC)-(\d{2})'
     match = re.search(pattern, text)
     return match.group(0) if match else None
 
@@ -91,7 +91,7 @@ def find_control_in_registry(control_id: str, registry: list) -> Optional[dict]:
     """Find control by ID in registry list.
 
     Args:
-        control_id: Control ID to search for (e.g., 'SC-2B').
+        control_id: Control ID to search for (e.g., 'SC-02').
         registry: List of control dicts from registry.yaml.
 
     Returns:
@@ -115,11 +115,11 @@ def build_markdown_table(headers: list, rows: list) -> str:
 
     Example:
         >>> headers = ["Name", "Status"]
-        >>> rows = [{"Name": "SC-2B", "Status": "Active"}]
+        >>> rows = [{"Name": "SC-02", "Status": "Active"}]
         >>> print(build_markdown_table(headers, rows))
         | Name | Status |
         |------|--------|
-        | SC-2B | Active |
+        | SC-02 | Active |
     """
     if not headers:
         return ""
@@ -197,7 +197,7 @@ def rel_path(path: Path, from_root: Path) -> str:
         from_root: Repository root path.
 
     Returns:
-        Relative path as string (e.g., 'controls/sc/SC-2B.yaml').
+        Relative path as string (e.g., 'controls/sc/SC-02.yaml').
     """
     try:
         return str(path.relative_to(from_root))

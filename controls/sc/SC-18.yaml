@@ -1,0 +1,106 @@
+# =============================================================================
+# Control: SC-18 — Secrets & Key Management Lifecycle
+# Track:   SC (Security Controls)
+# Owner:   Security / Infrastructure Security Engineer
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-18
+moscow_score: should
+name: Secrets & Key Management Lifecycle
+description: >-
+  Before deployment, verify that all secrets and cryptographic keys required by the
+  release are: stored in an approved vault or secrets management system (not in config
+  files, environment variables, or code repositories); have defined rotation schedules
+  meeting policy requirements; have not exceeded their maximum age policy; have access
+  control lists (ACLs) restricting access to only required service identities; and have
+  audit logging enabled for all access. Verify that the deployment process retrieves
+  secrets at runtime from the approved vault, not from static configuration. Block deployment
+  if any secret fails validation.
+required_in_stages:
+- number: 5
+  name: Deployment & Release
+  mandatory: true
+  note: >-
+    SC-09 detects secrets in code (Stage 3). This control ensures legitimate secrets
+    in production are properly lifecycle-managed (vaulted, rotated, access-controlled).
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: agent_checks_human_approves
+  human_display: Agent verifies, human approves deployment
+  agent_role: >-
+    Before deployment: validate all required secrets against a vault system. Check:
+    is each secret stored in approved vault (Vault, AWS Secrets Manager, Azure Key Vault)?
+    Does it have a defined rotation schedule? Has it been rotated within policy limits?
+    Are ACLs configured to allow only necessary services? Is audit logging enabled?
+    Verify deployment process uses runtime secret injection, not config files. Report any
+    violations.
+  human_role: >-
+    Review agent validation report. For any failed validation: decide to remediate
+    (rotate secret, update deployment process), accept risk (document exception), or
+    delay deployment. Approve deployment only if all secrets pass validation.
+owner:
+  team: Security, Infrastructure
+  role: Infrastructure Security Engineer
+  contact: ''
+regulatory_mapping:
+  dora:
+    - article: "Art. 9(4)"
+      obligation: >-
+        "Strong authentication and cryptographic key management based on data
+        classification" is explicit requirement; presupposes lifecycle management
+    - article: "Art. 9(2-3)"
+      obligation: >-
+        Protection of ICT systems; compromised credentials from poor lifecycle
+        management are primary breach vector
+  eu_ai_act:
+    - article: "Art. 15(4)"
+      requirement: >-
+        Appropriate cybersecurity measures including protection against confidentiality
+        breaches from exposed credentials
+inputs:
+- name: Deployment configuration
+  description: >-
+    Infrastructure-as-Code (IaC) files, deployment manifests, environment configurations
+    that specify secrets usage
+- name: Secrets vault system
+  description: Approved secrets management system (Vault, AWS Secrets Manager, etc.)
+- name: Key rotation policy
+  description: Defined policy on rotation frequency by secret type
+outputs:
+- name: Secrets Validation Report
+  type: report
+  description: >-
+    For each secret used by the release: vault status (vaulted/not vaulted), rotation
+    schedule compliance, age, ACL configuration, audit logging status. Pass/fail assessment.
+  retention: 7 years (audit trail)
+- name: Secret rotation certificate (if rotations performed)
+  type: evidence
+  description: >-
+    Dated evidence of any rotation activities performed pre-deployment
+  retention: 7 years
+failure_behaviour:
+  action: block
+  escalation_target: Infrastructure Security Engineer
+  description: >-
+    Deployment blocked if: secrets found in config files/env vars, secrets exceed max
+    age, ACLs not configured, audit logging disabled, or deployment process attempts
+    static secret injection. Must remediate before deployment approval.
+automation:
+  tooling:
+    - HashiCorp Vault
+    - AWS Secrets Manager
+    - Azure Key Vault
+    - Kubernetes Secrets with external secret operators
+    - GitOps secret scanning (Sealed Secrets, Kyverno)
+  frequency: per_release
+  sla_minutes: 60
+dependencies:
+- SC-09   # Secrets & Credentials Scanning (detects accidental secret commits)
+- SC-16   # Infrastructure Security (production baseline)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

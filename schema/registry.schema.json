@@ -42,7 +42,7 @@
           },
           "file": {
             "type": "string",
-            "pattern": "^controls/[a-z]{2}/[A-Z]{2}-[0-9][A-Z]?\\.yaml$",
+            "pattern": "^controls/[a-z]{2}/[A-Z]{2}-\\d{2}\\.yaml$",
             "description": "Path to control YAML file (relative to repo root)"
           },
           "owner_team": {
@@ -52,7 +52,7 @@
           },
           "directive_payload": {
             "type": "string",
-            "description": "Optional: path to directive payload file (only for SC-0D)"
+            "description": "Optional: path to directive payload file (only for SC-01)"
           },
           "note": {
             "type": "string",

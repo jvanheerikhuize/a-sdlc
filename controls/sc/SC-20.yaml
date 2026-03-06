@@ -1,0 +1,57 @@
+# =============================================================================
+# Control: SC-20 — Runtime Anomaly Detection
+# Track:   SC (Security Controls)
+# Owner:   Security / SRE / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-20
+moscow_score: could
+name: Runtime Anomaly Detection
+description: 'Detect behavioural anomalies through statistical baseline monitoring: identify deviations in system behaviour
+  patterns, detect AI model drift, identify adversarial input patterns, and surface any runtime behaviour inconsistent with
+  the approved design. Feeds detected anomalies into the SC-19 incident process when thresholds are exceeded.'
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: automated_with_human_escalation
+  human_display: Automated with human escalation
+  agent_role: Maintain behavioural baselines; apply statistical anomaly detection; detect AI model drift and adversarial inputs;
+    escalate on anomaly.
+  human_role: Investigate escalated anomalies; determine whether anomaly represents a security incident or requires code change.
+owner:
+  team: Security / SRE
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 10
+    obligation: Detection of anomalous activities and ICT-related incidents through continuous monitoring
+  eu_ai_act:
+  - article: Art. 15(3)
+    requirement: Resilience of AI systems against errors, inconsistencies, and adversarial inputs
+  - article: Art. 9(2)(b)
+    requirement: Continuous monitoring of identified risks during operation
+outputs:
+- name: Anomaly detection record
+  type: log_entry
+  description: Continuous record of detected behavioural anomalies with severity and baseline deviation measurements.
+  retention: 7 years (DORA)
+- name: Anomaly escalation alert
+  type: alert
+  description: Alert when anomaly exceeds defined threshold; includes context for human investigation.
+failure_behaviour:
+  action: escalate
+  escalation_target: Security Architect
+  description: High-severity anomalies trigger immediate escalation to Security Architect and may initiate feedback loop.
+automation:
+  frequency: continuous
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

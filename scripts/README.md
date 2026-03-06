@@ -101,8 +101,8 @@ Run `validate.py` before committing any change to:
 
 **With failures:**
 ```
-✗ Registry: Duplicate control ID found: SC-2B (appears in controls/sc/SC-2B.yaml and controls/sc/SC-2B-alt.yaml)
-✗ Control file: controls/sc/SC-5D.yaml references missing control QC-9Z in dependencies
+✗ Registry: Duplicate control ID found: SC-02 (appears in controls/sc/SC-02.yaml and controls/sc/SC-02-alt.yaml)
+✗ Control file: controls/sc/SC-20.yaml references missing control QC-99 in dependencies
 ✗ 2 failures found (exit code 1)
 ```
 
@@ -305,10 +305,10 @@ pip install -r scripts/requirements.txt
 pip install jsonschema>=4.18.0
 ```
 
-**Error: "Control file controls/sc/SC-2B.yaml not found"**
+**Error: "Control file controls/sc/SC-02.yaml not found"**
 - Check file path is correct
 - Ensure registry.yaml references correct file path
-- Verify file exists: `ls -la controls/sc/SC-2B.yaml`
+- Verify file exists: `ls -la controls/sc/SC-02.yaml`
 
 **Circular dependency detected**
 - Examine control's `dependencies` field

@@ -1,0 +1,65 @@
+# =============================================================================
+# Rollback Plan Template
+# =============================================================================
+# Produced during Step 5.3 by control RC-07.
+# Validated rollback strategy with triggers, tested procedure steps, decision
+# authority, and pre-production test results.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp rollback-plan.yaml FEAT-XXXX-rollback-plan.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 5
+control: RC-07
+validated_at: ""                   # ISO 8601 datetime
+
+# --- Rollback trigger conditions ---
+triggers: []
+# e.g.:
+# - id: "RT-001"
+#   condition: ""                  # e.g. "Error rate exceeds 5% for 3 consecutive minutes"
+#   metric_source: ""              # e.g. "SLO dashboard — error rate SLI"
+#   auto_trigger: null             # true | false
+
+decision_authority:
+  name: ""                         # Person with authority to initiate rollback
+  role: ""                         # e.g. Release Manager | OPS Lead
+  escalation_contact: ""           # Backup authority
+
+time_window:
+  maximum_rollback_minutes: null   # Maximum time from trigger to rollback initiation
+  rollback_execution_minutes: null # Expected time to complete rollback procedure
+
+procedure_steps: []
+# e.g.:
+# - step: 1
+#   action: ""
+#   actor: ""                      # AGT | OPS | REL
+#   expected_duration_minutes: null
+#   verification: ""               # How to confirm this step succeeded
+
+rollback_target:
+  version: ""                      # Version/tag to roll back to
+  environment: ""                  # Target environment name
+  data_migration_required: null    # true | false
+  data_migration_notes: ""         # Steps to reverse any data migrations
+
+# --- Pre-production test results ---
+pre_production_test:
+  executed_at: ""                  # ISO 8601 datetime
+  environment: ""
+  execution_time_minutes: null
+  triggered_condition: ""          # Which trigger was simulated
+  all_steps_completed: null        # true | false
+  failures: []
+  notes: ""
+
+# --- Release Manager approval ---
+decision:
+  status: ""                       # approved | improvements_required
+  decided_by: ""                   # REL full name
+  decided_at: ""                   # ISO 8601 datetime
+  notes: ""

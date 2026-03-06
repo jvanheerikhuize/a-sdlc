@@ -1,0 +1,57 @@
+# =============================================================================
+# Control: QC-07 — AI Output Validation
+# Track:   QC (Quality Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-07
+moscow_score: should
+name: AI Output Validation
+description: 'For changes involving AI systems: execute hallucination detection tests, accuracy benchmarking against defined
+  thresholds, output consistency tests across equivalent inputs, and boundary condition tests. Results feed into the RC-05
+  risk threshold evaluation. Not applicable to changes with no AI component.'
+required_in_stages:
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: agent_executes_human_reviews
+  human_display: Agent executes, human reviews
+  agent_role: Execute AI validation test suite; measure hallucination rate, accuracy, and consistency.
+  human_role: Review AI validation results; determine if accuracy thresholds are acceptable for release.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+  - article: Art. 15(1)
+    requirement: Accuracy, robustness, and cybersecurity requirements for high-risk AI systems
+  - article: Art. 9(7)
+    requirement: Testing to identify appropriate risk management measures for AI systems
+inputs:
+- name: AI Act risk tier classification
+  source_control: AC-01
+  description: Determines the depth and scope of AI validation required.
+outputs:
+- name: AI output validation report
+  type: evidence
+  description: Hallucination detection results, accuracy scores, consistency test results, and boundary test outcomes.
+  retention: 7 years (AI Act)
+failure_behaviour:
+  action: block
+  escalation_target: AI Governance Lead
+  description: AI systems failing accuracy thresholds cannot proceed to production.
+automation:
+  frequency: per_release
+dependencies:
+- QC-04
+- AC-01
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

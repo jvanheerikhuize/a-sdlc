@@ -1,0 +1,97 @@
+# =============================================================================
+# Control: SC-02 — Directive Injection
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-02
+moscow_score: must
+name: Stage Directive Injection
+description: >-
+  Inject the signed, immutable stage directive bundle into the agent context
+  at the entry of each A-SDLC stage. Stage directives layer on top of the
+  core directives (SC-01) and add behavioural constraints specific to the work
+  performed in that stage. The agent must acknowledge receipt before beginning
+  stage work. Runs once per stage entry across all six stages.
+required_in_stages:
+- number: 1
+  name: Intent Ingestion
+  mandatory: true
+  directive_payload: directives/stages/01-intent-ingestion.yaml
+- number: 2
+  name: System Design
+  mandatory: true
+  directive_payload: directives/stages/02-system-design.yaml
+- number: 3
+  name: Coding & Implementation
+  mandatory: true
+  directive_payload: directives/stages/03-coding-implementation.yaml
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+  directive_payload: directives/stages/04-testing-documentation.yaml
+- number: 5
+  name: Deployment & Release
+  mandatory: true
+  directive_payload: directives/stages/05-deployment-release.yaml
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+  directive_payload: directives/stages/06-observability-maintenance.yaml
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: automated_policy_enforced
+  human_display: Fully automated (signed)
+  agent_role: >-
+    At each stage entry, receive and acknowledge the signed stage directive
+    payload for that stage. Log acknowledgement with stage number, timestamp,
+    and agent identifier before performing any stage work.
+  human_role: >-
+    Security Architect authors, signs, and publishes each stage directive
+    payload. Reviews directive violation logs periodically. Triggers
+    re-injection after any directive update.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 9(4)(c)
+    obligation: ICT security policies and access controls must govern automated agents
+  eu_ai_act:
+  - article: Art. 14(1)
+    requirement: Human oversight measures must be built into AI system design and operation
+inputs:
+- name: Stage directive payload
+  description: >-
+    Signed YAML stage directive bundle from directives/stages/0N-name.yaml,
+    where N is the stage number being entered.
+outputs:
+- name: Stage directive injection confirmation
+  type: evidence
+  description: >-
+    Confirmation that the agent received and acknowledged the stage directive
+    payload, with stage number, timestamp, and agent identifier.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: >-
+    If stage directive injection fails or the agent does not acknowledge, the
+    stage cannot begin. The session must be restarted from directive injection.
+automation:
+  frequency: per_stage_entry
+dependencies:
+- SC-01
+feedback_loops:
+- path: path_a
+  required_in_path: false
+- path: path_b
+  required_in_path: false
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

@@ -104,41 +104,41 @@ doc_generation:
 # Full definitions in: controls/[track]/[ID].yaml
 controls:
   # Cross-Cutting (Stage 0)
-  - id: SC-0D
+  - id: SC-01
     name: Core Directive Injection
     track: SC
     stage: 0
-    file: controls/sc/SC-0D.yaml
+    file: controls/sc/SC-01.yaml
 
-  - id: SC-2B
+  - id: SC-02
     name: Stage Directive Injection
     track: SC
     stage: 0
-    file: controls/sc/SC-2B.yaml
+    file: controls/sc/SC-02.yaml
 
-  - id: GC-0A
+  - id: GC-01
     name: Audit Trail & Compliance Reporting
     track: GC
     stage: 0
-    file: controls/gc/GC-0A.yaml
+    file: controls/gc/GC-01.yaml
 
-  - id: GC-0B
+  - id: GC-02
     name: End-to-End Traceability
     track: GC
     stage: 0
-    file: controls/gc/GC-0B.yaml
+    file: controls/gc/GC-02.yaml
 
-  - id: GC-0C
+  - id: GC-03
     name: Agent Provenance Registry
     track: GC
     stage: 0
-    file: controls/gc/GC-0C.yaml
+    file: controls/gc/GC-03.yaml
 
-  - id: GC-0D
+  - id: GC-04
     name: Compliance Evidence Automation
     track: GC
     stage: 0
-    file: controls/gc/GC-0D.yaml
+    file: controls/gc/GC-04.yaml
 
 # Track definitions
 tracks:

@@ -31,7 +31,7 @@ The following roles participate in this stage:
 | AGT | Agent | Executes continuous monitoring; detects anomalies; classifies incidents; prepares regulatory reports; triggers alerts |
 | OPS | Operations / SRE | Activates monitoring at handover; responds to SLO and health alerts; initiates feedback loops for code changes |
 | SA | Security Architect | Responds to incident and anomaly escalations; approves DORA Art. 19 classification; investigates security events |
-| RO | Risk Officer | Responds to risk escalations from RC-6A; makes risk acceptance decisions; approves feedback loop triggers |
+| RO | Risk Officer | Responds to risk escalations from RC-08; makes risk acceptance decisions; approves feedback loop triggers |
 | AGL | AI Governance Lead | Reviews AI post-market surveillance results; files serious AI incident reports per Art. 73 |
 | CO | Compliance Officer | Reviews all regulatory incident reports; ensures DORA and AI Act reporting obligations are met |
 
@@ -90,7 +90,7 @@ Maximum concurrent steps: **6**
 
 | Property | Value |
 |----------|-------|
-| **Input** | Deployment integrity record (Stage 5 SC-5B output) |
+| **Input** | Deployment integrity record (Stage 5 SC-17 output) |
 | **Output** | Monitoring activation confirmed; all Stage 6 controls enter continuous operation |
 | **On Failure** | If any monitoring channel fails to activate, do not leave Stage 5 hypercare. Resolve and retry |
 
@@ -98,7 +98,7 @@ Maximum concurrent steps: **6**
 
 ### Step 6.2 — SLA/SLO Monitoring
 
-**Control:** [`QC-6A`](../../controls/qc/QC-6A.yaml) · **Delegation:** Agent monitors, OPS responds
+**Control:** [`QC-10`](../../controls/qc/QC-10.yaml) · **Delegation:** Agent monitors, OPS responds
 
 
 #### Actors and Actions
@@ -122,7 +122,7 @@ Maximum concurrent steps: **6**
 
 ### Step 6.3 — Risk & Health Monitoring
 
-**Control:** [`RC-6A`](../../controls/rc/RC-6A.yaml) · **Delegation:** Automated with human escalation
+**Control:** [`RC-08`](../../controls/rc/RC-08.yaml) · **Delegation:** Automated with human escalation
 
 
 #### Actors and Actions
@@ -147,7 +147,7 @@ Maximum concurrent steps: **6**
 
 ### Step 6.3-3rd-party — Third-Party Risk Monitoring
 
-**Control:** [`RC-6B`](../../controls/rc/RC-6B.yaml) · **Delegation:** Fully automated
+**Control:** [`RC-09`](../../controls/rc/RC-09.yaml) · **Delegation:** Fully automated
 
 **Condition:** Applicable for AI component deployments — monitors third-party provider risk posture
 
@@ -171,7 +171,7 @@ Maximum concurrent steps: **6**
 
 ### Step 6.4 — Incident Scanning & Detection
 
-**Control:** [`SC-6A`](../../controls/sc/SC-6A.yaml) · **Delegation:** Automated with human escalation
+**Control:** [`SC-19`](../../controls/sc/SC-19.yaml) · **Delegation:** Automated with human escalation
 
 
 #### Actors and Actions
@@ -204,7 +204,7 @@ Maximum concurrent steps: **6**
 
 ### Step 6.5 — Runtime Anomaly Detection
 
-**Control:** [`SC-6B`](../../controls/sc/SC-6B.yaml) · **Delegation:** Automated with human escalation
+**Control:** [`SC-20`](../../controls/sc/SC-20.yaml) · **Delegation:** Automated with human escalation
 
 
 #### Actors and Actions
@@ -213,7 +213,7 @@ Maximum concurrent steps: **6**
 |-------|--------|
 | AGT | Maintain statistical behavioural baselines for all system components |
 | AGT | Detect deviations: AI model drift, adversarial inputs, abnormal resource patterns, unexpected call graphs |
-| AGT | Escalate anomalies exceeding defined thresholds to SC-6A (Step 6.4) incident process |
+| AGT | Escalate anomalies exceeding defined thresholds to SC-19 (Step 6.4) incident process |
 | SA | Investigate high-severity anomalies; determine whether anomaly is a security incident or requires code change |
 
 #### Inputs and Outputs
@@ -221,14 +221,14 @@ Maximum concurrent steps: **6**
 | Property | Value |
 |----------|-------|
 | **Output** | Anomaly detection record (artifacts/outputs/anomaly-detection-record.yaml) — continuously updated |
-| **On Failure** | Feeds into SC-6A (Step 6.4); may trigger feedback loop if code change is needed |
-| **Note** | Continuous runtime monitoring; feeds into SC-6A incident detection |
+| **On Failure** | Feeds into SC-19 (Step 6.4); may trigger feedback loop if code change is needed |
+| **Note** | Continuous runtime monitoring; feeds into SC-19 incident detection |
 
 
 
 ### Step 6.6 — AI Post-Market Surveillance
 
-**Control:** [`AC-6A`](../../controls/ac/AC-6A.yaml) · **Delegation:** Agent monitors, AGL reports
+**Control:** [`AC-06`](../../controls/ac/AC-06.yaml) · **Delegation:** Agent monitors, AGL reports
 
 **Condition:** Only applicable when the deployed system includes AI components.
 
@@ -237,7 +237,7 @@ Maximum concurrent steps: **6**
 
 | Actor | Action |
 |-------|--------|
-| AGT | Continuously track AI performance metrics against Stage 4 QC-4B baselines |
+| AGT | Continuously track AI performance metrics against Stage 4 QC-07 baselines |
 | AGT | Execute scheduled bias re-testing at defined intervals |
 | AGT | Maintain incident log for any serious AI incidents |
 | AGT | Keep AI Act technical documentation current |
@@ -259,51 +259,51 @@ Maximum concurrent steps: **6**
 ## Required Controls
 
 
-### QC-6A — SLA/SLO Monitoring
+### QC-10 — SLA/SLO Monitoring
 
 - **Track:** QC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/qc/QC-6A.yaml`](../../controls/qc/QC-6A.yaml)
+- **File:** [`controls/qc/QC-10.yaml`](../../controls/qc/QC-10.yaml)
 - **Note:** Continuous — runs throughout the operational lifetime
 
 
-### RC-6A — Risk & Health Monitoring
+### RC-08 — Risk & Health Monitoring
 
 - **Track:** RC
 - **Delegation:** `automated_with_human_escalation`
-- **File:** [`controls/rc/RC-6A.yaml`](../../controls/rc/RC-6A.yaml)
+- **File:** [`controls/rc/RC-08.yaml`](../../controls/rc/RC-08.yaml)
 - **Note:** Continuous — runs throughout the operational lifetime
 
 
-### RC-6B — Third-Party Continuous Risk Monitoring
+### RC-09 — Third-Party Continuous Risk Monitoring
 
 - **Track:** RC
 - **Delegation:** `agent_monitors_human_reports`
-- **File:** [`controls/rc/RC-6B.yaml`](../../controls/rc/RC-6B.yaml)
+- **File:** [`controls/rc/RC-09.yaml`](../../controls/rc/RC-09.yaml)
 - **Note:** Applicable for AI component deployments — monitors third-party provider risk posture
 
 
-### SC-6A — Incident Scanning & Detection
+### SC-19 — Incident Scanning & Detection
 
 - **Track:** SC
 - **Delegation:** `automated_with_human_escalation`
-- **File:** [`controls/sc/SC-6A.yaml`](../../controls/sc/SC-6A.yaml)
+- **File:** [`controls/sc/SC-19.yaml`](../../controls/sc/SC-19.yaml)
 - **Note:** Continuous — DORA Art. 17–19 reporting obligations
 
 
-### SC-6B — Runtime Anomaly Detection
+### SC-20 — Runtime Anomaly Detection
 
 - **Track:** SC
 - **Delegation:** `automated_with_human_escalation`
-- **File:** [`controls/sc/SC-6B.yaml`](../../controls/sc/SC-6B.yaml)
-- **Note:** Continuous — feeds anomalies into SC-6A incident process
+- **File:** [`controls/sc/SC-20.yaml`](../../controls/sc/SC-20.yaml)
+- **Note:** Continuous — feeds anomalies into SC-19 incident process
 
 
-### AC-6A — AI Post-Market Surveillance
+### AC-06 — AI Post-Market Surveillance
 
 - **Track:** AC
 - **Delegation:** `agent_monitors_human_reports`
-- **File:** [`controls/ac/AC-6A.yaml`](../../controls/ac/AC-6A.yaml)
+- **File:** [`controls/ac/AC-06.yaml`](../../controls/ac/AC-06.yaml)
 - **Note:** Applicable when deployed system includes AI components
 
 
@@ -313,7 +313,7 @@ Maximum concurrent steps: **6**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../05-deployment-release/artifacts/outputs/SC-5B-deployment-integrity-record.yaml`](../05-deployment-release/artifacts/outputs/SC-5B-deployment-integrity-record.yaml)
+- [`../05-deployment-release/artifacts/outputs/SC-17-deployment-integrity-record.yaml`](../05-deployment-release/artifacts/outputs/SC-17-deployment-integrity-record.yaml)
 
 ---
 
@@ -321,12 +321,12 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-6A-slo-monitoring-record.yaml`](artifacts/outputs/QC-6A-slo-monitoring-record.yaml)
-- [`artifacts/outputs/RC-6A-risk-health-monitoring-record.yaml`](artifacts/outputs/RC-6A-risk-health-monitoring-record.yaml)
-- [`artifacts/outputs/SC-6A-incident-detection-record.yaml`](artifacts/outputs/SC-6A-incident-detection-record.yaml)
-- [`artifacts/outputs/SC-6B-anomaly-detection-record.yaml`](artifacts/outputs/SC-6B-anomaly-detection-record.yaml)
-- [`artifacts/outputs/AC-6A-ai-surveillance-report.yaml`](artifacts/outputs/AC-6A-ai-surveillance-report.yaml)
-- [`artifacts/outputs/RC-6B-third-party-risk-monitoring.yaml`](artifacts/outputs/RC-6B-third-party-risk-monitoring.yaml)
+- [`artifacts/outputs/QC-10-slo-monitoring-record.yaml`](artifacts/outputs/QC-10-slo-monitoring-record.yaml)
+- [`artifacts/outputs/RC-08-risk-health-monitoring-record.yaml`](artifacts/outputs/RC-08-risk-health-monitoring-record.yaml)
+- [`artifacts/outputs/SC-19-incident-detection-record.yaml`](artifacts/outputs/SC-19-incident-detection-record.yaml)
+- [`artifacts/outputs/SC-20-anomaly-detection-record.yaml`](artifacts/outputs/SC-20-anomaly-detection-record.yaml)
+- [`artifacts/outputs/AC-06-ai-surveillance-report.yaml`](artifacts/outputs/AC-06-ai-surveillance-report.yaml)
+- [`artifacts/outputs/RC-09-third-party-risk-monitoring.yaml`](artifacts/outputs/RC-09-third-party-risk-monitoring.yaml)
 
 ---
 
@@ -338,12 +338,12 @@ The following escalations from this stage may trigger feedback loops back into e
 
 | Trigger | Originating Control | Path | Re-Entry Stage |
 |---------|-------------------|------|-----------------|
-| SLO burn rate exceeds threshold | QC-6A | Path B — Quickfix | Stage 3 |
-| Low-risk issue matching pre-approved template | RC-6A | Path A — Autofix | Stage 3 |
-| Vulnerability in SBOM dependency | RC-6A | Path B — Quickfix | Stage 3 |
-| Major security incident requiring code change | SC-6A | Path B — Quickfix or Feature | Stage 3 |
-| Anomaly caused by implementation defect | SC-6B | Path B — Quickfix | Stage 3 |
-| AI performance degradation | AC-6A | Path B — Feature | Stage 1 |
+| SLO burn rate exceeds threshold | QC-10 | Path B — Quickfix | Stage 3 |
+| Low-risk issue matching pre-approved template | RC-08 | Path A — Autofix | Stage 3 |
+| Vulnerability in SBOM dependency | RC-08 | Path B — Quickfix | Stage 3 |
+| Major security incident requiring code change | SC-19 | Path B — Quickfix or Feature | Stage 3 |
+| Anomaly caused by implementation defect | SC-20 | Path B — Quickfix | Stage 3 |
+| AI performance degradation | AC-06 | Path B — Feature | Stage 1 |
 | Scope requires new functionality | Any | Path B — Feature | Stage 1 |
 
 For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](../../feedbackloops/feedback-loops.yaml).
@@ -351,4 +351,4 @@ For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](..
 ---
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

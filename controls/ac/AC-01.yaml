@@ -1,0 +1,57 @@
+# =============================================================================
+# Control: AC-01 — AI Risk Tier Classification
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-01
+moscow_score: must
+name: AI Risk Tier Classification
+description: 'For changes that introduce, modify, or interact with AI components: classify the EU AI Act risk tier (minimal/limited/high/unacceptable)
+  and trigger the corresponding compliance requirements for all downstream stages. Not applicable to changes with no AI component.'
+required_in_stages:
+- number: 1
+  name: Intent Ingestion
+  mandatory: false
+  note: Only applicable when the change introduces, modifies, or interacts with AI components.
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_proposes_human_confirms
+  human_display: Agent proposes, human confirms
+  agent_role: Analyse the specification for AI component involvement; propose EU AI Act risk tier with rationale referencing
+    Art. 6 and Annex III.
+  human_role: Review proposed tier and rationale; confirm or override with documented justification.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+  - article: Art. 6
+    requirement: Classification rules for high-risk AI systems
+  - article: Annex III
+    requirement: List of high-risk AI applications; determines applicable compliance obligations
+inputs:
+- name: Validated feature specification
+  source_control: QC-01
+  description: Specification reviewed for AI component involvement.
+outputs:
+- name: AI Act risk tier classification
+  type: decision
+  description: Confirmed risk tier with rationale and list of triggered compliance obligations for downstream stages.
+  retention: 7 years (AI Act)
+failure_behaviour:
+  action: escalate
+  escalation_target: AI Governance Lead
+  description: If tier cannot be determined, escalate to AI Governance Lead. Default to highest applicable tier pending resolution.
+automation:
+  frequency: per_change
+dependencies:
+- QC-01
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

@@ -3,7 +3,7 @@
 # =============================================================================
 # Scope:          Stage 2 only
 # Classification: IMMUTABLE
-# Injected by:    SC-2B (Stage Directive Injection) at Stage 2 entry
+# Injected by:    SC-02 (Stage Directive Injection) at Stage 2 entry
 #
 # These directives govern agent behaviour during architecture drafting, STRIDE
 # threat modelling, and design review. They layer on top of
@@ -31,7 +31,7 @@ injection:
   notes: >-
     Inject at the start of the Stage 2 agent session, after core directives
     have been acknowledged. Remains active until the Stage 2 exit criteria are
-    confirmed and Stage 3 directive injection (SC-2B) has been completed.
+    confirmed and Stage 3 directive injection (SC-02) has been completed.
 
 enforcement:
   overridable: false
@@ -60,7 +60,7 @@ categories:
           Every stated requirement must map to at least one architectural
           component in the design. Any requirement that cannot be mapped must
           be flagged to the Lead Architect before the design is considered
-          complete. Unmapped requirements block QC-2A approval.
+          complete. Unmapped requirements block QC-03 approval.
 
       - id: DESIGN-02
         text: >-
@@ -92,5 +92,5 @@ categories:
         text: >-
           All CRITICAL and HIGH severity threats must have at least one
           proposed mitigation documented before the threat model is submitted
-          for SC-2A validation. Unmitigated critical or high threats block
+          for SC-05 validation. Unmitigated critical or high threats block
           Stage 2 and prevent Stage 3 from beginning.

@@ -3,7 +3,7 @@
 # =============================================================================
 # Scope:          Stage 4 only
 # Classification: IMMUTABLE
-# Injected by:    SC-2B (Stage Directive Injection) at Stage 4 entry
+# Injected by:    SC-02 (Stage Directive Injection) at Stage 4 entry
 #
 # These directives govern agent behaviour during test execution, coverage
 # reporting, and documentation generation. They layer on top of
@@ -31,7 +31,7 @@ injection:
   notes: >-
     Inject at the start of the Stage 4 agent session, after core directives
     have been acknowledged. Remains active until all Stage 4 exit criteria
-    are confirmed and the risk threshold evaluation (RC-4A) is complete.
+    are confirmed and the risk threshold evaluation (RC-05) is complete.
 
 enforcement:
   overridable: false
@@ -76,6 +76,6 @@ categories:
 
       - id: TEST-04
         text: >-
-          All test evidence submitted as part of QC-4A, SC-4A, and SC-4B must
+          All test evidence submitted as part of QC-06, SC-12, and SC-13 must
           be the genuine output of actual test execution — not synthetic,
           assumed, or manually constructed artefacts.

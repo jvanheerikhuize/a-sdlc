@@ -1,0 +1,51 @@
+# =============================================================================
+# Pull Request Record Template
+# =============================================================================
+# Produced during Step 3.4 (creation) and Step 3.5 (approval) by control QC-04.
+# Records the full pull request lifecycle with evidence package and approvals.
+# IMMUTABLE after merge.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp pull-request-record.yaml FEAT-XXXX-pull-request-record.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 3
+control: QC-04
+immutable: true
+
+pull_request:
+  id: ""                           # PR number or identifier in VCS
+  url: ""
+  title: ""
+  branch_source: ""
+  branch_target: ""
+  created_by: ""                   # agent | human
+  created_at: ""                   # ISO 8601 datetime
+
+risk_tier: ""                      # From Stage 1 RC-01 (low | medium | high | critical)
+reviewers_required: 0              # Determined by risk tier
+
+reviewers: []
+# Per-reviewer entries, e.g.:
+# - name: ""
+#   role: ""                       # Developer | Lead Architect | Security Architect
+#   required: null                 # true | false
+#   approved: null                 # true | false
+#   approved_at: ""                # ISO 8601 datetime
+#   comments_resolved: null        # true | false
+
+evidence_attached:
+  permission-enforcement-log: ""   # FEAT-XXXX-permission-enforcement-log.yaml
+  quality-gate-report: ""          # FEAT-XXXX-quality-gate-report.yaml
+  decision-log: ""                 # FEAT-XXXX-decision-log.yaml
+  secrets-scan-report: ""          # FEAT-XXXX-secrets-scan-report.yaml
+  post-guardrail-scan: ""          # FEAT-XXXX-post-guardrail-scan.yaml
+
+decision:
+  status: ""                       # approved | changes_requested | rejected
+  merged_at: ""                    # ISO 8601 datetime
+  merged_by: ""                    # Name of person who merged
+  rejection_reason: ""             # Populated only if status is rejected

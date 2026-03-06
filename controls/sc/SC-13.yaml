@@ -1,0 +1,55 @@
+# =============================================================================
+# Control: SC-13 — DAST
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-13
+moscow_score: must
+name: DAST
+description: 'Dynamic Application Security Testing: execute runtime security tests against a deployed test instance including
+  injection attack tests, authentication flaw detection, session management validation, TLS configuration checks, and other
+  OWASP top-10 categories.'
+required_in_stages:
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Execute runtime security test suite against test environment; generate findings report.
+  human_role: Review findings; remediate or formally accept residual risk per severity policy.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 24
+    obligation: Requirements for ICT testing of security controls
+  - article: Art. 25
+    obligation: Testing of ICT tools and systems including penetration testing
+  eu_ai_act:
+  - article: Art. 15(3)
+    requirement: Technical solutions for AI-specific cybersecurity including runtime attack simulation
+outputs:
+- name: DAST scan report
+  type: evidence
+  description: Runtime security test results with findings, severity ratings, and remediation recommendations.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: Critical and high-severity findings block Stage 4 exit.
+automation:
+  tooling:
+  - DAST tool (e.g. OWASP ZAP, Burp Suite)
+  frequency: per_release
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

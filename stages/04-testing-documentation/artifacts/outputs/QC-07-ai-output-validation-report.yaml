@@ -1,0 +1,65 @@
+# =============================================================================
+# AI Output Validation Report Template
+# =============================================================================
+# Produced during Step 4.4 by control QC-07.
+# CONDITIONAL: Only applicable when the change involves an AI component.
+# Records hallucination detection, accuracy, consistency, and boundary tests
+# against thresholds defined in the Stage 1 AI tier classification.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp ai-output-validation-report.yaml FEAT-XXXX-ai-output-validation-report.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 4
+control: QC-07
+applicability: ""                  # applicable | not_applicable
+executed_at: ""                    # ISO 8601 datetime (blank if not_applicable)
+ai_tier: ""                        # From Stage 1 AC-01 (minimal | limited | high | prohibited)
+model_id: ""                       # AI model identifier and version
+
+# Leave all test sections empty and set applicability: not_applicable
+# if this change does not involve an AI component.
+
+hallucination_detection:
+  tests_executed: 0
+  hallucination_rate: null         # Decimal, e.g. 0.02 = 2%
+  threshold: null                  # Maximum acceptable rate from AC-01 baseline
+  passed: null                     # true | false
+
+accuracy:
+  tests_executed: 0
+  accuracy_score: null             # Decimal, e.g. 0.95 = 95%
+  threshold: null
+  passed: null
+
+consistency:
+  equivalent_input_pairs_tested: 0
+  inconsistent_pairs: 0
+  inconsistency_rate: null
+  threshold: null
+  passed: null
+
+boundary_conditions:
+  tests_executed: 0
+  unexpected_outputs: 0
+  passed: null
+
+findings: []
+# Per-finding entries, e.g.:
+# - id: "AIV-001"
+#   test_type: ""                  # hallucination | accuracy | consistency | boundary
+#   description: ""
+#   severity: ""                   # critical | high | medium | low
+#   resolution:
+#     status: ""                   # open | accepted
+#     accepted_by: ""              # AGL name
+#     acceptance_rationale: ""
+
+summary:
+  all_thresholds_met: null         # true | false
+  status: ""                       # passed | failed | not_applicable
+  reviewed_by: ""                  # AGL name
+  reviewed_at: ""                  # ISO 8601 datetime

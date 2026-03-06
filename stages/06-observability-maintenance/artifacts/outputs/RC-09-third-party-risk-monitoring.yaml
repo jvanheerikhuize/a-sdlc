@@ -1,0 +1,60 @@
+# RC-09 Third-Party Risk Monitoring Record
+# Produced by: RC-09 (Third-Party Risk Monitoring)
+#
+# Continuous monitoring of third-party providers (cloud vendors, SaaS platforms, APIs)
+# for compliance, security posture, and incident reporting.
+# Applicable for AI component deployments that depend on external providers.
+
+metadata:
+  control: RC-09
+  stage: 6
+  monitoring_period_start: null
+  monitoring_period_end: null
+  frequency: continuous
+
+third_party_providers:
+  - provider_name: null
+    provider_type: null  # cloud-vendor, saas-platform, api-provider, ai-provider, etc.
+    criticality: null  # critical, high, medium, low
+    contract_reference: null
+
+provider_risk_assessment:
+  - provider: null
+    security_posture_score: null  # 0-100
+    compliance_status: []  # SOC2, ISO27001, FedRAMP, etc.
+    incidents_last_period: []
+    security_certifications: []
+
+compliance_monitoring:
+  - provider: null
+    framework: null  # SOC2, ISO27001, HIPAA, GDPR, etc.
+    audit_date: null
+    audit_status: null  # current, expired, pending
+    findings: []
+
+incident_tracking:
+  - provider: null
+    incident_id: null
+    incident_date: null
+    severity: null
+    impact_on_system: null
+    provider_response: null
+    our_mitigation: null
+
+security_events:
+  - provider: null
+    event_date: null
+    event_type: null  # breach, outage, policy-change, certification-update
+    description: null
+    our_response: null
+
+escalations:
+  - date: null
+    provider: null
+    reason: null
+    escalation_level: null
+
+notes: |
+  This record is continuously updated throughout operational lifetime (Stage 6).
+  Applicable for AI component deployments that depend on third-party providers.
+  Escalations may trigger feedback loops if provider risk exceeds acceptable thresholds.

@@ -1,0 +1,106 @@
+# =============================================================================
+# Control: RC-09 — Third-Party Continuous Risk Monitoring
+# Track:   RC (Risk Controls)
+# Owner:   Risk Management / Third-Party Risk Manager
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: RC-09
+moscow_score: could
+name: Third-Party Continuous Risk Monitoring
+description: >-
+  Continuously monitor the risk posture of critical ICT third-party providers and SaaS
+  vendors: service availability (uptime tracking), security advisories and patches,
+  known breach notifications, compliance certification expiry (SOC 2, ISO 27001), SLA
+  performance against contractual terms, and credit/financial health. Alert when provider
+  risk score changes materially (e.g., critical vulnerability disclosed, breach announced,
+  certification expired). RC-08 monitors internal health; this control monitors the external
+  supply chain. Correlate third-party risk with change deployment: if a critical provider
+  risk is identified, assess whether it impacts the deployed system.
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: false
+  note: >-
+    Third-party continuous monitoring is important for full DORA Art. 28 compliance but
+    depends on mature third-party risk intelligence tooling and vendor relationships.
+    Phase 3 capability.
+track:
+  code: RC
+  name: Risk Controls
+delegation:
+  pattern: agent_monitors_human_reports
+  human_display: Agent monitors, human reviews and reports
+  agent_role: >-
+    Continuously monitor critical third-party providers: subscribe to their security
+    advisories, track vulnerability disclosures, check compliance certification renewal
+    status, monitor SLA performance (uptime, latency). Aggregate risk indicators. Alert
+    on material risk changes (critical advisory, certification expiry, SLA breach).
+  human_role: >-
+    Review alerts. When a third-party risk is identified: assess impact on deployed
+    systems, determine escalation path (contact vendor, request patch, plan migration),
+    and update risk register. Report material third-party risks to senior management.
+owner:
+  team: Risk Management
+  role: Third-Party Risk Manager
+  contact: ''
+regulatory_mapping:
+  dora:
+    - article: "Art. 28(3)"
+      obligation: >-
+        Entities must maintain registers of all ICT service contractual arrangements and
+        review them periodically (at least yearly)
+    - article: "Art. 28(4-8)"
+      obligation: >-
+        Pre-contract and ongoing due diligence on third-party providers including
+        concentration risk assessment and performance monitoring
+    - article: "Art. 10-11"
+      obligation: >-
+        Detection and response mechanisms must cover third-party-introduced risks
+inputs:
+- name: Third-party provider registry
+  source_control: GC-03
+  description: List of critical ICT service providers and SaaS vendors
+- name: Third-party risk intelligence feeds
+  description: Security advisories, vulnerability databases, compliance tracking services
+outputs:
+- name: Third-Party Risk Dashboard
+  type: report
+  description: >-
+    Real-time view of critical providers: risk scores, recent advisories, certification
+    status, SLA performance. Alerts for material risk changes.
+  retention: Operational (ongoing monitoring)
+- name: Third-Party Risk Incident Reports
+  type: report
+  description: >-
+    Documented incidents/advisories from third parties: description, impact assessment,
+    action taken
+  retention: 7 years (audit trail)
+- name: Provider remediation tickets
+  type: decision
+  description: >-
+    For each significant third-party risk: action plan (patch request, vendor communication,
+    system redesign), owner, target date
+  retention: 7 years
+failure_behaviour:
+  action: escalate
+  escalation_target: Chief Risk Officer
+  description: >-
+    If a critical third-party risk is identified (e.g., zero-day, SLA breach, certification
+    expired) affecting deployed systems, escalate to CRO for incident response and
+    potential vendor escalation.
+automation:
+  tooling:
+    - Third-party risk intelligence platforms (SecurityScorecard, BitSight, RiskRecon)
+    - Vulnerability aggregators (CVE feeds, GitHub Advisory)
+    - Compliance tracking (CertMetrics, Axio360)
+    - Custom vendor health dashboards
+  frequency: continuous
+  sla_minutes: 120 (for alert triage and initial assessment)
+dependencies:
+- GC-03   # Agent Provenance Registry (source of third-party list)
+- RC-08   # Risk & Health Monitoring (internal counterpart)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

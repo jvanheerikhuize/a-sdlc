@@ -7,7 +7,7 @@
 > python3 scripts/generate-docs.py
 > ```
 
-Translate the approved specification into a complete, approved system design. Security directives are injected before coding begins. No implementation may start without RC-2A (design approval) and SC-2B directive injection confirmation.
+Translate the approved specification into a complete, approved system design. Security directives are injected before coding begins. No implementation may start without RC-02 (design approval) and SC-02 directive injection confirmation.
 
 ---
 
@@ -82,7 +82,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.1 — Draft System Design
 
-**Control:** [`QC-2A`](../../controls/qc/QC-2A.yaml) · **Delegation:** Agent drafts
+**Control:** [`QC-03`](../../controls/qc/QC-03.yaml) · **Delegation:** Agent drafts
 
 
 #### Actors and Actions
@@ -106,7 +106,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.2 — Design Validation
 
-**Control:** [`QC-2A`](../../controls/qc/QC-2A.yaml) · **Delegation:** Agent validates, LAD approves
+**Control:** [`QC-03`](../../controls/qc/QC-03.yaml) · **Delegation:** Agent validates, LAD approves
 
 
 #### Actors and Actions
@@ -129,7 +129,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.3 — STRIDE Threat Modelling
 
-**Control:** [`SC-2A`](../../controls/sc/SC-2A.yaml) · **Delegation:** Agent generates, SA validates
+**Control:** [`SC-05`](../../controls/sc/SC-05.yaml) · **Delegation:** Agent generates, SA validates
 
 
 #### Actors and Actions
@@ -153,7 +153,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.4 — AI Component Design Review
 
-**Control:** [`AC-2A`](../../controls/ac/AC-2A.yaml) · **Delegation:** Agent assists, AGL approves
+**Control:** [`AC-03`](../../controls/ac/AC-03.yaml) · **Delegation:** Agent assists, AGL approves
 
 **Condition:** Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document as not_applicable and skip human confirmation.
 
@@ -178,7 +178,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.3b — Privacy Impact Assessment
 
-**Control:** [`RC-2B`](../../controls/rc/RC-2B.yaml) · **Delegation:** Agent generates, LAD reviews
+**Control:** [`RC-03`](../../controls/rc/RC-03.yaml) · **Delegation:** Agent generates, LAD reviews
 
 **Condition:** Only applicable when the change processes personal data, involves profiling, or high-risk AI processing. If not applicable, document as not_applicable.
 
@@ -203,7 +203,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.3c — Zero-Trust Architecture Validation
 
-**Control:** [`SC-2C`](../../controls/sc/SC-2C.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-06`](../../controls/sc/SC-06.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -226,7 +226,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.5 — Design Approval
 
-**Control:** [`RC-2A`](../../controls/rc/RC-2A.yaml) · **Delegation:** Human required
+**Control:** [`RC-02`](../../controls/rc/RC-02.yaml) · **Delegation:** Human required
 
 
 #### Actors and Actions
@@ -260,7 +260,7 @@ Maximum concurrent steps: **5**
 
 ### Step 2.6 — AI Model Governance and Version Control
 
-**Control:** [`AC-2B`](../../controls/ac/AC-2B.yaml) · **Delegation:** Agent registers, AGL approves
+**Control:** [`AC-04`](../../controls/ac/AC-04.yaml) · **Delegation:** Agent registers, AGL approves
 
 **Condition:** Only applicable when the change introduces or modifies use of a GPAI or foundation model. If not applicable, document as not_applicable.
 
@@ -279,13 +279,13 @@ Maximum concurrent steps: **5**
 |----------|-------|
 | **Input** | Approved design document + AI component design review |
 | **Output** | AI model governance record (artifacts/outputs/ai-model-governance-record.yaml) |
-| **Note** | Runs after design approval (RC-2A) |
+| **Note** | Runs after design approval (RC-02) |
 
 
 
 ### Step 2.7 — Stage Directive Injection
 
-**Control:** [`SC-2B`](../../controls/sc/SC-2B.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-02`](../../controls/sc/SC-02.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -310,65 +310,65 @@ Maximum concurrent steps: **5**
 ## Required Controls
 
 
-### QC-2A — Design Completeness & Standards
+### QC-03 — Design Completeness & Standards
 
 - **Track:** QC
 - **Delegation:** `agent_drafts_human_approves`
-- **File:** [`controls/qc/QC-2A.yaml`](../../controls/qc/QC-2A.yaml)
+- **File:** [`controls/qc/QC-03.yaml`](../../controls/qc/QC-03.yaml)
 
 
-### RC-2A — Design Approval
+### RC-02 — Design Approval
 
 - **Track:** RC
 - **Delegation:** `human_required`
-- **File:** [`controls/rc/RC-2A.yaml`](../../controls/rc/RC-2A.yaml)
+- **File:** [`controls/rc/RC-02.yaml`](../../controls/rc/RC-02.yaml)
 - **Note:** Human-required gate — cannot be delegated to an agent
 
 
-### RC-2B — Privacy Impact Assessment Gate
+### RC-03 — Privacy Impact Assessment Gate
 
 - **Track:** RC
 - **Delegation:** `agent_analyses_human_resolves`
-- **File:** [`controls/rc/RC-2B.yaml`](../../controls/rc/RC-2B.yaml)
+- **File:** [`controls/rc/RC-03.yaml`](../../controls/rc/RC-03.yaml)
 - **Note:** Applicable when the change involves personal data, profiling, or high-risk AI systems
 
 
-### SC-2A — Threat Model Validation
+### SC-05 — Threat Model Validation
 
 - **Track:** SC
 - **Delegation:** `agent_drafts_human_approves`
-- **File:** [`controls/sc/SC-2A.yaml`](../../controls/sc/SC-2A.yaml)
+- **File:** [`controls/sc/SC-05.yaml`](../../controls/sc/SC-05.yaml)
 
 
-### SC-2C — Zero-Trust Architecture Validation
+### SC-06 — Zero-Trust Architecture Validation
 
 - **Track:** SC
 - **Delegation:** `agent_analyses_human_resolves`
-- **File:** [`controls/sc/SC-2C.yaml`](../../controls/sc/SC-2C.yaml)
+- **File:** [`controls/sc/SC-06.yaml`](../../controls/sc/SC-06.yaml)
 - **Note:** Validate zero-trust architecture principles in design
 
 
-### SC-2B — Stage Directive Injection
+### SC-02 — Stage Directive Injection
 
 - **Track:** SC
 - **Delegation:** `automated_policy_enforced`
-- **File:** [`controls/sc/SC-2B.yaml`](../../controls/sc/SC-2B.yaml)
+- **File:** [`controls/sc/SC-02.yaml`](../../controls/sc/SC-02.yaml)
 - **Note:** Directive injection must be confirmed before Stage 3 begins
 
 
-### AC-2A — AI Component Design Review
+### AC-03 — AI Component Design Review
 
 - **Track:** AC
 - **Delegation:** `agent_drafts_human_approves`
-- **File:** [`controls/ac/AC-2A.yaml`](../../controls/ac/AC-2A.yaml)
+- **File:** [`controls/ac/AC-03.yaml`](../../controls/ac/AC-03.yaml)
 - **Note:** Applicable when the change involves an AI component
 
 
-### AC-2B — AI Model Governance & Version Control
+### AC-04 — AI Model Governance & Version Control
 
 - **Track:** AC
 - **Delegation:** `agent_creates_human_reviews`
-- **File:** [`controls/ac/AC-2B.yaml`](../../controls/ac/AC-2B.yaml)
+- **File:** [`controls/ac/AC-04.yaml`](../../controls/ac/AC-04.yaml)
 - **Note:** Applicable when the change involves AI models — register in model registry
 
 
@@ -378,8 +378,8 @@ Maximum concurrent steps: **5**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml)
-- [`../01-intent-ingestion/artifacts/outputs/RC-1A-risk-classification.yaml`](../01-intent-ingestion/artifacts/outputs/RC-1A-risk-classification.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/RC-01-risk-classification.yaml`](../01-intent-ingestion/artifacts/outputs/RC-01-risk-classification.yaml)
 
 ---
 
@@ -387,14 +387,14 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-2A-design-document.yaml`](artifacts/outputs/QC-2A-design-document.yaml)
-- [`artifacts/outputs/SC-2A-stride-threat-model.yaml`](artifacts/outputs/SC-2A-stride-threat-model.yaml)
-- [`artifacts/outputs/RC-2A-design-approval-decision.yaml`](artifacts/outputs/RC-2A-design-approval-decision.yaml)
-- [`artifacts/outputs/SC-2B-directive-injection-confirmation.yaml`](artifacts/outputs/SC-2B-directive-injection-confirmation.yaml)
-- [`artifacts/outputs/AC-2A-ai-component-design-review.yaml`](artifacts/outputs/AC-2A-ai-component-design-review.yaml)
-- [`artifacts/outputs/RC-2B-privacy-impact-assessment.yaml`](artifacts/outputs/RC-2B-privacy-impact-assessment.yaml)
-- [`artifacts/outputs/SC-2C-zero-trust-validation.yaml`](artifacts/outputs/SC-2C-zero-trust-validation.yaml)
-- [`artifacts/outputs/AC-2B-ai-model-governance-record.yaml`](artifacts/outputs/AC-2B-ai-model-governance-record.yaml)
+- [`artifacts/outputs/QC-03-design-document.yaml`](artifacts/outputs/QC-03-design-document.yaml)
+- [`artifacts/outputs/SC-05-stride-threat-model.yaml`](artifacts/outputs/SC-05-stride-threat-model.yaml)
+- [`artifacts/outputs/RC-02-design-approval-decision.yaml`](artifacts/outputs/RC-02-design-approval-decision.yaml)
+- [`artifacts/outputs/SC-02-directive-injection-confirmation.yaml`](artifacts/outputs/SC-02-directive-injection-confirmation.yaml)
+- [`artifacts/outputs/AC-03-ai-component-design-review.yaml`](artifacts/outputs/AC-03-ai-component-design-review.yaml)
+- [`artifacts/outputs/RC-03-privacy-impact-assessment.yaml`](artifacts/outputs/RC-03-privacy-impact-assessment.yaml)
+- [`artifacts/outputs/SC-06-zero-trust-validation.yaml`](artifacts/outputs/SC-06-zero-trust-validation.yaml)
+- [`artifacts/outputs/AC-04-ai-model-governance-record.yaml`](artifacts/outputs/AC-04-ai-model-governance-record.yaml)
 
 ---
 
@@ -410,4 +410,4 @@ The following directives are injected at the entry to this stage:
 
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

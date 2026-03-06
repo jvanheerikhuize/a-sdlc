@@ -1,0 +1,112 @@
+# =============================================================================
+# Release Readiness Checklist Template
+# =============================================================================
+# Produced during Step 5.1 by control QC-09.
+# Agent queries the audit trail to confirm all prior stage controls passed.
+# Release Manager reviews and approves before CAB submission.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp release-readiness-checklist.yaml FEAT-XXXX-release-readiness-checklist.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 5
+control: QC-09
+compiled_at: ""                    # ISO 8601 datetime
+
+# --- Prior stage control evidence ---
+prior_controls:
+  GC-05:
+    status: ""                     # passed | not_run | gap
+    artifact: ""
+  QC-01:
+    status: ""
+    artifact: ""
+  RC-01:
+    status: ""
+    artifact: ""
+  SC-03:
+    status: ""
+    artifact: ""
+  AC-01:
+    status: ""
+    artifact: ""
+  QC-03:
+    status: ""
+    artifact: ""
+  RC-02:
+    status: ""
+    artifact: ""
+  SC-05:
+    status: ""
+    artifact: ""
+  SC-02:
+    status: ""
+    artifact: ""
+  AC-03:
+    status: ""
+    artifact: ""
+  QC-04:
+    status: ""
+    artifact: ""
+  QC-05:
+    status: ""
+    artifact: ""
+  RC-04:
+    status: ""
+    artifact: ""
+  SC-07:
+    status: ""
+    artifact: ""
+  SC-08:
+    status: ""
+    artifact: ""
+  SC-09:
+    status: ""
+    artifact: ""
+  GC-06:
+    status: ""
+    artifact: ""
+  SC-12:
+    status: ""
+    artifact: ""
+  QC-06:
+    status: ""
+    artifact: ""
+  SC-13:
+    status: ""
+    artifact: ""
+  QC-07:
+    status: ""                     # passed | not_applicable
+    artifact: ""
+  AC-05:
+    status: ""                     # passed | not_applicable
+    artifact: ""
+  QC-08:
+    status: ""
+    artifact: ""
+  RC-05:
+    status: ""                     # pass | conditional_pass
+    artifact: ""
+
+gaps: []
+# Per-gap entries, e.g.:
+# - control_id: ""
+#   description: ""
+#   severity: ""                   # blocking | non_blocking
+#   resolved: null                 # true | false
+
+# --- Release package completeness ---
+release_package:
+  documentation_current: null     # true | false
+  artefacts_versioned: null       # true | false
+  release_notes_present: null     # true | false
+
+# --- Release Manager approval ---
+decision:
+  status: ""                       # approved | gaps_require_resolution
+  decided_by: ""                   # REL full name
+  decided_at: ""                   # ISO 8601 datetime
+  notes: ""

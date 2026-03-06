@@ -19,7 +19,7 @@ immutable: true
 # --- Trigger ---
 trigger:
   detected_at: ""                  # ISO 8601 datetime
-  originating_control: ""          # Control ID (QC-6A | RC-6A | SC-6A | SC-6B | AC-6A)
+  originating_control: ""          # Control ID (QC-10 | RC-08 | SC-19 | SC-20 | AC-06)
   source_record: ""                # Path to the Stage 6 artifact that triggered this loop
   alert_id: ""                     # Alert or incident ID from the source record
   description: ""                  # Brief description of the triggering issue
@@ -66,7 +66,7 @@ outcome:
   # For Path A: minimum controls executed
   path_a_controls_executed: []
   # e.g.:
-  # - control_id: QC-3A
+  # - control_id: QC-04
   #   passed: true
   #   artifact: ""
 
@@ -75,6 +75,6 @@ compliance_review:
   reviewed_by: ""                  # CO full name
   reviewed_at: ""                  # ISO 8601 datetime
   dora_art8_documented: null       # true | false
-  dora_art19_impact: null          # true | false (for SC-6A-triggered loops)
+  dora_art19_impact: null          # true | false (for SC-19-triggered loops)
   dora_art19_notes: ""
   notes: ""

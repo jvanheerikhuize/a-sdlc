@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://asdlc/schema/directive.schema.json",
   "title": "A-SDLC Directive Bundle",
-  "description": "Schema for agent behavioural directive bundles: directives/core/core-directives.yaml and directives/stages/NN-name.yaml. Injected by SC-0D (core) and SC-2B (stage).",
+  "description": "Schema for agent behavioural directive bundles: directives/core/core-directives.yaml and directives/stages/NN-name.yaml. Injected by SC-01 (core) and SC-02 (stage).",
   "type": "object",
   "required": ["meta", "injection", "enforcement", "categories"],
   "additionalProperties": false,
@@ -20,7 +20,7 @@
         "scope": {
           "type": "string",
           "enum": ["global", "stage"],
-          "description": "global = injected at session start via SC-0D; stage = injected at stage entry via SC-2B."
+          "description": "global = injected at session start via SC-01; stage = injected at stage entry via SC-02."
         },
         "classification": {
           "type": "string",
@@ -66,7 +66,7 @@
         "trigger": {
           "type": "string",
           "enum": ["session_start", "stage_entry"],
-          "description": "When injection occurs: session_start (SC-0D core) or stage_entry (SC-2B stage)."
+          "description": "When injection occurs: session_start (SC-01 core) or stage_entry (SC-02 stage)."
         },
         "stage_number": {
           "type": "integer",

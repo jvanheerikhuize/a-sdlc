@@ -1,0 +1,63 @@
+# =============================================================================
+# Control: AC-03 — AI Component Design Review
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-03
+moscow_score: must
+name: AI Component Design Review
+description: 'For changes involving AI systems: validate model selection rationale, data pipeline design, data governance
+  approach, explainability mechanisms, and human oversight provisions. Ensures AI component design meets EU AI Act technical
+  documentation requirements before implementation begins. Not applicable to changes with no AI component.'
+required_in_stages:
+- number: 2
+  name: System Design
+  mandatory: true
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_drafts_human_approves
+  human_display: Agent assists, human approves
+  agent_role: Validate AI component design against AI Act requirements; identify gaps in explainability, data governance,
+    or human oversight provisions.
+  human_role: Review AI design validation; approve or require revisions before implementation proceeds.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+  - article: Art. 11, Annex IV
+    requirement: Technical documentation requirements for high-risk AI systems
+  - article: Art. 13
+    requirement: Transparency and information provision for AI systems
+  - article: Art. 14
+    requirement: Human oversight mechanisms must be designed into the system
+inputs:
+- name: AI Act risk tier classification
+  source_control: AC-01
+  description: Risk tier from Stage 1 determining which AI Act obligations apply.
+- name: Approved architecture document
+  source_control: QC-03
+  description: Architecture design including AI component specifications.
+outputs:
+- name: AI component design review report
+  type: evidence
+  description: Validated documentation covering model selection, data governance, explainability, and human oversight.
+  retention: 7 years (AI Act)
+failure_behaviour:
+  action: block
+  escalation_target: AI Governance Lead
+  description: Gaps in AI design documentation block progression. Design must be revised to address all AI Act requirements.
+automation:
+  frequency: per_change
+dependencies:
+- QC-03
+- AC-01
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

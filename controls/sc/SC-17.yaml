@@ -1,0 +1,60 @@
+# =============================================================================
+# Control: SC-17 — Deployment Integrity
+# Track:   SC (Security Controls)
+# Owner:   Security / Release Management / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-17
+moscow_score: must
+name: Deployment Integrity
+description: Cryptographically verify that the artefacts being deployed to production are byte-for-byte identical to the artefacts
+  that were tested in Stage 4. No tampering, substitution, or modification between test and production deployment is permitted.
+  Verification must occur immediately before deployment execution.
+required_in_stages:
+- number: 5
+  name: Deployment & Release
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Compute and compare cryptographic checksums of test and deployment artefacts; block deployment if any mismatch.
+  human_role: Investigate any detected integrity failures before deployment can proceed.
+owner:
+  team: Security / Release Management
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 9(2)
+    obligation: ICT system integrity must be maintained through the deployment process
+  - article: Art. 28a
+    obligation: Supply chain security requirements for ICT systems
+  eu_ai_act:
+  - article: Art. 15(3)
+    requirement: Resilience against manipulation of AI systems by third parties during deployment
+outputs:
+- name: Deployment integrity verification record
+  type: evidence
+  description: Cryptographic hash comparison confirming test and production artefacts are identical.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: Any integrity mismatch immediately blocks deployment. Security incident process is initiated.
+automation:
+  frequency: per_release
+dependencies:
+- SC-16
+feedback_loops:
+- path: path_a
+  required_in_path: true
+- path: path_b
+  required_in_path: true
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

@@ -1,0 +1,50 @@
+# GC-06 Code Provenance Record
+# Produced by: GC-06 (Code Provenance & Author Attribution)
+#
+# Immutable record of all code contributions, sign-offs, and attestations.
+# Enables traceability of every code change for regulatory and security audits.
+
+metadata:
+  control: GC-06
+  stage: 3
+  record_location: immutable-ledger  # e.g., blockchain, append-only log, or signed commits
+
+commits:
+  - commit_sha: null
+    author_identity: null
+    author_email: null
+    timestamp: null
+    message: null
+    digital_signature: null
+    pgp_fingerprint: null
+
+pull_request_record:
+  pr_number: null
+  branch: null
+  target_branch: null
+  created_by: null
+  approved_by: []  # List of reviewers
+  approval_timestamps: []
+  merge_commit_sha: null
+
+code_ownership:
+  - path: null
+    owners: []
+    last_modified: null
+
+legal_attestations:
+  - signatory: null
+    attestation_type: null  # original-work, no-secrets, no-ai-generated, etc.
+    signed_timestamp: null
+    signature_method: null
+
+audit_trail:
+  - event: null
+    actor: null
+    timestamp: null
+    action_details: null
+
+notes: |
+  This provenance record is append-only and immutable.
+  Every merge into main produces a new provenance entry.
+  Used for regulatory compliance, audit trails, and forensic investigation.

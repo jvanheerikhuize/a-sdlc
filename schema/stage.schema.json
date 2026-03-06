@@ -41,7 +41,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+            "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$",
             "description": "Control identifier. Must exist in controls/registry.yaml."
           },
           "note": {
@@ -94,7 +94,7 @@
               },
               "control": {
                 "type": ["string", "null"],
-                "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$|^null$",
+                "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$|^null$",
                 "description": "Control ID (or null for handover/meta steps)."
               },
               "description": {
@@ -311,7 +311,7 @@
     "directives": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Paths to directive YAML files injected at this stage's entry (SC-2B payloads)."
+      "description": "Paths to directive YAML files injected at this stage's entry (SC-02 payloads)."
     }
   }
 }

@@ -32,16 +32,16 @@ Ensure work meets standards
 
 | ID | Name | Stage | Delegation | File |
 |----|------|-------|-----------|------|
-| [`QC-1A`](controls/qc/QC-1A.yaml) | Specification Validation | 1 | `agent_drafts_human_approves` | [`controls/qc/QC-1A.yaml`](controls/qc/QC-1A.yaml) |
-| [`QC-1B`](controls/qc/QC-1B.yaml) | Coherence & Conflict Resolution | 1 | `agent_analyses_human_resolves` | [`controls/qc/QC-1B.yaml`](controls/qc/QC-1B.yaml) |
-| [`QC-2A`](controls/qc/QC-2A.yaml) | Design Completeness & Standards | 2 | `agent_drafts_human_approves` | [`controls/qc/QC-2A.yaml`](controls/qc/QC-2A.yaml) |
-| [`QC-3A`](controls/qc/QC-3A.yaml) | Pull Request Creation & Review | 3 | `agent_creates_human_reviews` | [`controls/qc/QC-3A.yaml`](controls/qc/QC-3A.yaml) |
-| [`QC-3B`](controls/qc/QC-3B.yaml) | Code Quality Standards | 3 | `fully_automated` | [`controls/qc/QC-3B.yaml`](controls/qc/QC-3B.yaml) |
-| [`QC-4A`](controls/qc/QC-4A.yaml) | Functional & Non-Functional Testing | 4 | `agent_executes_human_reviews` | [`controls/qc/QC-4A.yaml`](controls/qc/QC-4A.yaml) |
-| [`QC-4B`](controls/qc/QC-4B.yaml) | AI Output Validation | 4 | `agent_executes_human_reviews` | [`controls/qc/QC-4B.yaml`](controls/qc/QC-4B.yaml) |
-| [`QC-4C`](controls/qc/QC-4C.yaml) | Documentation Completeness | 4 | `agent_checks_human_approves` | [`controls/qc/QC-4C.yaml`](controls/qc/QC-4C.yaml) |
-| [`QC-5A`](controls/qc/QC-5A.yaml) | Release Readiness Checklist | 5 | `agent_compiles_human_approves` | [`controls/qc/QC-5A.yaml`](controls/qc/QC-5A.yaml) |
-| [`QC-6A`](controls/qc/QC-6A.yaml) | SLA/SLO Monitoring | 6 | `fully_automated` | [`controls/qc/QC-6A.yaml`](controls/qc/QC-6A.yaml) |
+| [`QC-01`](controls/qc/QC-01.yaml) | Specification Validation | 1 | `agent_drafts_human_approves` | [`controls/qc/QC-01.yaml`](controls/qc/QC-01.yaml) |
+| [`QC-02`](controls/qc/QC-02.yaml) | Coherence & Conflict Resolution | 1 | `agent_analyses_human_resolves` | [`controls/qc/QC-02.yaml`](controls/qc/QC-02.yaml) |
+| [`QC-03`](controls/qc/QC-03.yaml) | Design Completeness & Standards | 2 | `agent_drafts_human_approves` | [`controls/qc/QC-03.yaml`](controls/qc/QC-03.yaml) |
+| [`QC-04`](controls/qc/QC-04.yaml) | Pull Request Creation & Review | 3 | `agent_creates_human_reviews` | [`controls/qc/QC-04.yaml`](controls/qc/QC-04.yaml) |
+| [`QC-05`](controls/qc/QC-05.yaml) | Code Quality Standards | 3 | `fully_automated` | [`controls/qc/QC-05.yaml`](controls/qc/QC-05.yaml) |
+| [`QC-06`](controls/qc/QC-06.yaml) | Functional & Non-Functional Testing | 4 | `agent_executes_human_reviews` | [`controls/qc/QC-06.yaml`](controls/qc/QC-06.yaml) |
+| [`QC-07`](controls/qc/QC-07.yaml) | AI Output Validation | 4 | `agent_executes_human_reviews` | [`controls/qc/QC-07.yaml`](controls/qc/QC-07.yaml) |
+| [`QC-08`](controls/qc/QC-08.yaml) | Documentation Completeness | 4 | `agent_checks_human_approves` | [`controls/qc/QC-08.yaml`](controls/qc/QC-08.yaml) |
+| [`QC-09`](controls/qc/QC-09.yaml) | Release Readiness Checklist | 5 | `agent_compiles_human_approves` | [`controls/qc/QC-09.yaml`](controls/qc/QC-09.yaml) |
+| [`QC-10`](controls/qc/QC-10.yaml) | SLA/SLO Monitoring | 6 | `fully_automated` | [`controls/qc/QC-10.yaml`](controls/qc/QC-10.yaml) |
 
 
 ### RC — Risk Controls
@@ -50,15 +50,15 @@ Identify and manage what can go wrong
 
 | ID | Name | Stage | Delegation | File |
 |----|------|-------|-----------|------|
-| [`RC-1A`](controls/rc/RC-1A.yaml) | Risk Classification | 1 | `agent_classifies_human_validates` | [`controls/rc/RC-1A.yaml`](controls/rc/RC-1A.yaml) |
-| [`RC-2A`](controls/rc/RC-2A.yaml) | Design Approval | 2 | `human_required` | [`controls/rc/RC-2A.yaml`](controls/rc/RC-2A.yaml) |
-| [`RC-2B`](controls/rc/RC-2B.yaml) | Privacy Impact Assessment Gate | 2 | `agent_analyses_human_resolves` | [`controls/rc/RC-2B.yaml`](controls/rc/RC-2B.yaml) |
-| [`RC-3A`](controls/rc/RC-3A.yaml) | Decision Log | 3 | `agent_logs_human_reviews` | [`controls/rc/RC-3A.yaml`](controls/rc/RC-3A.yaml) |
-| [`RC-4A`](controls/rc/RC-4A.yaml) | Risk Threshold Evaluation | 4 | `agent_calculates_human_decides` | [`controls/rc/RC-4A.yaml`](controls/rc/RC-4A.yaml) |
-| [`RC-5A`](controls/rc/RC-5A.yaml) | CAB Approval | 5 | `human_required` | [`controls/rc/RC-5A.yaml`](controls/rc/RC-5A.yaml) |
-| [`RC-5B`](controls/rc/RC-5B.yaml) | Rollback Plan Validation | 5 | `agent_validates_human_approves` | [`controls/rc/RC-5B.yaml`](controls/rc/RC-5B.yaml) |
-| [`RC-6A`](controls/rc/RC-6A.yaml) | Risk & Health Monitoring | 6 | `automated_with_human_escalation` | [`controls/rc/RC-6A.yaml`](controls/rc/RC-6A.yaml) |
-| [`RC-6B`](controls/rc/RC-6B.yaml) | Third-Party Continuous Risk Monitoring | 6 | `agent_monitors_human_reports` | [`controls/rc/RC-6B.yaml`](controls/rc/RC-6B.yaml) |
+| [`RC-01`](controls/rc/RC-01.yaml) | Risk Classification | 1 | `agent_classifies_human_validates` | [`controls/rc/RC-01.yaml`](controls/rc/RC-01.yaml) |
+| [`RC-02`](controls/rc/RC-02.yaml) | Design Approval | 2 | `human_required` | [`controls/rc/RC-02.yaml`](controls/rc/RC-02.yaml) |
+| [`RC-03`](controls/rc/RC-03.yaml) | Privacy Impact Assessment Gate | 2 | `agent_analyses_human_resolves` | [`controls/rc/RC-03.yaml`](controls/rc/RC-03.yaml) |
+| [`RC-04`](controls/rc/RC-04.yaml) | Decision Log | 3 | `agent_logs_human_reviews` | [`controls/rc/RC-04.yaml`](controls/rc/RC-04.yaml) |
+| [`RC-05`](controls/rc/RC-05.yaml) | Risk Threshold Evaluation | 4 | `agent_calculates_human_decides` | [`controls/rc/RC-05.yaml`](controls/rc/RC-05.yaml) |
+| [`RC-06`](controls/rc/RC-06.yaml) | CAB Approval | 5 | `human_required` | [`controls/rc/RC-06.yaml`](controls/rc/RC-06.yaml) |
+| [`RC-07`](controls/rc/RC-07.yaml) | Rollback Plan Validation | 5 | `agent_validates_human_approves` | [`controls/rc/RC-07.yaml`](controls/rc/RC-07.yaml) |
+| [`RC-08`](controls/rc/RC-08.yaml) | Risk & Health Monitoring | 6 | `automated_with_human_escalation` | [`controls/rc/RC-08.yaml`](controls/rc/RC-08.yaml) |
+| [`RC-09`](controls/rc/RC-09.yaml) | Third-Party Continuous Risk Monitoring | 6 | `agent_monitors_human_reports` | [`controls/rc/RC-09.yaml`](controls/rc/RC-09.yaml) |
 
 
 ### SC — Security Controls
@@ -67,26 +67,26 @@ Protect against threats and vulnerabilities
 
 | ID | Name | Stage | Delegation | File |
 |----|------|-------|-----------|------|
-| [`SC-0D`](controls/sc/SC-0D.yaml) | Core Directive Injection | 0 | `automated_policy_enforced` | [`controls/sc/SC-0D.yaml`](controls/sc/SC-0D.yaml) |
-| [`SC-1A`](controls/sc/SC-1A.yaml) | Pre-Guardrails | 1 | `fully_automated` | [`controls/sc/SC-1A.yaml`](controls/sc/SC-1A.yaml) |
-| [`SC-1B`](controls/sc/SC-1B.yaml) | Data Classification & Sensitivity Screening | 1 | `agent_classifies_human_validates` | [`controls/sc/SC-1B.yaml`](controls/sc/SC-1B.yaml) |
-| [`SC-2A`](controls/sc/SC-2A.yaml) | Threat Model Validation | 2 | `agent_drafts_human_approves` | [`controls/sc/SC-2A.yaml`](controls/sc/SC-2A.yaml) |
-| [`SC-2C`](controls/sc/SC-2C.yaml) | Zero-Trust Architecture Validation | 2 | `agent_analyses_human_resolves` | [`controls/sc/SC-2C.yaml`](controls/sc/SC-2C.yaml) |
-| [`SC-2B`](controls/sc/SC-2B.yaml) | Stage Directive Injection | 0 | `automated_policy_enforced` | [`controls/sc/SC-2B.yaml`](controls/sc/SC-2B.yaml) |
-| [`SC-3A`](controls/sc/SC-3A.yaml) | Permission Management | 3 | `automated_policy_enforced` | [`controls/sc/SC-3A.yaml`](controls/sc/SC-3A.yaml) |
-| [`SC-3B`](controls/sc/SC-3B.yaml) | Post-Guardrails | 3 | `fully_automated` | [`controls/sc/SC-3B.yaml`](controls/sc/SC-3B.yaml) |
-| [`SC-3C`](controls/sc/SC-3C.yaml) | Secrets & Credentials Scanning | 3 | `fully_automated` | [`controls/sc/SC-3C.yaml`](controls/sc/SC-3C.yaml) |
-| [`SC-3D`](controls/sc/SC-3D.yaml) | Software Composition Analysis & SBOM Generation | 3 | `fully_automated` | [`controls/sc/SC-3D.yaml`](controls/sc/SC-3D.yaml) |
-| [`SC-3E`](controls/sc/SC-3E.yaml) | Container & IaC Security Scanning | 3 | `fully_automated` | [`controls/sc/SC-3E.yaml`](controls/sc/SC-3E.yaml) |
-| [`SC-4A`](controls/sc/SC-4A.yaml) | SAST | 4 | `fully_automated` | [`controls/sc/SC-4A.yaml`](controls/sc/SC-4A.yaml) |
-| [`SC-4B`](controls/sc/SC-4B.yaml) | DAST | 4 | `fully_automated` | [`controls/sc/SC-4B.yaml`](controls/sc/SC-4B.yaml) |
-| [`SC-4C`](controls/sc/SC-4C.yaml) | API Security Testing | 4 | `agent_executes_human_reviews` | [`controls/sc/SC-4C.yaml`](controls/sc/SC-4C.yaml) |
-| [`SC-4D`](controls/sc/SC-4D.yaml) | Adversarial AI Robustness Testing | 4 | `agent_executes_human_reviews` | [`controls/sc/SC-4D.yaml`](controls/sc/SC-4D.yaml) |
-| [`SC-5A`](controls/sc/SC-5A.yaml) | Infrastructure Security | 5 | `fully_automated` | [`controls/sc/SC-5A.yaml`](controls/sc/SC-5A.yaml) |
-| [`SC-5B`](controls/sc/SC-5B.yaml) | Deployment Integrity | 5 | `fully_automated` | [`controls/sc/SC-5B.yaml`](controls/sc/SC-5B.yaml) |
-| [`SC-5C`](controls/sc/SC-5C.yaml) | Secrets & Key Management Lifecycle | 5 | `agent_checks_human_approves` | [`controls/sc/SC-5C.yaml`](controls/sc/SC-5C.yaml) |
-| [`SC-6A`](controls/sc/SC-6A.yaml) | Incident Scanning & Detection | 6 | `automated_with_human_escalation` | [`controls/sc/SC-6A.yaml`](controls/sc/SC-6A.yaml) |
-| [`SC-6B`](controls/sc/SC-6B.yaml) | Runtime Anomaly Detection | 6 | `automated_with_human_escalation` | [`controls/sc/SC-6B.yaml`](controls/sc/SC-6B.yaml) |
+| [`SC-01`](controls/sc/SC-01.yaml) | Core Directive Injection | 0 | `automated_policy_enforced` | [`controls/sc/SC-01.yaml`](controls/sc/SC-01.yaml) |
+| [`SC-03`](controls/sc/SC-03.yaml) | Pre-Guardrails | 1 | `fully_automated` | [`controls/sc/SC-03.yaml`](controls/sc/SC-03.yaml) |
+| [`SC-04`](controls/sc/SC-04.yaml) | Data Classification & Sensitivity Screening | 1 | `agent_classifies_human_validates` | [`controls/sc/SC-04.yaml`](controls/sc/SC-04.yaml) |
+| [`SC-05`](controls/sc/SC-05.yaml) | Threat Model Validation | 2 | `agent_drafts_human_approves` | [`controls/sc/SC-05.yaml`](controls/sc/SC-05.yaml) |
+| [`SC-06`](controls/sc/SC-06.yaml) | Zero-Trust Architecture Validation | 2 | `agent_analyses_human_resolves` | [`controls/sc/SC-06.yaml`](controls/sc/SC-06.yaml) |
+| [`SC-02`](controls/sc/SC-02.yaml) | Stage Directive Injection | 0 | `automated_policy_enforced` | [`controls/sc/SC-02.yaml`](controls/sc/SC-02.yaml) |
+| [`SC-07`](controls/sc/SC-07.yaml) | Permission Management | 3 | `automated_policy_enforced` | [`controls/sc/SC-07.yaml`](controls/sc/SC-07.yaml) |
+| [`SC-08`](controls/sc/SC-08.yaml) | Post-Guardrails | 3 | `fully_automated` | [`controls/sc/SC-08.yaml`](controls/sc/SC-08.yaml) |
+| [`SC-09`](controls/sc/SC-09.yaml) | Secrets & Credentials Scanning | 3 | `fully_automated` | [`controls/sc/SC-09.yaml`](controls/sc/SC-09.yaml) |
+| [`SC-10`](controls/sc/SC-10.yaml) | Software Composition Analysis & SBOM Generation | 3 | `fully_automated` | [`controls/sc/SC-10.yaml`](controls/sc/SC-10.yaml) |
+| [`SC-11`](controls/sc/SC-11.yaml) | Container & IaC Security Scanning | 3 | `fully_automated` | [`controls/sc/SC-11.yaml`](controls/sc/SC-11.yaml) |
+| [`SC-12`](controls/sc/SC-12.yaml) | SAST | 4 | `fully_automated` | [`controls/sc/SC-12.yaml`](controls/sc/SC-12.yaml) |
+| [`SC-13`](controls/sc/SC-13.yaml) | DAST | 4 | `fully_automated` | [`controls/sc/SC-13.yaml`](controls/sc/SC-13.yaml) |
+| [`SC-14`](controls/sc/SC-14.yaml) | API Security Testing | 4 | `agent_executes_human_reviews` | [`controls/sc/SC-14.yaml`](controls/sc/SC-14.yaml) |
+| [`SC-15`](controls/sc/SC-15.yaml) | Adversarial AI Robustness Testing | 4 | `agent_executes_human_reviews` | [`controls/sc/SC-15.yaml`](controls/sc/SC-15.yaml) |
+| [`SC-16`](controls/sc/SC-16.yaml) | Infrastructure Security | 5 | `fully_automated` | [`controls/sc/SC-16.yaml`](controls/sc/SC-16.yaml) |
+| [`SC-17`](controls/sc/SC-17.yaml) | Deployment Integrity | 5 | `fully_automated` | [`controls/sc/SC-17.yaml`](controls/sc/SC-17.yaml) |
+| [`SC-18`](controls/sc/SC-18.yaml) | Secrets & Key Management Lifecycle | 5 | `agent_checks_human_approves` | [`controls/sc/SC-18.yaml`](controls/sc/SC-18.yaml) |
+| [`SC-19`](controls/sc/SC-19.yaml) | Incident Scanning & Detection | 6 | `automated_with_human_escalation` | [`controls/sc/SC-19.yaml`](controls/sc/SC-19.yaml) |
+| [`SC-20`](controls/sc/SC-20.yaml) | Runtime Anomaly Detection | 6 | `automated_with_human_escalation` | [`controls/sc/SC-20.yaml`](controls/sc/SC-20.yaml) |
 
 
 ### AC — AI Controls
@@ -95,12 +95,12 @@ Address EU AI Act requirements
 
 | ID | Name | Stage | Delegation | File |
 |----|------|-------|-----------|------|
-| [`AC-1A`](controls/ac/AC-1A.yaml) | AI Risk Tier Classification | 1 | `agent_proposes_human_confirms` | [`controls/ac/AC-1A.yaml`](controls/ac/AC-1A.yaml) |
-| [`AC-1B`](controls/ac/AC-1B.yaml) | GPAI & Foundation Model Obligation Screening | 1 | `agent_classifies_human_validates` | [`controls/ac/AC-1B.yaml`](controls/ac/AC-1B.yaml) |
-| [`AC-2A`](controls/ac/AC-2A.yaml) | AI Component Design Review | 2 | `agent_drafts_human_approves` | [`controls/ac/AC-2A.yaml`](controls/ac/AC-2A.yaml) |
-| [`AC-2B`](controls/ac/AC-2B.yaml) | AI Model Governance & Version Control | 2 | `agent_creates_human_reviews` | [`controls/ac/AC-2B.yaml`](controls/ac/AC-2B.yaml) |
-| [`AC-4A`](controls/ac/AC-4A.yaml) | Bias & Fairness Testing | 4 | `agent_executes_human_reviews` | [`controls/ac/AC-4A.yaml`](controls/ac/AC-4A.yaml) |
-| [`AC-6A`](controls/ac/AC-6A.yaml) | AI Post-Market Surveillance | 6 | `agent_monitors_human_reports` | [`controls/ac/AC-6A.yaml`](controls/ac/AC-6A.yaml) |
+| [`AC-01`](controls/ac/AC-01.yaml) | AI Risk Tier Classification | 1 | `agent_proposes_human_confirms` | [`controls/ac/AC-01.yaml`](controls/ac/AC-01.yaml) |
+| [`AC-02`](controls/ac/AC-02.yaml) | GPAI & Foundation Model Obligation Screening | 1 | `agent_classifies_human_validates` | [`controls/ac/AC-02.yaml`](controls/ac/AC-02.yaml) |
+| [`AC-03`](controls/ac/AC-03.yaml) | AI Component Design Review | 2 | `agent_drafts_human_approves` | [`controls/ac/AC-03.yaml`](controls/ac/AC-03.yaml) |
+| [`AC-04`](controls/ac/AC-04.yaml) | AI Model Governance & Version Control | 2 | `agent_creates_human_reviews` | [`controls/ac/AC-04.yaml`](controls/ac/AC-04.yaml) |
+| [`AC-05`](controls/ac/AC-05.yaml) | Bias & Fairness Testing | 4 | `agent_executes_human_reviews` | [`controls/ac/AC-05.yaml`](controls/ac/AC-05.yaml) |
+| [`AC-06`](controls/ac/AC-06.yaml) | AI Post-Market Surveillance | 6 | `agent_monitors_human_reports` | [`controls/ac/AC-06.yaml`](controls/ac/AC-06.yaml) |
 
 
 ### GC — Governance Controls
@@ -109,12 +109,12 @@ Maintain the audit trail
 
 | ID | Name | Stage | Delegation | File |
 |----|------|-------|-----------|------|
-| [`GC-0A`](controls/gc/GC-0A.yaml) | Audit Trail & Compliance Reporting | 0 | `fully_automated` | [`controls/gc/GC-0A.yaml`](controls/gc/GC-0A.yaml) |
-| [`GC-0B`](controls/gc/GC-0B.yaml) | End-to-End Traceability | 0 | `fully_automated` | [`controls/gc/GC-0B.yaml`](controls/gc/GC-0B.yaml) |
-| [`GC-0C`](controls/gc/GC-0C.yaml) | Agent Provenance Registry | 0 | `fully_automated` | [`controls/gc/GC-0C.yaml`](controls/gc/GC-0C.yaml) |
-| [`GC-0D`](controls/gc/GC-0D.yaml) | Compliance Evidence Automation | 0 | `agent_compiles_human_approves` | [`controls/gc/GC-0D.yaml`](controls/gc/GC-0D.yaml) |
-| [`GC-1A`](controls/gc/GC-1A.yaml) | Intent Traceability | 1 | `fully_automated` | [`controls/gc/GC-1A.yaml`](controls/gc/GC-1A.yaml) |
-| [`GC-3A`](controls/gc/GC-3A.yaml) | Code Provenance Tracking | 3 | `fully_automated` | [`controls/gc/GC-3A.yaml`](controls/gc/GC-3A.yaml) |
+| [`GC-01`](controls/gc/GC-01.yaml) | Audit Trail & Compliance Reporting | 0 | `fully_automated` | [`controls/gc/GC-01.yaml`](controls/gc/GC-01.yaml) |
+| [`GC-02`](controls/gc/GC-02.yaml) | End-to-End Traceability | 0 | `fully_automated` | [`controls/gc/GC-02.yaml`](controls/gc/GC-02.yaml) |
+| [`GC-03`](controls/gc/GC-03.yaml) | Agent Provenance Registry | 0 | `fully_automated` | [`controls/gc/GC-03.yaml`](controls/gc/GC-03.yaml) |
+| [`GC-04`](controls/gc/GC-04.yaml) | Compliance Evidence Automation | 0 | `agent_compiles_human_approves` | [`controls/gc/GC-04.yaml`](controls/gc/GC-04.yaml) |
+| [`GC-05`](controls/gc/GC-05.yaml) | Intent Traceability | 1 | `fully_automated` | [`controls/gc/GC-05.yaml`](controls/gc/GC-05.yaml) |
+| [`GC-06`](controls/gc/GC-06.yaml) | Code Provenance Tracking | 3 | `fully_automated` | [`controls/gc/GC-06.yaml`](controls/gc/GC-06.yaml) |
 
 
 ---
@@ -128,9 +128,9 @@ Control IDs follow the format: `[Track]-[Stage][Letter]`
 - **Letter:** A-Z disambiguator for controls in the same stage
 
 Examples:
-- `SC-0D` — Security Control, Cross-Cutting, identifier D
-- `QC-3A` — Quality Control, Stage 3, identifier A
-- `AC-2B` — AI Control, Stage 2, identifier B
+- `SC-01` — Security Control, Cross-Cutting, identifier D
+- `QC-04` — Quality Control, Stage 3, identifier A
+- `AC-04` — AI Control, Stage 2, identifier B
 
 ---
 
@@ -146,57 +146,57 @@ Examples:
 
 ## Flat Index (Fast Lookup)
 
-- [`AC-1A`](controls/ac/AC-1A.yaml) — AI Risk Tier Classification (Intent Ingestion)
-- [`AC-1B`](controls/ac/AC-1B.yaml) — GPAI & Foundation Model Obligation Screening (Intent Ingestion)
-- [`AC-2A`](controls/ac/AC-2A.yaml) — AI Component Design Review (System Design)
-- [`AC-2B`](controls/ac/AC-2B.yaml) — AI Model Governance & Version Control (System Design)
-- [`AC-4A`](controls/ac/AC-4A.yaml) — Bias & Fairness Testing (Testing & Documentation)
-- [`AC-6A`](controls/ac/AC-6A.yaml) — AI Post-Market Surveillance (Observability & Maintenance)
-- [`GC-0A`](controls/gc/GC-0A.yaml) — Audit Trail & Compliance Reporting (Cross-Cutting)
-- [`GC-0B`](controls/gc/GC-0B.yaml) — End-to-End Traceability (Cross-Cutting)
-- [`GC-0C`](controls/gc/GC-0C.yaml) — Agent Provenance Registry (Cross-Cutting)
-- [`GC-0D`](controls/gc/GC-0D.yaml) — Compliance Evidence Automation (Cross-Cutting)
-- [`GC-1A`](controls/gc/GC-1A.yaml) — Intent Traceability (Intent Ingestion)
-- [`GC-3A`](controls/gc/GC-3A.yaml) — Code Provenance Tracking (Coding & Implementation)
-- [`QC-1A`](controls/qc/QC-1A.yaml) — Specification Validation (Intent Ingestion)
-- [`QC-1B`](controls/qc/QC-1B.yaml) — Coherence & Conflict Resolution (Intent Ingestion)
-- [`QC-2A`](controls/qc/QC-2A.yaml) — Design Completeness & Standards (System Design)
-- [`QC-3A`](controls/qc/QC-3A.yaml) — Pull Request Creation & Review (Coding & Implementation)
-- [`QC-3B`](controls/qc/QC-3B.yaml) — Code Quality Standards (Coding & Implementation)
-- [`QC-4A`](controls/qc/QC-4A.yaml) — Functional & Non-Functional Testing (Testing & Documentation)
-- [`QC-4B`](controls/qc/QC-4B.yaml) — AI Output Validation (Testing & Documentation)
-- [`QC-4C`](controls/qc/QC-4C.yaml) — Documentation Completeness (Testing & Documentation)
-- [`QC-5A`](controls/qc/QC-5A.yaml) — Release Readiness Checklist (Deployment & Release)
-- [`QC-6A`](controls/qc/QC-6A.yaml) — SLA/SLO Monitoring (Observability & Maintenance)
-- [`RC-1A`](controls/rc/RC-1A.yaml) — Risk Classification (Intent Ingestion)
-- [`RC-2A`](controls/rc/RC-2A.yaml) — Design Approval (System Design)
-- [`RC-2B`](controls/rc/RC-2B.yaml) — Privacy Impact Assessment Gate (System Design)
-- [`RC-3A`](controls/rc/RC-3A.yaml) — Decision Log (Coding & Implementation)
-- [`RC-4A`](controls/rc/RC-4A.yaml) — Risk Threshold Evaluation (Testing & Documentation)
-- [`RC-5A`](controls/rc/RC-5A.yaml) — CAB Approval (Deployment & Release)
-- [`RC-5B`](controls/rc/RC-5B.yaml) — Rollback Plan Validation (Deployment & Release)
-- [`RC-6A`](controls/rc/RC-6A.yaml) — Risk & Health Monitoring (Observability & Maintenance)
-- [`RC-6B`](controls/rc/RC-6B.yaml) — Third-Party Continuous Risk Monitoring (Observability & Maintenance)
-- [`SC-0D`](controls/sc/SC-0D.yaml) — Core Directive Injection (Cross-Cutting)
-- [`SC-1A`](controls/sc/SC-1A.yaml) — Pre-Guardrails (Intent Ingestion)
-- [`SC-1B`](controls/sc/SC-1B.yaml) — Data Classification & Sensitivity Screening (Intent Ingestion)
-- [`SC-2A`](controls/sc/SC-2A.yaml) — Threat Model Validation (System Design)
-- [`SC-2B`](controls/sc/SC-2B.yaml) — Stage Directive Injection (Cross-Cutting)
-- [`SC-2C`](controls/sc/SC-2C.yaml) — Zero-Trust Architecture Validation (System Design)
-- [`SC-3A`](controls/sc/SC-3A.yaml) — Permission Management (Coding & Implementation)
-- [`SC-3B`](controls/sc/SC-3B.yaml) — Post-Guardrails (Coding & Implementation)
-- [`SC-3C`](controls/sc/SC-3C.yaml) — Secrets & Credentials Scanning (Coding & Implementation)
-- [`SC-3D`](controls/sc/SC-3D.yaml) — Software Composition Analysis & SBOM Generation (Coding & Implementation)
-- [`SC-3E`](controls/sc/SC-3E.yaml) — Container & IaC Security Scanning (Coding & Implementation)
-- [`SC-4A`](controls/sc/SC-4A.yaml) — SAST (Testing & Documentation)
-- [`SC-4B`](controls/sc/SC-4B.yaml) — DAST (Testing & Documentation)
-- [`SC-4C`](controls/sc/SC-4C.yaml) — API Security Testing (Testing & Documentation)
-- [`SC-4D`](controls/sc/SC-4D.yaml) — Adversarial AI Robustness Testing (Testing & Documentation)
-- [`SC-5A`](controls/sc/SC-5A.yaml) — Infrastructure Security (Deployment & Release)
-- [`SC-5B`](controls/sc/SC-5B.yaml) — Deployment Integrity (Deployment & Release)
-- [`SC-5C`](controls/sc/SC-5C.yaml) — Secrets & Key Management Lifecycle (Deployment & Release)
-- [`SC-6A`](controls/sc/SC-6A.yaml) — Incident Scanning & Detection (Observability & Maintenance)
-- [`SC-6B`](controls/sc/SC-6B.yaml) — Runtime Anomaly Detection (Observability & Maintenance)
+- [`AC-01`](controls/ac/AC-01.yaml) — AI Risk Tier Classification (Intent Ingestion)
+- [`AC-02`](controls/ac/AC-02.yaml) — GPAI & Foundation Model Obligation Screening (Intent Ingestion)
+- [`AC-03`](controls/ac/AC-03.yaml) — AI Component Design Review (System Design)
+- [`AC-04`](controls/ac/AC-04.yaml) — AI Model Governance & Version Control (System Design)
+- [`AC-05`](controls/ac/AC-05.yaml) — Bias & Fairness Testing (Testing & Documentation)
+- [`AC-06`](controls/ac/AC-06.yaml) — AI Post-Market Surveillance (Observability & Maintenance)
+- [`GC-01`](controls/gc/GC-01.yaml) — Audit Trail & Compliance Reporting (Cross-Cutting)
+- [`GC-02`](controls/gc/GC-02.yaml) — End-to-End Traceability (Cross-Cutting)
+- [`GC-03`](controls/gc/GC-03.yaml) — Agent Provenance Registry (Cross-Cutting)
+- [`GC-04`](controls/gc/GC-04.yaml) — Compliance Evidence Automation (Cross-Cutting)
+- [`GC-05`](controls/gc/GC-05.yaml) — Intent Traceability (Intent Ingestion)
+- [`GC-06`](controls/gc/GC-06.yaml) — Code Provenance Tracking (Coding & Implementation)
+- [`QC-01`](controls/qc/QC-01.yaml) — Specification Validation (Intent Ingestion)
+- [`QC-02`](controls/qc/QC-02.yaml) — Coherence & Conflict Resolution (Intent Ingestion)
+- [`QC-03`](controls/qc/QC-03.yaml) — Design Completeness & Standards (System Design)
+- [`QC-04`](controls/qc/QC-04.yaml) — Pull Request Creation & Review (Coding & Implementation)
+- [`QC-05`](controls/qc/QC-05.yaml) — Code Quality Standards (Coding & Implementation)
+- [`QC-06`](controls/qc/QC-06.yaml) — Functional & Non-Functional Testing (Testing & Documentation)
+- [`QC-07`](controls/qc/QC-07.yaml) — AI Output Validation (Testing & Documentation)
+- [`QC-08`](controls/qc/QC-08.yaml) — Documentation Completeness (Testing & Documentation)
+- [`QC-09`](controls/qc/QC-09.yaml) — Release Readiness Checklist (Deployment & Release)
+- [`QC-10`](controls/qc/QC-10.yaml) — SLA/SLO Monitoring (Observability & Maintenance)
+- [`RC-01`](controls/rc/RC-01.yaml) — Risk Classification (Intent Ingestion)
+- [`RC-02`](controls/rc/RC-02.yaml) — Design Approval (System Design)
+- [`RC-03`](controls/rc/RC-03.yaml) — Privacy Impact Assessment Gate (System Design)
+- [`RC-04`](controls/rc/RC-04.yaml) — Decision Log (Coding & Implementation)
+- [`RC-05`](controls/rc/RC-05.yaml) — Risk Threshold Evaluation (Testing & Documentation)
+- [`RC-06`](controls/rc/RC-06.yaml) — CAB Approval (Deployment & Release)
+- [`RC-07`](controls/rc/RC-07.yaml) — Rollback Plan Validation (Deployment & Release)
+- [`RC-08`](controls/rc/RC-08.yaml) — Risk & Health Monitoring (Observability & Maintenance)
+- [`RC-09`](controls/rc/RC-09.yaml) — Third-Party Continuous Risk Monitoring (Observability & Maintenance)
+- [`SC-01`](controls/sc/SC-01.yaml) — Core Directive Injection (Cross-Cutting)
+- [`SC-02`](controls/sc/SC-02.yaml) — Stage Directive Injection (Cross-Cutting)
+- [`SC-03`](controls/sc/SC-03.yaml) — Pre-Guardrails (Intent Ingestion)
+- [`SC-04`](controls/sc/SC-04.yaml) — Data Classification & Sensitivity Screening (Intent Ingestion)
+- [`SC-05`](controls/sc/SC-05.yaml) — Threat Model Validation (System Design)
+- [`SC-06`](controls/sc/SC-06.yaml) — Zero-Trust Architecture Validation (System Design)
+- [`SC-07`](controls/sc/SC-07.yaml) — Permission Management (Coding & Implementation)
+- [`SC-08`](controls/sc/SC-08.yaml) — Post-Guardrails (Coding & Implementation)
+- [`SC-09`](controls/sc/SC-09.yaml) — Secrets & Credentials Scanning (Coding & Implementation)
+- [`SC-10`](controls/sc/SC-10.yaml) — Software Composition Analysis & SBOM Generation (Coding & Implementation)
+- [`SC-11`](controls/sc/SC-11.yaml) — Container & IaC Security Scanning (Coding & Implementation)
+- [`SC-12`](controls/sc/SC-12.yaml) — SAST (Testing & Documentation)
+- [`SC-13`](controls/sc/SC-13.yaml) — DAST (Testing & Documentation)
+- [`SC-14`](controls/sc/SC-14.yaml) — API Security Testing (Testing & Documentation)
+- [`SC-15`](controls/sc/SC-15.yaml) — Adversarial AI Robustness Testing (Testing & Documentation)
+- [`SC-16`](controls/sc/SC-16.yaml) — Infrastructure Security (Deployment & Release)
+- [`SC-17`](controls/sc/SC-17.yaml) — Deployment Integrity (Deployment & Release)
+- [`SC-18`](controls/sc/SC-18.yaml) — Secrets & Key Management Lifecycle (Deployment & Release)
+- [`SC-19`](controls/sc/SC-19.yaml) — Incident Scanning & Detection (Observability & Maintenance)
+- [`SC-20`](controls/sc/SC-20.yaml) — Runtime Anomaly Detection (Observability & Maintenance)
 
 ---
 
@@ -212,4 +212,4 @@ python3 scripts/validate.py <control-file>
 
 ---
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

@@ -3,7 +3,7 @@
 # =============================================================================
 # A Change Request (CR) is the raw input to Stage 1 (Intent Ingestion).
 # It is submitted by the requester BEFORE any agent processing.
-# The agent transforms this into a Feature Specification (FEAT-XXXX) in QC-1A.
+# The agent transforms this into a Feature Specification (FEAT-XXXX) in QC-01.
 #
 # Usage:
 #   1. Copy: cp change-request.yaml CR-XXXX-short-title.yaml
@@ -15,7 +15,7 @@ id: "CR-0000"              # Unique change request ID — assigned by intake sys
 title: ""                  # One-line title of the requested change
 type: feature              # feature | bug | improvement | spike | security | compliance
 urgency: routine           # routine | urgent | emergency
-                           # emergency: triggers SA pre-notification and SC-1A fast-path
+                           # emergency: triggers SA pre-notification and SC-03 fast-path
 
 requester:
   name: ""
@@ -44,4 +44,4 @@ known_dependencies:
   - ""                     # Other changes, systems, or teams this depends on
 
 ai_component_involved: null  # true | false | unknown
-                             # If true or unknown: AC-1A will run during Stage 1
+                             # If true or unknown: AC-01 will run during Stage 1

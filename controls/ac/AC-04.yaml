@@ -1,0 +1,123 @@
+# =============================================================================
+# Control: AC-04 — AI Model Governance & Version Control
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / ML Ops Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-04
+moscow_score: should
+name: AI Model Governance & Version Control
+description: >-
+  For changes involving AI components: register all AI models (including GPAI/foundation
+  models, open-source models, custom-trained models) in a model registry capturing:
+  model identifier and version, provider, training data provenance and lineage, known
+  limitations and failure modes, bias test results, performance benchmarks, licence terms,
+  and intended use constraints. Enforce model version pinning in all deployment configurations.
+  Require documented approval for any model version upgrade, downgrade, or provider change.
+  Validate model version at deploy time (Stage 5) and monitor for model provider version
+  changes (Stage 6).
+required_in_stages:
+- number: 2
+  name: System Design
+  mandatory: false
+  note: >-
+    AC-04 applies at design time (model registry creation), deployment time (version
+    validation), and maintenance time (drift detection). Applicable only when change
+    involves AI models.
+- number: 5
+  name: Deployment & Release
+  mandatory: false
+  note: >-
+    At deployment: verify that the deployed model version matches the registered and
+    tested version from design.
+- number: 6
+  name: Observability & Maintenance
+  mandatory: false
+  note: >-
+    Monitor for model provider version changes (e.g., when using API-based models like
+    OpenAI GPT) and detect model performance drift.
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_creates_human_reviews
+  human_display: Agent creates registry, human reviews and approves
+  agent_role: >-
+    Create model registry entry for each AI model. Populate: model ID, version, provider,
+    training data description, performance metrics, bias test results, known limitations.
+    For model updates: propose new version with change rationale. Track model dependency
+    in deployment configuration.
+  human_role: >-
+    Review model registry entry. Validate training data provenance and licensing. Approve
+    model version for use. For model updates: approve change or request rollback. Monitor
+    for performance degradation.
+owner:
+  team: AI Governance, ML Ops
+  role: ML Ops Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+    - article: "Art. 11 & Annex IV"
+      requirement: >-
+        Technical documentation must include "description of changes made to the system
+        throughout its lifecycle"; model version tracking enables this
+    - article: "Art. 72"
+      requirement: >-
+        Post-market monitoring must track performance relative to the deployed model
+        version; presupposes version tracking
+    - article: "Arts. 51-56"
+      requirement: >-
+        GPAI model documentation requirements (model card, training data, limitations);
+        stored in model registry
+  dora:
+    - article: "Art. 28"
+      obligation: Third-party ICT risk management applies to AI model providers
+inputs:
+- name: AI model specification
+  source_control: AC-03
+  description: Design-time documentation of selected AI models and their intended use
+- name: Model provider documentation
+  description: Model cards, training data descriptions, licence terms
+outputs:
+- name: Model Registry Entry
+  type: evidence
+  description: >-
+    Comprehensive metadata for each AI model: ID, version, provider, training data
+    provenance, performance benchmarks, bias test results, licence, intended use,
+    limitations, and dependencies.
+  retention: 7 years (EU AI Act Art. 12 record-keeping)
+- name: Model Version Pin (deployment configuration)
+  type: artefact
+  description: >-
+    Explicit version pinning in deployment manifests (e.g., model_version: gpt-4-0613,
+    rather than latest)
+  retention: Duration of deployment
+- name: Model Update Approval Decision
+  type: decision
+  description: >-
+    For each model version change: approval, rationale, date, and rollback plan if
+    degradation is detected
+  retention: 7 years
+failure_behaviour:
+  action: escalate
+  escalation_target: AI Governance Lead
+  description: >-
+    If model registry is incomplete or version pinning is not enforced, escalate to AI
+    Governance Lead. Cannot deploy without confirmed model version.
+automation:
+  tooling:
+    - MLflow Model Registry
+    - Hugging Face Model Hub
+    - Amazon SageMaker Model Registry
+    - Weights & Biases
+    - Custom model versioning system
+  frequency: per_model_change
+  sla_minutes: 120
+dependencies:
+- AC-03   # AI Component Design Review (specifies models)
+- AC-01   # AI Risk Tier Classification (determines governance strictness)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

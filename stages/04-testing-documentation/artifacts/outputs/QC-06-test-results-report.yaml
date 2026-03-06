@@ -1,0 +1,83 @@
+# =============================================================================
+# Test Results Report Template
+# =============================================================================
+# Produced during Step 4.2 by control QC-06.
+# Records functional and non-functional test results traced to acceptance
+# criteria from the Stage 1 feature specification.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp test-results-report.yaml FEAT-XXXX-test-results-report.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 4
+control: QC-06
+executed_at: ""                    # ISO 8601 datetime
+tooling: ""                        # Test framework name and version
+
+functional_tests: []
+# Per-test entries, e.g.:
+# - id: "FT-001"
+#   acceptance_criterion_ref: ""   # ID from feature-spec.yaml
+#   description: ""
+#   result: ""                     # passed | failed | skipped
+#   failure_detail: ""             # Populated only if result is failed
+
+nfr_tests:
+  regression:
+    executed: 0
+    passed: 0
+    failed: 0
+  negative:
+    executed: 0
+    passed: 0
+    failed: 0
+  boundary:
+    executed: 0
+    passed: 0
+    failed: 0
+  performance:
+    executed: 0
+    passed: 0
+    failed: 0
+    p95_latency_ms: null
+    target_p95_latency_ms: null
+  load:
+    executed: 0
+    passed: 0
+    failed: 0
+  stress:
+    executed: 0
+    passed: 0
+    failed: 0
+  accessibility:
+    executed: 0
+    passed: 0
+    failed: 0
+    standard: ""                   # e.g. WCAG 2.2 AA
+  resilience:
+    executed: 0
+    passed: 0
+    failed: 0
+
+failures: []
+# Per-failure entries, e.g.:
+# - test_id: ""
+#   type: ""                       # functional | nfr
+#   description: ""
+#   blocks_release: null           # true | false (QA determination)
+#   resolution: ""                 # Populated after QA review
+
+summary:
+  total_functional: 0
+  functional_passed: 0
+  functional_failed: 0
+  total_nfr: 0
+  nfr_passed: 0
+  nfr_failed: 0
+  unresolved_blocking_failures: 0  # Must be 0 before Stage 4 exit
+  status: ""                       # passed | failed
+  reviewed_by: ""                  # QA name
+  reviewed_at: ""                  # ISO 8601 datetime

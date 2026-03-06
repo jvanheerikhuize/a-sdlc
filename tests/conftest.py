@@ -69,11 +69,11 @@ def repo_root(tmp_path) -> Path:
     # Create registry with 5 sample controls
     registry_data = {
         "registry": [
-            {"id": "QC-1A", "name": "Test Control 1", "file": "controls/qc/QC-1A.yaml"},
-            {"id": "SC-2B", "name": "Test Control 2", "file": "controls/sc/SC-2B.yaml"},
-            {"id": "RC-3A", "name": "Test Control 3", "file": "controls/rc/RC-3A.yaml"},
-            {"id": "AC-1B", "name": "Test Control 4", "file": "controls/ac/AC-1B.yaml"},
-            {"id": "GC-2A", "name": "Test Control 5", "file": "controls/gc/GC-2A.yaml"},
+            {"id": "QC-01", "name": "Test Control 1", "file": "controls/qc/QC-01.yaml"},
+            {"id": "SC-02", "name": "Test Control 2", "file": "controls/sc/SC-02.yaml"},
+            {"id": "RC-04", "name": "Test Control 3", "file": "controls/rc/RC-04.yaml"},
+            {"id": "AC-02", "name": "Test Control 4", "file": "controls/ac/AC-02.yaml"},
+            {"id": "GC-02", "name": "Test Control 5", "file": "controls/gc/GC-02.yaml"},
         ]
     }
     with open(tmp_path / "controls" / "registry.yaml", "w") as f:
@@ -125,11 +125,11 @@ def sample_stage_yaml() -> dict:
         "name": "Intent Ingestion",
         "slug": "intent-ingestion",
         "description": "Capture and validate feature requirements.",
-        "required_controls": ["QC-1A", "SC-1A"],
+        "required_controls": ["QC-01", "SC-03"],
         "workflow": {
             "nodes": [
-                {"id": "QC-1A", "name": "Spec Validation", "type": "quality"},
-                {"id": "SC-1A", "name": "Security Check", "type": "security"},
+                {"id": "QC-01", "name": "Spec Validation", "type": "quality"},
+                {"id": "SC-03", "name": "Security Check", "type": "security"},
             ]
         },
         "exit_criteria": ["All controls passed", "Documentation complete"],
@@ -193,7 +193,7 @@ def create_control_yaml(path: Path, control_id: str, **kwargs) -> dict:
 
     Args:
         path: Path where control file should be created.
-        control_id: Control ID (e.g., 'SC-2B').
+        control_id: Control ID (e.g., 'SC-02').
         **kwargs: Additional fields to include in control YAML.
 
     Returns:
@@ -244,7 +244,7 @@ def create_registry_entry(control_id: str, **kwargs) -> dict:
     """Create a registry entry dict.
 
     Args:
-        control_id: Control ID (e.g., 'SC-2B').
+        control_id: Control ID (e.g., 'SC-02').
         **kwargs: Additional fields to include.
 
     Returns:

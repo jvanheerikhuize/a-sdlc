@@ -58,7 +58,7 @@ Use this when your agent starts a session and needs full framework context.
        tasks = yaml.safe_load(f)
 
    # Map: task name → stage → controls → entry_file
-   # Example: "implement-feature" → Stage 3 → [QC-3A, QC-3B, ...] → context/stage-03.md
+   # Example: "implement-feature" → Stage 3 → [QC-04, QC-05, ...] → context/stage-03.md
    ```
 
 5. **Load Stage Context Bundle (when entering a stage):**
@@ -95,15 +95,15 @@ Use this when you need a specific control definition without loading the full fr
    # Find control by ID
    control_entry = next(
        c for c in registry['controls']
-       if c['id'] == 'SC-3B'
+       if c['id'] == 'SC-08'
    )
-   # Result: {'id': 'SC-3B', 'name': '...', 'track': 'sc', 'stages': [...]}
+   # Result: {'id': 'SC-08', 'name': '...', 'track': 'sc', 'stages': [...]}
    ```
 
 2. **Load control definition:**
    ```python
    track = control_entry['track']  # 'sc'
-   control_id = control_entry['id']  # 'SC-3B'
+   control_id = control_entry['id']  # 'SC-08'
 
    control_path = f"a-sdlc/controls/{track}/{control_id}.yaml"
    with open(control_path) as f:
@@ -146,7 +146,7 @@ Use this when an agent receives a task description and needs to discover relevan
    #   'id': 'implement-feature',
    #   'name': 'Implement a feature',
    #   'stage': 3,
-   #   'controls': ['QC-3A', 'QC-3B', 'SC-3B', 'SC-3C', ...],
+   #   'controls': ['QC-04', 'QC-05', 'SC-08', 'SC-09', ...],
    #   'entry_file': 'context/stage-03-coding-and-implementation.md'
    # }
    ```
@@ -258,7 +258,7 @@ Use this when your agent detects a Stage 4 test failure or Stage 6 production is
    # Get the human decision (Path A or Path B)
    trigger_record = {
        'source_stage': 4,  # or 6
-       'control_id': 'SC-4A',
+       'control_id': 'SC-12',
        'alert_id': 'ALT-2024-00123',
        'description': 'SAST found SQL injection in query builder'
    }
@@ -270,7 +270,7 @@ Use this when your agent detects a Stage 4 test failure or Stage 6 production is
 3. **Execute Path A (Quick Fix) or Path B (Full Re-entry):**
    ```python
    if path_decision == 'path_a':
-       # Re-execute minimum controls: QC-3A, QC-3B, SC-3B, SC-3C, GC-3A, QC-4A, SC-4A, RC-4A, SC-5B
+       # Re-execute minimum controls: QC-04, QC-05, SC-08, SC-09, GC-06, QC-06, SC-12, RC-05, SC-17
        # Runs at Stage 3 (Coding) level
        execute_path_a(trigger_record)
 
@@ -315,11 +315,11 @@ framework = load_yaml_safe('a-sdlc/asdlc.yaml')
 
 # Registry lookup
 registry = load_yaml_safe('a-sdlc/controls/registry.yaml')
-control = find_control_in_registry('SC-3B', registry['controls'])
+control = find_control_in_registry('SC-08', registry['controls'])
 
 # Extract control IDs from freetext
-text = "We must implement QC-1A and RC-1A before proceeding"
-control_ids = extract_control_id_from_string(text)  # ['QC-1A', 'RC-1A']
+text = "We must implement QC-01 and RC-01 before proceeding"
+control_ids = extract_control_id_from_string(text)  # ['QC-01', 'RC-01']
 ```
 
 ---
@@ -364,9 +364,9 @@ a-sdlc/
 │
 ├── directives/
 │   ├── core/
-│   │   └── core-directives.yaml       ← IMMUTABLE security constraints (SC-0D)
+│   │   └── core-directives.yaml       ← IMMUTABLE security constraints (SC-01)
 │   └── stages/
-│       └── NN-name.yaml               ← Stage-specific directives (SC-2B)
+│       └── NN-name.yaml               ← Stage-specific directives (SC-02)
 │
 ├── regulatory/
 │   ├── compliance-matrix.yaml         ← DORA & EU AI Act coverage
@@ -423,7 +423,7 @@ When integrating into your agentic repository:
 - [ ] Verify YAML parsing against schemas in `schema/`
 - [ ] Run validation: `python3 a-sdlc/scripts/validate.py`
 - [ ] Inject stage-specific directives when entering a new stage
-- [ ] Log all control executions to `GC-0A` audit trail
+- [ ] Log all control executions to `GC-01` audit trail
 
 ---
 

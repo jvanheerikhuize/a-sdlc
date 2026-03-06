@@ -1,0 +1,54 @@
+# =============================================================================
+# Control: AC-05 — Bias & Fairness Testing
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-05
+moscow_score: should
+name: Bias & Fairness Testing
+description: 'For changes involving AI systems: test for discriminatory outcomes across protected characteristics (e.g. age,
+  gender, ethnicity, disability) as defined by applicable EU regulations. Results feed into RC-05. Not applicable to changes
+  with no AI component.'
+required_in_stages:
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_executes_human_reviews
+  human_display: Agent executes, human reviews
+  agent_role: Execute bias and fairness test suite across protected characteristic groups; measure disparate impact.
+  human_role: Review bias test results; determine if disparate impact is within acceptable thresholds.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+  - article: Art. 10(2)(f)
+    requirement: Examination of training data and outputs for potential biases
+  - article: Art. 10(5)
+    requirement: Special category data may be used for bias detection and correction
+  - article: Art. 15(1)
+    requirement: Appropriate levels of accuracy across all population groups
+outputs:
+- name: Bias & fairness test report
+  type: evidence
+  description: Test results showing disparate impact measurements across protected groups with threshold comparison.
+  retention: 7 years (AI Act)
+failure_behaviour:
+  action: block
+  escalation_target: AI Governance Lead
+  description: Discriminatory outcomes exceeding defined thresholds block deployment. Design or training data must be revised.
+automation:
+  frequency: per_release
+dependencies:
+- AC-01
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

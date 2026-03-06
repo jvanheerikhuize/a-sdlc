@@ -81,8 +81,8 @@ class TestCheckControlFiles:
         found_ids = check_control_files(checker)
 
         assert len(found_ids) == 5  # conftest creates 5 sample controls
-        assert "QC-1A" in found_ids
-        assert "SC-2B" in found_ids
+        assert "QC-01" in found_ids
+        assert "SC-02" in found_ids
 
     def test_check_control_files_returns_list(self, repo_root):
         """Test that check_control_files returns a list."""
@@ -106,11 +106,11 @@ class TestCheckRegistry:
     def test_check_registry_finds_all_controls(self, repo_root):
         """Test that check_registry finds all registry entries."""
         checker = Checker(quiet=True)
-        control_ids = ["QC-1A", "SC-2B", "RC-3A", "AC-1B", "GC-2A"]
+        control_ids = ["QC-01", "SC-02", "RC-04", "AC-02", "GC-02"]
         registry_ids = check_registry(checker, control_ids)
 
         assert len(registry_ids) == 5
-        assert "QC-1A" in registry_ids
+        assert "QC-01" in registry_ids
 
     def test_check_registry_returns_list(self, repo_root):
         """Test that check_registry returns a list."""
@@ -131,7 +131,7 @@ class TestCheckStageFiles:
     def test_check_stage_files_runs_without_error(self, repo_root):
         """Test that check_stage_files executes without error."""
         checker = Checker(quiet=True)
-        registry_ids = ["QC-1A", "SC-2B", "RC-3A", "AC-1B", "GC-2A"]
+        registry_ids = ["QC-01", "SC-02", "RC-04", "AC-02", "GC-02"]
 
         # Should not raise an error
         check_stage_files(checker, registry_ids)
@@ -157,7 +157,7 @@ class TestCheckControlDependencies:
     def test_check_control_dependencies_runs_without_error(self, repo_root):
         """Test that check_control_dependencies executes without error."""
         checker = Checker(quiet=True)
-        registry_ids = ["QC-1A", "SC-2B", "RC-3A", "AC-1B", "GC-2A"]
+        registry_ids = ["QC-01", "SC-02", "RC-04", "AC-02", "GC-02"]
         check_control_dependencies(checker, registry_ids)
 
     def test_check_control_dependencies_with_empty_registry(self, repo_root):
@@ -172,7 +172,7 @@ class TestCheckFeedbackLoops:
     def test_check_feedback_loops_runs_without_error(self, repo_root):
         """Test that check_feedback_loops executes without error."""
         checker = Checker(quiet=True)
-        registry_ids = ["QC-1A", "SC-2B", "RC-3A", "AC-1B", "GC-2A"]
+        registry_ids = ["QC-01", "SC-02", "RC-04", "AC-02", "GC-02"]
         check_feedback_loops(checker, registry_ids)
 
     def test_check_feedback_loops_with_empty_registry(self, repo_root):
@@ -258,12 +258,12 @@ class TestValidatorHelpers:
 
     def test_rel_returns_relative_path_string(self, repo_root):
         """Test that rel() returns relative path as string."""
-        control_file = repo_root / "controls" / "qc" / "QC-1A.yaml"
+        control_file = repo_root / "controls" / "qc" / "QC-01.yaml"
         result = rel(control_file)
 
         assert isinstance(result, str)
         assert "controls" in result
-        assert "QC-1A" in result
+        assert "QC-01" in result
 
     def test_rel_handles_paths_outside_repo(self):
         """Test that rel() handles paths outside repo gracefully."""

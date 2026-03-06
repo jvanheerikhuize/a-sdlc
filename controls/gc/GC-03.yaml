@@ -1,0 +1,51 @@
+# =============================================================================
+# Control: GC-03 — Agent Provenance Registry
+# Track:   GC (Governance Controls)
+# Owner:   Governance & Compliance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: GC-03
+moscow_score: must
+name: Agent Provenance Registry
+description: 'Maintain a centralised registry of all agent contributions across the lifecycle: what each agent produced, which
+  decisions it made autonomously, and which humans reviewed and approved its output. Supports DORA third-party oversight and
+  EU AI Act deployer obligations.'
+required_in_stages:
+- number: 0
+  name: Cross-Cutting
+  mandatory: true
+track:
+  code: GC
+  name: Governance Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Register every contribution, decision, and approval in the provenance registry automatically.
+  human_role: Review provenance records; provide regulatory evidence of agent oversight.
+owner:
+  team: Governance & Compliance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 28
+    obligation: Third-party ICT service provider oversight and accountability
+  - article: Art. 8(6)
+    obligation: ICT documentation including agent and automation contributions
+  eu_ai_act:
+  - article: Art. 17(1)(f)
+    requirement: Data management and quality management documentation
+  - article: Art. 26(5)
+    requirement: Deployer obligations for monitoring AI system operation
+outputs:
+- name: Agent provenance record
+  type: registry_entry
+  description: Per-contribution entry recording agent identity, action taken, output reference, and approving human.
+  retention: 7 years (DORA Art. 28)
+automation:
+  frequency: per_change
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

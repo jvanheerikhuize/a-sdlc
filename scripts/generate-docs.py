@@ -95,7 +95,7 @@ class DocGenerator:
         """Find a control in the registry by ID using shared utility.
 
         Args:
-            control_id: Control ID to find (e.g., "SC-2B").
+            control_id: Control ID to find (e.g., "SC-02").
             registry: List of control entries from registry.
 
         Returns:
@@ -418,8 +418,8 @@ class DocGenerator:
         ]
         for ctrl in path_a_min_ctrls:
             ctrl_id = ctrl.get("id", "")
-            # Parse stage from control ID (QC-3A → 3, SC-4A → 4, SC-5B → 5, etc.)
-            # Format: [TRACK]-[STAGE][LETTER], e.g., QC-3A, SC-4A, SC-5B
+            # Parse stage from control ID (QC-04 → 3, SC-12 → 4, SC-17 → 5, etc.)
+            # Format: [TRACK]-[STAGE][LETTER], e.g., QC-04, SC-12, SC-17
             stage = "?"
             if "-" in ctrl_id:
                 parts = ctrl_id.split("-")

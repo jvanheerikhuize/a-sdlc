@@ -120,12 +120,12 @@ The framework organizes controls into five tracks, each addressing a different d
 
 The following controls apply to **every stage** and are not listed per-stage. See [`../controls/README.md`](../controls/README.md) for the full control registry:
 
-- **SC-0D** — Core Directive Injection
-- **SC-2B** — Stage Directive Injection
-- **GC-0A** — Audit Trail & Compliance Reporting
-- **GC-0B** — End-to-End Traceability
-- **GC-0C** — Agent Provenance Registry
-- **GC-0D** — Compliance Evidence Automation
+- **SC-01** — Core Directive Injection
+- **SC-02** — Stage Directive Injection
+- **GC-01** — Audit Trail & Compliance Reporting
+- **GC-02** — End-to-End Traceability
+- **GC-03** — Agent Provenance Registry
+- **GC-04** — Compliance Evidence Automation
 
 ---
 
@@ -140,4 +140,4 @@ For full feedback loop definitions and decision logic, see [`../feedbackloops/fe
 
 ---
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

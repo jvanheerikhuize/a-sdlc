@@ -111,7 +111,7 @@ Generates `AGENTS.md` from `asdlc.yaml` and `tasks.yaml`.
 - `stages` — All stages with workflow DAGs
 - `controls` — All controls with execution rules
 - `tasks` — Navigation index mapping "what am I doing?" to stages/controls
-- `directives` — Core and stage-specific security directives (SC-0D, SC-2B)
+- `directives` — Core and stage-specific security directives (SC-01, SC-02)
 - `last_updated` — Timestamp
 
 **Sections generated:**
@@ -119,7 +119,7 @@ Generates `AGENTS.md` from `asdlc.yaml` and `tasks.yaml`.
 - Agent operating instructions (mandatory rules)
 - Navigation map (stages, controls, tasks)
 - Control execution rules (actor, gate criteria, success conditions)
-- Directive injection rules (SC-0D at session start, SC-2B at stage entry)
+- Directive injection rules (SC-01 at session start, SC-02 at stage entry)
 - Feedback loop decision tree
 - Delegation patterns
 

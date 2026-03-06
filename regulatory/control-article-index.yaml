@@ -11,14 +11,14 @@
 
 controls:
   # DORA-Only Controls
-  QC-1A:
+  QC-01:
     name: "Feature Acceptance Criteria"
     mappings:
       - framework: DORA
         article: "8(5)"
         coverage: Strong
 
-  QC-1B:
+  QC-02:
     name: "Coherence & Conflict Resolution"
     mappings:
       - framework: DORA
@@ -28,56 +28,56 @@ controls:
         article: "9"
         coverage: Strong
 
-  QC-2A:
+  QC-03:
     name: "Design Completeness & Standards"
     mappings:
       - framework: DORA
         article: "8(4)"
         coverage: Strong
 
-  QC-3A:
+  QC-04:
     name: "Pull Request Creation & Review"
     mappings:
       - framework: DORA
         article: "8(5)"
         coverage: Strong
 
-  QC-3B:
+  QC-05:
     name: "Code Quality Standards"
     mappings:
       - framework: DORA
         article: "8(5)"
         coverage: Strong
 
-  QC-5A:
+  QC-09:
     name: "Release Readiness Checklist"
     mappings:
       - framework: DORA
         article: "8(5)"
         coverage: Strong
 
-  QC-6A:
+  QC-10:
     name: "SLA/SLO Monitoring"
     mappings:
       - framework: DORA
         article: "8(6)"
         coverage: Strong
 
-  RC-5A:
+  RC-06:
     name: "CAB Approval"
     mappings:
       - framework: DORA
         article: "9(4)"
         coverage: Strong
 
-  RC-5B:
+  RC-07:
     name: "Rollback Plan Validation"
     mappings:
       - framework: DORA
         article: "11"
         coverage: Strong
 
-  SC-2C:
+  SC-06:
     name: "Zero-Trust Architecture Validation"
     mappings:
       - framework: DORA
@@ -90,14 +90,14 @@ controls:
         article: "9(4)"
         coverage: Strong
 
-  SC-3C:
+  SC-09:
     name: "Secrets & Credentials Scanning"
     mappings:
       - framework: DORA
         article: "9(4)"
         coverage: Strong
 
-  RC-6B:
+  RC-09:
     name: "Third-Party Continuous Risk Monitoring"
     mappings:
       - framework: DORA
@@ -114,7 +114,7 @@ controls:
         coverage: Strong
 
   # Dual-Framework Controls
-  GC-0A:
+  GC-01:
     name: "Audit Trail & Compliance Reporting"
     mappings:
       - framework: DORA
@@ -130,7 +130,7 @@ controls:
         article: "72"
         coverage: Partial
 
-  GC-0B:
+  GC-02:
     name: "End-to-End Traceability"
     mappings:
       - framework: DORA
@@ -140,7 +140,7 @@ controls:
         article: "20"
         coverage: Strong
 
-  GC-0C:
+  GC-03:
     name: "Agent Provenance Registry"
     mappings:
       - framework: DORA
@@ -150,7 +150,7 @@ controls:
         article: "23"
         coverage: Partial
 
-  GC-0D:
+  GC-04:
     name: "Compliance Evidence Automation"
     mappings:
       - framework: DORA
@@ -163,7 +163,7 @@ controls:
         article: "17(1)"
         coverage: Strong
 
-  GC-1A:
+  GC-05:
     name: "Intent Audit Record"
     mappings:
       - framework: DORA
@@ -173,7 +173,7 @@ controls:
         article: "9(2)"
         coverage: Strong
 
-  GC-3A:
+  GC-06:
     name: "Code Provenance Tracking"
     mappings:
       - framework: DORA
@@ -184,7 +184,7 @@ controls:
         coverage: Partial
 
   # Security Controls (Mostly Dual-Framework)
-  SC-0D:
+  SC-01:
     name: "Core Directive Injection"
     mappings:
       - framework: DORA
@@ -194,7 +194,7 @@ controls:
         article: "14"
         coverage: Partial
 
-  SC-1A:
+  SC-03:
     name: "Pre-Guardrails"
     mappings:
       - framework: DORA
@@ -207,7 +207,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-1B:
+  SC-04:
     name: "Data Classification & Sensitivity Screening"
     mappings:
       - framework: DORA
@@ -220,7 +220,7 @@ controls:
         article: "10"
         coverage: Partial
 
-  SC-2A:
+  SC-05:
     name: "Threat Model Validation"
     mappings:
       - framework: DORA
@@ -230,7 +230,7 @@ controls:
         article: "9(2)"
         coverage: Strong
 
-  SC-2B:
+  SC-02:
     name: "Stage Directive Injection"
     mappings:
       - framework: DORA
@@ -240,7 +240,7 @@ controls:
         article: "14"
         coverage: Partial
 
-  SC-3A:
+  SC-07:
     name: "Permission & Access Control Enforcement"
     mappings:
       - framework: DORA
@@ -250,7 +250,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-3B:
+  SC-08:
     name: "Post-Guardrails"
     mappings:
       - framework: DORA
@@ -263,7 +263,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-3D:
+  SC-10:
     name: "SCA & SBOM Generation"
     mappings:
       - framework: DORA
@@ -279,7 +279,7 @@ controls:
         article: "15(3)"
         coverage: Strong
 
-  SC-3E:
+  SC-11:
     name: "Container & IaC Security Scanning"
     mappings:
       - framework: DORA
@@ -292,7 +292,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-4A:
+  SC-12:
     name: "SAST"
     mappings:
       - framework: DORA
@@ -305,7 +305,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-4B:
+  SC-13:
     name: "DAST"
     mappings:
       - framework: DORA
@@ -318,7 +318,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-4C:
+  SC-14:
     name: "API Security Testing"
     mappings:
       - framework: DORA
@@ -340,7 +340,7 @@ controls:
         article: "15(5)"
         coverage: Strong
 
-  SC-4D:
+  SC-15:
     name: "Adversarial AI Robustness Testing"
     mappings:
       - framework: DORA
@@ -350,7 +350,7 @@ controls:
         article: "15(5)"
         coverage: Strong
 
-  SC-5A:
+  SC-16:
     name: "Infrastructure Security"
     mappings:
       - framework: DORA
@@ -366,7 +366,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-5B:
+  SC-17:
     name: "Deployment Integrity"
     mappings:
       - framework: DORA
@@ -376,7 +376,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-5C:
+  SC-18:
     name: "Secrets & Key Management Lifecycle"
     mappings:
       - framework: DORA
@@ -392,7 +392,7 @@ controls:
         article: "15(4)"
         coverage: Strong
 
-  SC-6A:
+  SC-19:
     name: "Incident Detection, Classification & Response"
     mappings:
       - framework: DORA
@@ -414,7 +414,7 @@ controls:
         article: "73"
         coverage: Strong
 
-  SC-6B:
+  SC-20:
     name: "Anomaly Detection & Alerting"
     mappings:
       - framework: DORA
@@ -428,7 +428,7 @@ controls:
         coverage: Strong
 
   # Risk Controls (Mostly Dual-Framework)
-  RC-1A:
+  RC-01:
     name: "Risk Classification"
     mappings:
       - framework: DORA
@@ -441,7 +441,7 @@ controls:
         article: "9"
         coverage: Strong
 
-  RC-2A:
+  RC-02:
     name: "Design Approval"
     mappings:
       - framework: DORA
@@ -457,7 +457,7 @@ controls:
         article: "9"
         coverage: Strong
 
-  RC-2B:
+  RC-03:
     name: "Privacy Impact Assessment Gate"
     mappings:
       - framework: DORA
@@ -470,7 +470,7 @@ controls:
         article: "10(5)"
         coverage: Strong
 
-  RC-3A:
+  RC-04:
     name: "Decision Log"
     mappings:
       - framework: DORA
@@ -486,7 +486,7 @@ controls:
         article: "12"
         coverage: Strong
 
-  RC-4A:
+  RC-05:
     name: "Risk Threshold Evaluation"
     mappings:
       - framework: DORA
@@ -502,7 +502,7 @@ controls:
         article: "21"
         coverage: Partial
 
-  RC-6A:
+  RC-08:
     name: "Risk & Health Monitoring"
     mappings:
       - framework: DORA
@@ -519,7 +519,7 @@ controls:
         coverage: Strong
 
   # Quality Controls (EU AI Act-Only)
-  QC-4A:
+  QC-06:
     name: "Functional & Non-Functional Testing"
     mappings:
       - framework: DORA
@@ -529,7 +529,7 @@ controls:
         article: "15(1)"
         coverage: Strong
 
-  QC-4B:
+  QC-07:
     name: "AI Output Validation"
     mappings:
       - framework: DORA
@@ -551,7 +551,7 @@ controls:
         article: "15(3)"
         coverage: Partial
 
-  QC-4C:
+  QC-08:
     name: "Documentation Completeness"
     mappings:
       - framework: DORA
@@ -574,7 +574,7 @@ controls:
         coverage: Strong
 
   # AI Controls (EU AI Act-Only)
-  AC-1A:
+  AC-01:
     name: "AI Risk Tier Classification"
     mappings:
       - framework: EU AI Act
@@ -596,7 +596,7 @@ controls:
         article: "55"
         coverage: Partial
 
-  AC-1B:
+  AC-02:
     name: "GPAI & Foundation Model Obligation Screening"
     mappings:
       - framework: EU AI Act
@@ -615,7 +615,7 @@ controls:
         article: "56"
         coverage: Strong
 
-  AC-2A:
+  AC-03:
     name: "AI Component Design Review"
     mappings:
       - framework: EU AI Act
@@ -667,7 +667,7 @@ controls:
         article: "72(3)"
         coverage: Strong
 
-  AC-2B:
+  AC-04:
     name: "AI Model Governance & Version Control"
     mappings:
       - framework: DORA
@@ -692,7 +692,7 @@ controls:
         article: "72(2)"
         coverage: Strong
 
-  AC-4A:
+  AC-05:
     name: "Bias & Fairness Testing"
     mappings:
       - framework: EU AI Act
@@ -714,7 +714,7 @@ controls:
         article: "15(5)"
         coverage: Strong
 
-  AC-6A:
+  AC-06:
     name: "AI Post-Market Surveillance"
     mappings:
       - framework: DORA

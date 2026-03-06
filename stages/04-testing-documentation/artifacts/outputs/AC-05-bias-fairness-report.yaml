@@ -1,0 +1,56 @@
+# =============================================================================
+# Bias & Fairness Report Template
+# =============================================================================
+# Produced during Step 4.5 by control AC-05.
+# CONDITIONAL: Only applicable when the change involves an AI component.
+# Records disparate impact measurements across protected characteristic groups
+# against thresholds required by EU AI Act Art. 10 and Art. 15.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp bias-fairness-report.yaml FEAT-XXXX-bias-fairness-report.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 4
+control: AC-05
+applicability: ""                  # applicable | not_applicable
+executed_at: ""                    # ISO 8601 datetime (blank if not_applicable)
+ai_tier: ""                        # From Stage 1 AC-01
+model_id: ""                       # AI model identifier and version
+
+# Leave all group sections empty and set applicability: not_applicable
+# if this change does not involve an AI component.
+
+protected_groups: []
+# Per-group entries, e.g.:
+# - characteristic: ""             # age | gender | ethnicity | disability | (other)
+#   subgroups_tested: []           # List of subgroup labels tested
+#   dataset_size: 0
+#   disparate_impact_ratio: null   # Decimal — ratio of worst-performing to best-performing group
+#   threshold: null                # Maximum acceptable ratio (e.g. 0.80 = 80% rule)
+#   passed: null                   # true | false
+#   notes: ""
+
+findings: []
+# Per-finding entries, e.g.:
+# - id: "BF-001"
+#   characteristic: ""
+#   description: ""
+#   disparate_impact_ratio: null
+#   severity: ""                   # critical | high | medium | low
+#   resolution:
+#     status: ""                   # open | accepted
+#     accepted_by: ""              # AGL name
+#     acceptance_rationale: ""
+
+summary:
+  groups_tested: 0
+  groups_passing: 0
+  groups_failing: 0
+  max_disparate_impact_ratio: null
+  discriminatory_outcomes_detected: null  # true | false
+  status: ""                       # passed | failed | not_applicable
+  reviewed_by: ""                  # AGL name
+  reviewed_at: ""                  # ISO 8601 datetime

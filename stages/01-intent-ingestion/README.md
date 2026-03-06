@@ -76,7 +76,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.1 — Screen Incoming Request
 
-**Control:** [`SC-1A`](../../controls/sc/SC-1A.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-03`](../../controls/sc/SC-03.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -99,7 +99,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.2 — Draft Feature Specification
 
-**Control:** [`QC-1A`](../../controls/qc/QC-1A.yaml) · **Delegation:** Agent drafts → human approves
+**Control:** [`QC-01`](../../controls/qc/QC-01.yaml) · **Delegation:** Agent drafts → human approves
 
 
 #### Actors and Actions
@@ -122,7 +122,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.3 — Conflict Analysis
 
-**Control:** [`QC-1B`](../../controls/qc/QC-1B.yaml) · **Delegation:** Agent analyses, human resolves
+**Control:** [`QC-02`](../../controls/qc/QC-02.yaml) · **Delegation:** Agent analyses, human resolves
 
 
 #### Actors and Actions
@@ -146,7 +146,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.4 — Risk Classification
 
-**Control:** [`RC-1A`](../../controls/rc/RC-1A.yaml) · **Delegation:** Agent classifies, human validates
+**Control:** [`RC-01`](../../controls/rc/RC-01.yaml) · **Delegation:** Agent classifies, human validates
 
 
 #### Actors and Actions
@@ -169,7 +169,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.5 — AI Tier Classification (conditional)
 
-**Control:** [`AC-1A`](../../controls/ac/AC-1A.yaml) · **Delegation:** Agent proposes, human confirms
+**Control:** [`AC-01`](../../controls/ac/AC-01.yaml) · **Delegation:** Agent proposes, human confirms
 
 **Condition:** Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document as not_applicable and skip human confirmation.
 
@@ -194,7 +194,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.5b — Data Classification Screening
 
-**Control:** [`SC-1B`](../../controls/sc/SC-1B.yaml) · **Delegation:** Agent classifies, SA reviews
+**Control:** [`SC-04`](../../controls/sc/SC-04.yaml) · **Delegation:** Agent classifies, SA reviews
 
 **Condition:** Only applicable when the change processes personal data or involves profiling. If not applicable, document as not_applicable.
 
@@ -219,7 +219,7 @@ Maximum concurrent steps: **3**
 
 ### Step 1.6 — Product Owner Sign-off
 
-**Control:** [`GC-1A`](../../controls/gc/GC-1A.yaml) · **Delegation:** Human required
+**Control:** [`GC-05`](../../controls/gc/GC-05.yaml) · **Delegation:** Human required
 
 
 #### Actors and Actions
@@ -245,64 +245,64 @@ Maximum concurrent steps: **3**
 ## Required Controls
 
 
-### SC-1A — Pre-Guardrails
+### SC-03 — Pre-Guardrails
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-1A.yaml`](../../controls/sc/SC-1A.yaml)
+- **File:** [`controls/sc/SC-03.yaml`](../../controls/sc/SC-03.yaml)
 - **Note:** Must run first — screens for adversarial inputs before any agent processing
 
 
-### SC-1B — Data Classification & Sensitivity Screening
+### SC-04 — Data Classification & Sensitivity Screening
 
 - **Track:** SC
 - **Delegation:** `agent_classifies_human_validates`
-- **File:** [`controls/sc/SC-1B.yaml`](../../controls/sc/SC-1B.yaml)
+- **File:** [`controls/sc/SC-04.yaml`](../../controls/sc/SC-04.yaml)
 - **Note:** Applicable when the change processes personal data or involves profiling
 
 
-### QC-1A — Specification Validation
+### QC-01 — Specification Validation
 
 - **Track:** QC
 - **Delegation:** `agent_drafts_human_approves`
-- **File:** [`controls/qc/QC-1A.yaml`](../../controls/qc/QC-1A.yaml)
+- **File:** [`controls/qc/QC-01.yaml`](../../controls/qc/QC-01.yaml)
 
 
-### QC-1B — Coherence & Conflict Resolution
+### QC-02 — Coherence & Conflict Resolution
 
 - **Track:** QC
 - **Delegation:** `agent_analyses_human_resolves`
-- **File:** [`controls/qc/QC-1B.yaml`](../../controls/qc/QC-1B.yaml)
+- **File:** [`controls/qc/QC-02.yaml`](../../controls/qc/QC-02.yaml)
 
 
-### RC-1A — Risk Classification
+### RC-01 — Risk Classification
 
 - **Track:** RC
 - **Delegation:** `agent_classifies_human_validates`
-- **File:** [`controls/rc/RC-1A.yaml`](../../controls/rc/RC-1A.yaml)
+- **File:** [`controls/rc/RC-01.yaml`](../../controls/rc/RC-01.yaml)
 
 
-### AC-1A — AI Risk Tier Classification
+### AC-01 — AI Risk Tier Classification
 
 - **Track:** AC
 - **Delegation:** `agent_proposes_human_confirms`
-- **File:** [`controls/ac/AC-1A.yaml`](../../controls/ac/AC-1A.yaml)
+- **File:** [`controls/ac/AC-01.yaml`](../../controls/ac/AC-01.yaml)
 - **Note:** Applicable when the change involves an AI component
 
 
-### AC-1B — GPAI & Foundation Model Obligation Screening
+### AC-02 — GPAI & Foundation Model Obligation Screening
 
 - **Track:** AC
 - **Delegation:** `agent_classifies_human_validates`
-- **File:** [`controls/ac/AC-1B.yaml`](../../controls/ac/AC-1B.yaml)
+- **File:** [`controls/ac/AC-02.yaml`](../../controls/ac/AC-02.yaml)
 - **Note:** Applicable when the change introduces or modifies use of a GPAI/foundation model
 
 
-### GC-1A — Intent Traceability
+### GC-05 — Intent Traceability
 
 - **Track:** GC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/gc/GC-1A.yaml`](../../controls/gc/GC-1A.yaml)
+- **File:** [`controls/gc/GC-05.yaml`](../../controls/gc/GC-05.yaml)
 
 
 ---
@@ -319,15 +319,15 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-1A-feature-spec.yaml`](artifacts/outputs/QC-1A-feature-spec.yaml)
-- [`artifacts/outputs/QC-1B-conflict-resolution-record.yaml`](artifacts/outputs/QC-1B-conflict-resolution-record.yaml)
-- [`artifacts/outputs/RC-1A-risk-classification.yaml`](artifacts/outputs/RC-1A-risk-classification.yaml)
-- [`artifacts/outputs/AC-1A-ai-tier-classification.yaml`](artifacts/outputs/AC-1A-ai-tier-classification.yaml)
-- [`artifacts/outputs/SC-1B-data-classification-record.yaml`](artifacts/outputs/SC-1B-data-classification-record.yaml)
-- [`artifacts/outputs/GC-1A-intent-audit-record.yaml`](artifacts/outputs/GC-1A-intent-audit-record.yaml)
+- [`artifacts/outputs/QC-01-feature-spec.yaml`](artifacts/outputs/QC-01-feature-spec.yaml)
+- [`artifacts/outputs/QC-02-conflict-resolution-record.yaml`](artifacts/outputs/QC-02-conflict-resolution-record.yaml)
+- [`artifacts/outputs/RC-01-risk-classification.yaml`](artifacts/outputs/RC-01-risk-classification.yaml)
+- [`artifacts/outputs/AC-01-ai-tier-classification.yaml`](artifacts/outputs/AC-01-ai-tier-classification.yaml)
+- [`artifacts/outputs/SC-04-data-classification-record.yaml`](artifacts/outputs/SC-04-data-classification-record.yaml)
+- [`artifacts/outputs/GC-05-intent-audit-record.yaml`](artifacts/outputs/GC-05-intent-audit-record.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

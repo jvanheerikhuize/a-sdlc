@@ -195,9 +195,9 @@ workflows:
       - condition: "New control ID is unique"
         check_type: "grep_registry"
         pattern: "[NEW_ID]"
-      - condition: "Control ID follows naming convention [Track]-[Stage][Letter]"
+      - condition: "Control ID follows naming convention [Track]-[NN]"
         check_type: "regex"
-        pattern: "[A-Z]{2}-[0-6][A-Z]"
+        pattern: "(QC|RC|SC|AC|GC)-\\d{2}"
 
     steps:
       - step_id: 1

@@ -7,7 +7,7 @@
 > python3 scripts/generate-docs.py
 > ```
 
-Validate the implementation against all acceptance criteria, security requirements, and documentation standards. RC-4A is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted RC-4A result.
+Validate the implementation against all acceptance criteria, security requirements, and documentation standards. RC-05 is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted RC-05 result.
 
 ---
 
@@ -32,7 +32,7 @@ The following roles participate in this stage:
 | QA | QA Engineer | Reviews functional and NFR test results; investigates failures; approves documentation completeness |
 | SA | Security Architect | Reviews SAST and DAST findings; triages CWE-mapped vulnerabilities; approves risk acceptance for security findings |
 | AGL | AI Governance Lead | Reviews AI output validation and bias test results; approves AI-specific risk acceptance |
-| RO | Risk Officer | Makes the formal go/no-go decision at RC-4A; provides documented risk acceptance for conditional pass |
+| RO | Risk Officer | Makes the formal go/no-go decision at RC-05; provides documented risk acceptance for conditional pass |
 | CO | Compliance Officer | Reviews documentation artefacts and test evidence during regulatory audits |
 
 ---
@@ -83,7 +83,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.1 — SAST
 
-**Control:** [`SC-4A`](../../controls/sc/SC-4A.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-12`](../../controls/sc/SC-12.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -106,7 +106,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.2 — Functional & Non-Functional Testing
 
-**Control:** [`QC-4A`](../../controls/qc/QC-4A.yaml) · **Delegation:** Agent executes, QA reviews
+**Control:** [`QC-06`](../../controls/qc/QC-06.yaml) · **Delegation:** Agent executes, QA reviews
 
 
 #### Actors and Actions
@@ -130,7 +130,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.3 — DAST
 
-**Control:** [`SC-4B`](../../controls/sc/SC-4B.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-13`](../../controls/sc/SC-13.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -153,7 +153,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.4 — AI Output Validation
 
-**Control:** [`QC-4B`](../../controls/qc/QC-4B.yaml) · **Delegation:** Agent executes, AGL reviews
+**Control:** [`QC-07`](../../controls/qc/QC-07.yaml) · **Delegation:** Agent executes, AGL reviews
 
 **Condition:** Only applicable when the change involves an AI component. If not applicable, document as not_applicable.
 
@@ -178,7 +178,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.5 — Bias & Fairness Testing
 
-**Control:** [`AC-4A`](../../controls/ac/AC-4A.yaml) · **Delegation:** Agent executes, AGL reviews
+**Control:** [`AC-05`](../../controls/ac/AC-05.yaml) · **Delegation:** Agent executes, AGL reviews
 
 **Condition:** Only applicable when the change involves an AI component. If not applicable, document as not_applicable.
 
@@ -203,7 +203,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.6 — Documentation Completeness
 
-**Control:** [`QC-4C`](../../controls/qc/QC-4C.yaml) · **Delegation:** Agent checks, human approves
+**Control:** [`QC-08`](../../controls/qc/QC-08.yaml) · **Delegation:** Agent checks, human approves
 
 
 #### Actors and Actions
@@ -227,7 +227,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.2-api — API Security Testing
 
-**Control:** [`SC-4C`](../../controls/sc/SC-4C.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-14`](../../controls/sc/SC-14.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -249,7 +249,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.7-ai-adversarial — Adversarial AI Robustness Testing
 
-**Control:** [`SC-4D`](../../controls/sc/SC-4D.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-15`](../../controls/sc/SC-15.yaml) · **Delegation:** Fully automated
 
 **Condition:** Only applicable for high-risk or security-critical AI deployments. If not applicable, document as not_applicable.
 
@@ -273,7 +273,7 @@ Maximum concurrent steps: **7**
 
 ### Step 4.8 — Risk Threshold Evaluation
 
-**Control:** [`RC-4A`](../../controls/rc/RC-4A.yaml) · **Delegation:** Agent calculates, RO decides
+**Control:** [`RC-05`](../../controls/rc/RC-05.yaml) · **Delegation:** Agent calculates, RO decides
 
 
 #### Actors and Actions
@@ -309,71 +309,71 @@ Maximum concurrent steps: **7**
 ## Required Controls
 
 
-### QC-4A — Functional & Non-Functional Testing
+### QC-06 — Functional & Non-Functional Testing
 
 - **Track:** QC
 - **Delegation:** `agent_executes_human_reviews`
-- **File:** [`controls/qc/QC-4A.yaml`](../../controls/qc/QC-4A.yaml)
+- **File:** [`controls/qc/QC-06.yaml`](../../controls/qc/QC-06.yaml)
 
 
-### QC-4B — AI Output Validation
+### QC-07 — AI Output Validation
 
 - **Track:** QC
 - **Delegation:** `agent_executes_human_reviews`
-- **File:** [`controls/qc/QC-4B.yaml`](../../controls/qc/QC-4B.yaml)
+- **File:** [`controls/qc/QC-07.yaml`](../../controls/qc/QC-07.yaml)
 - **Note:** Applicable when the change involves an AI component
 
 
-### QC-4C — Documentation Completeness
+### QC-08 — Documentation Completeness
 
 - **Track:** QC
 - **Delegation:** `agent_checks_human_approves`
-- **File:** [`controls/qc/QC-4C.yaml`](../../controls/qc/QC-4C.yaml)
+- **File:** [`controls/qc/QC-08.yaml`](../../controls/qc/QC-08.yaml)
 
 
-### SC-4A — SAST
-
-- **Track:** SC
-- **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-4A.yaml`](../../controls/sc/SC-4A.yaml)
-
-
-### SC-4B — DAST
+### SC-12 — SAST
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-4B.yaml`](../../controls/sc/SC-4B.yaml)
+- **File:** [`controls/sc/SC-12.yaml`](../../controls/sc/SC-12.yaml)
 
 
-### SC-4C — API Security Testing
+### SC-13 — DAST
+
+- **Track:** SC
+- **Delegation:** `fully_automated`
+- **File:** [`controls/sc/SC-13.yaml`](../../controls/sc/SC-13.yaml)
+
+
+### SC-14 — API Security Testing
 
 - **Track:** SC
 - **Delegation:** `agent_executes_human_reviews`
-- **File:** [`controls/sc/SC-4C.yaml`](../../controls/sc/SC-4C.yaml)
+- **File:** [`controls/sc/SC-14.yaml`](../../controls/sc/SC-14.yaml)
 - **Note:** Test all exposed APIs against OWASP API Security Top 10
 
 
-### AC-4A — Bias & Fairness Testing
+### AC-05 — Bias & Fairness Testing
 
 - **Track:** AC
 - **Delegation:** `agent_executes_human_reviews`
-- **File:** [`controls/ac/AC-4A.yaml`](../../controls/ac/AC-4A.yaml)
+- **File:** [`controls/ac/AC-05.yaml`](../../controls/ac/AC-05.yaml)
 - **Note:** Applicable when the change involves an AI component
 
 
-### SC-4D — Adversarial AI Robustness Testing
+### SC-15 — Adversarial AI Robustness Testing
 
 - **Track:** SC
 - **Delegation:** `agent_executes_human_reviews`
-- **File:** [`controls/sc/SC-4D.yaml`](../../controls/sc/SC-4D.yaml)
+- **File:** [`controls/sc/SC-15.yaml`](../../controls/sc/SC-15.yaml)
 - **Note:** Applicable for high-risk or security-critical AI deployments
 
 
-### RC-4A — Risk Threshold Evaluation
+### RC-05 — Risk Threshold Evaluation
 
 - **Track:** RC
 - **Delegation:** `agent_calculates_human_decides`
-- **File:** [`controls/rc/RC-4A.yaml`](../../controls/rc/RC-4A.yaml)
+- **File:** [`controls/rc/RC-05.yaml`](../../controls/rc/RC-05.yaml)
 - **Note:** Final go/no-go gate — depends on all other Stage 4 controls
 
 
@@ -383,9 +383,9 @@ Maximum concurrent steps: **7**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml)
-- [`../01-intent-ingestion/artifacts/outputs/AC-1A-ai-tier-classification.yaml`](../01-intent-ingestion/artifacts/outputs/AC-1A-ai-tier-classification.yaml)
-- [`../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml`](../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml)
+- [`../01-intent-ingestion/artifacts/outputs/AC-01-ai-tier-classification.yaml`](../01-intent-ingestion/artifacts/outputs/AC-01-ai-tier-classification.yaml)
+- [`../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml)
 
 ---
 
@@ -393,18 +393,18 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-4A-test-results-report.yaml`](artifacts/outputs/QC-4A-test-results-report.yaml)
-- [`artifacts/outputs/SC-4A-sast-scan-report.yaml`](artifacts/outputs/SC-4A-sast-scan-report.yaml)
-- [`artifacts/outputs/SC-4B-dast-scan-report.yaml`](artifacts/outputs/SC-4B-dast-scan-report.yaml)
-- [`artifacts/outputs/QC-4C-documentation-completeness-report.yaml`](artifacts/outputs/QC-4C-documentation-completeness-report.yaml)
-- [`artifacts/outputs/QC-4B-ai-output-validation-report.yaml`](artifacts/outputs/QC-4B-ai-output-validation-report.yaml)
-- [`artifacts/outputs/AC-4A-bias-fairness-report.yaml`](artifacts/outputs/AC-4A-bias-fairness-report.yaml)
-- [`artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml`](artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml)
-- [`artifacts/outputs/SC-4C-api-security-report.yaml`](artifacts/outputs/SC-4C-api-security-report.yaml)
-- [`artifacts/outputs/SC-4D-adversarial-robustness-report.yaml`](artifacts/outputs/SC-4D-adversarial-robustness-report.yaml)
+- [`artifacts/outputs/QC-06-test-results-report.yaml`](artifacts/outputs/QC-06-test-results-report.yaml)
+- [`artifacts/outputs/SC-12-sast-scan-report.yaml`](artifacts/outputs/SC-12-sast-scan-report.yaml)
+- [`artifacts/outputs/SC-13-dast-scan-report.yaml`](artifacts/outputs/SC-13-dast-scan-report.yaml)
+- [`artifacts/outputs/QC-08-documentation-completeness-report.yaml`](artifacts/outputs/QC-08-documentation-completeness-report.yaml)
+- [`artifacts/outputs/QC-07-ai-output-validation-report.yaml`](artifacts/outputs/QC-07-ai-output-validation-report.yaml)
+- [`artifacts/outputs/AC-05-bias-fairness-report.yaml`](artifacts/outputs/AC-05-bias-fairness-report.yaml)
+- [`artifacts/outputs/RC-05-risk-threshold-evaluation.yaml`](artifacts/outputs/RC-05-risk-threshold-evaluation.yaml)
+- [`artifacts/outputs/SC-14-api-security-report.yaml`](artifacts/outputs/SC-14-api-security-report.yaml)
+- [`artifacts/outputs/SC-15-adversarial-robustness-report.yaml`](artifacts/outputs/SC-15-adversarial-robustness-report.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

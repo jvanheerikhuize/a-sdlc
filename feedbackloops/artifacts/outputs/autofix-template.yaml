@@ -24,7 +24,7 @@ scope:
   applicable_components: []        # Components this template may be applied to (e.g. ["api-gateway", "auth-service"])
   applicable_cve_severity: ""      # For dependency patches: critical | high | medium | low
   applicable_trigger_controls:     # Which Stage 6 controls may trigger this template
-    - ""                           # e.g. RC-6A | SC-6A | SC-6B | QC-6A
+    - ""                           # e.g. RC-08 | SC-19 | SC-20 | QC-10
   applicable_issue_types: []       # Free-text descriptors (e.g. ["dependency-version-bump", "config-value-correction"])
 
 # --- Eligibility constraints ---
@@ -54,15 +54,15 @@ required_actions:
 # --- Minimum controls ---
 # Must not exceed or modify the Path A minimum control set defined in feedback-loops.yaml.
 minimum_controls:
-  - QC-3A
-  - QC-3B
-  - SC-3B
-  - SC-3C
-  - GC-3A
-  - QC-4A
-  - SC-4A
-  - RC-4A
-  - SC-5B
+  - QC-04
+  - QC-05
+  - SC-08
+  - SC-09
+  - GC-06
+  - QC-06
+  - SC-12
+  - RC-05
+  - SC-17
 
 # --- Deviation protocol ---
 deviation_protocol: >-

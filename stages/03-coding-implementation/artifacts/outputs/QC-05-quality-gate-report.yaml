@@ -1,0 +1,45 @@
+# =============================================================================
+# Quality Gate Report Template
+# =============================================================================
+# Produced during Step 3.2 (per commit) by control QC-05.
+# Accumulates quality gate results across all commits in the implementation
+# session. Final entry represents the state at PR creation.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp quality-gate-report.yaml FEAT-XXXX-quality-gate-report.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 3
+control: QC-05
+period:
+  from: ""                         # ISO 8601 — first commit scanned
+  to: ""                           # ISO 8601 — last commit before PR creation
+
+thresholds:
+  max_complexity: null             # Cyclomatic complexity threshold (e.g. 10)
+  min_coverage: null               # Minimum test coverage % (applied at Stage 4)
+  linting_errors_allowed: 0        # Typically 0 (zero tolerance)
+
+commits_scanned: 0
+violations: []
+# Per-violation entries, e.g.:
+# - commit: ""                     # Commit SHA
+#   timestamp: ""
+#   type: ""                       # linting | complexity | standards | maintainability
+#   rule: ""                       # Rule ID or name
+#   severity: ""                   # error | warning
+#   file: ""
+#   line: null
+#   resolved: null                 # true | false
+#   resolved_at: ""
+#   resolved_in_commit: ""
+
+summary:
+  total_commits: 0
+  commits_with_violations: 0
+  violations_total: 0
+  violations_unresolved: 0         # Must be 0 before QC-04 (PR creation)
+  status: ""                       # passed | failed

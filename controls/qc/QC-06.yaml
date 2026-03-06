@@ -1,0 +1,65 @@
+# =============================================================================
+# Control: QC-06 — Functional & Non-Functional Testing
+# Track:   QC (Quality Controls)
+# Owner:   Quality Assurance / QA Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-06
+moscow_score: should
+name: Functional & Non-Functional Testing
+description: 'Execute the full test suite covering: functional tests mapped to every Stage 1 acceptance criterion, regression
+  tests, negative and boundary tests, performance tests, load tests, stress tests, accessibility tests, and resilience tests.
+  All tests must be traced to their originating acceptance criteria.'
+required_in_stages:
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: agent_executes_human_reviews
+  human_display: Agent executes, human reviews
+  agent_role: Execute full test suite; generate pass/fail report mapped to acceptance criteria.
+  human_role: Review test results; investigate failures; determine if failures block release or require fix.
+owner:
+  team: Quality Assurance
+  role: QA Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(4)
+    obligation: Thorough testing of ICT systems before deployment to production
+  eu_ai_act:
+  - article: Art. 15(1)
+    requirement: AI systems must be tested for appropriate levels of accuracy and reliability
+inputs:
+- name: Validated feature specification
+  source_control: QC-01
+  description: Stage 1 acceptance criteria used as the test basis.
+- name: Approved pull request
+  source_control: QC-04
+  description: Merged code that is the subject of testing.
+outputs:
+- name: Test results report
+  type: evidence
+  description: Full test results mapped to acceptance criteria with pass/fail status per criterion.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: QA Lead
+  description: Failing tests block Stage 4 exit. Work is returned to Stage 3 for remediation.
+automation:
+  frequency: per_release
+dependencies:
+- QC-04
+feedback_loops:
+- path: path_a
+  required_in_path: true
+- path: path_b
+  required_in_path: true
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

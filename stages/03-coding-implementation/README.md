@@ -28,9 +28,9 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Writes code; logs decisions (RC-3A); tags provenance (GC-3A); scans output (SC-3B); creates pull request (QC-3A) |
+| AGT | Agent | Writes code; logs decisions (RC-04); tags provenance (GC-06); scans output (SC-08); creates pull request (QC-04) |
 | DEV | Developer | Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk tiers |
-| SA | Security Architect | Defines and maintains agent permission policy (SC-3A); reviews violation logs; escalation target for SC-3B and SC-3C findings |
+| SA | Security Architect | Defines and maintains agent permission policy (SC-07); reviews violation logs; escalation target for SC-08 and SC-09 findings |
 | CO | Compliance Officer | Reviews code provenance records and audit artefacts during regulatory audits |
 
 ---
@@ -80,15 +80,15 @@ Maximum concurrent steps: **6**
 
 ### Step 3.1 — Verify Prerequisites & Load Permissions
 
-**Control:** [`SC-3A`](../../controls/sc/SC-3A.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-07`](../../controls/sc/SC-07.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
 
 | Actor | Action |
 |-------|--------|
-| AGT | Verify that SC-2B directive injection confirmation exists and covers Stage 3 directives |
-| AGT | Load agent trust tier and permission policy from SC-3A |
+| AGT | Verify that SC-02 directive injection confirmation exists and covers Stage 3 directives |
+| AGT | Load agent trust tier and permission policy from SC-07 |
 | AGT | Confirm that directives/stages/03-coding-implementation.yaml has been acknowledged |
 | SA | Confirms permission policy is up to date for the agent trust tier |
 
@@ -96,7 +96,7 @@ Maximum concurrent steps: **6**
 
 | Property | Value |
 |----------|-------|
-| **Input** | Directive injection confirmation (Stage 2 SC-2B output) |
+| **Input** | Directive injection confirmation (Stage 2 SC-02 output) |
 | **Output** | Permission enforcement log started (artifacts/outputs/permission-enforcement-log.yaml) |
 | **On Failure** | Stage 3 cannot begin. Missing directive confirmation or invalid permission policy must be resolved before any coding starts |
 
@@ -104,7 +104,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.2 — Implementation Loop
 
-**Control:** [`QC-3B`](../../controls/qc/QC-3B.yaml) · **Delegation:** Agent implements, DEV authors
+**Control:** [`QC-05`](../../controls/qc/QC-05.yaml) · **Delegation:** Agent implements, DEV authors
 
 
 #### Actors and Actions
@@ -112,10 +112,10 @@ Maximum concurrent steps: **6**
 | Actor | Action |
 |-------|--------|
 | AGT | Implement code against the approved Stage 2 design document |
-| AGT | Tag all agent-generated code with provenance metadata at point of generation (GC-3A → GC-0C registry) |
-| AGT | Commit; QC-3B runs quality gates and SC-3C scans for secrets automatically |
-| AGT | Log all significant autonomous decisions to the decision log (RC-3A): rationale, alternatives considered |
-| DEV | Review and triage any QC-3B violations or SC-3C blocked commits; resolve before re-committing |
+| AGT | Tag all agent-generated code with provenance metadata at point of generation (GC-06 → GC-03 registry) |
+| AGT | Commit; QC-05 runs quality gates and SC-09 scans for secrets automatically |
+| AGT | Log all significant autonomous decisions to the decision log (RC-04): rationale, alternatives considered |
+| DEV | Review and triage any QC-05 violations or SC-09 blocked commits; resolve before re-committing |
 | AGT | Repeat until all design requirements are implemented |
 
 #### Inputs and Outputs
@@ -125,13 +125,13 @@ Maximum concurrent steps: **6**
 | **Input** | Approved design document |
 | **Output** | Quality gate report (artifacts/outputs/quality-gate-report.yaml) · Secrets scan report (artifacts/outputs/secrets-scan-report.yaml) · Decision log (artifacts/outputs/decision-log.yaml) |
 | **On Failure** | Commit blocked; developer resolves violations and re-commits |
-| **Note** | This step is the main implementation loop. All four controls run continuously — QC-3B and SC-3C on every commit, GC-3A at the point of generation, RC-3A whenever a significant decision is made. Repeats on every commit. |
+| **Note** | This step is the main implementation loop. All four controls run continuously — QC-05 and SC-09 on every commit, GC-06 at the point of generation, RC-04 whenever a significant decision is made. Repeats on every commit. |
 
 
 
 ### Step 3.2-sc3c — Secrets Scanning
 
-**Control:** [`SC-3C`](../../controls/sc/SC-3C.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-09`](../../controls/sc/SC-09.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -153,7 +153,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.2-sc3d — Software Composition Analysis
 
-**Control:** [`SC-3D`](../../controls/sc/SC-3D.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-10`](../../controls/sc/SC-10.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -175,7 +175,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.2-sc3e — Container & IaC Security Scanning
 
-**Control:** [`SC-3E`](../../controls/sc/SC-3E.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-11`](../../controls/sc/SC-11.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -197,7 +197,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.2-rc3a — Decision Logging
 
-**Control:** [`RC-3A`](../../controls/rc/RC-3A.yaml) · **Delegation:** Agent logs, DEV reviews
+**Control:** [`RC-04`](../../controls/rc/RC-04.yaml) · **Delegation:** Agent logs, DEV reviews
 
 
 #### Actors and Actions
@@ -219,7 +219,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.2-gc3a — Code Provenance Tracking
 
-**Control:** [`GC-3A`](../../controls/gc/GC-3A.yaml) · **Delegation:** Fully automated
+**Control:** [`GC-06`](../../controls/gc/GC-06.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -227,7 +227,7 @@ Maximum concurrent steps: **6**
 | Actor | Action |
 |-------|--------|
 | AGT | Tag all agent-generated code with provenance metadata (author, model, date, commitment) at point of generation |
-| AGT | Register tags in GC-0C provenance registry |
+| AGT | Register tags in GC-03 provenance registry |
 
 #### Inputs and Outputs
 
@@ -241,14 +241,14 @@ Maximum concurrent steps: **6**
 
 ### Step 3.3 — Agent Output Scan
 
-**Control:** [`SC-3B`](../../controls/sc/SC-3B.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-08`](../../controls/sc/SC-08.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
 
 | Actor | Action |
 |-------|--------|
-| AGT | Trigger SC-3B scan across all agent-generated code in the branch |
+| AGT | Trigger SC-08 scan across all agent-generated code in the branch |
 | AGT | Report findings: file, line, category, severity |
 | SA | Review any flagged findings; determine resolution |
 | AGT | Block PR creation if any critical or high findings remain unresolved |
@@ -265,7 +265,7 @@ Maximum concurrent steps: **6**
 
 ### Step 3.4 — Pull Request Creation
 
-**Control:** [`QC-3A`](../../controls/qc/QC-3A.yaml) · **Delegation:** Agent creates, humans review
+**Control:** [`QC-04`](../../controls/qc/QC-04.yaml) · **Delegation:** Agent creates, humans review
 
 
 #### Actors and Actions
@@ -275,7 +275,7 @@ Maximum concurrent steps: **6**
 | AGT | Assemble evidence package: all Stage 3 control outputs |
 | AGT | Create pull request from feature branch to target branch |
 | AGT | Attach all evidence artefacts to the PR |
-| AGT | Assign reviewers per risk tier from Stage 1 RC-1A |
+| AGT | Assign reviewers per risk tier from Stage 1 RC-01 |
 | DEV | Review code changes against the approved design document |
 | DEV | Review all Stage 3 evidence artefacts (quality gate report, decision log, scan results) |
 | DEV | Request changes or approve; all requested changes must be resolved before re-review |
@@ -307,75 +307,75 @@ Maximum concurrent steps: **6**
 ## Required Controls
 
 
-### QC-3B — Code Quality Standards
+### QC-05 — Code Quality Standards
 
 - **Track:** QC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/qc/QC-3B.yaml`](../../controls/qc/QC-3B.yaml)
+- **File:** [`controls/qc/QC-05.yaml`](../../controls/qc/QC-05.yaml)
 - **Note:** Runs continuously on every commit
 
 
-### SC-3A — Permission Management
+### SC-07 — Permission Management
 
 - **Track:** SC
 - **Delegation:** `automated_policy_enforced`
-- **File:** [`controls/sc/SC-3A.yaml`](../../controls/sc/SC-3A.yaml)
+- **File:** [`controls/sc/SC-07.yaml`](../../controls/sc/SC-07.yaml)
 - **Note:** Enforced throughout the implementation session
 
 
-### SC-3B — Post-Guardrails
+### SC-08 — Post-Guardrails
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-3B.yaml`](../../controls/sc/SC-3B.yaml)
+- **File:** [`controls/sc/SC-08.yaml`](../../controls/sc/SC-08.yaml)
 - **Note:** Runs on all agent-generated code before PR creation
 
 
-### SC-3C — Secrets & Credentials Scanning
+### SC-09 — Secrets & Credentials Scanning
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-3C.yaml`](../../controls/sc/SC-3C.yaml)
+- **File:** [`controls/sc/SC-09.yaml`](../../controls/sc/SC-09.yaml)
 - **Note:** Runs on every commit
 
 
-### SC-3D — Software Composition Analysis & SBOM Generation
+### SC-10 — Software Composition Analysis & SBOM Generation
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-3D.yaml`](../../controls/sc/SC-3D.yaml)
+- **File:** [`controls/sc/SC-10.yaml`](../../controls/sc/SC-10.yaml)
 - **Note:** Scans all third-party dependencies for known vulnerabilities
 
 
-### SC-3E — Container & IaC Security Scanning
+### SC-11 — Container & IaC Security Scanning
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-3E.yaml`](../../controls/sc/SC-3E.yaml)
+- **File:** [`controls/sc/SC-11.yaml`](../../controls/sc/SC-11.yaml)
 - **Note:** Scans all container images and IaC manifests for security misconfigurations
 
 
-### RC-3A — Decision Log
+### RC-04 — Decision Log
 
 - **Track:** RC
 - **Delegation:** `agent_logs_human_reviews`
-- **File:** [`controls/rc/RC-3A.yaml`](../../controls/rc/RC-3A.yaml)
+- **File:** [`controls/rc/RC-04.yaml`](../../controls/rc/RC-04.yaml)
 - **Note:** Logged throughout; reviewed by Tech Lead
 
 
-### GC-3A — Code Provenance Tracking
+### GC-06 — Code Provenance Tracking
 
 - **Track:** GC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/gc/GC-3A.yaml`](../../controls/gc/GC-3A.yaml)
+- **File:** [`controls/gc/GC-06.yaml`](../../controls/gc/GC-06.yaml)
 - **Note:** All code tagged at point of generation
 
 
-### QC-3A — Pull Request Creation & Review
+### QC-04 — Pull Request Creation & Review
 
 - **Track:** QC
 - **Delegation:** `agent_creates_human_reviews`
-- **File:** [`controls/qc/QC-3A.yaml`](../../controls/qc/QC-3A.yaml)
+- **File:** [`controls/qc/QC-04.yaml`](../../controls/qc/QC-04.yaml)
 - **Note:** Final gate — aggregates all other Stage 3 evidence
 
 
@@ -385,8 +385,8 @@ Maximum concurrent steps: **6**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../02-system-design/artifacts/outputs/QC-2A-design-document.yaml`](../02-system-design/artifacts/outputs/QC-2A-design-document.yaml)
-- [`../02-system-design/artifacts/outputs/SC-2B-directive-injection-confirmation.yaml`](../02-system-design/artifacts/outputs/SC-2B-directive-injection-confirmation.yaml)
+- [`../02-system-design/artifacts/outputs/QC-03-design-document.yaml`](../02-system-design/artifacts/outputs/QC-03-design-document.yaml)
+- [`../02-system-design/artifacts/outputs/SC-02-directive-injection-confirmation.yaml`](../02-system-design/artifacts/outputs/SC-02-directive-injection-confirmation.yaml)
 
 ---
 
@@ -394,18 +394,18 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-3A-pull-request-record.yaml`](artifacts/outputs/QC-3A-pull-request-record.yaml)
-- [`artifacts/outputs/QC-3B-quality-gate-report.yaml`](artifacts/outputs/QC-3B-quality-gate-report.yaml)
-- [`artifacts/outputs/SC-3A-permission-enforcement-log.yaml`](artifacts/outputs/SC-3A-permission-enforcement-log.yaml)
-- [`artifacts/outputs/SC-3B-post-guardrail-scan.yaml`](artifacts/outputs/SC-3B-post-guardrail-scan.yaml)
-- [`artifacts/outputs/SC-3C-secrets-scan-report.yaml`](artifacts/outputs/SC-3C-secrets-scan-report.yaml)
-- [`artifacts/outputs/RC-3A-decision-log.yaml`](artifacts/outputs/RC-3A-decision-log.yaml)
-- [`artifacts/outputs/SC-3D-sca-report.yaml`](artifacts/outputs/SC-3D-sca-report.yaml)
-- [`artifacts/outputs/SC-3E-container-iac-security-report.yaml`](artifacts/outputs/SC-3E-container-iac-security-report.yaml)
-- [`artifacts/outputs/GC-3A-code-provenance-record.yaml`](artifacts/outputs/GC-3A-code-provenance-record.yaml)
+- [`artifacts/outputs/QC-04-pull-request-record.yaml`](artifacts/outputs/QC-04-pull-request-record.yaml)
+- [`artifacts/outputs/QC-05-quality-gate-report.yaml`](artifacts/outputs/QC-05-quality-gate-report.yaml)
+- [`artifacts/outputs/SC-07-permission-enforcement-log.yaml`](artifacts/outputs/SC-07-permission-enforcement-log.yaml)
+- [`artifacts/outputs/SC-08-post-guardrail-scan.yaml`](artifacts/outputs/SC-08-post-guardrail-scan.yaml)
+- [`artifacts/outputs/SC-09-secrets-scan-report.yaml`](artifacts/outputs/SC-09-secrets-scan-report.yaml)
+- [`artifacts/outputs/RC-04-decision-log.yaml`](artifacts/outputs/RC-04-decision-log.yaml)
+- [`artifacts/outputs/SC-10-sca-report.yaml`](artifacts/outputs/SC-10-sca-report.yaml)
+- [`artifacts/outputs/SC-11-container-iac-security-report.yaml`](artifacts/outputs/SC-11-container-iac-security-report.yaml)
+- [`artifacts/outputs/GC-06-code-provenance-record.yaml`](artifacts/outputs/GC-06-code-provenance-record.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

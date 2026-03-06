@@ -6,8 +6,8 @@
   "$defs": {
     "control_id": {
       "type": "string",
-      "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
-      "description": "Control identifier: [Track]-[Stage][Letter] (e.g., SC-2B, QC-1A). Stage 0 is cross-cutting."
+      "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$",
+      "description": "Control identifier: [Track]-[Stage][Letter] (e.g., SC-02, QC-01). Stage 0 is cross-cutting."
     },
     "track_code": {
       "type": "string",

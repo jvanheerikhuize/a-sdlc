@@ -1,0 +1,53 @@
+# =============================================================================
+# Control: QC-10 — SLA/SLO Monitoring
+# Track:   QC (Quality Controls)
+# Owner:   Engineering / SRE / SRE Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-10
+moscow_score: could
+name: SLA/SLO Monitoring
+description: 'Continuously measure all defined Service Level Indicators (SLIs) against Service Level Objectives (SLOs): availability,
+  latency percentiles, error rates, and throughput. Track error budget consumption rates and alert when burn rate exceeds
+  defined thresholds before SLO breach occurs.'
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Continuously measure SLIs; compute error budget consumption; trigger alerts when burn rate thresholds are exceeded.
+  human_role: Respond to alerts; make decisions on service degradation; initiate feedback loop if code change is needed.
+owner:
+  team: Engineering / SRE
+  role: SRE Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 10
+    obligation: Detection of anomalous activities impacting operational performance
+  - article: Art. 8(4)
+    obligation: Operational resilience monitoring of ICT systems
+outputs:
+- name: SLO monitoring dashboard
+  type: evidence
+  description: Continuous record of SLI measurements, SLO compliance status, and error budget consumption.
+  retention: 2 years operational + 7 years regulatory
+- name: SLO breach alert
+  type: alert
+  description: Real-time alert when error budget burn rate exceeds threshold or SLO is breached.
+failure_behaviour:
+  action: escalate
+  escalation_target: SRE Lead
+  description: SLO breach triggers immediate escalation and may initiate a feedback loop for code remediation.
+automation:
+  frequency: continuous
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

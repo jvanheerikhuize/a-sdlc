@@ -1,0 +1,62 @@
+# =============================================================================
+# Control: SC-19 — Incident Scanning & Detection
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-19
+moscow_score: must
+name: Incident Scanning & Detection
+description: 'Real-time SIEM monitoring for security incidents using MITRE ATT&CK detection patterns. Classify all detected
+  incidents per DORA Art. 18 taxonomy and trigger the appropriate reporting timelines: 4-hour initial notification, 72-hour
+  intermediate report, 1-month final report for major incidents.'
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: automated_with_human_escalation
+  human_display: Automated with human escalation
+  agent_role: Monitor SIEM continuously; detect and classify incidents; trigger reporting timelines; prepare incident reports.
+  human_role: Validate incident classification; approve regulatory reports; make escalation decisions.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 17
+    obligation: ICT-related incident management process including detection and classification
+  - article: Art. 18
+    obligation: Classification of ICT-related incidents per DORA taxonomy
+  - article: Art. 19
+    obligation: Reporting of major ICT incidents to competent authorities within defined timelines
+  eu_ai_act:
+  - article: Art. 73
+    requirement: Reporting of serious AI incidents to relevant authorities
+outputs:
+- name: Incident detection record
+  type: log_entry
+  description: Real-time log of all detected security events with DORA Art. 18 classification.
+  retention: 7 years (DORA)
+- name: Major incident report
+  type: report
+  description: Regulatory incident report per DORA Art. 19 timelines (initial, intermediate, final).
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: escalate
+  escalation_target: Security Architect
+  description: Major incidents trigger immediate escalation and regulatory reporting process.
+automation:
+  tooling:
+  - SIEM platform
+  - MITRE ATT&CK detection rules
+  frequency: continuous
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

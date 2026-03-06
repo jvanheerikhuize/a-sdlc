@@ -22,7 +22,7 @@ Full path definitions and minimum control sets: [feedback-loops.yaml](feedback-l
 | Agent | AGT | Detects Stage 4 or Stage 6 trigger; prepares activation record; re-executes minimum controls on Path A |
 | Operations / SRE | OPS | First responder to Stage 6 alerts; co-classifies path; monitors Path A execution |
 | QA Lead | QA | First responder to Stage 4 failures; co-classifies path; confirms root cause from test output |
-| Security Architect | SA | Validates path classification for SC-4A, SC-4B, SC-6A, and SC-6B triggers; confirms root cause before Path A is approved |
+| Security Architect | SA | Validates path classification for SC-12, SC-13, SC-19, and SC-20 triggers; confirms root cause before Path A is approved |
 | Risk Officer | RO | Makes the formal path selection and classification decisions; provides signed approval for any Path B selection |
 | Compliance Officer | CO | Reviews activation record; confirms DORA Art. 8 reporting obligations are documented |
 
@@ -51,7 +51,7 @@ For easy, obvious, low-risk issues with a clear root cause. Re-enters directly a
 - Issue matches a pre-approved autofix template exactly (no partial matches).
 - Risk classification is low.
 - No new architectural changes are required.
-- Root cause is confirmed (SA sign-off required for SC-6A and SC-6B triggers).
+- Root cause is confirmed (SA sign-off required for SC-19 and SC-20 triggers).
 
 **Eligibility — when triggered from Stage 4:**
 
@@ -64,15 +64,15 @@ For easy, obvious, low-risk issues with a clear root cause. Re-enters directly a
 
 | Control | Stage | Rationale |
 | ------- | ----- | --------- |
-| QC-3A | 3 | All code changes must be reviewed before merge. |
-| QC-3B | 3 | Automated quality checks apply to all fixes. |
-| SC-3B | 3 | Agent-generated fix must be scanned for malicious patterns. |
-| SC-3C | 3 | Fix must not introduce exposed credentials. |
-| GC-3A | 3 | Fix output must be attributed to the agent or developer that produced it. |
-| QC-4A | 4 | Fix must be tested before deployment. |
-| SC-4A | 4 | Static security analysis is mandatory even for expedited paths. |
-| RC-4A | 4 | Residual risk must be assessed before deployment. |
-| SC-5B | 5 | Cryptographic verification that tested artefact matches deployed artefact. |
+| QC-04 | 0 | All code changes must be reviewed before merge. |
+| QC-05 | 0 | Automated quality checks apply to all fixes. |
+| SC-08 | 0 | Agent-generated fix must be scanned for malicious patterns. |
+| SC-09 | 0 | Fix must not introduce exposed credentials. |
+| GC-06 | 0 | Fix output must be attributed to the agent or developer that produced it. |
+| QC-06 | 0 | Fix must be tested before deployment. |
+| SC-12 | 1 | Static security analysis is mandatory even for expedited paths. |
+| RC-05 | 0 | Residual risk must be assessed before deployment. |
+| SC-17 | 1 | Cryptographic verification that tested artefact matches deployed artefact. |
 
 > When triggered from Stage 4, also re-execute the specific Stage 4 control(s) that raised the issue.
 
@@ -123,7 +123,7 @@ flowchart TD
 | ----- | ------ |
 | AGT | Retrieve the trigger: source stage (4 or 6), originating control, alert or finding ID, issue description |
 | OPS / QA | Assess issue scope, urgency, and affected components; provide initial path recommendation |
-| SA | For SC-4A, SC-4B, SC-6A, or SC-6B triggers: confirm root cause is understood before any path is approved |
+| SA | For SC-12, SC-13, SC-19, or SC-20 triggers: confirm root cause is understood before any path is approved |
 | RO | Make the formal path selection decision: Path A or Path B |
 | RO | Record identity, role, timestamp, rationale, and selected path in the activation record |
 
@@ -174,20 +174,20 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 
 | Control | Stage | Rationale |
 | ------- | ----- | --------- |
-| QC-3A | 3 | All code changes must be reviewed before merge. |
-| QC-3B | 3 | Automated quality checks apply to all fixes. |
-| SC-3B | 3 | Agent-generated fix must be scanned for malicious patterns. |
-| SC-3C | 3 | Fix must not introduce exposed credentials. |
-| GC-3A | 3 | Fix output must be attributed to the agent or developer that produced it. |
-| QC-4A | 4 | Fix must be tested before deployment. |
-| SC-4A | 4 | Static security analysis is mandatory even for expedited paths. |
-| RC-4A | 4 | Residual risk must be assessed before deployment. |
-| SC-5B | 5 | Cryptographic verification that tested artefact matches deployed artefact. |
+| QC-04 | 0 | All code changes must be reviewed before merge. |
+| QC-05 | 0 | Automated quality checks apply to all fixes. |
+| SC-08 | 0 | Agent-generated fix must be scanned for malicious patterns. |
+| SC-09 | 0 | Fix must not introduce exposed credentials. |
+| GC-06 | 0 | Fix output must be attributed to the agent or developer that produced it. |
+| QC-06 | 0 | Fix must be tested before deployment. |
+| SC-12 | 1 | Static security analysis is mandatory even for expedited paths. |
+| RC-05 | 0 | Residual risk must be assessed before deployment. |
+| SC-17 | 1 | Cryptographic verification that tested artefact matches deployed artefact. |
 
 | | |
 | --- | --- |
 | **Input** | Stage 4 failing control output or matched Stage 6 autofix template + trigger record |
-| **Output** | All minimum controls passed; change deployed via SC-5B; activation record updated |
+| **Output** | All minimum controls passed; change deployed via SC-17; activation record updated |
 | **On deviation** | Immediately upgrade to Path B — do not attempt to continue with modifications |
 
 ---
@@ -223,9 +223,9 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 | Actor | Action |
 | ----- | ------ |
 | AGT | Complete the feedback-loop activation record: trigger source (Stage 4 or 6), control ID, path selected, approvals, re-entry ID, outcome |
-| AGT | Link activation record to the GC-0A audit trail and to the resulting change's Stage 3 or Stage 1 evidence package |
+| AGT | Link activation record to the GC-01 audit trail and to the resulting change's Stage 3 or Stage 1 evidence package |
 | CO | Review activation record; confirm DORA Art. 8 documentation obligations are met |
-| CO | For SC-6A-triggered loops: confirm DORA Art. 19 reporting timelines are not impacted by the re-entry |
+| CO | For SC-19-triggered loops: confirm DORA Art. 19 reporting timelines are not impacted by the re-entry |
 
 | | |
 | --- | --- |
@@ -240,20 +240,20 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 
 | Artifact | Source Control | Source Step |
 |----------|-----------------|-------------|
-| SAST scan report | SC-4A | Step 4.1 |
-| Test results report | QC-4A | Step 4.2 |
-| DAST scan report | SC-4B | Step 4.3 |
-| Risk threshold evaluation | RC-4A | Step 4.7 |
+| SAST scan report | SC-12 | Step 4.1 |
+| Test results report | QC-06 | Step 4.2 |
+| DAST scan report | SC-13 | Step 4.3 |
+| Risk threshold evaluation | RC-05 | Step 4.7 |
 
 **From Stage 6:**
 
 | Artifact | Source Control | Source Step |
 |----------|-----------------|-------------|
-| SLO monitoring record | QC-6A | Step 6.2 |
-| Risk & health monitoring record | RC-6A | Step 6.3 |
-| Incident detection record | SC-6A | Step 6.4 |
-| Anomaly detection record | SC-6B | Step 6.5 |
-| AI post-market surveillance report | AC-6A | Step 6.6 |
+| SLO monitoring record | QC-10 | Step 6.2 |
+| Risk & health monitoring record | RC-08 | Step 6.3 |
+| Incident detection record | SC-19 | Step 6.4 |
+| Anomaly detection record | SC-20 | Step 6.5 |
+| AI post-market surveillance report | AC-06 | Step 6.6 |
 
 ---
 
@@ -265,4 +265,4 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 
 ---
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

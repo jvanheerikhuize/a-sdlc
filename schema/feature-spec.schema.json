@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://asdlc/schema/feature-spec.schema.json",
   "title": "A-SDLC Feature Specification",
-  "description": "Schema for feature/change specifications produced during Stage 1 (Intent Ingestion). Referenced by control QC-1A.",
+  "description": "Schema for feature/change specifications produced during Stage 1 (Intent Ingestion). Referenced by control QC-01.",
   "type": "object",
   "required": ["metadata", "description", "acceptance_criteria"],
   "additionalProperties": false,
@@ -146,22 +146,22 @@
     "risk_classification": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Populated by RC-1A (risk classification) and AC-1A (EU AI Act tier).",
+      "description": "Populated by RC-01 (risk classification) and AC-01 (EU AI Act tier).",
       "properties": {
         "risk_tier": {
           "type": "string",
           "enum": ["low", "medium", "high", "critical"],
-          "description": "Non-functional risk exposure tier from RC-1A."
+          "description": "Non-functional risk exposure tier from RC-01."
         },
         "ai_act_tier": {
           "type": "string",
           "enum": ["minimal", "limited", "high", "unacceptable", "not_applicable"],
-          "description": "EU AI Act risk tier from AC-1A. Only populated for AI components."
+          "description": "EU AI Act risk tier from AC-01. Only populated for AI components."
         },
         "governance_intensity": {
           "type": "string",
           "enum": ["standard", "enhanced", "full"],
-          "description": "Governance intensity level determined by RC-1A."
+          "description": "Governance intensity level determined by RC-01."
         }
       }
     }

@@ -99,8 +99,8 @@ a-sdlc/
 │   └── gc/                            ← Governance Control definitions (6 controls)
 ├── directives/
 │   ├── core/
-│   │   └── core-directives.yaml       ← Immutable core security directives (SC-0D payload)
-│   └── stages/                        ← Stage-specific directive payloads (SC-2B injection)
+│   │   └── core-directives.yaml       ← Immutable core security directives (SC-01 payload)
+│   └── stages/                        ← Stage-specific directive payloads (SC-02 injection)
 ├── stages/
 │   ├── 01-intent-ingestion/           ← Intent Ingestion stage (6 controls)
 │   ├── 02-system-design/              ← System Design stage (5 controls)
@@ -146,14 +146,14 @@ The A-SDLC framework is engineered for compliance with **DORA** (Digital Operati
 
 | Area | DORA Articles | EU AI Act Articles | Key Controls |
 | ---- | ------------- | ------------------ | ------------ |
-| **Risk Management** | Art. 8–9 | Art. 6, 9, Annex III | RC-1A, AC-1A, RC-2A, RC-4A |
-| **Security Testing** | Art. 24–25 | Art. 15 | SC-4A, SC-4B, SC-4C, SC-4D, QC-4A |
-| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-3D, SC-3E, GC-0C, GC-3A |
-| **Change Management** | Art. 9(4) | Art. 9 | RC-2A, RC-5A, QC-3A, QC-3B |
-| **Documentation** | Art. 8(5-6) | Art. 11, Annex IV | QC-4C, AC-2A, AC-2B |
-| **Record-Keeping** | Art. 8(6) | Art. 12 | GC-0A, GC-0B, RC-3A, GC-0D |
-| **Incident Management** | Art. 17–19 | Art. 73 | SC-6A, SC-6B, GC-0A |
-| **GPAI Models** | — | Art. 51–56 | AC-1B, AC-2A, AC-2B |
+| **Risk Management** | Art. 8–9 | Art. 6, 9, Annex III | RC-01, AC-01, RC-02, RC-05 |
+| **Security Testing** | Art. 24–25 | Art. 15 | SC-12, SC-13, SC-14, SC-15, QC-06 |
+| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-10, SC-11, GC-03, GC-06 |
+| **Change Management** | Art. 9(4) | Art. 9 | RC-02, RC-06, QC-04, QC-05 |
+| **Documentation** | Art. 8(5-6) | Art. 11, Annex IV | QC-08, AC-03, AC-04 |
+| **Record-Keeping** | Art. 8(6) | Art. 12 | GC-01, GC-02, RC-04, GC-04 |
+| **Incident Management** | Art. 17–19 | Art. 73 | SC-19, SC-20, GC-01 |
+| **GPAI Models** | — | Art. 51–56 | AC-02, AC-03, AC-04 |
 
 For detailed mappings of all 51 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
 

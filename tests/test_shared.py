@@ -51,7 +51,7 @@ class TestLoadYamlSafe:
         data = load_yaml_safe(registry_file)
         assert "registry" in data
         assert len(data["registry"]) == 5
-        assert data["registry"][0]["id"] == "QC-1A"
+        assert data["registry"][0]["id"] == "QC-01"
 
 
 class TestLoadJsonSafe:
@@ -85,15 +85,15 @@ class TestExtractControlIdFromString:
 
     def test_extract_valid_control_id(self):
         """Test extracting valid control ID from text."""
-        text = "Please implement SC-2B security control"
+        text = "Please implement SC-02 security control"
         control_id = extract_control_id_from_string(text)
-        assert control_id == "SC-2B"
+        assert control_id == "SC-02"
 
     def test_extract_multiple_ids_returns_first(self):
         """Test that function returns first match when multiple IDs present."""
-        text = "Controls SC-2B and QC-1A are required"
+        text = "Controls SC-02 and QC-01 are required"
         control_id = extract_control_id_from_string(text)
-        assert control_id == "SC-2B"
+        assert control_id == "SC-02"
 
     def test_extract_invalid_id_returns_none(self):
         """Test that function returns None for invalid ID."""
@@ -104,11 +104,11 @@ class TestExtractControlIdFromString:
     def test_extract_all_valid_track_codes(self):
         """Test extraction for all track codes."""
         test_cases = [
-            ("Control QC-1A", "QC-1A"),
-            ("Control SC-3B", "SC-3B"),
-            ("Control RC-2A", "RC-2A"),
-            ("Control AC-4C", "AC-4C"),
-            ("Control GC-5D", "GC-5D"),
+            ("Control QC-01", "QC-01"),
+            ("Control SC-08", "SC-08"),
+            ("Control RC-02", "RC-02"),
+            ("Control AC-05", "AC-05"),
+            ("Control GC-04", "GC-04"),
         ]
         for text, expected in test_cases:
             result = extract_control_id_from_string(text)
@@ -120,9 +120,9 @@ class TestFindControlInRegistry:
 
     def test_find_existing_control(self, sample_control_registry: list):
         """Test finding control that exists in registry."""
-        control = find_control_in_registry("QC-1A", sample_control_registry)
+        control = find_control_in_registry("QC-01", sample_control_registry)
         assert control is not None
-        assert control["id"] == "QC-1A"
+        assert control["id"] == "QC-01"
         assert control["name"] == "Test Control 1"
 
     def test_find_missing_control_returns_none(self, sample_control_registry: list):
@@ -132,14 +132,14 @@ class TestFindControlInRegistry:
 
     def test_find_all_sample_controls(self, sample_control_registry: list):
         """Test finding all sample controls in registry."""
-        for control_id in ["QC-1A", "SC-2B", "RC-3A", "AC-1B", "GC-2A"]:
+        for control_id in ["QC-01", "SC-02", "RC-04", "AC-02", "GC-02"]:
             control = find_control_in_registry(control_id, sample_control_registry)
             assert control is not None
             assert control["id"] == control_id
 
     def test_find_in_empty_registry(self):
         """Test finding control in empty registry."""
-        control = find_control_in_registry("SC-2B", [])
+        control = find_control_in_registry("SC-02", [])
         assert control is None
 
 
@@ -150,14 +150,14 @@ class TestBuildMarkdownTable:
         """Test building simple 2-column table."""
         headers = ["ID", "Name"]
         rows = [
-            {"ID": "SC-2B", "Name": "Security Control"},
-            {"ID": "QC-1A", "Name": "Quality Control"},
+            {"ID": "SC-02", "Name": "Security Control"},
+            {"ID": "QC-01", "Name": "Quality Control"},
         ]
         result = build_markdown_table(headers, rows)
 
         assert "| ID | Name |" in result
-        assert "| SC-2B | Security Control |" in result
-        assert "| QC-1A | Quality Control |" in result
+        assert "| SC-02 | Security Control |" in result
+        assert "| QC-01 | Quality Control |" in result
 
     def test_table_with_special_chars(self):
         """Test table with special markdown characters."""
@@ -186,11 +186,11 @@ class TestBuildMarkdownTable:
         """Test that missing fields in row dict are replaced with '—'."""
         headers = ["ID", "Name", "Status"]
         rows = [
-            {"ID": "SC-2B"},  # Missing Name and Status
+            {"ID": "SC-02"},  # Missing Name and Status
         ]
         result = build_markdown_table(headers, rows)
 
-        assert "| SC-2B | — | — |" in result
+        assert "| SC-02 | — | — |" in result
 
     def test_multiple_columns(self):
         """Test table with many columns."""
@@ -273,9 +273,9 @@ class TestRelPath:
 
     def test_relative_path_conversion(self, repo_root: Path):
         """Test converting absolute path to relative."""
-        abs_path = repo_root / "controls" / "sc" / "SC-2B.yaml"
+        abs_path = repo_root / "controls" / "sc" / "SC-02.yaml"
         result = rel_path(abs_path, repo_root)
-        assert result == "controls/sc/SC-2B.yaml"
+        assert result == "controls/sc/SC-02.yaml"
 
     def test_path_not_relative_returns_str(self, repo_root: Path):
         """Test that path not under root returns full path string."""

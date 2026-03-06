@@ -35,53 +35,53 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 
 | Area | DORA Articles | EU AI Act | A-SDLC Controls | Status |
 |------|---|---|---|---|
-| Risk Identification & Assessment | Art. 8 (identification of ICT risk), Art | Art. 6 (classification), Art. 9 (risk ma | RC-1A, AC-1A, QC-1A, QC-1B, QC-2A, RC-2A | Strong Coverage |
-| Security Testing & Verification | Art. 24 (testing programme), Art. 25 (te | Art. 15 (accuracy, robustness), Art. 10  | SC-4A, SC-4B, SC-5A, SC-3D, SC-3E, SC-4C | Strong Coverage - Comprehensive testing across all methodologies |
-| Change Management & Governance | Art. 9(4) (change management procedures) | Art. 9 (risk management system governanc | RC-2A, RC-5A, QC-3A, QC-3B, RC-3A, GC-0A | Strong Coverage - Multiple approval and documentation gates |
-| Incident Detection & Reporting | Art. 10 (detection mechanisms), Art. 17  | Art. 73 (serious incident reporting - 10 | SC-6A, SC-6B, GC-0A | Strong Coverage |
-| Access & Permission Management | Art. 9(4) (access controls, authenticati |  | SC-3A, SC-0D | Partial Coverage |
-| Supply Chain & Third-Party Risk | Art. 28 (third-party risk management) | Art. 17 (quality management, data manage | GC-0C, GC-3A, SC-5B | Partial Coverage |
-| Documentation & Record-Keeping | Art. 8(6) (documentation) | Art. 11 (technical documentation), Art.  | QC-4C, GC-0A, GC-0B | Strong Coverage |
-| Business Continuity & Recovery | Art. 11 (response and recovery) |  | RC-5B, RC-6A, QC-6A | Partial Coverage |
-| Human Oversight & Governance | Art. 9(4) (change management) | Art. 14 (human oversight) | SC-2B, AC-2A, RC-2A, RC-5A | Partial Coverage |
+| Risk Identification & Assessment | Art. 8 (identification of ICT risk), Art | Art. 6 (classification), Art. 9 (risk ma | RC-01, AC-01, QC-01, QC-02, QC-03, RC-02 | Strong Coverage |
+| Security Testing & Verification | Art. 24 (testing programme), Art. 25 (te | Art. 15 (accuracy, robustness), Art. 10  | SC-12, SC-13, SC-16, SC-10, SC-11, SC-14 | Strong Coverage - Comprehensive testing across all methodologies |
+| Change Management & Governance | Art. 9(4) (change management procedures) | Art. 9 (risk management system governanc | RC-02, RC-06, QC-04, QC-05, RC-04, GC-01 | Strong Coverage - Multiple approval and documentation gates |
+| Incident Detection & Reporting | Art. 10 (detection mechanisms), Art. 17  | Art. 73 (serious incident reporting - 10 | SC-19, SC-20, GC-01 | Strong Coverage |
+| Access & Permission Management | Art. 9(4) (access controls, authenticati |  | SC-07, SC-01 | Partial Coverage |
+| Supply Chain & Third-Party Risk | Art. 28 (third-party risk management) | Art. 17 (quality management, data manage | GC-03, GC-06, SC-17 | Partial Coverage |
+| Documentation & Record-Keeping | Art. 8(6) (documentation) | Art. 11 (technical documentation), Art.  | QC-08, GC-01, GC-02 | Strong Coverage |
+| Business Continuity & Recovery | Art. 11 (response and recovery) |  | RC-07, RC-08, QC-10 | Partial Coverage |
+| Human Oversight & Governance | Art. 9(4) (change management) | Art. 14 (human oversight) | SC-02, AC-03, RC-02, RC-06 | Partial Coverage |
 ---
 
 ## DORA Article Mappings
 
 | Article | Title | A-SDLC Controls | Coverage & Rationale |
 |---------|-------|---|---|
-| Art. 8 | Identification of ICT risk | RC-1A, GC-0B, QC-1A, QC-2A, RC-3A | Strong - Risk identification and documentation controls present |
-| Art. 8(5) & Art. 8(6) | Documentation of ICT risk management procedures and changes | QC-1A, QC-1B, QC-3A, RC-3A, GC-0A | Strong - Comprehensive change and documentation controls |
-| Art. 9 | Protection and prevention | SC-0D, SC-1A, SC-2B, SC-3A, SC-3B, SC-1B, SC-5C | Strong - Multiple control layers with cryptography and data protection |
-| Art. 9(4) Change Management | Change management, including for ICT-related patches | RC-2A, RC-5A, QC-3A, QC-3B, RC-3A | Strong - Comprehensive change management gates and approvals |
-| Art. 17 | ICT-related incident management process | GC-0A, SC-6A | Partial - Detection and reporting controls present |
-| Art. 18 | Classification of ICT-related incidents | SC-6A | Partial - Detection prerequisite for classification |
-| Art. 19 | Reporting of major incidents | GC-0A, SC-6A | Partial - Reporting infrastructure in place |
-| Art. 24 | General requirements for digital operational resilience testing | SC-4A, SC-4B, SC-5A, QC-4A, QC-4B | Strong - Comprehensive testing programme covering functional and security aspects |
-| Art. 25 | Testing of ICT tools and systems | SC-4A, SC-4B, SC-5A, SC-3D, SC-3E, SC-4C, QC-4A | Strong - Testing controls cover all key methodologies including supply chain |
-| Art. 28 | General principles of sound management of ICT third-party risk | GC-0C, SC-3A, GC-3A, SC-5B | Partial - Oversight and provenance controls present |
-| Art. 11 | Response and recovery | RC-5B, QC-6A, RC-6A, QC-5A | Strong - Recovery, testing, and monitoring controls present |
-| Art. 10 | Detection | SC-6A, SC-6B, QC-6A, RC-6A | Strong - Multiple detection and monitoring controls |
+| Art. 8 | Identification of ICT risk | RC-01, GC-02, QC-01, QC-03, RC-04 | Strong - Risk identification and documentation controls present |
+| Art. 8(5) & Art. 8(6) | Documentation of ICT risk management procedures and changes | QC-01, QC-02, QC-04, RC-04, GC-01 | Strong - Comprehensive change and documentation controls |
+| Art. 9 | Protection and prevention | SC-01, SC-03, SC-02, SC-07, SC-08, SC-04, SC-18 | Strong - Multiple control layers with cryptography and data protection |
+| Art. 9(4) Change Management | Change management, including for ICT-related patches | RC-02, RC-06, QC-04, QC-05, RC-04 | Strong - Comprehensive change management gates and approvals |
+| Art. 17 | ICT-related incident management process | GC-01, SC-19 | Partial - Detection and reporting controls present |
+| Art. 18 | Classification of ICT-related incidents | SC-19 | Partial - Detection prerequisite for classification |
+| Art. 19 | Reporting of major incidents | GC-01, SC-19 | Partial - Reporting infrastructure in place |
+| Art. 24 | General requirements for digital operational resilience testing | SC-12, SC-13, SC-16, QC-06, QC-07 | Strong - Comprehensive testing programme covering functional and security aspects |
+| Art. 25 | Testing of ICT tools and systems | SC-12, SC-13, SC-16, SC-10, SC-11, SC-14, QC-06 | Strong - Testing controls cover all key methodologies including supply chain |
+| Art. 28 | General principles of sound management of ICT third-party risk | GC-03, SC-07, GC-06, SC-17 | Partial - Oversight and provenance controls present |
+| Art. 11 | Response and recovery | RC-07, QC-10, RC-08, QC-09 | Strong - Recovery, testing, and monitoring controls present |
+| Art. 10 | Detection | SC-19, SC-20, QC-10, RC-08 | Strong - Multiple detection and monitoring controls |
 ---
 
 ## EU AI Act Mappings
 
 | Article / Annex | Title | A-SDLC Controls | Coverage & Rationale |
 |---|---|---|---|
-| Art. 6 | Classification rules for high-risk AI systems | AC-1A | Partial - Classification control present |
-| Art. 9 | Risk management system | AC-1A, RC-4A, AC-6A, RC-2A, QC-1B, RC-3A | Strong - Risk management system with gates at design, implementation, and post-market phases |
-| Art. 10 | Data and data governance | AC-2A, AC-4A | Partial - Data governance and bias testing controls present |
-| Art. 11 | Technical documentation | QC-4C, AC-2A | Partial - Documentation controls present |
-| Art. 12 | Record-keeping | GC-0A, GC-0B, RC-3A, GC-0D | Strong - Comprehensive logging, traceability, and decision documentation |
-| Art. 13 | Transparency and provision of information to deployers | AC-2A | Partial - Design review includes transparency |
-| Art. 14 | Human oversight | SC-2B, AC-2A | Partial - Oversight mechanisms present |
-| Art. 15 | Accuracy, robustness and cybersecurity | AC-4A, SC-1A, SC-3B, SC-5B, QC-4A, QC-4B, SC-4D | Strong - Comprehensive accuracy, robustness, and security controls |
-| Art. 17 | Quality management system | GC-0C, GC-3A | Partial - Quality tracking controls present |
-| Art. 26 | Obligations of deployers | GC-0C, AC-6A | Partial - Deployer monitoring controls present |
-| Art. 72 | Post-market monitoring | AC-6A | Partial - Post-market surveillance control present |
-| Art. 73 | Reporting of serious incidents | AC-6A, SC-6A | Partial - Incident detection controls present |
-| Annex III | High-risk AI systems | AC-1A | Partial - Classification control present |
-| Annex IV | Technical documentation | QC-4C, AC-2A | Partial - Documentation controls present |
+| Art. 6 | Classification rules for high-risk AI systems | AC-01 | Partial - Classification control present |
+| Art. 9 | Risk management system | AC-01, RC-05, AC-06, RC-02, QC-02, RC-04 | Strong - Risk management system with gates at design, implementation, and post-market phases |
+| Art. 10 | Data and data governance | AC-03, AC-05 | Partial - Data governance and bias testing controls present |
+| Art. 11 | Technical documentation | QC-08, AC-03 | Partial - Documentation controls present |
+| Art. 12 | Record-keeping | GC-01, GC-02, RC-04, GC-04 | Strong - Comprehensive logging, traceability, and decision documentation |
+| Art. 13 | Transparency and provision of information to deployers | AC-03 | Partial - Design review includes transparency |
+| Art. 14 | Human oversight | SC-02, AC-03 | Partial - Oversight mechanisms present |
+| Art. 15 | Accuracy, robustness and cybersecurity | AC-05, SC-03, SC-08, SC-17, QC-06, QC-07, SC-15 | Strong - Comprehensive accuracy, robustness, and security controls |
+| Art. 17 | Quality management system | GC-03, GC-06 | Partial - Quality tracking controls present |
+| Art. 26 | Obligations of deployers | GC-03, AC-06 | Partial - Deployer monitoring controls present |
+| Art. 72 | Post-market monitoring | AC-06 | Partial - Post-market surveillance control present |
+| Art. 73 | Reporting of serious incidents | AC-06, SC-19 | Partial - Incident detection controls present |
+| Annex III | High-risk AI systems | AC-01 | Partial - Classification control present |
+| Annex IV | Technical documentation | QC-08, AC-03 | Partial - Documentation controls present |
 ---
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

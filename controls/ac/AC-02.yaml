@@ -1,0 +1,100 @@
+# =============================================================================
+# Control: AC-02 — GPAI & Foundation Model Obligation Screening
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-02
+moscow_score: should
+name: GPAI & Foundation Model Obligation Screening
+description: >-
+  For changes that introduce or modify use of a general-purpose AI model (GPAI) or
+  foundation model — including API-accessed LLMs (e.g., OpenAI, Anthropic, Hugging Face),
+  multimodal models, and embedded AI services — screen for applicable obligations under
+  EU AI Act Arts. 51-56. Classify the GPAI use as: Standard GPAI (normal use), Systemic Risk
+  GPAI (trained with >10²⁵ FLOPs), or Prohibited High-Risk Use (real-time remote biometric ID,
+  social scoring). Trigger corresponding compliance obligations and documentation requirements
+  for downstream stages.
+required_in_stages:
+- number: 1
+  name: Intent Ingestion
+  mandatory: false
+  note: >-
+    Only applicable when the change involves a GPAI or foundation model. Screens for
+    EU AI Act chapter III (GPAI) and chapter II (high-risk AI) obligations. Early screening
+    prevents compliance surprises at design or deployment time.
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_classifies_human_validates
+  human_display: Agent classifies, human validates
+  agent_role: >-
+    Analyse the specification for any AI model use. If GPAI/foundation models are
+    referenced: identify the model provider, model name, intended use, and training
+    compute estimate. Classify as Standard, Systemic Risk, or Prohibited. Flag any
+    obligations under Arts. 51-56 (transparency, documentation, adversarial testing).
+  human_role: >-
+    Review agent classification. Confirm or override with documented justification.
+    For Systemic Risk GPAIs, engage AI Ethics or Legal to confirm systemic risk status.
+    Sign off on applicable obligation set before design begins.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+    - article: "Art. 51"
+      requirement: Definition and scope of general-purpose AI models; triggers Chapter III obligations
+    - article: "Art. 52"
+      requirement: >-
+        Transparency obligations for GPAI: disclosure of training data, intended uses,
+        known limitations, testing results
+    - article: "Art. 53"
+      requirement: >-
+        Technical documentation requirements for GPAI providers (model card, capabilities,
+        testing results)
+    - article: "Art. 55"
+      requirement: >-
+        Systemic risk GPAIs (>10²⁵ FLOPs) must undergo additional adversarial testing,
+        EU conformity assessment, and post-market monitoring
+    - article: "Art. 56"
+      requirement: Provider obligations for systemic risk GPAIs including incident reporting
+inputs:
+- name: Validated feature specification
+  source_control: QC-01
+  description: Specification documenting AI model use case and intended purpose
+outputs:
+- name: GPAI Classification Decision
+  type: decision
+  description: >-
+    Classification of GPAI as Standard, Systemic Risk, or Prohibited. List of applicable
+    Arts. 51-56 obligations. Reference to GPAI provider's transparency disclosures.
+  retention: 7 years (EU AI Act Art. 12 record-keeping)
+- name: Compliance Obligation Checklist
+  type: decision
+  description: >-
+    Downstream controls triggered for Stages 2-6 (documentation, testing, monitoring)
+    based on GPAI classification
+  retention: 7 years
+failure_behaviour:
+  action: escalate
+  escalation_target: AI Governance Lead
+  description: >-
+    If GPAI classification is unclear or contradictory, escalate to AI Governance Lead.
+    Default to Systemic Risk classification pending resolution to ensure comprehensive
+    compliance obligations are triggered.
+automation:
+  tooling:
+    - GPAI classification taxonomy (EU AI Act Chapter III)
+    - Model provenance tracker (Hugging Face Model Card, Model Card Meta, etc.)
+  frequency: per_change
+  sla_minutes: 120
+dependencies:
+- QC-01   # Specification Validation (provides specification to screen)
+- AC-01   # AI Risk Tier Classification (related classification for high-risk purpose-built AI)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

@@ -1,0 +1,72 @@
+# =============================================================================
+# Risk Threshold Evaluation Template
+# =============================================================================
+# Produced during Step 4.7 by control RC-05.
+# Aggregates all Stage 4 control results into a residual risk score.
+# Risk Officer makes the formal go/no-go decision. IMMUTABLE after decision.
+#
+# Retention: 7 years (DORA Art. 8(6)).
+#
+# Usage:
+#   Copy: cp risk-threshold-evaluation.yaml FEAT-XXXX-risk-threshold-evaluation.yaml
+# =============================================================================
+
+feat_id: ""                        # FEAT-XXXX
+stage: 4
+control: RC-05
+immutable: true
+evaluated_at: ""                   # ISO 8601 datetime
+
+# --- Control results aggregated from Stage 4 steps ---
+control_results:
+  SC-12:
+    status: ""                     # passed | passed_with_accepted_risk | failed | not_run
+    unresolved_critical: 0
+    unresolved_high: 0
+    artifact: ""                   # Path to FEAT-XXXX-sast-scan-report.yaml
+  QC-06:
+    status: ""
+    unresolved_blocking_failures: 0
+    artifact: ""                   # Path to FEAT-XXXX-test-results-report.yaml
+  SC-13:
+    status: ""
+    unresolved_critical: 0
+    unresolved_high: 0
+    artifact: ""                   # Path to FEAT-XXXX-dast-scan-report.yaml
+  QC-07:
+    status: ""                     # passed | failed | not_applicable
+    artifact: ""                   # Path to FEAT-XXXX-ai-output-validation-report.yaml
+  AC-05:
+    status: ""                     # passed | failed | not_applicable
+    artifact: ""                   # Path to FEAT-XXXX-bias-fairness-report.yaml
+  QC-08:
+    status: ""
+    blocking_gaps: 0
+    artifact: ""                   # Path to FEAT-XXXX-documentation-completeness-report.yaml
+
+# --- Agent recommendation ---
+agent_recommendation:
+  residual_risk_score: null        # Computed composite score (0.0 – 1.0)
+  recommendation: ""               # pass | conditional_pass | fail
+  rationale: ""                    # Supporting evidence summary
+
+# --- Risk Officer decision ---
+# Outcomes:
+#   pass             — residual risk within appetite; proceed to Stage 5
+#   conditional_pass — residual risk exceeds appetite but formally accepted; proceed to Stage 5
+#   fail             — residual risk exceeds appetite; cannot be accepted; return to Stage 3
+decision:
+  outcome: ""                      # pass | conditional_pass | fail
+  decided_by: ""                   # RO full name
+  decided_by_role: ""              # Risk Officer
+  decided_at: ""                   # ISO 8601 datetime
+
+  # Populated for conditional_pass only
+  risk_acceptance:
+    accepted_risks: []             # List of specific accepted findings/gaps
+    conditions: ""                 # Conditions or compensating controls required
+    review_date: ""                # Date by which acceptance must be reviewed
+
+  # Populated for fail only
+  failure_reasons: []              # Specific failures requiring remediation before retesting
+  return_to_stage: 3

@@ -29,11 +29,11 @@ regulatory_mapping:
   - framework: DORA
     article: "9(2)"
     coverage: Strong
-    rationale: "SC-3A enforces permission models and access control least-privilege principles."
+    rationale: "SC-07 enforces permission models and access control least-privilege principles."
   - framework: EU AI Act
     article: "15(4)"
     coverage: Strong
-    rationale: "SC-3A enforces identity-based access control for AI system resources."
+    rationale: "SC-07 enforces identity-based access control for AI system resources."
 ```
 
 **Coverage values:** `Strong` | `Partial` | `Not Mapped`
@@ -44,7 +44,7 @@ Add or update the entry in this consolidated index:
 
 ``` yaml
 controls:
-  SC-3A:
+  SC-07:
     name: "Permission & Access Control Enforcement"
     mappings:
       - framework: DORA
@@ -64,7 +64,7 @@ Add the control to the appropriate section(s):
 DORA:
   "9(3)":
     controls:
-      - SC-3A
+      - SC-07
     coverage: Strong
 ```
 
@@ -72,7 +72,7 @@ DORA:
 Add or modify the article row in the appropriate chapter table:
 
 ```markdown
-| **Art. 9(3)** | Least privilege and segregation of duties | SC-3A | **✅ Strong** — SC-3A enforces role-based access control (RBAC) with least-privilege principles and segregation of duties across all environments. |
+| **Art. 9(3)** | Least privilege and segregation of duties | SC-07 | **✅ Strong** — SC-07 enforces role-based access control (RBAC) with least-privilege principles and segregation of duties across all environments. |
 ```
 
 **Format for Partial:** Include "**Not covered (org responsibility):**" section.
@@ -122,7 +122,7 @@ A-SDLC [provides X]; entity [handles Y].
 
 ### Real Example (Art. 16: Backup Policies)
 ```
-**✅ Partial** — RC-5B validates backup/restore procedures work; QC-5A checks
+**✅ Partial** — RC-07 validates backup/restore procedures work; QC-09 checks
 backup integrity. **Not covered (org responsibility):** Backup frequency,
 retention policies, and offline storage requirements. A-SDLC validates
 procedures work; entity determines operational policy.
@@ -165,10 +165,10 @@ If a new article exists in DORA or EU AI Act:
 
 → Search `compliance-matrix.yaml` for `"25"` under DORA section
 
-### "What does SC-3D cover?"
+### "What does SC-10 cover?"
 
-→ Read `controls/sc/SC-3D.yaml` `regulatory_mapping` field
-→ Or search `control-article-index.yaml` for SC-3D entry
+→ Read `controls/sc/SC-10.yaml` `regulatory_mapping` field
+→ Or search `control-article-index.yaml` for SC-10 entry
 
 ### "Which articles don't have control mappings?"
 
@@ -184,7 +184,7 @@ If a new article exists in DORA or EU AI Act:
 
 1. **Consistency check:** Every control in `controls/[track]/` that has `regulatory_mapping` should appear in `compliance-matrix.yaml`
 2. **Article coverage:** Every article listed in `README.md` should have at least one mapping or explicit rationale for no mapping
-3. **Bidirectional consistency:** If `compliance-matrix.yaml` lists "SC-3A maps to Art. 9(3)", then `controls/sc/SC-3A.yaml` should also list Art. 9(3)
+3. **Bidirectional consistency:** If `compliance-matrix.yaml` lists "SC-07 maps to Art. 9(3)", then `controls/sc/SC-07.yaml` should also list Art. 9(3)
 4. **Statistics:** Coverage percentages in README.md Coverage Summary should match actual count of controls with ≥1 mapping
 
 ---

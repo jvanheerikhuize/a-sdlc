@@ -9,9 +9,9 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+      "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$",
       "description": "Unique control identifier. Format: [Track]-[Stage][Letter]. Track: QC|RC|SC|AC|GC. Stage: 0=cross-cutting, 1-6=lifecycle stage.",
-      "examples": ["QC-1A", "SC-2B", "GC-0A"]
+      "examples": ["QC-01", "SC-02", "GC-01"]
     },
     "name": {
       "type": "string",
@@ -59,7 +59,7 @@
           },
           "directive_payload": {
             "type": "string",
-            "description": "Path to the directive payload file injected at this stage entry. Used by SC-2B."
+            "description": "Path to the directive payload file injected at this stage entry. Used by SC-02."
           }
         }
       }
@@ -188,7 +188,7 @@
           "name": { "type": "string" },
           "source_control": {
             "type": "string",
-            "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$",
+            "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$",
             "description": "Control ID that produces this input."
           },
           "description": { "type": "string" }
@@ -245,7 +245,7 @@
       "description": "Controls that must pass before this one can execute.",
       "items": {
         "type": "string",
-        "pattern": "^(QC|RC|SC|AC|GC)-[0-6][A-Z]$"
+        "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$"
       }
     },
     "feedback_loops": {
@@ -266,7 +266,7 @@
     },
     "directive_payload": {
       "type": "string",
-      "description": "Path to the directive payload file injected by this control. Used by SC-0D for the core directive bundle."
+      "description": "Path to the directive payload file injected by this control. Used by SC-01 for the core directive bundle."
     },
     "moscow_score": {
       "type": "string",

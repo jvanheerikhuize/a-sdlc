@@ -1,0 +1,57 @@
+# =============================================================================
+# Control: RC-08 — Risk & Health Monitoring
+# Track:   RC (Risk Controls)
+# Owner:   Risk Management / SRE / Risk Officer
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: RC-08
+moscow_score: should
+name: Risk & Health Monitoring
+description: 'Continuously monitor the system''s operational risk posture: configuration drift against approved baseline,
+  new vulnerabilities in the SBOM, threat landscape changes, application health indicators, capacity trends, TLS certificate
+  expiry, and dependency health. Escalate when risk thresholds are crossed.'
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+track:
+  code: RC
+  name: Risk Controls
+delegation:
+  pattern: automated_with_human_escalation
+  human_display: Automated with human escalation
+  agent_role: Continuously monitor all risk and health indicators; detect drift, vulnerabilities, and capacity risks; alert
+    on threshold breaches.
+  human_role: Respond to escalations; make decisions on risk acceptance or remediation; initiate feedback loops.
+owner:
+  team: Risk Management / SRE
+  role: Risk Officer
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(2)
+    obligation: Continuous identification and assessment of ICT risk including vulnerability management
+  - article: Art. 10
+    obligation: Detection of anomalous activities and potential ICT vulnerabilities
+  eu_ai_act:
+  - article: Art. 9(1)
+    requirement: Continuous and iterative risk management process throughout the AI system lifecycle
+outputs:
+- name: Risk & health monitoring record
+  type: evidence
+  description: Continuous record of all monitored risk indicators with threshold breach events.
+  retention: 7 years (DORA)
+- name: Risk escalation alert
+  type: alert
+  description: Alert when any monitored risk indicator exceeds its defined threshold.
+failure_behaviour:
+  action: escalate
+  escalation_target: Risk Officer
+  description: Threshold breaches escalate to Risk Officer. Critical risks may trigger emergency feedback loop.
+automation:
+  frequency: continuous
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

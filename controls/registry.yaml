@@ -15,184 +15,184 @@ registry:
   # Cross-Cutting (Stage 0) — Always active across all stages
   # ---------------------------------------------------------------------------
 
-  - id: SC-0D
+  - id: SC-01
     name: Core Directive Injection
     stage: 0
     stage_name: Cross-Cutting
     track: SC
     delegation: automated_policy_enforced
-    file: controls/sc/SC-0D.yaml
+    file: controls/sc/SC-01.yaml
     directive_payload: directives/core/core-directives.yaml
     owner_team: Security
 
-  - id: GC-0A
+  - id: GC-01
     name: Audit Trail & Compliance Reporting
     stage: 0
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: controls/gc/GC-0A.yaml
+    file: controls/gc/GC-01.yaml
     owner_team: Governance & Compliance
 
-  - id: GC-0B
+  - id: GC-02
     name: End-to-End Traceability
     stage: 0
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: controls/gc/GC-0B.yaml
+    file: controls/gc/GC-02.yaml
     owner_team: Engineering Platform
 
-  - id: GC-0C
+  - id: GC-03
     name: Agent Provenance Registry
     stage: 0
     stage_name: Cross-Cutting
     track: GC
     delegation: fully_automated
-    file: controls/gc/GC-0C.yaml
+    file: controls/gc/GC-03.yaml
     owner_team: Governance & Compliance
 
-  - id: GC-0D
+  - id: GC-04
     name: Compliance Evidence Automation
     stage: 0
     stage_name: Cross-Cutting
     track: GC
     delegation: agent_compiles_human_approves
-    file: controls/gc/GC-0D.yaml
+    file: controls/gc/GC-04.yaml
     owner_team: Governance & Compliance
 
   # ---------------------------------------------------------------------------
   # Stage 1 — Intent Ingestion
   # ---------------------------------------------------------------------------
 
-  - id: QC-1A
+  - id: QC-01
     name: Specification Validation
     stage: 1
     stage_name: Intent Ingestion
     track: QC
     delegation: agent_drafts_human_approves
-    file: controls/qc/QC-1A.yaml
+    file: controls/qc/QC-01.yaml
     owner_team: Product / Delivery
 
-  - id: QC-1B
+  - id: QC-02
     name: Coherence & Conflict Resolution
     stage: 1
     stage_name: Intent Ingestion
     track: QC
     delegation: agent_analyses_human_resolves
-    file: controls/qc/QC-1B.yaml
+    file: controls/qc/QC-02.yaml
     owner_team: Product / Delivery
 
-  - id: RC-1A
+  - id: RC-01
     name: Risk Classification
     stage: 1
     stage_name: Intent Ingestion
     track: RC
     delegation: agent_classifies_human_validates
-    file: controls/rc/RC-1A.yaml
+    file: controls/rc/RC-01.yaml
     owner_team: Risk Management
 
-  - id: SC-1A
+  - id: SC-03
     name: Pre-Guardrails
     stage: 1
     stage_name: Intent Ingestion
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-1A.yaml
+    file: controls/sc/SC-03.yaml
     owner_team: Security
 
-  - id: SC-1B
+  - id: SC-04
     name: Data Classification & Sensitivity Screening
     stage: 1
     stage_name: Intent Ingestion
     track: SC
     delegation: agent_classifies_human_validates
-    file: controls/sc/SC-1B.yaml
+    file: controls/sc/SC-04.yaml
     owner_team: Security
 
-  - id: AC-1A
+  - id: AC-01
     name: AI Risk Tier Classification
     stage: 1
     stage_name: Intent Ingestion
     track: AC
     delegation: agent_proposes_human_confirms
-    file: controls/ac/AC-1A.yaml
+    file: controls/ac/AC-01.yaml
     owner_team: AI Governance
 
-  - id: AC-1B
+  - id: AC-02
     name: GPAI & Foundation Model Obligation Screening
     stage: 1
     stage_name: Intent Ingestion
     track: AC
     delegation: agent_classifies_human_validates
-    file: controls/ac/AC-1B.yaml
+    file: controls/ac/AC-02.yaml
     owner_team: AI Governance
 
-  - id: GC-1A
+  - id: GC-05
     name: Intent Traceability
     stage: 1
     stage_name: Intent Ingestion
     track: GC
     delegation: fully_automated
-    file: controls/gc/GC-1A.yaml
+    file: controls/gc/GC-05.yaml
     owner_team: Governance & Compliance
 
   # ---------------------------------------------------------------------------
   # Stage 2 — System Design
   # ---------------------------------------------------------------------------
 
-  - id: QC-2A
+  - id: QC-03
     name: Design Completeness & Standards
     stage: 2
     stage_name: System Design
     track: QC
     delegation: agent_drafts_human_approves
-    file: controls/qc/QC-2A.yaml
+    file: controls/qc/QC-03.yaml
     owner_team: Engineering
 
-  - id: RC-2A
+  - id: RC-02
     name: Design Approval
     stage: 2
     stage_name: System Design
     track: RC
     delegation: human_required
-    file: controls/rc/RC-2A.yaml
+    file: controls/rc/RC-02.yaml
     owner_team: Risk Management
 
-  - id: RC-2B
+  - id: RC-03
     name: Privacy Impact Assessment Gate
     stage: 2
     stage_name: System Design
     track: RC
     delegation: agent_analyses_human_resolves
-    file: controls/rc/RC-2B.yaml
+    file: controls/rc/RC-03.yaml
     owner_team: Risk Management
 
-  - id: SC-2A
+  - id: SC-05
     name: Threat Model Validation
     stage: 2
     stage_name: System Design
     track: SC
     delegation: agent_drafts_human_approves
-    file: controls/sc/SC-2A.yaml
+    file: controls/sc/SC-05.yaml
     owner_team: Security
 
-  - id: SC-2C
+  - id: SC-06
     name: Zero-Trust Architecture Validation
     stage: 2
     stage_name: System Design
     track: SC
     delegation: agent_analyses_human_resolves
-    file: controls/sc/SC-2C.yaml
+    file: controls/sc/SC-06.yaml
     owner_team: Security
 
-  - id: SC-2B
+  - id: SC-02
     name: Stage Directive Injection
     stage: 0
     stage_name: Cross-Cutting
     track: SC
     delegation: automated_policy_enforced
-    file: controls/sc/SC-2B.yaml
+    file: controls/sc/SC-02.yaml
     directive_payloads:
       - directives/stages/01-intent-ingestion.yaml
       - directives/stages/02-system-design.yaml
@@ -202,123 +202,123 @@ registry:
       - directives/stages/06-observability-maintenance.yaml
     owner_team: Security
 
-  - id: AC-2A
+  - id: AC-03
     name: AI Component Design Review
     stage: 2
     stage_name: System Design
     track: AC
     delegation: agent_drafts_human_approves
-    file: controls/ac/AC-2A.yaml
+    file: controls/ac/AC-03.yaml
     owner_team: AI Governance
 
-  - id: AC-2B
+  - id: AC-04
     name: AI Model Governance & Version Control
     stage: 2
     stage_name: System Design
     track: AC
     delegation: agent_creates_human_reviews
-    file: controls/ac/AC-2B.yaml
+    file: controls/ac/AC-04.yaml
     owner_team: AI Governance
 
   # ---------------------------------------------------------------------------
   # Stage 3 — Coding & Implementation
   # ---------------------------------------------------------------------------
 
-  - id: QC-3A
+  - id: QC-04
     name: Pull Request Creation & Review
     stage: 3
     stage_name: Coding & Implementation
     track: QC
     delegation: agent_creates_human_reviews
-    file: controls/qc/QC-3A.yaml
+    file: controls/qc/QC-04.yaml
     owner_team: Engineering
     feedback_loops:
       - path_a
       - path_b
 
-  - id: QC-3B
+  - id: QC-05
     name: Code Quality Standards
     stage: 3
     stage_name: Coding & Implementation
     track: QC
     delegation: fully_automated
-    file: controls/qc/QC-3B.yaml
+    file: controls/qc/QC-05.yaml
     owner_team: Engineering
     feedback_loops:
       - path_a
       - path_b
 
-  - id: RC-3A
+  - id: RC-04
     name: Decision Log
     stage: 3
     stage_name: Coding & Implementation
     track: RC
     delegation: agent_logs_human_reviews
-    file: controls/rc/RC-3A.yaml
+    file: controls/rc/RC-04.yaml
     owner_team: Engineering
     feedback_loops:
       - path_b_quickfix
 
-  - id: SC-3A
+  - id: SC-07
     name: Permission Management
     stage: 3
     stage_name: Coding & Implementation
     track: SC
     delegation: automated_policy_enforced
-    file: controls/sc/SC-3A.yaml
+    file: controls/sc/SC-07.yaml
     owner_team: Security
     feedback_loops:
       - path_b_quickfix
 
-  - id: SC-3B
+  - id: SC-08
     name: Post-Guardrails
     stage: 3
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-3B.yaml
+    file: controls/sc/SC-08.yaml
     owner_team: Security
     feedback_loops:
       - path_a
       - path_b
 
-  - id: SC-3C
+  - id: SC-09
     name: Secrets & Credentials Scanning
     stage: 3
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-3C.yaml
+    file: controls/sc/SC-09.yaml
     owner_team: Security
     feedback_loops:
       - path_a
       - path_b
 
-  - id: SC-3D
+  - id: SC-10
     name: Software Composition Analysis & SBOM Generation
     stage: 3
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-3D.yaml
+    file: controls/sc/SC-10.yaml
     owner_team: Security
 
-  - id: SC-3E
+  - id: SC-11
     name: Container & IaC Security Scanning
     stage: 3
     stage_name: Coding & Implementation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-3E.yaml
+    file: controls/sc/SC-11.yaml
     owner_team: Security
 
-  - id: GC-3A
+  - id: GC-06
     name: Code Provenance Tracking
     stage: 3
     stage_name: Coding & Implementation
     track: GC
     delegation: fully_automated
-    file: controls/gc/GC-3A.yaml
+    file: controls/gc/GC-06.yaml
     owner_team: Governance & Compliance
     feedback_loops:
       - path_a
@@ -328,95 +328,95 @@ registry:
   # Stage 4 — Testing & Documentation
   # ---------------------------------------------------------------------------
 
-  - id: QC-4A
+  - id: QC-06
     name: Functional & Non-Functional Testing
     stage: 4
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_executes_human_reviews
-    file: controls/qc/QC-4A.yaml
+    file: controls/qc/QC-06.yaml
     owner_team: Quality Assurance
     feedback_loops:
       - path_a
       - path_b
 
-  - id: QC-4B
+  - id: QC-07
     name: AI Output Validation
     stage: 4
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_executes_human_reviews
-    file: controls/qc/QC-4B.yaml
+    file: controls/qc/QC-07.yaml
     owner_team: AI Governance
     note: Applicable to AI components only
 
-  - id: QC-4C
+  - id: QC-08
     name: Documentation Completeness
     stage: 4
     stage_name: Testing & Documentation
     track: QC
     delegation: agent_checks_human_approves
-    file: controls/qc/QC-4C.yaml
+    file: controls/qc/QC-08.yaml
     owner_team: Engineering
 
-  - id: RC-4A
+  - id: RC-05
     name: Risk Threshold Evaluation
     stage: 4
     stage_name: Testing & Documentation
     track: RC
     delegation: agent_calculates_human_decides
-    file: controls/rc/RC-4A.yaml
+    file: controls/rc/RC-05.yaml
     owner_team: Risk Management
     feedback_loops:
       - path_a
       - path_b
 
-  - id: SC-4A
+  - id: SC-12
     name: SAST
     stage: 4
     stage_name: Testing & Documentation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-4A.yaml
+    file: controls/sc/SC-12.yaml
     owner_team: Security
     feedback_loops:
       - path_a
       - path_b
 
-  - id: SC-4B
+  - id: SC-13
     name: DAST
     stage: 4
     stage_name: Testing & Documentation
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-4B.yaml
+    file: controls/sc/SC-13.yaml
     owner_team: Security
 
-  - id: AC-4A
+  - id: AC-05
     name: Bias & Fairness Testing
     stage: 4
     stage_name: Testing & Documentation
     track: AC
     delegation: agent_executes_human_reviews
-    file: controls/ac/AC-4A.yaml
+    file: controls/ac/AC-05.yaml
     owner_team: AI Governance
 
-  - id: SC-4C
+  - id: SC-14
     name: API Security Testing
     stage: 4
     stage_name: Testing & Documentation
     track: SC
     delegation: agent_executes_human_reviews
-    file: controls/sc/SC-4C.yaml
+    file: controls/sc/SC-14.yaml
     owner_team: Security
 
-  - id: SC-4D
+  - id: SC-15
     name: Adversarial AI Robustness Testing
     stage: 4
     stage_name: Testing & Documentation
     track: SC
     delegation: agent_executes_human_reviews
-    file: controls/sc/SC-4D.yaml
+    file: controls/sc/SC-15.yaml
     owner_team: Security
     note: Applicable to AI components only
 
@@ -424,120 +424,120 @@ registry:
   # Stage 5 — Deployment & Release
   # ---------------------------------------------------------------------------
 
-  - id: QC-5A
+  - id: QC-09
     name: Release Readiness Checklist
     stage: 5
     stage_name: Deployment & Release
     track: QC
     delegation: agent_compiles_human_approves
-    file: controls/qc/QC-5A.yaml
+    file: controls/qc/QC-09.yaml
     owner_team: Engineering / Release Management
 
-  - id: RC-5A
+  - id: RC-06
     name: CAB Approval
     stage: 5
     stage_name: Deployment & Release
     track: RC
     delegation: human_required
-    file: controls/rc/RC-5A.yaml
+    file: controls/rc/RC-06.yaml
     owner_team: Risk Management / Release Management
     feedback_loops:
       - path_b_quickfix
 
-  - id: RC-5B
+  - id: RC-07
     name: Rollback Plan Validation
     stage: 5
     stage_name: Deployment & Release
     track: RC
     delegation: agent_validates_human_approves
-    file: controls/rc/RC-5B.yaml
+    file: controls/rc/RC-07.yaml
     owner_team: Engineering / Release Management
 
-  - id: SC-5A
+  - id: SC-16
     name: Infrastructure Security
     stage: 5
     stage_name: Deployment & Release
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-5A.yaml
+    file: controls/sc/SC-16.yaml
     owner_team: Security / Infrastructure
 
-  - id: SC-5B
+  - id: SC-17
     name: Deployment Integrity
     stage: 5
     stage_name: Deployment & Release
     track: SC
     delegation: fully_automated
-    file: controls/sc/SC-5B.yaml
+    file: controls/sc/SC-17.yaml
     owner_team: Security / Release Management
     feedback_loops:
       - path_a
       - path_b
 
-  - id: SC-5C
+  - id: SC-18
     name: Secrets & Key Management Lifecycle
     stage: 5
     stage_name: Deployment & Release
     track: SC
     delegation: agent_checks_human_approves
-    file: controls/sc/SC-5C.yaml
+    file: controls/sc/SC-18.yaml
     owner_team: Security
 
   # ---------------------------------------------------------------------------
   # Stage 6 — Observability & Maintenance
   # ---------------------------------------------------------------------------
 
-  - id: QC-6A
+  - id: QC-10
     name: SLA/SLO Monitoring
     stage: 6
     stage_name: Observability & Maintenance
     track: QC
     delegation: fully_automated
-    file: controls/qc/QC-6A.yaml
+    file: controls/qc/QC-10.yaml
     owner_team: Engineering / SRE
 
-  - id: RC-6A
+  - id: RC-08
     name: Risk & Health Monitoring
     stage: 6
     stage_name: Observability & Maintenance
     track: RC
     delegation: automated_with_human_escalation
-    file: controls/rc/RC-6A.yaml
+    file: controls/rc/RC-08.yaml
     owner_team: Risk Management / SRE
 
-  - id: SC-6A
+  - id: SC-19
     name: Incident Scanning & Detection
     stage: 6
     stage_name: Observability & Maintenance
     track: SC
     delegation: automated_with_human_escalation
-    file: controls/sc/SC-6A.yaml
+    file: controls/sc/SC-19.yaml
     owner_team: Security
 
-  - id: SC-6B
+  - id: SC-20
     name: Runtime Anomaly Detection
     stage: 6
     stage_name: Observability & Maintenance
     track: SC
     delegation: automated_with_human_escalation
-    file: controls/sc/SC-6B.yaml
+    file: controls/sc/SC-20.yaml
     owner_team: Security / SRE
 
-  - id: AC-6A
+  - id: AC-06
     name: AI Post-Market Surveillance
     stage: 6
     stage_name: Observability & Maintenance
     track: AC
     delegation: agent_monitors_human_reports
-    file: controls/ac/AC-6A.yaml
+    file: controls/ac/AC-06.yaml
     owner_team: AI Governance
 
-  - id: RC-6B
+  - id: RC-09
     name: Third-Party Continuous Risk Monitoring
     stage: 6
     stage_name: Observability & Maintenance
     track: RC
     delegation: agent_monitors_human_reports
-    file: controls/rc/RC-6B.yaml
+    file: controls/rc/RC-09.yaml
     owner_team: Risk Management
     note: Applicable to AI components only

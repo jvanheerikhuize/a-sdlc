@@ -7,7 +7,7 @@
 > python3 scripts/generate-docs.py
 > ```
 
-Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact integrity checking. RC-5A CAB Approval is a mandatory human gate that cannot be delegated.
+Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact integrity checking. RC-06 CAB Approval is a mandatory human gate that cannot be delegated.
 
 ---
 
@@ -75,15 +75,15 @@ Maximum concurrent steps: **3**
 
 ### Step 5.1 — Release Readiness Checklist
 
-**Control:** [`QC-5A`](../../controls/qc/QC-5A.yaml) · **Delegation:** Agent compiles, REL approves
+**Control:** [`QC-09`](../../controls/qc/QC-09.yaml) · **Delegation:** Agent compiles, REL approves
 
 
 #### Actors and Actions
 
 | Actor | Action |
 |-------|--------|
-| AGT | Query audit trail (GC-0A) to confirm all prior stage controls were executed and passed |
-| AGT | Confirm Stage 4 RC-4A result is pass or approved conditional pass |
+| AGT | Query audit trail (GC-01) to confirm all prior stage controls were executed and passed |
+| AGT | Confirm Stage 4 RC-05 result is pass or approved conditional pass |
 | AGT | Verify documentation is current and release package is complete |
 | AGT | Flag any gaps in control evidence |
 | REL | Review completed checklist; approve release package or require resolution of gaps |
@@ -92,7 +92,7 @@ Maximum concurrent steps: **3**
 
 | Property | Value |
 |----------|-------|
-| **Input** | Audit trail (GC-0A) + Stage 4 risk threshold evaluation (RC-4A output) |
+| **Input** | Audit trail (GC-01) + Stage 4 risk threshold evaluation (RC-05 output) |
 | **Output** | Release readiness checklist (artifacts/outputs/release-readiness-checklist.yaml) |
 | **On Failure** | Gaps in prior control evidence block the release; must be resolved before seeking CAB approval |
 
@@ -100,7 +100,7 @@ Maximum concurrent steps: **3**
 
 ### Step 5.2 — CAB Approval
 
-**Control:** [`RC-5A`](../../controls/rc/RC-5A.yaml) · **Delegation:** Human required
+**Control:** [`RC-06`](../../controls/rc/RC-06.yaml) · **Delegation:** Human required
 
 
 #### Actors and Actions
@@ -134,7 +134,7 @@ Maximum concurrent steps: **3**
 
 ### Step 5.3 — Rollback Plan Validation
 
-**Control:** [`RC-5B`](../../controls/rc/RC-5B.yaml) · **Delegation:** Agent validates, REL approves
+**Control:** [`RC-07`](../../controls/rc/RC-07.yaml) · **Delegation:** Agent validates, REL approves
 
 
 #### Actors and Actions
@@ -158,7 +158,7 @@ Maximum concurrent steps: **3**
 
 ### Step 5.4 — Infrastructure Security Baseline
 
-**Control:** [`SC-5A`](../../controls/sc/SC-5A.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-16`](../../controls/sc/SC-16.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -181,7 +181,7 @@ Maximum concurrent steps: **3**
 
 ### Step 5.4-secrets — Secrets & Key Management Lifecycle
 
-**Control:** [`SC-5C`](../../controls/sc/SC-5C.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-18`](../../controls/sc/SC-18.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -204,7 +204,7 @@ Maximum concurrent steps: **3**
 
 ### Step 5.5 — Deployment Integrity Verification
 
-**Control:** [`SC-5B`](../../controls/sc/SC-5B.yaml) · **Delegation:** Fully automated
+**Control:** [`SC-17`](../../controls/sc/SC-17.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -257,56 +257,56 @@ Maximum concurrent steps: **3**
 ## Required Controls
 
 
-### QC-5A — Release Readiness Checklist
+### QC-09 — Release Readiness Checklist
 
 - **Track:** QC
 - **Delegation:** `agent_compiles_human_approves`
-- **File:** [`controls/qc/QC-5A.yaml`](../../controls/qc/QC-5A.yaml)
+- **File:** [`controls/qc/QC-09.yaml`](../../controls/qc/QC-09.yaml)
 
 
-### RC-5A — CAB Approval
+### RC-06 — CAB Approval
 
 - **Track:** RC
 - **Delegation:** `human_required`
-- **File:** [`controls/rc/RC-5A.yaml`](../../controls/rc/RC-5A.yaml)
+- **File:** [`controls/rc/RC-06.yaml`](../../controls/rc/RC-06.yaml)
 - **Note:** Human-required gate — cannot be delegated to an agent
 
 
-### RC-5B — Rollback Plan Validation
+### RC-07 — Rollback Plan Validation
 
 - **Track:** RC
 - **Delegation:** `agent_validates_human_approves`
-- **File:** [`controls/rc/RC-5B.yaml`](../../controls/rc/RC-5B.yaml)
+- **File:** [`controls/rc/RC-07.yaml`](../../controls/rc/RC-07.yaml)
 
 
-### SC-5A — Infrastructure Security
-
-- **Track:** SC
-- **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-5A.yaml`](../../controls/sc/SC-5A.yaml)
-
-
-### SC-5B — Deployment Integrity
+### SC-16 — Infrastructure Security
 
 - **Track:** SC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/sc/SC-5B.yaml`](../../controls/sc/SC-5B.yaml)
+- **File:** [`controls/sc/SC-16.yaml`](../../controls/sc/SC-16.yaml)
+
+
+### SC-17 — Deployment Integrity
+
+- **Track:** SC
+- **Delegation:** `fully_automated`
+- **File:** [`controls/sc/SC-17.yaml`](../../controls/sc/SC-17.yaml)
 - **Note:** Must run immediately before deployment execution
 
 
-### SC-5C — Secrets & Key Management Lifecycle
+### SC-18 — Secrets & Key Management Lifecycle
 
 - **Track:** SC
 - **Delegation:** `agent_checks_human_approves`
-- **File:** [`controls/sc/SC-5C.yaml`](../../controls/sc/SC-5C.yaml)
+- **File:** [`controls/sc/SC-18.yaml`](../../controls/sc/SC-18.yaml)
 - **Note:** Verify all secrets and keys are properly vaulted, rotated, and access-controlled
 
 
-### AC-2B — AI Model Governance & Version Control
+### AC-04 — AI Model Governance & Version Control
 
 - **Track:** AC
 - **Delegation:** `agent_creates_human_reviews`
-- **File:** [`controls/ac/AC-2B.yaml`](../../controls/ac/AC-2B.yaml)
+- **File:** [`controls/ac/AC-04.yaml`](../../controls/ac/AC-04.yaml)
 - **Note:** Applicable when change involves AI models — verify deployed model version matches registry
 
 
@@ -316,8 +316,8 @@ Maximum concurrent steps: **3**
 
 The following artifacts from prior stages are required as inputs:
 
-- [`../04-testing-documentation/artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml`](../04-testing-documentation/artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml)
-- [`../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml)
+- [`../04-testing-documentation/artifacts/outputs/RC-05-risk-threshold-evaluation.yaml`](../04-testing-documentation/artifacts/outputs/RC-05-risk-threshold-evaluation.yaml)
+- [`../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml`](../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml)
 
 ---
 
@@ -325,15 +325,15 @@ The following artifacts from prior stages are required as inputs:
 
 This stage produces the following artifacts:
 
-- [`artifacts/outputs/QC-5A-release-readiness-checklist.yaml`](artifacts/outputs/QC-5A-release-readiness-checklist.yaml)
-- [`artifacts/outputs/RC-5A-change-approval-record.yaml`](artifacts/outputs/RC-5A-change-approval-record.yaml)
-- [`artifacts/outputs/RC-5B-rollback-plan.yaml`](artifacts/outputs/RC-5B-rollback-plan.yaml)
-- [`artifacts/outputs/SC-5A-infrastructure-security-report.yaml`](artifacts/outputs/SC-5A-infrastructure-security-report.yaml)
-- [`artifacts/outputs/SC-5B-deployment-integrity-record.yaml`](artifacts/outputs/SC-5B-deployment-integrity-record.yaml)
-- [`artifacts/outputs/SC-5C-secrets-management-report.yaml`](artifacts/outputs/SC-5C-secrets-management-report.yaml)
+- [`artifacts/outputs/QC-09-release-readiness-checklist.yaml`](artifacts/outputs/QC-09-release-readiness-checklist.yaml)
+- [`artifacts/outputs/RC-06-change-approval-record.yaml`](artifacts/outputs/RC-06-change-approval-record.yaml)
+- [`artifacts/outputs/RC-07-rollback-plan.yaml`](artifacts/outputs/RC-07-rollback-plan.yaml)
+- [`artifacts/outputs/SC-16-infrastructure-security-report.yaml`](artifacts/outputs/SC-16-infrastructure-security-report.yaml)
+- [`artifacts/outputs/SC-17-deployment-integrity-record.yaml`](artifacts/outputs/SC-17-deployment-integrity-record.yaml)
+- [`artifacts/outputs/SC-18-secrets-management-report.yaml`](artifacts/outputs/SC-18-secrets-management-report.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-06 08:24 UTC
+**Last Updated:** 2026-03-06 08:44 UTC

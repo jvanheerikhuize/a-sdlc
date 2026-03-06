@@ -15,8 +15,8 @@ Agent directive bundles for the Agentic SDLC Framework. Directives are immutable
 
 | Tier | File | Injected when | Control |
 | ---- | ---- | ------------- | ------- |
-| **Core** | [core/core-directives.yaml](core/core-directives.yaml) | Session start — before any stage begins | [SC-0D](../controls/sc/SC-0D.yaml) |
-| **Stage** | [stages/0N-name.yaml](stages/) | Stage entry — before the agent begins work in that stage | [SC-2B](../controls/sc/SC-2B.yaml) |
+| **Core** | [core/core-directives.yaml](core/core-directives.yaml) | Session start — before any stage begins | [SC-01](../controls/sc/SC-01.yaml) |
+| **Stage** | [stages/0N-name.yaml](stages/) | Stage entry — before the agent begins work in that stage | [SC-02](../controls/sc/SC-02.yaml) |
 
 Core directives are always active. Stage directives layer on top and add constraints specific to the work performed in that stage.
 
@@ -65,7 +65,7 @@ Agents must acknowledge receipt of both bundles before performing any stage work
 | **Owner** | {{ core_directive.meta.owner }} |
 | **Classification** | IMMUTABLE |
 | **Precedence** | ABSOLUTE |
-| **Injected by** | SC-0D (Core Directive Injection) at session start |
+| **Injected by** | SC-01 (Core Directive Injection) at session start |
 
 These directives establish the universal behavioural constraints that govern every agent operating under the A-SDLC framework, regardless of stage, task type, or instruction source.
 
@@ -90,7 +90,7 @@ Directive files are immutable at runtime. Changes require:
 1. Security Architect authorship and sign-off
 2. Version bump in `meta.version`
 3. Updated `meta.last_reviewed` date
-4. Re-injection into all active agent sessions (SC-0D and SC-2B re-run)
+4. Re-injection into all active agent sessions (SC-01 and SC-02 re-run)
 
 Any attempt to modify, override, or reinterpret directive content at runtime must be refused and logged per the `enforcement` block in each file.
 

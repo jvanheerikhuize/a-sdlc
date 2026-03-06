@@ -118,8 +118,8 @@ dora:
           Non-microenterprises must conduct yearly ICT risk assessments on legacy
           systems and before/after connecting new technologies.
       controls_mapped:
-        - RC-1A   # Risk Classification
-        - GC-0B   # End-to-End Traceability
+        - RC-01   # Risk Classification
+        - GC-02   # End-to-End Traceability
 
     - id: "Art. 9"
       title: Protection and prevention
@@ -148,10 +148,10 @@ dora:
           Network infrastructure must be instantaneously severable or segmentable
           to minimise and prevent contagion.
       controls_mapped:
-        - SC-2B   # Directive Injection
-        - SC-3A   # Permission Management
-        - SC-3B   # Post-Guardrails
-        - SC-1A   # Pre-Guardrails
+        - SC-02   # Directive Injection
+        - SC-07   # Permission Management
+        - SC-08   # Post-Guardrails
+        - SC-03   # Pre-Guardrails
 
     - id: "Art. 10"
       title: Detection
@@ -169,10 +169,10 @@ dora:
           activity, the occurrence of ICT anomalies and ICT-related incidents,
           particularly cyber-attacks.
       controls_mapped:
-        - SC-6A   # Incident Scanning & Detection
-        - SC-6B   # Runtime Anomaly Detection
-        - QC-6A   # SLA/SLO Monitoring
-        - RC-6A   # Risk & Health Monitoring
+        - SC-19   # Incident Scanning & Detection
+        - SC-20   # Runtime Anomaly Detection
+        - QC-10   # SLA/SLO Monitoring
+        - RC-08   # Risk & Health Monitoring
 
     - id: "Art. 11"
       title: Response and recovery
@@ -192,9 +192,9 @@ dora:
           analysis of critical functions and third-party dependencies, and report
           aggregated costs from major ICT incidents.
       controls_mapped:
-        - RC-5B   # Rollback Plan Validation
-        - QC-6A   # SLA/SLO Monitoring
-        - RC-6A   # Risk & Health Monitoring
+        - RC-07   # Rollback Plan Validation
+        - QC-10   # SLA/SLO Monitoring
+        - RC-08   # Risk & Health Monitoring
 
     - id: "Art. 17"
       title: ICT-related incident management process
@@ -215,8 +215,8 @@ dora:
           and the management body; and response procedures to restore operations and
           security promptly.
       controls_mapped:
-        - SC-6A   # Incident Scanning & Detection
-        - GC-0A   # Audit Trail & Compliance Reporting
+        - SC-19   # Incident Scanning & Detection
+        - GC-01   # Audit Trail & Compliance Reporting
 
     - id: "Art. 18"
       title: Classification of ICT-related incidents and cyber threats
@@ -239,7 +239,7 @@ dora:
           authority assessment and cross-border information sharing; and materiality
           thresholds for significant cyber threats.
       controls_mapped:
-        - SC-6A   # Incident Scanning & Detection
+        - SC-19   # Incident Scanning & Detection
 
     - id: "Art. 19"
       title: Reporting of major ICT-related incidents and voluntary notification of significant cyber threats
@@ -262,8 +262,8 @@ dora:
           Article 20. While entities may outsource reporting to third parties,
           they remain fully responsible for compliance.
       controls_mapped:
-        - SC-6A   # Incident Scanning & Detection
-        - GC-0A   # Audit Trail & Compliance Reporting
+        - SC-19   # Incident Scanning & Detection
+        - GC-01   # Audit Trail & Compliance Reporting
 
     - id: "Art. 24"
       title: General requirements for the performance of digital operational resilience testing
@@ -290,9 +290,9 @@ dora:
           Entities must conduct appropriate tests at least yearly on all ICT systems
           and applications supporting critical or important functions.
       controls_mapped:
-        - SC-4A   # SAST
-        - SC-4B   # DAST
-        - SC-5A   # Infrastructure Security
+        - SC-12   # SAST
+        - SC-13   # DAST
+        - SC-16   # Infrastructure Security
 
     - id: "Art. 25"
       title: Testing of ICT tools and systems
@@ -314,9 +314,9 @@ dora:
           strategic planning of ICT testing, balancing resource allocation against risk
           urgency, information asset criticality, and risk tolerance capacity.
       controls_mapped:
-        - SC-4A   # SAST
-        - SC-4B   # DAST
-        - SC-5A   # Infrastructure Security
+        - SC-12   # SAST
+        - SC-13   # DAST
+        - SC-16   # Infrastructure Security
 
     - id: "Art. 28"
       title: General principles of sound management of ICT third-party risk
@@ -361,10 +361,10 @@ dora:
         concentration risk). This should be corrected in a future review of the
         compliance-matrix.yaml.
       controls_mapped:
-        - GC-0C   # Agent Provenance Registry
-        - SC-3A   # Permission Management
-        - GC-3A   # Code Provenance Tracking
-        - SC-5B   # Deployment Integrity
+        - GC-03   # Agent Provenance Registry
+        - SC-07   # Permission Management
+        - GC-06   # Code Provenance Tracking
+        - SC-17   # Deployment Integrity
 
 
 # ---------------------------------------------------------------------------
@@ -431,7 +431,7 @@ eu_ai_act:
           public services and benefits; law enforcement; migration, asylum, and border
           control management; administration of justice and democratic processes.
       controls_mapped:
-        - AC-1A   # AI Risk Tier Classification
+        - AC-01   # AI Risk Tier Classification
 
     - id: "Art. 9"
       title: Risk management system
@@ -454,9 +454,9 @@ eu_ai_act:
           development and before market placement, using predefined metrics and
           probabilistic thresholds appropriate to the intended purpose.
       controls_mapped:
-        - AC-1A   # AI Risk Tier Classification
-        - RC-4A   # Risk Threshold Evaluation
-        - AC-6A   # AI Post-Market Surveillance
+        - AC-01   # AI Risk Tier Classification
+        - RC-05   # Risk Threshold Evaluation
+        - AC-06   # AI Post-Market Surveillance
 
     - id: "Art. 10"
       title: Data and data governance
@@ -484,8 +484,8 @@ eu_ai_act:
           safety of persons, have a negative impact on fundamental rights, or lead
           to discrimination prohibited under Union or national law.
       controls_mapped:
-        - AC-2A   # AI Component Design Review
-        - AC-4A   # Bias & Fairness Testing
+        - AC-03   # AI Component Design Review
+        - AC-05   # Bias & Fairness Testing
 
     - id: "Art. 11"
       title: Technical documentation
@@ -505,8 +505,8 @@ eu_ai_act:
           The Commission may adopt delegated acts to amend Annex IV as needed to
           ensure technical progress does not impair documentation requirements.
       controls_mapped:
-        - QC-4C   # Documentation Completeness
-        - AC-2A   # AI Component Design Review
+        - QC-08   # Documentation Completeness
+        - AC-03   # AI Component Design Review
 
     - id: "Art. 12"
       title: Record-keeping
@@ -522,8 +522,8 @@ eu_ai_act:
           data has been checked; (c) input data or data summaries that can be used
           to identify the inputs giving rise to the AI system's output.
       controls_mapped:
-        - GC-0A   # Audit Trail & Compliance Reporting
-        - GC-0B   # End-to-End Traceability
+        - GC-01   # Audit Trail & Compliance Reporting
+        - GC-02   # End-to-End Traceability
 
     - id: "Art. 13"
       title: Transparency and provision of information to deployers
@@ -540,7 +540,7 @@ eu_ai_act:
           to in Article 14 including technical measures put in place to facilitate
           interpretation of outputs.
       controls_mapped:
-        - AC-2A   # AI Component Design Review
+        - AC-03   # AI Component Design Review
 
     - id: "Art. 14"
       title: Human oversight
@@ -557,8 +557,8 @@ eu_ai_act:
           who have the necessary competence, training and authority, as well as the
           necessary support.
       controls_mapped:
-        - SC-2B   # Directive Injection
-        - AC-2A   # AI Component Design Review
+        - SC-02   # Directive Injection
+        - AC-03   # AI Component Design Review
 
     - id: "Art. 15"
       title: Accuracy, robustness and cybersecurity
@@ -583,10 +583,10 @@ eu_ai_act:
           and model flaws. Solutions must be appropriate to the relevant circumstances
           and risks.
       controls_mapped:
-        - AC-4A   # Bias & Fairness Testing
-        - SC-1A   # Pre-Guardrails
-        - SC-3B   # Post-Guardrails
-        - SC-5B   # Deployment Integrity
+        - AC-05   # Bias & Fairness Testing
+        - SC-03   # Pre-Guardrails
+        - SC-08   # Post-Guardrails
+        - SC-17   # Deployment Integrity
 
     - id: "Art. 17"
       title: Quality management system
@@ -621,8 +621,8 @@ eu_ai_act:
           exempt from certain requirements, allowing compliance through existing
           internal governance rules already mandated under that legislation.
       controls_mapped:
-        - GC-0C   # Agent Provenance Registry
-        - GC-3A   # Code Provenance Tracking
+        - GC-03   # Agent Provenance Registry
+        - GC-06   # Code Provenance Tracking
 
     - id: "Art. 26"
       title: Obligations of deployers of high-risk AI systems
@@ -647,8 +647,8 @@ eu_ai_act:
           satisfy monitoring obligations through compliance with existing financial
           services governance rules.
       controls_mapped:
-        - GC-0C   # Agent Provenance Registry
-        - AC-6A   # AI Post-Market Surveillance
+        - GC-03   # Agent Provenance Registry
+        - AC-06   # AI Post-Market Surveillance
 
     - id: "Art. 72"
       title: Post-market monitoring by providers and post-market monitoring plan for high-risk AI systems
@@ -662,7 +662,7 @@ eu_ai_act:
           Post-market monitoring data feeds back into the risk management system
           (Article 9) and must be shared with relevant authorities upon request.
       controls_mapped:
-        - AC-6A   # AI Post-Market Surveillance
+        - AC-06   # AI Post-Market Surveillance
 
     - id: "Art. 73"
       title: Reporting of serious incidents
@@ -685,8 +685,8 @@ eu_ai_act:
           of critical infrastructure; breach of obligations under Union law protecting
           fundamental rights; or serious damage to property or the environment.
       controls_mapped:
-        - AC-6A   # AI Post-Market Surveillance
-        - SC-6A   # Incident Scanning & Detection
+        - AC-06   # AI Post-Market Surveillance
+        - SC-19   # Incident Scanning & Detection
 
   annexes:
 
@@ -701,7 +701,7 @@ eu_ai_act:
         AI systems for migration, asylum and border control management; AI systems
         for administration of justice and democratic processes.
       controls_mapped:
-        - AC-1A   # AI Risk Tier Classification
+        - AC-01   # AI Risk Tier Classification
 
     - id: "Annex IV"
       title: Technical documentation referred to in Article 11(1)
@@ -713,8 +713,8 @@ eu_ai_act:
         to the system throughout its lifecycle; list of harmonised standards applied;
         copy of the EU declaration of conformity.
       controls_mapped:
-        - QC-4C   # Documentation Completeness
-        - AC-2A   # AI Component Design Review
+        - QC-08   # Documentation Completeness
+        - AC-03   # AI Component Design Review
 
 
 # ---------------------------------------------------------------------------

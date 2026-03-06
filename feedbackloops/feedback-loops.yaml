@@ -30,7 +30,7 @@ roles:
     responsibilities: "First responder to Stage 4 failures; co-classifies path; confirms root cause from test output"
   - role_code: SA
     role_name: Security Architect
-    responsibilities: "Validates path classification for SC-4A, SC-4B, SC-6A, and SC-6B triggers; confirms root cause before Path A is approved"
+    responsibilities: "Validates path classification for SC-12, SC-13, SC-19, and SC-20 triggers; confirms root cause before Path A is approved"
   - role_code: RO
     role_name: Risk Officer
     responsibilities: "Makes the formal path selection and classification decisions; provides signed approval for any Path B selection"
@@ -41,32 +41,32 @@ roles:
 input_artifacts:
   stage4:
     - artifact: SAST scan report
-      source_control: SC-4A
+      source_control: SC-12
       source_step: "Step 4.1"
     - artifact: Test results report
-      source_control: QC-4A
+      source_control: QC-06
       source_step: "Step 4.2"
     - artifact: DAST scan report
-      source_control: SC-4B
+      source_control: SC-13
       source_step: "Step 4.3"
     - artifact: Risk threshold evaluation
-      source_control: RC-4A
+      source_control: RC-05
       source_step: "Step 4.7"
   stage6:
     - artifact: SLO monitoring record
-      source_control: QC-6A
+      source_control: QC-10
       source_step: "Step 6.2"
     - artifact: Risk & health monitoring record
-      source_control: RC-6A
+      source_control: RC-08
       source_step: "Step 6.3"
     - artifact: Incident detection record
-      source_control: SC-6A
+      source_control: SC-19
       source_step: "Step 6.4"
     - artifact: Anomaly detection record
-      source_control: SC-6B
+      source_control: SC-20
       source_step: "Step 6.5"
     - artifact: AI post-market surveillance report
-      source_control: AC-6A
+      source_control: AC-06
       source_step: "Step 6.6"
 
 steps:
@@ -81,7 +81,7 @@ steps:
       - actor: "OPS / QA"
         action: "Assess issue scope, urgency, and affected components; provide initial path recommendation"
       - actor: "SA"
-        action: "For SC-4A, SC-4B, SC-6A, or SC-6B triggers: confirm root cause is understood before any path is approved"
+        action: "For SC-12, SC-13, SC-19, or SC-20 triggers: confirm root cause is understood before any path is approved"
       - actor: "RO"
         action: "Make the formal path selection decision: Path A or Path B"
       - actor: "RO"
@@ -129,7 +129,7 @@ steps:
     inputs:
       - "Stage 4 failing control output or matched Stage 6 autofix template + trigger record"
     outputs:
-      - "All minimum controls passed; change deployed via SC-5B; activation record updated"
+      - "All minimum controls passed; change deployed via SC-17; activation record updated"
     on_deviation: "Immediately upgrade to Path B — do not attempt to continue with modifications"
 
   - id: FL.2B
@@ -157,11 +157,11 @@ steps:
       - actor: "AGT"
         action: "Complete the feedback-loop activation record: trigger source (Stage 4 or 6), control ID, path selected, approvals, re-entry ID, outcome"
       - actor: "AGT"
-        action: "Link activation record to the GC-0A audit trail and to the resulting change's Stage 3 or Stage 1 evidence package"
+        action: "Link activation record to the GC-01 audit trail and to the resulting change's Stage 3 or Stage 1 evidence package"
       - actor: "CO"
         action: "Review activation record; confirm DORA Art. 8 documentation obligations are met"
       - actor: "CO"
-        action: "For SC-6A-triggered loops: confirm DORA Art. 19 reporting timelines are not impacted by the re-entry"
+        action: "For SC-19-triggered loops: confirm DORA Art. 19 reporting timelines are not impacted by the re-entry"
     outputs:
       - "Activation record (artifacts/outputs/feedback-loop-activation-record.yaml)"
     retention: "7 years (DORA Art. 8(6))"
@@ -185,7 +185,7 @@ workflow:
         - role: OPS / QA
           action: "Assess issue scope, urgency, affected components; provide initial path recommendation"
         - role: SA
-          action: "For SC-4A, SC-4B, SC-6A, SC-6B triggers: confirm root cause is understood"
+          action: "For SC-12, SC-13, SC-19, SC-20 triggers: confirm root cause is understood"
         - role: RO
           action: "Make formal path selection decision: Path A or Path B"
         - role: RO
@@ -213,7 +213,7 @@ workflow:
         - role: OPS / QA
           action: "Monitor execution continuously; validate no out-of-scope actions taken"
       input: "Stage 4 failing control output OR matched Stage 6 autofix template + trigger record"
-      output: "All minimum controls passed; change deployed via SC-5B; activation record updated"
+      output: "All minimum controls passed; change deployed via SC-17; activation record updated"
       on_success: "Proceed to FL.3"
       on_deviation: "Immediately upgrade to Path B; proceed to FL.2B"
 
@@ -244,11 +244,11 @@ workflow:
         - role: AGT
           action: "Complete feedback-loop activation record: trigger source, control ID, path selected, approvals, re-entry ID, outcome"
         - role: AGT
-          action: "Link activation record to GC-0A audit trail and resulting change's Stage 3 or Stage 1 evidence package"
+          action: "Link activation record to GC-01 audit trail and resulting change's Stage 3 or Stage 1 evidence package"
         - role: CO
           action: "Review activation record; confirm DORA Art. 8 documentation obligations met"
         - role: CO
-          action: "For SC-6A-triggered loops: confirm DORA Art. 19 reporting timelines not impacted"
+          action: "For SC-19-triggered loops: confirm DORA Art. 19 reporting timelines not impacted"
       input: "Path A/B completion outcomes"
       output: "Activation record (artifacts/outputs/feedback-loop-activation-record.yaml)"
       retention: "7 years (DORA Art. 8(6))"
@@ -288,16 +288,16 @@ feedback_loops:
     trigger_sources:
       - stage: 6
         name: Observability & Maintenance
-        source_controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
+        source_controls: [QC-10, RC-08, SC-19, SC-20, AC-06]
         description: Alert or incident detected during continuous Stage 6 monitoring.
         eligibility:
           - Issue matches a pre-approved autofix template exactly (no partial matches).
           - Risk classification is low.
           - No new architectural changes are required.
-          - Root cause is confirmed (SA sign-off required for SC-6A and SC-6B triggers).
+          - Root cause is confirmed (SA sign-off required for SC-19 and SC-20 triggers).
       - stage: 4
         name: Testing & Documentation
-        source_controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
+        source_controls: [SC-12, QC-06, SC-13, QC-07, AC-05, QC-08, RC-05]
         description: >-
           Test failure, SAST/DAST finding, AI validation failure, or documentation
           gap detected during Stage 4.
@@ -315,31 +315,31 @@ feedback_loops:
       Stage 4 control(s) that raised the issue must be re-executed in addition
       to the minimum control set below.
     minimum_controls:
-      - id: QC-3A
+      - id: QC-04
         name: Pull Request Creation & Review
         rationale: All code changes must be reviewed before merge.
-      - id: QC-3B
+      - id: QC-05
         name: Code Quality Standards
         rationale: Automated quality checks apply to all fixes.
-      - id: SC-3B
+      - id: SC-08
         name: Post-Guardrails
         rationale: Agent-generated fix must be scanned for malicious patterns.
-      - id: SC-3C
+      - id: SC-09
         name: Secrets & Credentials Scanning
         rationale: Fix must not introduce exposed credentials.
-      - id: GC-3A
+      - id: GC-06
         name: Code Provenance Tracking
         rationale: Fix output must be attributed to the agent or developer that produced it.
-      - id: QC-4A
+      - id: QC-06
         name: Functional & Non-Functional Testing
         rationale: Fix must be tested before deployment.
-      - id: SC-4A
+      - id: SC-12
         name: SAST
         rationale: Static security analysis is mandatory even for expedited paths.
-      - id: RC-4A
+      - id: RC-05
         name: Risk Threshold Evaluation
         rationale: Residual risk must be assessed before deployment.
-      - id: SC-5B
+      - id: SC-17
         name: Deployment Integrity
         rationale: Cryptographic verification that tested artefact matches deployed artefact.
     regulatory_mapping:
@@ -367,18 +367,18 @@ feedback_loops:
       scope: full_lifecycle
       stages:
         - number: 1
-          controls: [SC-1A, QC-1A, QC-1B, RC-1A, AC-1A, GC-1A]
+          controls: [SC-03, QC-01, QC-02, RC-01, AC-01, GC-05]
         - number: 2
-          controls: [SC-2B, QC-2A, RC-2A, SC-2A, AC-2A]
+          controls: [SC-02, QC-03, RC-02, SC-05, AC-03]
         - number: 3
-          controls: [SC-3A, QC-3B, RC-3A, SC-3B, SC-3C, QC-3A, GC-3A]
+          controls: [SC-07, QC-05, RC-04, SC-08, SC-09, QC-04, GC-06]
         - number: 4
-          controls: [SC-4A, QC-4A, SC-4B, QC-4B, AC-4A, QC-4C, RC-4A]
-          note: QC-4B and AC-4A applicable only if AI components are involved.
+          controls: [SC-12, QC-06, SC-13, QC-07, AC-05, QC-08, RC-05]
+          note: QC-07 and AC-05 applicable only if AI components are involved.
         - number: 5
-          controls: [QC-5A, RC-5A, RC-5B, SC-5A, SC-5B]
+          controls: [QC-09, RC-06, RC-07, SC-16, SC-17]
         - number: 6
-          controls: [QC-6A, RC-6A, SC-6A, SC-6B, AC-6A]
+          controls: [QC-10, RC-08, SC-19, SC-20, AC-06]
           note: Stage 6 monitoring must be re-activated after the change is deployed.
     regulatory_mapping:
       dora:

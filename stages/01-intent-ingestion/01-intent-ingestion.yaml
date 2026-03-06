@@ -33,13 +33,13 @@ roles:
     responsibilities: Reviews audit records during regulatory audits
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
-# Steps 1.3, 1.4, 1.5 (QC-1B, RC-1A, AC-1A) run in parallel after QC-1A completes
+# Steps 1.3, 1.4, 1.5 (QC-02, RC-01, AC-01) run in parallel after QC-01 completes
 workflow:
   nodes:
     - id: n-sc1a
       step_number: "1.1"
       title: Screen Incoming Request
-      control: SC-1A
+      control: SC-03
       description: Screen incoming request for adversarial patterns
       delegation: Fully automated
       depends_on: []
@@ -56,7 +56,7 @@ workflow:
     - id: n-qc1a
       step_number: "1.2"
       title: Draft Feature Specification
-      control: QC-1A
+      control: QC-01
       description: Draft and validate feature specification
       delegation: "Agent drafts → human approves"
       depends_on: [n-sc1a]
@@ -73,7 +73,7 @@ workflow:
     - id: n-qc1b
       step_number: "1.3"
       title: Conflict Analysis
-      control: QC-1B
+      control: QC-02
       description: Identify and resolve conflicts in specification
       delegation: "Agent analyses, human resolves"
       depends_on: [n-qc1a]
@@ -92,7 +92,7 @@ workflow:
     - id: n-rc1a
       step_number: "1.4"
       title: Risk Classification
-      control: RC-1A
+      control: RC-01
       description: Classify risk tier
       delegation: "Agent classifies, human validates"
       depends_on: [n-qc1a]
@@ -109,7 +109,7 @@ workflow:
     - id: n-ac1a
       step_number: "1.5"
       title: "AI Tier Classification (conditional)"
-      control: AC-1A
+      control: AC-01
       description: Classify AI Act risk tier (conditional on ai_component)
       delegation: "Agent proposes, human confirms"
       depends_on: [n-qc1a]
@@ -127,7 +127,7 @@ workflow:
     - id: n-sc1b
       step_number: "1.5b"
       title: Data Classification Screening
-      control: SC-1B
+      control: SC-04
       description: Data classification screening (conditional on processes_personal_data)
       delegation: "Agent classifies, SA reviews"
       depends_on: [n-sc1a]
@@ -145,7 +145,7 @@ workflow:
     - id: n-gc1a
       step_number: "1.6"
       title: Product Owner Sign-off
-      control: GC-1A
+      control: GC-05
       description: Write intent audit trail entry
       delegation: Human required
       depends_on: [n-qc1b, n-rc1a, n-ac1a]
@@ -165,35 +165,35 @@ workflow:
       - [n-qc1b, n-rc1a, n-ac1a]
 
 required_controls:
-- id: SC-1A
+- id: SC-03
   note: Must run first — screens for adversarial inputs before any agent processing
-- id: SC-1B
+- id: SC-04
   note: Applicable when the change processes personal data or involves profiling
-- id: QC-1A
-- id: QC-1B
-- id: RC-1A
-- id: AC-1A
+- id: QC-01
+- id: QC-02
+- id: RC-01
+- id: AC-01
   note: Applicable when the change involves an AI component
-- id: AC-1B
+- id: AC-02
   note: Applicable when the change introduces or modifies use of a GPAI/foundation model
-- id: GC-1A
+- id: GC-05
 exit_criteria:
-- 'SC-1A: Pre-guardrails passed — no injection patterns detected in incoming request'
-- 'SC-1B: Data classification assigned (if applicable to change)'
-- 'QC-1A: Feature specification approved by Product Owner'
-- 'QC-1B: All blocking conflicts resolved; non-blocking conflicts documented'
-- 'RC-1A: Risk classification tier assigned and logged'
-- 'AC-1A: AI Act risk tier confirmed (or not-applicable documented)'
-- 'AC-1B: GPAI obligation screening completed (if applicable)'
-- 'GC-1A: Intent audit record written to immutable log'
+- 'SC-03: Pre-guardrails passed — no injection patterns detected in incoming request'
+- 'SC-04: Data classification assigned (if applicable to change)'
+- 'QC-01: Feature specification approved by Product Owner'
+- 'QC-02: All blocking conflicts resolved; non-blocking conflicts documented'
+- 'RC-01: Risk classification tier assigned and logged'
+- 'AC-01: AI Act risk tier confirmed (or not-applicable documented)'
+- 'AC-02: GPAI obligation screening completed (if applicable)'
+- 'GC-05: Intent audit record written to immutable log'
 next_stage: 2
 artifacts:
   inputs:
     - artifacts/inputs/change-request.yaml
   outputs:
-    - artifacts/outputs/QC-1A-feature-spec.yaml
-    - artifacts/outputs/QC-1B-conflict-resolution-record.yaml
-    - artifacts/outputs/RC-1A-risk-classification.yaml
-    - artifacts/outputs/AC-1A-ai-tier-classification.yaml
-    - artifacts/outputs/SC-1B-data-classification-record.yaml
-    - artifacts/outputs/GC-1A-intent-audit-record.yaml
+    - artifacts/outputs/QC-01-feature-spec.yaml
+    - artifacts/outputs/QC-02-conflict-resolution-record.yaml
+    - artifacts/outputs/RC-01-risk-classification.yaml
+    - artifacts/outputs/AC-01-ai-tier-classification.yaml
+    - artifacts/outputs/SC-04-data-classification-record.yaml
+    - artifacts/outputs/GC-05-intent-audit-record.yaml

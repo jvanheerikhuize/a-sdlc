@@ -11,7 +11,7 @@ All 152 YAML files in the repository are now validated by one of 13 schemas:
 | **Core Schemas (Already existed)** | | | | |
 | 1 | [control.schema.json](control.schema.json) | `controls/[track]/[ID].yaml` | Individual control definitions | 51 controls |
 | 2 | [stage.schema.json](stage.schema.json) | `stages/NN-name/NN-name.yaml` | Stage workflow & execution | 6 stages |
-| 3 | [directive.schema.json](directive.schema.json) | `directives/**/[name].yaml` | Security directives (SC-0D, SC-2B) | 7 directives |
+| 3 | [directive.schema.json](directive.schema.json) | `directives/**/[name].yaml` | Security directives (SC-01, SC-02) | 7 directives |
 | 4 | [feature-spec.schema.json](feature-spec.schema.json) | `stages/01-*/artifacts/outputs/FEAT-*.yaml` | Feature specifications | 47+ artifacts |
 | **Infrastructure Schemas (NEW)** | | | | |
 | 5 | [common.schema.json](common.schema.json) | $defs in all schemas | Shared reusable definitions | All schemas |
@@ -36,7 +36,7 @@ All new schemas use `$ref` to reference shared definitions from `common.schema.j
 
 | Definition | Type | Values |
 |---|---|---|
-| `control_id` | pattern | `^(QC\|RC\|SC\|AC\|GC)-[0-6][A-Z]$` |
+| `control_id` | pattern | `^(QC\|RC\|SC\|AC\|GC)-\\d{2}$` |
 | `track_code` | enum | QC, RC, SC, AC, GC |
 | `stage_number` | integer | 0–6 (0=cross-cutting) |
 | `stage_name` | enum | 7 stage names |
@@ -62,7 +62,7 @@ All new schemas use `$ref` to reference shared definitions from `common.schema.j
 
 **Key Constraints:**
 - `id` must match pattern `[Track]-[Stage][Letter]` and equal filename without `.yaml`
-- `required_in_stages` is an array — supports multi-stage controls (e.g., SC-0D in all 6 stages)
+- `required_in_stages` is an array — supports multi-stage controls (e.g., SC-01 in all 6 stages)
 - `track` must be one of: QC, RC, SC, AC, GC
 - `delegation` specifies how the control is split between agent and human
 - `regulatory_mapping` documents DORA and/or EU AI Act coverage
@@ -71,7 +71,7 @@ All new schemas use `$ref` to reference shared definitions from `common.schema.j
 
 **Required Fields:**
 ```yaml
-id: SC-2B                    # Control ID
+id: SC-02                    # Control ID
 name: string                 # Human-readable name
 description: string          # What this control does
 required_in_stages: []       # Stages where required
@@ -113,20 +113,20 @@ roles: []                    # Actor roles in this stage
 **Validates:** Core (`directives/core/`) and per-stage directives (`directives/stages/`)
 
 **Key Constraints:**
-- `meta.scope` is either `global` (SC-0D) or `stage` (SC-2B)
+- `meta.scope` is either `global` (SC-01) or `stage` (SC-02)
 - `meta.classification` is always `immutable` — directives cannot be overridden
-- `injection.trigger` is either `session_start` (SC-0D) or `stage_entry` (SC-2B)
+- `injection.trigger` is either `session_start` (SC-01) or `stage_entry` (SC-02)
 - `categories[]` group related security directives
 
 **Required Fields:**
 ```yaml
 meta:
-  id: SC-0D|SC-2B            # Directive ID
+  id: SC-01|SC-02            # Directive ID
   scope: global|stage         # Scope of application
   classification: immutable   # Cannot override
 injection:
   trigger: session_start|stage_entry
-  stage_number?: 1-6          # For SC-2B
+  stage_number?: 1-6          # For SC-02
 enforcement:
   overridable: false          # Security directives always enforced
 categories:                   # Grouped directives
@@ -139,14 +139,14 @@ categories:                   # Grouped directives
 
 #### 4. **feature-spec.schema.json** — Feature Specification Schema
 
-**Validates:** Feature specification artifacts in Stage 1 (QC-1A output)
+**Validates:** Feature specification artifacts in Stage 1 (QC-01 output)
 
 **Key Constraints:**
 - `metadata.id` must match pattern `FEAT-[0-9]{4}`
 - `metadata.version` must be semantic (e.g., 1.0.0)
 - `acceptance_criteria[]` uses BDD format (given/when/then)
 - `technical_requirements` includes constraints, performance, security
-- `risk_classification` ties to RC-1A and AC-1A controls
+- `risk_classification` ties to RC-01 and AC-01 controls
 
 **Required Fields:**
 ```yaml
@@ -236,15 +236,15 @@ supporting_files:
 
 **Each registry entry:**
 ```yaml
-id: QC-1A                        # Control ID
+id: QC-01                        # Control ID
 name: Specification Validation   # Control name
 stage: 1                         # Stage number
 stage_name: Intent Ingestion     # Stage name
 track: QC                        # Track code
 delegation: agent_drafts_human_approves  # Delegation pattern
-file: controls/qc/QC-1A.yaml    # YAML file path
+file: controls/qc/QC-01.yaml    # YAML file path
 owner_team: Product / Delivery   # Responsible team
-directive_payload?: string       # Optional: SC-0D only
+directive_payload?: string       # Optional: SC-01 only
 note?: string                    # Optional: additional notes
 ```
 
@@ -263,8 +263,8 @@ name: Ingest a new feature request  # Human-readable name
 stage: 1                         # Stage number (0=cross-cutting)
 description: string              # What this task accomplishes
 controls:                        # Control IDs required for this task
-  - QC-1A
-  - RC-1A
+  - QC-01
+  - RC-01
 entry_file: context/stage-01-intent-ingestion.md  # Context document
 note?: string                    # Optional: special instructions
 ```
@@ -328,7 +328,7 @@ compliance_matrix:
       - article: "Art. 8"
         title: "Identification of ICT risk"
         scope: string
-        controls: [RC-1A, GC-0B]  # Mapped controls
+        controls: [RC-01, GC-02]  # Mapped controls
         coverage: "Strong - ..."  # Pattern: (Strong|Partial) + description
   eu_ai_act:
     # ... similar structure
@@ -371,7 +371,7 @@ dora:
         "1": string              # Paragraph 1 content
         "2": string              # Paragraph 2 content
         # ...
-      controls_mapped: [QC-1A]   # Controls addressing this article
+      controls_mapped: [QC-01]   # Controls addressing this article
   annexes:                        # Optional: regulation annexes
     - id: "Annex I"
       title: string
@@ -405,10 +405,10 @@ description: string
 trigger_sources:
   - stage: 6
     name: "Observability & Maintenance"
-    source_controls: [QC-6A, RC-6A]
+    source_controls: [QC-10, RC-08]
     description: string
 minimum_controls:              # Path A: array; Path B: object
-  - id: QC-3A
+  - id: QC-04
     name: "Pull Request Creation & Review"
     rationale: string
 regulatory_mapping:
@@ -427,16 +427,16 @@ regulatory_mapping:
 
 | Category | Key Fields | Example File |
 |----------|-----------|--------------|
-| **Classification Record** | `feat_id`, `stage`, `control`, `tier`, `rationale`, `criteria`, `classification` | `RC-1A-risk-classification.yaml` |
-| **Lifecycle Record** | `feat_id`, `stage`, `control`, `immutable`, `pull_request`, `decision` | `QC-3A-pull-request-record.yaml` |
-| **Scan Report** | `feat_id`, `stage`, `control`, `findings[]`, `summary` | `SC-3B-post-guardrail-scan.yaml` |
-| **Feature Spec** | Delegates to `feature-spec.schema.json` | `QC-1A-feature-spec.yaml` |
+| **Classification Record** | `feat_id`, `stage`, `control`, `tier`, `rationale`, `criteria`, `classification` | `RC-01-risk-classification.yaml` |
+| **Lifecycle Record** | `feat_id`, `stage`, `control`, `immutable`, `pull_request`, `decision` | `QC-04-pull-request-record.yaml` |
+| **Scan Report** | `feat_id`, `stage`, `control`, `findings[]`, `summary` | `SC-08-post-guardrail-scan.yaml` |
+| **Feature Spec** | Delegates to `feature-spec.schema.json` | `QC-01-feature-spec.yaml` |
 
 **Shared artifact envelope (all templates):**
 ```yaml
 feat_id: FEAT-XXXX             # Feature ID (FEAT-0001 format)
 stage: 1-6                     # Stage number
-control: QC-1A                 # Producing control
+control: QC-01                 # Producing control
 immutable?: true               # Optional: prevent edits after creation
 <timestamp>?: YYYY-MM-DD       # Optional: creation/scan timestamp
 ```
@@ -471,7 +471,7 @@ Expected output (10 checks):
 ```bash
 # Validate a single control against control.schema.json
 python3 -c "from jsonschema import validate; import yaml, json
-control = yaml.safe_load(open('controls/qc/QC-1A.yaml'))
+control = yaml.safe_load(open('controls/qc/QC-01.yaml'))
 schema = json.load(open('schema/control.schema.json'))
 validate(control, schema)
 print('✓ Valid')"

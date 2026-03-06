@@ -1,0 +1,58 @@
+# =============================================================================
+# Control: QC-03 — Design Completeness & Standards
+# Track:   QC (Quality Controls)
+# Owner:   Engineering / Lead Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: QC-03
+moscow_score: must
+name: Design Completeness & Standards
+description: Validate that the proposed design addresses all requirements from the Stage 1 specification, follows organisational
+  architectural patterns, meets technology standards, and is sufficiently detailed for implementation.
+required_in_stages:
+- number: 2
+  name: System Design
+  mandatory: true
+track:
+  code: QC
+  name: Quality Controls
+delegation:
+  pattern: agent_drafts_human_approves
+  human_display: Agent assists, human approves
+  agent_role: Validate design coverage against specification; flag gaps, pattern deviations, and standards violations.
+  human_role: Review validation report; approve design or request revisions before sign-off.
+owner:
+  team: Engineering
+  role: Lead Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 8(4)
+    obligation: ICT systems must be designed to ensure resilience and meet quality standards
+inputs:
+- name: Validated feature specification
+  source_control: QC-01
+  description: Complete specification from Stage 1 used to validate design coverage.
+outputs:
+- name: Design validation report
+  type: evidence
+  description: Structured report confirming all requirements are addressed and all standards are met.
+  retention: 7 years (DORA)
+- name: Approved architecture document
+  type: artefact
+  description: Final approved design including component diagrams, integration maps, and data flows.
+  retention: Lifecycle of system + 7 years
+failure_behaviour:
+  action: block
+  escalation_target: Lead Architect
+  description: Design is returned for revision. Stage 2 cannot progress until all gaps are resolved.
+automation:
+  frequency: per_change
+dependencies:
+- QC-01
+- QC-02
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

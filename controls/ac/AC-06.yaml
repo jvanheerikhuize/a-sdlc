@@ -1,0 +1,58 @@
+# =============================================================================
+# Control: AC-06 — AI Post-Market Surveillance
+# Track:   AC (AI Controls)
+# Owner:   AI Governance / AI Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: AC-06
+moscow_score: should
+name: AI Post-Market Surveillance
+description: 'Implement the EU AI Act Art. 72 post-market monitoring system for all deployed AI components: continuously track
+  performance metrics, execute scheduled bias re-testing, maintain an incident log for serious AI incidents, and keep technical
+  documentation current. Report serious AI incidents per Art. 73.'
+required_in_stages:
+- number: 6
+  name: Observability & Maintenance
+  mandatory: true
+track:
+  code: AC
+  name: AI Controls
+delegation:
+  pattern: agent_monitors_human_reports
+  human_display: Agent monitors, human reports
+  agent_role: Track AI performance metrics continuously; schedule and execute bias re-testing; detect performance degradation;
+    prepare incident reports.
+  human_role: Review AI performance trends; file serious incident reports to regulators; make decisions on retraining or rollback.
+owner:
+  team: AI Governance
+  role: AI Governance Lead
+  contact: ''
+regulatory_mapping:
+  eu_ai_act:
+  - article: Art. 72
+    requirement: Post-market monitoring system tracking AI performance and collecting operational data
+  - article: Art. 73
+    requirement: Reporting of serious incidents involving high-risk AI systems to authorities
+  - article: Art. 61
+    requirement: Post-market monitoring plan and system required for all high-risk AI systems
+outputs:
+- name: AI post-market surveillance report
+  type: report
+  description: Periodic report on AI system performance, bias re-test results, and incident summary.
+  retention: 7 years (AI Act)
+- name: Serious AI incident report
+  type: report
+  description: Regulatory report for serious AI incidents per Art. 73 timelines.
+  retention: 7 years (AI Act)
+failure_behaviour:
+  action: escalate
+  escalation_target: AI Governance Lead
+  description: Performance degradation or serious incidents trigger escalation and may initiate a feedback loop for retraining
+    or design change.
+automation:
+  frequency: continuous
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

@@ -1,0 +1,94 @@
+# =============================================================================
+# Control: SC-04 — Data Classification & Sensitivity Screening
+# Track:   SC (Security Controls)
+# Owner:   Security / Data Governance Lead
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-04
+moscow_score: should
+name: Data Classification & Sensitivity Screening
+description: >-
+  At intent ingestion, classify all data types referenced in the change request:
+  Public, Internal, Confidential, Restricted (includes PII), or Regulated (financial,
+  health, biometric). This classification flows downstream and gates encryption-at-rest
+  and in-transit requirements, access control stringency, retention policy, audit logging
+  depth, and applicable regulatory regimes (GDPR, DORA, AI Act). Requires data owner
+  or DPO review before proceeding.
+required_in_stages:
+- number: 1
+  name: Intent Ingestion
+  mandatory: true
+  note: >-
+    Classification must be determined before design begins. It informs all downstream
+    security and governance decisions. Classification persists in GC-02 traceability.
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: agent_classifies_human_validates
+  human_display: Agent classifies, human validates
+  agent_role: >-
+    Analyse the feature specification and identify all data types: user data, transactional
+    data, AI training data, logs, etc. Propose a sensitivity classification for each type
+    (Public/Internal/Confidential/Restricted/Regulated). Flag any data types that trigger
+    GDPR, DORA Art. 9, or EU AI Act Art. 10 obligations.
+  human_role: >-
+    Review agent-proposed classifications. Confirm or override with documented justification.
+    Engage Data Protection Officer (DPO) or data owner for Restricted or Regulated data.
+    Sign off on final classification before design begins.
+owner:
+  team: Security, Data Governance
+  role: Data Governance Lead
+  contact: ''
+regulatory_mapping:
+  dora:
+    - article: "Art. 9(2)"
+      obligation: >-
+        High standards for data protection across all states (at rest, in transit, in use);
+        calibration depends on knowing data sensitivity
+    - article: "Art. 9(4)"
+      obligation: >-
+        Cryptographic key management "based on data classification" is explicit requirement;
+        presupposes that classification exists
+  eu_ai_act:
+    - article: "Art. 10"
+      requirement: >-
+        Data governance and management must examine possible biases and risks to fundamental
+        rights; requires understanding what data is being processed
+inputs:
+- name: Feature specification
+  source_control: QC-01
+  description: Description of intended functionality and data flows
+- name: Data dictionary or schema
+  description: Technical specification of data structures and fields
+outputs:
+- name: Data classification inventory
+  type: decision
+  description: >-
+    Mapping of each data type to sensitivity level (Public/Internal/Confidential/Restricted/Regulated).
+    For each Restricted or Regulated classification, document: legal basis for processing,
+    retention policy, access controls required, encryption requirements.
+  retention: 7 years (audit trail)
+- name: DPO or data owner sign-off
+  type: decision
+  description: Documented approval from data steward for Restricted/Regulated data
+  retention: 7 years
+failure_behaviour:
+  action: block
+  escalation_target: Data Protection Officer
+  description: >-
+    If data classification cannot be determined or agreed upon, escalate to DPO.
+    Default to highest applicable sensitivity level pending resolution.
+automation:
+  tooling:
+    - Data classification taxonomies (internal or NIST)
+    - GDPR impact assessment templates
+  frequency: per_change
+  sla_minutes: 60
+dependencies:
+- QC-01   # Specification Validation (provides specification to classify)
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-04'
+  status: approved

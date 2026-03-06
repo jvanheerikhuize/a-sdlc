@@ -1,0 +1,58 @@
+# =============================================================================
+# Control: SC-03 — Pre-Guardrails
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-03
+moscow_score: must
+name: Pre-Guardrails
+description: Screen all incoming change requests for prompt injection attacks and adversarial inputs that could manipulate
+  agent interpretation of the requirements. Block manipulated inputs before they influence any downstream agent action.
+required_in_stages:
+- number: 1
+  name: Intent Ingestion
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Scan incoming request for injection patterns, adversarial framing, and manipulation attempts. Block and log
+    any detected attempts.
+  human_role: Review blocked request reports; investigate and resolve with requester.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 9(2)
+    obligation: Protection of ICT systems from unauthorised access and manipulation
+  eu_ai_act:
+  - article: Art. 15(4)
+    requirement: AI systems must be resilient against errors, faults, and manipulation attempts
+inputs:
+- name: Raw change request
+  description: Unprocessed incoming request before any agent parsing.
+outputs:
+- name: Guardrail scan result
+  type: evidence
+  description: Pass/fail result with details of any detected injection patterns.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: Detected injection attempts block processing entirely. Attempt is logged and flagged to security team.
+automation:
+  frequency: per_change
+dependencies: []
+feedback_loops:
+- path: path_a
+  required_in_path: false
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

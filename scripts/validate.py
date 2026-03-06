@@ -70,7 +70,7 @@ REGISTRY_FILE  = CONTROLS_DIR / "registry.yaml"
 FEEDBACK_FILE  = REPO / "feedbackloops" / "feedback-loops.yaml"
 FEEDBACK_DIR   = REPO / "feedbackloops"
 
-CONTROL_ID_RE = re.compile(r"^(QC|RC|SC|AC|GC)-[0-6][A-Z]$")
+CONTROL_ID_RE = re.compile(r"^(QC|RC|SC|AC|GC)-\d{2}$")
 
 # ── result tracking ───────────────────────────────────────────────────────────
 

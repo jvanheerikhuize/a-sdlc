@@ -1,0 +1,21 @@
+# SC-04 Data Classification Record
+# Produced by: SC-04 (Data Classification Screening)
+#
+# Documents the data classification tier assigned to the incoming change request.
+# Auto-generated from change request if applicable; otherwise marked as not-applicable.
+
+metadata:
+  control: SC-04
+  stage: 1
+  timestamp: null
+
+classification:
+  tier: null  # public, internal, confidential, restricted
+  reasoning: null
+  applicable: false  # true if data classification is applicable to this change
+
+examples_of_classified_data: []
+
+notes: |
+  This record is populated during Stage 1 screening if the change involves data processing.
+  If the change does not involve data handling, mark applicable: false.

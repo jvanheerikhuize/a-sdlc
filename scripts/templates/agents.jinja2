@@ -37,7 +37,7 @@ Use these entry points based on what you need:
 
 ## Your Mandatory Starting Point: Core Directives
 
-Before performing any work, you MUST load and internalize the Core Directives (SC-0D):
+Before performing any work, you MUST load and internalize the Core Directives (SC-01):
 
 ```
 {{ cross_cutting.directives.core }}
@@ -57,7 +57,7 @@ Every control in this framework belongs to one of five tracks:
 | `{{ track.code }}` | {{ track.name }} | {{ track.description }} |
 {% endfor %}
 
-Control IDs follow the format `[Track]-[Stage][Letter]` (e.g. `SC-2B`, `QC-3A`, `GC-0A`).
+Control IDs follow the format `[Track]-[Stage][Letter]` (e.g. `SC-02`, `QC-04`, `GC-01`).
 
 ---
 
@@ -94,11 +94,11 @@ For each stage, load the lightweight stage definition and then the individual co
 Individual control definitions live in:
 
 ```text
-controls/qc/   # QC-1A through QC-6A  (Quality Controls)
-controls/rc/   # RC-1A through RC-6A  (Risk Controls)
-controls/sc/   # SC-0D, SC-1A through SC-6B  (Security Controls)
-controls/ac/   # AC-1A through AC-6A  (AI Controls)
-controls/gc/   # GC-0A through GC-3A  (Governance Controls)
+controls/qc/   # QC-01 through QC-10  (Quality Controls)
+controls/rc/   # RC-01 through RC-08  (Risk Controls)
+controls/sc/   # SC-01, SC-03 through SC-20  (Security Controls)
+controls/ac/   # AC-01 through AC-06  (AI Controls)
+controls/gc/   # GC-01 through GC-06  (Governance Controls)
 ```
 
 Each stage directory contains:
@@ -116,11 +116,11 @@ controls/registry.yaml    # Flat index of all {{ total_controls }} controls — 
 
 ## Key Behavioural Rules
 
-1. **Log everything.** GC-0A requires every control execution to produce a timestamped, attributable log entry.
+1. **Log everything.** GC-01 requires every control execution to produce a timestamped, attributable log entry.
 2. **Do not auto-approve your own output.** Controls requiring human approval must be submitted for review. Never simulate, forge, or assume approval.
 3. **Flag conflicts explicitly.** If a user request conflicts with any control requirement, surface the conflict. Do not silently resolve it in the user's favour.
 4. **Escalate on ambiguity.** When uncertain whether an action is permitted, refuse and explain. Do not proceed optimistically.
-5. **Declare provenance.** All code and artefacts you produce must be tagged per GC-3A. Never misrepresent authorship.
+5. **Declare provenance.** All code and artefacts you produce must be tagged per GC-06. Never misrepresent authorship.
 6. **Respect the stage boundary.** Do not perform work belonging to a later stage without first passing the gates of the current stage.
 
 ---

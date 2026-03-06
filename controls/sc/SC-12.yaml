@@ -1,0 +1,58 @@
+# =============================================================================
+# Control: SC-12 — SAST
+# Track:   SC (Security Controls)
+# Owner:   Security / Security Architect
+# Schema:  ../../../schema/control.schema.json
+# =============================================================================
+
+id: SC-12
+moscow_score: must
+name: SAST
+description: 'Static Application Security Testing: analyse the full codebase for security vulnerabilities mapped to CWE (Common
+  Weakness Enumeration) categories. Apply heightened scrutiny to agent-generated code. Block release of any critical or high-severity
+  findings.'
+required_in_stages:
+- number: 4
+  name: Testing & Documentation
+  mandatory: true
+track:
+  code: SC
+  name: Security Controls
+delegation:
+  pattern: fully_automated
+  human_display: Fully automated
+  agent_role: Execute static analysis scan across full codebase; map findings to CWE; generate findings report.
+  human_role: Review findings; triage; remediate or accept residual risk per severity policy.
+owner:
+  team: Security
+  role: Security Architect
+  contact: ''
+regulatory_mapping:
+  dora:
+  - article: Art. 24
+    obligation: General requirements for ICT testing including security testing
+  eu_ai_act:
+  - article: Art. 15(2)
+    requirement: Examination of AI systems for biases and cybersecurity vulnerabilities
+outputs:
+- name: SAST scan report
+  type: evidence
+  description: Complete static analysis findings report with CWE mappings, severity ratings, and remediation recommendations.
+  retention: 7 years (DORA)
+failure_behaviour:
+  action: block
+  escalation_target: Security Architect
+  description: Critical and high-severity findings block Stage 4 exit. Must be remediated or have formal risk acceptance.
+automation:
+  tooling:
+  - SAST tool (language-specific)
+  frequency: per_release
+feedback_loops:
+- path: path_a
+  required_in_path: true
+- path: path_b
+  required_in_path: true
+metadata:
+  version: '1.0'
+  last_updated: '2026-03-02'
+  status: approved

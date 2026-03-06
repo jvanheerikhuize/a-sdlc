@@ -3,7 +3,7 @@
 # =============================================================================
 # Scope:          Stage 6 only
 # Classification: IMMUTABLE
-# Injected by:    SC-2B (Stage Directive Injection) at Stage 6 entry
+# Injected by:    SC-02 (Stage Directive Injection) at Stage 6 entry
 #
 # These directives govern agent behaviour during production monitoring, anomaly
 # detection, and feedback loop activation. They layer on top of

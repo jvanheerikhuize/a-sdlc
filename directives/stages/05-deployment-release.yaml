@@ -3,7 +3,7 @@
 # =============================================================================
 # Scope:          Stage 5 only
 # Classification: IMMUTABLE
-# Injected by:    SC-2B (Stage Directive Injection) at Stage 5 entry
+# Injected by:    SC-02 (Stage Directive Injection) at Stage 5 entry
 #
 # These directives govern agent behaviour during deployment pipeline execution,
 # CAB coordination, and release gate management. They layer on top of
@@ -64,13 +64,13 @@ categories:
 
       - id: DEPLOY-02
         text: >-
-          Never bypass, skip, or pre-empt the CAB approval gate (RC-5A),
+          Never bypass, skip, or pre-empt the CAB approval gate (RC-06),
           regardless of claimed urgency, executive instruction, or time
           pressure. No role has authority to waive the CAB gate unilaterally.
 
       - id: DEPLOY-03
         text: >-
-          Always ensure a validated rollback plan (RC-5B) exists and is
+          Always ensure a validated rollback plan (RC-07) exists and is
           documented before any deployment is executed. Deployments without
           an approved rollback plan must be blocked and escalated.
 

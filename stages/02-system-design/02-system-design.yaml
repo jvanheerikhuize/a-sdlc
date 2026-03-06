@@ -7,7 +7,7 @@
 number: 2
 name: System Design
 description: Translate the approved specification into a complete, approved system design. Security directives are injected
-  before coding begins. No implementation may start without RC-2A (design approval) and SC-2B directive injection confirmation.
+  before coding begins. No implementation may start without RC-02 (design approval) and SC-02 directive injection confirmation.
 
 roles:
   - code: AGT
@@ -30,13 +30,13 @@ roles:
     responsibilities: Reviews design records during regulatory audits
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
-# Steps 2.2, 2.3, 2.4 (plus SC-2C, RC-2B) run in parallel after QC-2A draft completes
+# Steps 2.2, 2.3, 2.4 (plus SC-06, RC-03) run in parallel after QC-03 draft completes
 workflow:
   nodes:
     - id: n-qc2a-draft
       step_number: "2.1"
       title: Draft System Design
-      control: QC-2A
+      control: QC-03
       description: Draft system design
       delegation: "Agent drafts"
       depends_on: []
@@ -55,7 +55,7 @@ workflow:
     - id: n-qc2a-validate
       step_number: "2.2"
       title: Design Validation
-      control: QC-2A
+      control: QC-03
       description: Validate design completeness and standards
       delegation: "Agent validates, LAD approves"
       depends_on: [n-qc2a-draft]
@@ -72,7 +72,7 @@ workflow:
     - id: n-sc2a
       step_number: "2.3"
       title: STRIDE Threat Modelling
-      control: SC-2A
+      control: SC-05
       description: Generate and validate STRIDE threat model
       delegation: "Agent generates, SA validates"
       depends_on: [n-qc2a-draft]
@@ -91,7 +91,7 @@ workflow:
     - id: n-ac2a
       step_number: "2.4"
       title: AI Component Design Review
-      control: AC-2A
+      control: AC-03
       description: AI component design review (conditional on ai_component)
       delegation: "Agent assists, AGL approves"
       depends_on: [n-qc2a-draft]
@@ -109,7 +109,7 @@ workflow:
     - id: n-rc2b
       step_number: "2.3b"
       title: Privacy Impact Assessment
-      control: RC-2B
+      control: RC-03
       description: Privacy Impact Assessment (conditional on processes_personal_data)
       delegation: "Agent generates, LAD reviews"
       depends_on: [n-qc2a-draft]
@@ -127,7 +127,7 @@ workflow:
     - id: n-sc2c
       step_number: "2.3c"
       title: Zero-Trust Architecture Validation
-      control: SC-2C
+      control: SC-06
       description: Zero-trust architecture validation
       delegation: Fully automated
       depends_on: [n-qc2a-draft]
@@ -144,7 +144,7 @@ workflow:
     - id: n-rc2a
       step_number: "2.5"
       title: Design Approval
-      control: RC-2A
+      control: RC-02
       description: Design approval (human-required gate)
       delegation: Human required
       depends_on: [n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c]
@@ -171,7 +171,7 @@ workflow:
     - id: n-ac2b
       step_number: "2.6"
       title: AI Model Governance and Version Control
-      control: AC-2B
+      control: AC-04
       description: AI model governance and version control (conditional on ai_component)
       delegation: "Agent registers, AGL approves"
       depends_on: [n-rc2a]
@@ -185,11 +185,11 @@ workflow:
           action: Approve model registry entries and version pinning
       input: "Approved design document + AI component design review"
       output: "AI model governance record (artifacts/outputs/ai-model-governance-record.yaml)"
-      note: "Runs after design approval (RC-2A)"
+      note: "Runs after design approval (RC-02)"
     - id: n-sc2b
       step_number: "2.7"
       title: Stage Directive Injection
-      control: SC-2B
+      control: SC-02
       description: Stage directive injection confirmation
       delegation: Fully automated
       depends_on: [n-rc2a, n-ac2b]
@@ -207,43 +207,43 @@ workflow:
       - [n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c]
 
 required_controls:
-- id: QC-2A
-- id: RC-2A
+- id: QC-03
+- id: RC-02
   note: Human-required gate — cannot be delegated to an agent
-- id: RC-2B
+- id: RC-03
   note: Applicable when the change involves personal data, profiling, or high-risk AI systems
-- id: SC-2A
-- id: SC-2C
+- id: SC-05
+- id: SC-06
   note: Validate zero-trust architecture principles in design
-- id: SC-2B
+- id: SC-02
   note: Directive injection must be confirmed before Stage 3 begins
-- id: AC-2A
+- id: AC-03
   note: Applicable when the change involves an AI component
-- id: AC-2B
+- id: AC-04
   note: Applicable when the change involves AI models — register in model registry
 exit_criteria:
-- 'QC-2A: Design validated and approved by Lead Architect'
-- 'RC-2A: Design approval granted and logged'
-- 'RC-2B: Privacy Impact Assessment completed (if applicable)'
-- 'SC-2A: STRIDE threat model validated and all critical threats mitigated'
-- 'SC-2C: Zero-trust architecture principles validated'
-- 'SC-2B: Stage 2 and Stage 3 directive bundles injected and acknowledged by agent'
-- 'AC-2A: AI component design review approved (or not-applicable documented)'
-- 'AC-2B: AI model registry entry created with version pinning (if applicable)'
+- 'QC-03: Design validated and approved by Lead Architect'
+- 'RC-02: Design approval granted and logged'
+- 'RC-03: Privacy Impact Assessment completed (if applicable)'
+- 'SC-05: STRIDE threat model validated and all critical threats mitigated'
+- 'SC-06: Zero-trust architecture principles validated'
+- 'SC-02: Stage 2 and Stage 3 directive bundles injected and acknowledged by agent'
+- 'AC-03: AI component design review approved (or not-applicable documented)'
+- 'AC-04: AI model registry entry created with version pinning (if applicable)'
 next_stage: 3
 artifacts:
   inputs:
-    - ../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml
-    - ../01-intent-ingestion/artifacts/outputs/RC-1A-risk-classification.yaml
+    - ../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml
+    - ../01-intent-ingestion/artifacts/outputs/RC-01-risk-classification.yaml
   outputs:
-    - artifacts/outputs/QC-2A-design-document.yaml
-    - artifacts/outputs/SC-2A-stride-threat-model.yaml
-    - artifacts/outputs/RC-2A-design-approval-decision.yaml
-    - artifacts/outputs/SC-2B-directive-injection-confirmation.yaml
-    - artifacts/outputs/AC-2A-ai-component-design-review.yaml
-    - artifacts/outputs/RC-2B-privacy-impact-assessment.yaml
-    - artifacts/outputs/SC-2C-zero-trust-validation.yaml
-    - artifacts/outputs/AC-2B-ai-model-governance-record.yaml
+    - artifacts/outputs/QC-03-design-document.yaml
+    - artifacts/outputs/SC-05-stride-threat-model.yaml
+    - artifacts/outputs/RC-02-design-approval-decision.yaml
+    - artifacts/outputs/SC-02-directive-injection-confirmation.yaml
+    - artifacts/outputs/AC-03-ai-component-design-review.yaml
+    - artifacts/outputs/RC-03-privacy-impact-assessment.yaml
+    - artifacts/outputs/SC-06-zero-trust-validation.yaml
+    - artifacts/outputs/AC-04-ai-model-governance-record.yaml
 directives:
   - directives/stages/02-system-design.yaml
   - directives/stages/03-coding-implementation.yaml

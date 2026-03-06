@@ -7,8 +7,8 @@
 number: 4
 name: Testing & Documentation
 description: Validate the implementation against all acceptance criteria, security requirements, and documentation standards.
-  RC-4A is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted
-  RC-4A result.
+  RC-05 is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted
+  RC-05 result.
 
 roles:
   - code: AGT
@@ -25,21 +25,21 @@ roles:
     responsibilities: Reviews AI output validation and bias test results; approves AI-specific risk acceptance
   - code: RO
     name: Risk Officer
-    responsibilities: Makes the formal go/no-go decision at RC-4A; provides documented risk acceptance for conditional pass
+    responsibilities: Makes the formal go/no-go decision at RC-05; provides documented risk acceptance for conditional pass
   - code: CO
     name: Compliance Officer
     responsibilities: Reviews documentation artefacts and test evidence during regulatory audits
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
-# SC-4A (SAST) runs first. Steps 4.2–4.6 (QC-4A, SC-4B, QC-4B, AC-4A, QC-4C) run in parallel.
-# SC-4C (API security) and SC-4D (adversarial robustness) run with the parallel group.
-# RC-4A (go/no-go gate) runs last, depends on all others.
+# SC-12 (SAST) runs first. Steps 4.2–4.6 (QC-06, SC-13, QC-07, AC-05, QC-08) run in parallel.
+# SC-14 (API security) and SC-15 (adversarial robustness) run with the parallel group.
+# RC-05 (go/no-go gate) runs last, depends on all others.
 workflow:
   nodes:
     - id: n-sc4a
       step_number: "4.1"
       title: SAST
-      control: SC-4A
+      control: SC-12
       description: SAST (static application security testing)
       delegation: Fully automated
       depends_on: []
@@ -56,7 +56,7 @@ workflow:
     - id: n-qc4a
       step_number: "4.2"
       title: Functional & Non-Functional Testing
-      control: QC-4A
+      control: QC-06
       description: Functional and non-functional testing
       delegation: "Agent executes, QA reviews"
       depends_on: [n-sc4a]
@@ -75,7 +75,7 @@ workflow:
     - id: n-sc4b
       step_number: "4.3"
       title: DAST
-      control: SC-4B
+      control: SC-13
       description: DAST (dynamic application security testing)
       delegation: Fully automated
       depends_on: [n-sc4a]
@@ -92,7 +92,7 @@ workflow:
     - id: n-qc4b
       step_number: "4.4"
       title: AI Output Validation
-      control: QC-4B
+      control: QC-07
       description: AI output validation (conditional on ai_component)
       delegation: "Agent executes, AGL reviews"
       depends_on: [n-sc4a]
@@ -110,7 +110,7 @@ workflow:
     - id: n-ac4a
       step_number: "4.5"
       title: Bias & Fairness Testing
-      control: AC-4A
+      control: AC-05
       description: Bias and fairness testing (conditional on ai_component)
       delegation: "Agent executes, AGL reviews"
       depends_on: [n-sc4a]
@@ -128,7 +128,7 @@ workflow:
     - id: n-qc4c
       step_number: "4.6"
       title: Documentation Completeness
-      control: QC-4C
+      control: QC-08
       description: Documentation completeness
       delegation: "Agent checks, human approves"
       depends_on: [n-sc4a]
@@ -147,7 +147,7 @@ workflow:
     - id: n-sc4c
       step_number: "4.2-api"
       title: API Security Testing
-      control: SC-4C
+      control: SC-14
       description: API security testing (OWASP API Top 10)
       delegation: Fully automated
       depends_on: [n-sc4a]
@@ -162,7 +162,7 @@ workflow:
     - id: n-sc4d
       step_number: "4.7-ai-adversarial"
       title: Adversarial AI Robustness Testing
-      control: SC-4D
+      control: SC-15
       description: Adversarial AI robustness testing (conditional on high-risk AI)
       delegation: Fully automated
       depends_on: [n-sc4a]
@@ -178,7 +178,7 @@ workflow:
     - id: n-rc4a
       step_number: "4.8"
       title: Risk Threshold Evaluation
-      control: RC-4A
+      control: RC-05
       description: Risk threshold evaluation and go/no-go gate
       delegation: "Agent calculates, RO decides"
       depends_on: [n-qc4a, n-sc4b, n-qc4b, n-ac4a, n-qc4c, n-sc4c, n-sc4d]
@@ -207,43 +207,43 @@ workflow:
       - [n-qc4a, n-sc4b, n-qc4b, n-ac4a, n-qc4c, n-sc4c, n-sc4d]
 
 required_controls:
-- id: QC-4A
-- id: QC-4B
+- id: QC-06
+- id: QC-07
   note: Applicable when the change involves an AI component
-- id: QC-4C
-- id: SC-4A
-- id: SC-4B
-- id: SC-4C
+- id: QC-08
+- id: SC-12
+- id: SC-13
+- id: SC-14
   note: Test all exposed APIs against OWASP API Security Top 10
-- id: AC-4A
+- id: AC-05
   note: Applicable when the change involves an AI component
-- id: SC-4D
+- id: SC-15
   note: Applicable for high-risk or security-critical AI deployments
-- id: RC-4A
+- id: RC-05
   note: Final go/no-go gate — depends on all other Stage 4 controls
 exit_criteria:
-- 'QC-4A: All acceptance criteria from Stage 1 have passing tests'
-- 'QC-4B: AI output validation passed within defined accuracy thresholds (or not-applicable)'
-- 'QC-4C: Documentation completeness confirmed and approved'
-- 'SC-4A: SAST passed — no critical or high-severity findings unresolved'
-- 'SC-4B: DAST passed — no critical or high-severity findings unresolved'
-- 'SC-4C: API security testing passed — no OWASP API Top 10 violations unresolved'
-- 'AC-4A: Bias & fairness test passed within defined thresholds (or not-applicable)'
-- 'SC-4D: Adversarial robustness testing completed (if applicable for high-risk AI)'
-- 'RC-4A: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
+- 'QC-06: All acceptance criteria from Stage 1 have passing tests'
+- 'QC-07: AI output validation passed within defined accuracy thresholds (or not-applicable)'
+- 'QC-08: Documentation completeness confirmed and approved'
+- 'SC-12: SAST passed — no critical or high-severity findings unresolved'
+- 'SC-13: DAST passed — no critical or high-severity findings unresolved'
+- 'SC-14: API security testing passed — no OWASP API Top 10 violations unresolved'
+- 'AC-05: Bias & fairness test passed within defined thresholds (or not-applicable)'
+- 'SC-15: Adversarial robustness testing completed (if applicable for high-risk AI)'
+- 'RC-05: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
 next_stage: 5
 artifacts:
   inputs:
-    - ../01-intent-ingestion/artifacts/outputs/QC-1A-feature-spec.yaml
-    - ../01-intent-ingestion/artifacts/outputs/AC-1A-ai-tier-classification.yaml
-    - ../03-coding-implementation/artifacts/outputs/QC-3A-pull-request-record.yaml
+    - ../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml
+    - ../01-intent-ingestion/artifacts/outputs/AC-01-ai-tier-classification.yaml
+    - ../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml
   outputs:
-    - artifacts/outputs/QC-4A-test-results-report.yaml
-    - artifacts/outputs/SC-4A-sast-scan-report.yaml
-    - artifacts/outputs/SC-4B-dast-scan-report.yaml
-    - artifacts/outputs/QC-4C-documentation-completeness-report.yaml
-    - artifacts/outputs/QC-4B-ai-output-validation-report.yaml
-    - artifacts/outputs/AC-4A-bias-fairness-report.yaml
-    - artifacts/outputs/RC-4A-risk-threshold-evaluation.yaml
-    - artifacts/outputs/SC-4C-api-security-report.yaml
-    - artifacts/outputs/SC-4D-adversarial-robustness-report.yaml
+    - artifacts/outputs/QC-06-test-results-report.yaml
+    - artifacts/outputs/SC-12-sast-scan-report.yaml
+    - artifacts/outputs/SC-13-dast-scan-report.yaml
+    - artifacts/outputs/QC-08-documentation-completeness-report.yaml
+    - artifacts/outputs/QC-07-ai-output-validation-report.yaml
+    - artifacts/outputs/AC-05-bias-fairness-report.yaml
+    - artifacts/outputs/RC-05-risk-threshold-evaluation.yaml
+    - artifacts/outputs/SC-14-api-security-report.yaml
+    - artifacts/outputs/SC-15-adversarial-robustness-report.yaml
