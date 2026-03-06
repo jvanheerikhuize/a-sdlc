@@ -94,6 +94,12 @@ doc_generation:
       output: feedbackloops/README.md
       description: "Feedback loop paths and re-entry procedures"
 
+    # Directives documentation
+    - source: directives/
+      template: directives-index
+      output: directives/README.md
+      description: "Agent directive bundles, injection protocols, and immutability rules"
+
 # Control registry (flat index for O(1) lookup)
 # Full definitions in: controls/[track]/[ID].yaml
 controls:

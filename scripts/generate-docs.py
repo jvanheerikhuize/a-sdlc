@@ -607,6 +607,67 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_directives_index(self):
+        """Generate directives/README.md from directive YAML files."""
+        # Load core directives
+        core_directive = self._load_yaml("directives/core/core-directives.yaml") or {}
+        if not core_directive:
+            print("ERROR: directives/core/core-directives.yaml not found")
+            return False
+
+        # Load all stage directives
+        stage_directives_dir = self.repo_root / "directives" / "stages"
+        stage_files = sorted(stage_directives_dir.glob("*.yaml"))
+
+        # Build stage directives list for template
+        stage_directives = []
+        for stage_file in stage_files:
+            stage_def = self._load_yaml(f"directives/stages/{stage_file.name}") or {}
+            meta = stage_def.get("meta", {})
+
+            # Parse stage number from filename (e.g., "01-intent-ingestion.yaml" -> 1)
+            stage_num_str = stage_file.name.split("-")[0]
+            stage_num = int(stage_num_str)
+
+            # Map stage number to name
+            stage_names = {
+                1: "Intent Ingestion",
+                2: "System Design",
+                3: "Coding & Implementation",
+                4: "Testing & Documentation",
+                5: "Deployment & Release",
+                6: "Observability & Maintenance",
+            }
+            stage_name = stage_names.get(stage_num, "Unknown")
+
+            stage_directives.append({
+                "number": stage_num,
+                "name": stage_name,
+                "filename": stage_file.name,
+                "version": meta.get("version", "1.0"),
+                "last_reviewed": meta.get("last_reviewed", "—"),
+            })
+
+        # Prepare template context
+        context = {
+            "core_directive": core_directive,
+            "stage_directives": stage_directives,
+        }
+
+        # Render template
+        content = render_template_safe(self.jinja_env, "directives-index.jinja2", context)
+        if content is None:
+            print(f"ERROR: Template not found: directives-index.jinja2")
+            return False
+
+        # Write output
+        output_file = self.repo_root / "directives" / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def generate_all(self):
         """Generate all documentation targets."""
         targets = self.manifest.get("doc_generation", {}).get("targets", [])
@@ -640,6 +701,9 @@ class DocGenerator:
                     count += 1
             elif template == "regulatory-index":
                 if self.generate_regulatory_index():
+                    count += 1
+            elif template == "directives-index":
+                if self.generate_directives_index():
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")
