@@ -43,15 +43,15 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-qc2a-draft["QC-2A: Draft system design"]
-  n-qc2a-validate["QC-2A: Validate design completeness and standar"]
-  n-sc2a["SC-2A: Generate and validate STRIDE threat mode"]
-  n-ac2a["AC-2A: AI component design review (conditional "]
-  n-rc2b["RC-2B: Privacy Impact Assessment (conditional o"]
-  n-sc2c["SC-2C: Zero-trust architecture validation"]
-  n-rc2a["RC-2A: Design approval (human-required gate)"]
-  n-ac2b["AC-2B: AI model governance and version control "]
-  n-sc2b["SC-2B: Stage directive injection confirmation"]
+  n-qc2a-draft["Step 2.1: Draft System Design"]
+  n-qc2a-validate["Step 2.2: Design Validation"]
+  n-sc2a["Step 2.3: STRIDE Threat Modelling"]
+  n-ac2a["Step 2.4: AI Component Design Review"]
+  n-rc2b["Step 2.3b: Privacy Impact Assessment"]
+  n-sc2c["Step 2.3c: Zero-Trust Architecture Validation"]
+  n-rc2a["Step 2.5: Design Approval"]
+  n-ac2b["Step 2.6: AI Model Governance and Version Control"]
+  n-sc2b["Step 2.7: Stage Directive Injection"]
   n-qc2a-draft --> n-qc2a-validate
   n-qc2a-draft --> n-sc2a
   n-qc2a-draft --> n-ac2a
@@ -410,4 +410,4 @@ The following directives are injected at the entry to this stage:
 
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC

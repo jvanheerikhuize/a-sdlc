@@ -43,15 +43,15 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-sc4a["SC-4A: SAST (static application security testin"]
-  n-qc4a["QC-4A: Functional and non-functional testing"]
-  n-sc4b["SC-4B: DAST (dynamic application security testi"]
-  n-qc4b["QC-4B: AI output validation (conditional on ai_"]
-  n-ac4a["AC-4A: Bias and fairness testing (conditional o"]
-  n-qc4c["QC-4C: Documentation completeness"]
-  n-sc4c["SC-4C: API security testing (OWASP API Top 10)"]
-  n-sc4d["SC-4D: Adversarial AI robustness testing (condi"]
-  n-rc4a["RC-4A: Risk threshold evaluation and go/no-go g"]
+  n-sc4a["Step 4.1: SAST"]
+  n-qc4a["Step 4.2: Functional & Non-Functional Testing"]
+  n-sc4b["Step 4.3: DAST"]
+  n-qc4b["Step 4.4: AI Output Validation"]
+  n-ac4a["Step 4.5: Bias & Fairness Testing"]
+  n-qc4c["Step 4.6: Documentation Completeness"]
+  n-sc4c["Step 4.2-api: API Security Testing"]
+  n-sc4d["Step 4.7-ai-adversarial: Adversarial AI Robustness Testing"]
+  n-rc4a["Step 4.8: Risk Threshold Evaluation"]
   n-sc4a --> n-qc4a
   n-sc4a --> n-sc4b
   n-sc4a --> n-qc4b
@@ -407,4 +407,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC

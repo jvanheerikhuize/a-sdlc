@@ -43,13 +43,13 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-qc5a["QC-5A: Release readiness checklist"]
-  n-rc5a["RC-5A: CAB (Change Advisory Board) approval (hu"]
-  n-rc5b["RC-5B: Rollback plan validation"]
-  n-sc5a["SC-5A: Infrastructure security baseline validat"]
-  n-sc5c["SC-5C: Secrets and key management lifecycle val"]
-  n-sc5b["SC-5B: Deployment integrity verification (immed"]
-  n-handover["None: Deployment execution and Stage 6 handove"]
+  n-qc5a["Step 5.1: Release Readiness Checklist"]
+  n-rc5a["Step 5.2: CAB Approval"]
+  n-rc5b["Step 5.3: Rollback Plan Validation"]
+  n-sc5a["Step 5.4: Infrastructure Security Baseline"]
+  n-sc5c["Step 5.4-secrets: Secrets & Key Management Lifecycle"]
+  n-sc5b["Step 5.5: Deployment Integrity Verification"]
+  n-handover["Step 5.6: Deploy & Handover"]
   n-qc5a --> n-rc5a
   n-rc5a --> n-rc5b
   n-rc5a --> n-sc5a
@@ -336,4 +336,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC

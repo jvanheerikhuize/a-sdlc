@@ -597,12 +597,12 @@ class DocGenerator:
         nodes = workflow.get("nodes", [])
         lines = ["```mermaid", "graph LR"]
 
-        # Add nodes
+        # Add nodes (based on steps, not controls)
         for node in nodes:
             node_id = node.get("id")
-            control = node.get("control", "handover")
-            desc = node.get("description", "").split("\n")[0][:40]
-            lines.append(f'  {node_id}["{control}: {desc}"]')
+            step = node.get("step_number", "N/A")
+            title = node.get("title", "")
+            lines.append(f'  {node_id}["Step {step}: {title}"]')
 
         # Add edges
         for node in nodes:

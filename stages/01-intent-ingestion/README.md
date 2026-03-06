@@ -44,13 +44,13 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-sc1a["SC-1A: Screen incoming request for adversarial "]
-  n-qc1a["QC-1A: Draft and validate feature specification"]
-  n-qc1b["QC-1B: Identify and resolve conflicts in specif"]
-  n-rc1a["RC-1A: Classify risk tier"]
-  n-ac1a["AC-1A: Classify AI Act risk tier (conditional o"]
-  n-sc1b["SC-1B: Data classification screening (condition"]
-  n-gc1a["GC-1A: Write intent audit trail entry"]
+  n-sc1a["Step 1.1: Screen Incoming Request"]
+  n-qc1a["Step 1.2: Draft Feature Specification"]
+  n-qc1b["Step 1.3: Conflict Analysis"]
+  n-rc1a["Step 1.4: Risk Classification"]
+  n-ac1a["Step 1.5: AI Tier Classification (conditional)"]
+  n-sc1b["Step 1.5b: Data Classification Screening"]
+  n-gc1a["Step 1.6: Product Owner Sign-off"]
   n-sc1a --> n-qc1a
   n-qc1a --> n-qc1b
   n-qc1a --> n-rc1a
@@ -330,4 +330,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC

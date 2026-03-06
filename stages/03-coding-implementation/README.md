@@ -41,15 +41,15 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-sc3a["SC-3A: Verify prerequisites and load permission"]
-  n-qc3b["QC-3B: Code quality standards (per-commit)"]
-  n-sc3c["SC-3C: Secrets and credentials scanning (per-co"]
-  n-sc3d["SC-3D: Software Composition Analysis and SBOM g"]
-  n-sc3e["SC-3E: Container and IaC security scanning"]
-  n-rc3a["RC-3A: Decision log (logged throughout)"]
-  n-gc3a["GC-3A: Code provenance tracking (per-commit)"]
-  n-sc3b["SC-3B: Post-guardrails scan on agent-generated "]
-  n-qc3a["QC-3A: Pull request creation and review (final "]
+  n-sc3a["Step 3.1: Verify Prerequisites & Load Permissions"]
+  n-qc3b["Step 3.2: Implementation Loop"]
+  n-sc3c["Step 3.2-sc3c: Secrets Scanning"]
+  n-sc3d["Step 3.2-sc3d: Software Composition Analysis"]
+  n-sc3e["Step 3.2-sc3e: Container & IaC Security Scanning"]
+  n-rc3a["Step 3.2-rc3a: Decision Logging"]
+  n-gc3a["Step 3.2-gc3a: Code Provenance Tracking"]
+  n-sc3b["Step 3.3: Agent Output Scan"]
+  n-qc3a["Step 3.4: Pull Request Creation"]
   n-sc3a --> n-qc3b
   n-sc3a --> n-sc3c
   n-sc3a --> n-sc3d
@@ -408,4 +408,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC

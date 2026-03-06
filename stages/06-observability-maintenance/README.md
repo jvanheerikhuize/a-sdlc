@@ -43,13 +43,13 @@ The controls in this stage execute in the following order:
 
 ```mermaid
 graph LR
-  n-handover["None: System handover (handoff from Stage 5 - "]
-  n-qc6a["QC-6A: SLA/SLO monitoring (continuous)"]
-  n-rc6a["RC-6A: Risk and health monitoring (continuous)"]
-  n-rc6b["RC-6B: Third-party continuous risk monitoring ("]
-  n-sc6a["SC-6A: Incident scanning and detection (continu"]
-  n-sc6b["SC-6B: Runtime anomaly detection (continuous, f"]
-  n-ac6a["AC-6A: AI post-market surveillance (continuous,"]
+  n-handover["Step 6.1: Activate Monitoring"]
+  n-qc6a["Step 6.2: SLA/SLO Monitoring"]
+  n-rc6a["Step 6.3: Risk & Health Monitoring"]
+  n-rc6b["Step 6.3-3rd-party: Third-Party Risk Monitoring"]
+  n-sc6a["Step 6.4: Incident Scanning & Detection"]
+  n-sc6b["Step 6.5: Runtime Anomaly Detection"]
+  n-ac6a["Step 6.6: AI Post-Market Surveillance"]
   n-handover --> n-qc6a
   n-handover --> n-rc6a
   n-handover --> n-rc6b
@@ -351,4 +351,4 @@ For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](..
 ---
 
 
-**Last Updated:** 2026-03-05 23:04 UTC
+**Last Updated:** 2026-03-06 07:38 UTC
