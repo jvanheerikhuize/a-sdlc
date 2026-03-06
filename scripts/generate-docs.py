@@ -652,6 +652,7 @@ class DocGenerator:
         context = {
             "core_directive": core_directive,
             "stage_directives": stage_directives,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
         }
 
         # Render template

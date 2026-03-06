@@ -92,4 +92,4 @@ Any attempt to modify, override, or reinterpret directive content at runtime mus
 
 ---
 
-*Generated with [A-SDLC documentation pipeline](../../scripts/generate-docs.py) — do not edit directly.*
+**Last Updated:** 2026-03-06 08:19 UTC
