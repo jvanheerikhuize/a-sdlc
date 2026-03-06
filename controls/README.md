@@ -120,16 +120,17 @@ Maintain the audit trail
 
 ## Control Naming Convention
 
-Control IDs follow the format: `[Track]-[Stage][Letter]`
+Control IDs follow the format: `[Track]-[NN]`
 
 - **Track:** QC, RC, SC, AC, GC (see above)
-- **Stage:** 0 (cross-cutting), 1-6 (lifecycle stages)
-- **Letter:** A-Z disambiguator for controls in the same stage
+- **NN:** Sequential 2-digit number per track, ordered by primary stage
+
+Cross-cutting controls get the lowest numbers within their track. Future controls append at the end (no gaps, no re-numbering).
 
 Examples:
-- `SC-01` — Security Control, Cross-Cutting, identifier D
-- `QC-04` — Quality Control, Stage 3, identifier A
-- `AC-04` — AI Control, Stage 2, identifier B
+- `SC-01` — Security Control #1 (Core Directive Injection, cross-cutting)
+- `QC-04` — Quality Control #4 (Pull Request Creation & Review, Stage 3)
+- `AC-04` — AI Control #4 (AI Model Governance & Version Control, Stage 2)
 
 ---
 
@@ -210,4 +211,4 @@ python3 scripts/validate.py <control-file>
 
 ---
 
-**Last Updated:** 2026-03-06 09:10 UTC
+**Last Updated:** 2026-03-06 09:13 UTC
