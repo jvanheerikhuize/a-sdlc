@@ -69,11 +69,11 @@ graph LR
 
 ### Parallelism
 
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-- n-qc2a-validate, n-sc2a, n-ac2a, n-rc2b, n-sc2c
+- Step 2.2: Design Validation, Step 2.3: STRIDE Threat Modelling, Step 2.4: AI Component Design Review, Step 2.3b: Privacy Impact Assessment, Step 2.3c: Zero-Trust Architecture Validation
 
-Maximum concurrent controls: **5**
+Maximum concurrent steps: **5**
 
 ---
 
@@ -410,4 +410,4 @@ The following directives are injected at the entry to this stage:
 
 
 
-**Last Updated:** 2026-03-06 07:38 UTC
+**Last Updated:** 2026-03-06 07:42 UTC

@@ -61,11 +61,11 @@ graph LR
 
 ### Parallelism
 
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-- n-qc6a, n-rc6a, n-rc6b, n-sc6a, n-sc6b, n-ac6a
+- Step 6.2: SLA/SLO Monitoring, Step 6.3: Risk & Health Monitoring, Step 6.3-3rd-party: Third-Party Risk Monitoring, Step 6.4: Incident Scanning & Detection, Step 6.5: Runtime Anomaly Detection, Step 6.6: AI Post-Market Surveillance
 
-Maximum concurrent controls: **6**
+Maximum concurrent steps: **6**
 
 ---
 
@@ -351,4 +351,4 @@ For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](..
 ---
 
 
-**Last Updated:** 2026-03-06 07:38 UTC
+**Last Updated:** 2026-03-06 07:42 UTC

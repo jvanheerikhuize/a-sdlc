@@ -142,6 +142,9 @@ class DocGenerator:
                     "file": control_file
                 })
 
+        # Pre-render parallelism groups with step information
+        parallelism_groups_rendered = self._render_parallelism_groups(stage_yaml)
+
         # Prepare template context
         context = {
             "framework": self.framework,
@@ -149,6 +152,7 @@ class DocGenerator:
             "stage_file": stage_file,
             "required_controls": required_controls,
             "workflow_diagram": self._generate_workflow_diagram(stage_yaml),
+            "parallelism_groups_rendered": parallelism_groups_rendered,
             "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
         }
 
@@ -587,6 +591,34 @@ class DocGenerator:
 
         print(f"✓ Generated: {output_file}")
         return True
+
+    def _render_parallelism_groups(self, stage_yaml):
+        """Convert parallelism node groups to human-readable step information."""
+        workflow = stage_yaml.get("workflow", {})
+        parallelism = workflow.get("parallelism", {})
+        groups = parallelism.get("groups", [])
+
+        if not groups:
+            return ""
+
+        # Build node ID to step mapping
+        nodes = workflow.get("nodes", [])
+        node_map = {node.get("id"): node for node in nodes}
+
+        # Render each group
+        rendered_groups = []
+        for group in groups:
+            steps = []
+            for node_id in group:
+                node = node_map.get(node_id)
+                if node:
+                    step_num = node.get("step_number", "N/A")
+                    title = node.get("title", "")
+                    steps.append(f"Step {step_num}: {title}")
+            if steps:
+                rendered_groups.append("- " + ", ".join(steps))
+
+        return "\n".join(rendered_groups)
 
     def _generate_workflow_diagram(self, stage_yaml):
         """Convert workflow DAG to markdown diagram."""

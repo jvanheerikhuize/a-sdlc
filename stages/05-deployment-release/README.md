@@ -62,11 +62,11 @@ graph LR
 
 ### Parallelism
 
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-- n-rc5b, n-sc5a, n-sc5c
+- Step 5.3: Rollback Plan Validation, Step 5.4: Infrastructure Security Baseline, Step 5.4-secrets: Secrets & Key Management Lifecycle
 
-Maximum concurrent controls: **3**
+Maximum concurrent steps: **3**
 
 ---
 
@@ -336,4 +336,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-06 07:38 UTC
+**Last Updated:** 2026-03-06 07:42 UTC

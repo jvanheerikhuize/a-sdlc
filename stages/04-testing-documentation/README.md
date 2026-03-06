@@ -70,11 +70,11 @@ graph LR
 
 ### Parallelism
 
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-- n-qc4a, n-sc4b, n-qc4b, n-ac4a, n-qc4c, n-sc4c, n-sc4d
+- Step 4.2: Functional & Non-Functional Testing, Step 4.3: DAST, Step 4.4: AI Output Validation, Step 4.5: Bias & Fairness Testing, Step 4.6: Documentation Completeness, Step 4.2-api: API Security Testing, Step 4.7-ai-adversarial: Adversarial AI Robustness Testing
 
-Maximum concurrent controls: **7**
+Maximum concurrent steps: **7**
 
 ---
 
@@ -407,4 +407,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-06 07:38 UTC
+**Last Updated:** 2026-03-06 07:42 UTC

@@ -45,13 +45,11 @@ The controls in this stage execute in the following order:
 ### Parallelism
 
 {% if stage.workflow.parallelism.groups %}
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-{% for group in stage.workflow.parallelism.groups %}
-- {{ group|join(", ") }}
-{% endfor %}
+{{ parallelism_groups_rendered }}
 
-Maximum concurrent controls: **{{ stage.workflow.parallelism.max_concurrent }}**
+Maximum concurrent steps: **{{ stage.workflow.parallelism.max_concurrent }}**
 {% endif %}
 
 ---

@@ -67,11 +67,11 @@ graph LR
 
 ### Parallelism
 
-The following controls may run in parallel:
+The following steps may run in parallel:
 
-- n-qc3b, n-sc3c, n-sc3d, n-sc3e, n-rc3a, n-gc3a
+- Step 3.2: Implementation Loop, Step 3.2-sc3c: Secrets Scanning, Step 3.2-sc3d: Software Composition Analysis, Step 3.2-sc3e: Container & IaC Security Scanning, Step 3.2-rc3a: Decision Logging, Step 3.2-gc3a: Code Provenance Tracking
 
-Maximum concurrent controls: **6**
+Maximum concurrent steps: **6**
 
 ---
 
@@ -408,4 +408,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-06 07:38 UTC
+**Last Updated:** 2026-03-06 07:42 UTC
