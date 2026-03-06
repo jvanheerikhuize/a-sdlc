@@ -166,6 +166,110 @@ steps:
       - "Activation record (artifacts/outputs/feedback-loop-activation-record.yaml)"
     retention: "7 years (DORA Art. 8(6))"
 
+# Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
+# FL.1 runs first (no dependencies)
+# FL.2A runs if Path A selected (conditional on FL.1 decision)
+# FL.2B runs if Path B selected OR FL.2A deviation occurs
+# FL.3 runs after either FL.2A OR FL.2B completes
+workflow:
+  nodes:
+    - id: n-fl1
+      step_number: "FL.1"
+      title: Path Classification
+      description: Classify feedback trigger and select re-entry path
+      delegation: "Human required — blocks re-entry until formal decision recorded"
+      depends_on: []
+      actors:
+        - role: AGT
+          action: "Retrieve trigger: source stage (4 or 6), originating control, alert/finding ID, issue description"
+        - role: OPS / QA
+          action: "Assess issue scope, urgency, affected components; provide initial path recommendation"
+        - role: SA
+          action: "For SC-4A, SC-4B, SC-6A, SC-6B triggers: confirm root cause is understood"
+        - role: RO
+          action: "Make formal path selection decision: Path A or Path B"
+        - role: RO
+          action: "Record identity, role, timestamp, rationale, selected path in activation record"
+      input: "Stage 4 or Stage 6 trigger record"
+      output: "Signed path selection (Path A or Path B) recorded in activation record"
+      on_decision: "Proceed to FL.2A if Path A selected; proceed to FL.2B if Path B selected"
+
+    - id: n-fl2a
+      step_number: "FL.2A"
+      title: "Path A: Quick Fix"
+      description: Execute minimum control set for expedited re-entry at Stage 3
+      delegation: "Agent executes, OPS/QA monitors"
+      depends_on: [n-fl1]
+      condition: "Only runs if Path A is selected in FL.1"
+      actors:
+        - role: AGT
+          action: "For Stage 6 triggers: retrieve matched pre-approved autofix template; verify exact signature match"
+        - role: AGT
+          action: "Execute minimum controls in sequence: Stage 3 group → Stage 4 group → Stage 5 check"
+        - role: AGT
+          action: "For Stage 4 triggers: re-execute specific Stage 4 control(s) that raised the issue"
+        - role: AGT
+          action: "At any deviation: stop immediately; escalate to OPS/QA; upgrade to Path B"
+        - role: OPS / QA
+          action: "Monitor execution continuously; validate no out-of-scope actions taken"
+      input: "Stage 4 failing control output OR matched Stage 6 autofix template + trigger record"
+      output: "All minimum controls passed; change deployed via SC-5B; activation record updated"
+      on_success: "Proceed to FL.3"
+      on_deviation: "Immediately upgrade to Path B; proceed to FL.2B"
+
+    - id: n-fl2b
+      step_number: "FL.2B"
+      title: "Path B: Full Re-entry"
+      description: Re-enter full lifecycle from Stage 1
+      delegation: "Full lifecycle — all stages"
+      depends_on: [n-fl1]
+      condition: "Runs if Path B selected in FL.1 OR if FL.2A deviates"
+      actors:
+        - role: OPS / QA
+          action: "Initiate Stage 1 re-entry; create new FEAT-XXXX change request referencing Stage 4 or Stage 6 trigger"
+        - role: All actors
+          action: "Execute full lifecycle: Stages 1 → 2 → 3 → 4 → 5 → Stage 6 monitoring re-activation"
+      input: "Path B selection from FL.1 (or deviation upgrade from FL.2A)"
+      output: "New FEAT-XXXX proceeding through full lifecycle; Stage 4/6 trigger linked in feature specification"
+      on_completion: "Proceed to FL.3"
+
+    - id: n-fl3
+      step_number: "FL.3"
+      title: "Activation Record & Handover"
+      description: Document feedback loop completion and link to audit trail
+      delegation: "Agent creates, CO reviews"
+      depends_on: [n-fl2a, n-fl2b]
+      condition: "Runs at completion of both Path A and Path B journeys"
+      actors:
+        - role: AGT
+          action: "Complete feedback-loop activation record: trigger source, control ID, path selected, approvals, re-entry ID, outcome"
+        - role: AGT
+          action: "Link activation record to GC-0A audit trail and resulting change's Stage 3 or Stage 1 evidence package"
+        - role: CO
+          action: "Review activation record; confirm DORA Art. 8 documentation obligations met"
+        - role: CO
+          action: "For SC-6A-triggered loops: confirm DORA Art. 19 reporting timelines not impacted"
+      input: "Path A/B completion outcomes"
+      output: "Activation record (artifacts/outputs/feedback-loop-activation-record.yaml)"
+      retention: "7 years (DORA Art. 8(6))"
+
+  parallelism:
+    note: "FL.1 is strictly sequential (decision gate). FL.2A and FL.2B are mutually exclusive (conditional routing). FL.3 is sequential cleanup after either path."
+    max_concurrent: 1
+    decision_gates:
+      - node: n-fl1
+        decisions:
+          - path: "path_a"
+            routes_to: n-fl2a
+          - path: "path_b"
+            routes_to: n-fl2b
+      - node: n-fl2a
+        decisions:
+          - outcome: "success"
+            routes_to: n-fl3
+          - outcome: "deviation"
+            routes_to: n-fl2b
+
 output_artifacts:
   - artifact: Feedback Loop Activation Record
     produced_at: Step FL.3
