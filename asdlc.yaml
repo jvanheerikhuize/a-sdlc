@@ -48,14 +48,14 @@ framework:
       - name: DORA
         full_name: "Digital Operational Resilience Act"
         regulation: "EU 2022/2554"
-        controls_mapped: 43
-        total_controls: 51
+        controls_mapped: 44
+        total_controls: 50
         coverage_pct: "88.0%"
       - name: EU AI Act
         full_name: "EU AI Act"
         regulation: "EU 2024/1689"
-        controls_mapped: 30
-        total_controls: 51
+        controls_mapped: 40
+        total_controls: 50
         coverage_pct: "80.0%"
 
   control_tracks:

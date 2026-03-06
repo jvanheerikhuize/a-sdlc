@@ -172,7 +172,7 @@ regulatory:
   dora:
     file: regulatory/sources.yaml
     articles: 51
-    controls_mapped: 51
+    controls_mapped: 50
   eu_ai_act:
     file: regulatory/sources.yaml
     articles: 17

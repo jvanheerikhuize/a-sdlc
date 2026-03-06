@@ -142,8 +142,8 @@ The A-SDLC framework is engineered for compliance with **DORA** (Digital Operati
 
 | Framework | Controls Mapped | Coverage |
 | --------- | --------------- | -------- |
-| **DORA** | 43 / 51 | **88.0%** |
-| **EU AI Act** | 30 / 51 | **80.0%** |
+| **DORA** | 44 / 50 | **88.0%** |
+| **EU AI Act** | 40 / 50 | **80.0%** |
 
 ### Regulatory Strengths by Track
 
@@ -174,4 +174,4 @@ For detailed mappings of all 50 controls to regulatory articles, see: **[regulat
 
 Start with [AGENTS.md](AGENTS.md). It contains your mandatory operating instructions, navigation map, delegation pattern definitions, and behavioural rules.
 
-**Last Updated:** 2026-03-06 09:06 UTC
+**Last Updated:** 2026-03-06 09:10 UTC

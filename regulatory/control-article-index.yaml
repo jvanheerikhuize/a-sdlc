@@ -739,7 +739,7 @@ controls:
 
 # Summary Statistics
 summary:
-  total_controls: 51
+  total_controls: 50
   dora_mapped: 47
   eu_ai_act_mapped: 40
   dual_framework: 36

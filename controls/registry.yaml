@@ -5,7 +5,7 @@
 # Use this file for fast lookup by control ID without reading individual
 # track files. Full control definitions are in controls/[track]/[ID].yaml.
 #
-# Total controls: 51
+# Total controls: 50
 # QC: 10 | RC: 9 | SC: 20 | AC: 6 | GC: 5
 # =============================================================================
 

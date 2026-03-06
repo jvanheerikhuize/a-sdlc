@@ -296,7 +296,7 @@ compliance_matrix:
 
 coverage_summary:
 
-  total_controls: 51
+  total_controls: 50
 
   dora_mapped_controls: 43
   dora_coverage_percentage: 88.0%
@@ -338,7 +338,7 @@ coverage_summary:
       combined_mapped: 6
       percentage: 100%
 
-  fully_mapped_controls: 51
+  fully_mapped_controls: 50
 
   mapping_approach: >
     All 50 controls now have explicit regulatory mappings to DORA and/or EU AI Act. Mappings

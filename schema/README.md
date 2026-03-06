@@ -16,7 +16,7 @@ All 152 YAML files in the repository are now validated by one of 13 schemas:
 | **Infrastructure Schemas (NEW)** | | | | |
 | 5 | [common.schema.json](common.schema.json) | $defs in all schemas | Shared reusable definitions | All schemas |
 | 6 | [framework.schema.json](framework.schema.json) | `asdlc.yaml` | Root framework manifest | 1 file |
-| 7 | [registry.schema.json](registry.schema.json) | `controls/registry.yaml` | Master control index | 1 file (51 entries) |
+| 7 | [registry.schema.json](registry.schema.json) | `controls/registry.yaml` | Master control index | 1 file (50 entries) |
 | 8 | [tasks.schema.json](tasks.schema.json) | `tasks.yaml` | Task navigation index | 1 file |
 | 9 | [doc-generation.schema.json](doc-generation.schema.json) | `manifest/catalog.yaml` | Documentation generation config | 1 file |
 | **Regulatory Schemas (NEW)** | | | | |
@@ -58,7 +58,7 @@ All new schemas use `$ref` to reference shared definitions from `common.schema.j
 
 #### 1. **control.schema.json** — Control Definition Schema
 
-**Validates:** All 51 control YAML files in `controls/[track]/`
+**Validates:** All 50 control YAML files in `controls/[track]/`
 
 **Key Constraints:**
 - `id` must match pattern `[Track]-[Stage][Letter]` and equal filename without `.yaml`
@@ -232,7 +232,7 @@ supporting_files:
 
 **Validates:** `controls/registry.yaml` — the master index of all 50 controls
 
-**Top-level required:** `registry` (array, exactly 51 entries)
+**Top-level required:** `registry` (array, exactly 50 entries)
 
 **Each registry entry:**
 ```yaml
@@ -333,7 +333,7 @@ compliance_matrix:
   eu_ai_act:
     # ... similar structure
 coverage_summary:                # Optional
-  total_controls: 51
+  total_controls: 50
   coverage_by_track: { ... }
 regulatory_areas: [ ... ]        # Optional: regulatory areas mapping
 ```
