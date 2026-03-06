@@ -1,12 +1,12 @@
 # =============================================================================
 # A-SDLC Control Registry
 # =============================================================================
-# Flat index of all 51 controls across the Agentic SDLC framework.
+# Flat index of all 50 controls across the Agentic SDLC framework.
 # Use this file for fast lookup by control ID without reading individual
 # track files. Full control definitions are in controls/[track]/[ID].yaml.
 #
 # Total controls: 51
-# QC: 10 | RC: 9 | SC: 20 | AC: 6 | GC: 6
+# QC: 10 | RC: 9 | SC: 20 | AC: 6 | GC: 5
 # =============================================================================
 
 registry:
@@ -311,18 +311,6 @@ registry:
     delegation: fully_automated
     file: controls/sc/SC-11.yaml
     owner_team: Security
-
-  - id: GC-06
-    name: Code Provenance Tracking
-    stage: 3
-    stage_name: Coding & Implementation
-    track: GC
-    delegation: fully_automated
-    file: controls/gc/GC-06.yaml
-    owner_team: Governance & Compliance
-    feedback_loops:
-      - path_a
-      - path_b
 
   # ---------------------------------------------------------------------------
   # Stage 4 — Testing & Documentation

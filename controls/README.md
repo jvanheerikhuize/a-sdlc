@@ -7,7 +7,7 @@
 > python3 scripts/generate-docs.py
 > ```
 
-This directory contains all **51** control definitions for the Agentic SDLC framework.
+This directory contains all **50** control definitions for the Agentic SDLC framework.
 
 ---
 
@@ -19,7 +19,7 @@ This directory contains all **51** control definitions for the Agentic SDLC fram
 | **RC** | Risk Controls | 9 | [`rc/`](rc/) |
 | **SC** | Security Controls | 20 | [`sc/`](sc/) |
 | **AC** | AI Controls | 6 | [`ac/`](ac/) |
-| **GC** | Governance Controls | 6 | [`gc/`](gc/) |
+| **GC** | Governance Controls | 5 | [`gc/`](gc/) |
 
 ---
 
@@ -114,7 +114,6 @@ Maintain the audit trail
 | [`GC-03`](controls/gc/GC-03.yaml) | Agent Provenance Registry | 0 | `fully_automated` | [`controls/gc/GC-03.yaml`](controls/gc/GC-03.yaml) |
 | [`GC-04`](controls/gc/GC-04.yaml) | Compliance Evidence Automation | 0 | `agent_compiles_human_approves` | [`controls/gc/GC-04.yaml`](controls/gc/GC-04.yaml) |
 | [`GC-05`](controls/gc/GC-05.yaml) | Intent Traceability | 1 | `fully_automated` | [`controls/gc/GC-05.yaml`](controls/gc/GC-05.yaml) |
-| [`GC-06`](controls/gc/GC-06.yaml) | Code Provenance Tracking | 3 | `fully_automated` | [`controls/gc/GC-06.yaml`](controls/gc/GC-06.yaml) |
 
 
 ---
@@ -157,7 +156,6 @@ Examples:
 - [`GC-03`](controls/gc/GC-03.yaml) — Agent Provenance Registry (Cross-Cutting)
 - [`GC-04`](controls/gc/GC-04.yaml) — Compliance Evidence Automation (Cross-Cutting)
 - [`GC-05`](controls/gc/GC-05.yaml) — Intent Traceability (Intent Ingestion)
-- [`GC-06`](controls/gc/GC-06.yaml) — Code Provenance Tracking (Coding & Implementation)
 - [`QC-01`](controls/qc/QC-01.yaml) — Specification Validation (Intent Ingestion)
 - [`QC-02`](controls/qc/QC-02.yaml) — Coherence & Conflict Resolution (Intent Ingestion)
 - [`QC-03`](controls/qc/QC-03.yaml) — Design Completeness & Standards (System Design)
@@ -212,4 +210,4 @@ python3 scripts/validate.py <control-file>
 
 ---
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC

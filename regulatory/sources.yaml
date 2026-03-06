@@ -363,7 +363,6 @@ dora:
       controls_mapped:
         - GC-03   # Agent Provenance Registry
         - SC-07   # Permission Management
-        - GC-06   # Code Provenance Tracking
         - SC-17   # Deployment Integrity
 
 
@@ -622,7 +621,6 @@ eu_ai_act:
           internal governance rules already mandated under that legislation.
       controls_mapped:
         - GC-03   # Agent Provenance Registry
-        - GC-06   # Code Provenance Tracking
 
     - id: "Art. 26"
       title: Obligations of deployers of high-risk AI systems

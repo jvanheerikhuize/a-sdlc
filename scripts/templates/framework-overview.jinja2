@@ -90,13 +90,13 @@ a-sdlc/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json       ← JSON Schema for feature specifications
 ├── controls/
-│   ├── registry.yaml                  ← Flat index of all 51 controls (fast lookup by ID)
+│   ├── registry.yaml                  ← Flat index of all 50 controls (fast lookup by ID)
 │   ├── README.md                      ← Controls directory documentation
 │   ├── qc/                            ← Quality Control definitions (10 controls)
 │   ├── rc/                            ← Risk Control definitions (8 controls)
 │   ├── sc/                            ← Security Control definitions (16 controls)
 │   ├── ac/                            ← AI Control definitions (6 controls)
-│   └── gc/                            ← Governance Control definitions (6 controls)
+│   └── gc/                            ← Governance Control definitions (5 controls)
 ├── directives/
 │   ├── core/
 │   │   └── core-directives.yaml       ← Immutable core security directives (SC-01 payload)
@@ -124,7 +124,7 @@ a-sdlc/
 
 ## Regulatory Compliance
 
-The A-SDLC framework is engineered for compliance with **DORA** (Digital Operational Resilience Act) and the **EU AI Act**. **All 51 controls have explicit regulatory mappings** to specific articles and requirements.
+The A-SDLC framework is engineered for compliance with **DORA** (Digital Operational Resilience Act) and the **EU AI Act**. **All 50 controls have explicit regulatory mappings** to specific articles and requirements.
 
 ### Coverage Summary
 
@@ -148,14 +148,14 @@ The A-SDLC framework is engineered for compliance with **DORA** (Digital Operati
 | ---- | ------------- | ------------------ | ------------ |
 | **Risk Management** | Art. 8–9 | Art. 6, 9, Annex III | RC-01, AC-01, RC-02, RC-05 |
 | **Security Testing** | Art. 24–25 | Art. 15 | SC-12, SC-13, SC-14, SC-15, QC-06 |
-| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-10, SC-11, GC-03, GC-06 |
+| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-10, SC-11, GC-03 |
 | **Change Management** | Art. 9(4) | Art. 9 | RC-02, RC-06, QC-04, QC-05 |
 | **Documentation** | Art. 8(5-6) | Art. 11, Annex IV | QC-08, AC-03, AC-04 |
 | **Record-Keeping** | Art. 8(6) | Art. 12 | GC-01, GC-02, RC-04, GC-04 |
 | **Incident Management** | Art. 17–19 | Art. 73 | SC-19, SC-20, GC-01 |
 | **GPAI Models** | — | Art. 51–56 | AC-02, AC-03, AC-04 |
 
-For detailed mappings of all 51 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
+For detailed mappings of all 50 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
 
 ---
 

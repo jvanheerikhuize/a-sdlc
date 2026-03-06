@@ -67,7 +67,7 @@ The validator performs **7 comprehensive checks** across the entire framework:
 | Check | Verifies | Key Validations |
 |-------|----------|-----------------|
 | **1/7 Control files** | Individual control YAMLs | Schema compliance; ID matches filename; ID pattern `[Track]-[Stage][Letter]` |
-| **2/7 Registry** | `controls/registry.yaml` | All 51 controls present; no duplicate IDs; all file/directive paths resolve |
+| **2/7 Registry** | `controls/registry.yaml` | All 50 controls present; no duplicate IDs; all file/directive paths resolve |
 | **3/7 Stage files** | Stage YAMLs in `stages/NN-*/` | Schema compliance; `process.md` exists; required controls in registry; artifact paths exist |
 | **4/7 Directives** | `directives/core/` and `directives/stages/` | Schema compliance for core and all 6 stage directive bundles |
 | **5/7 Dependencies** | Control cross-references | All `dependencies` IDs exist in registry; no circular dependency chains |
@@ -87,7 +87,7 @@ Run `validate.py` before committing any change to:
 
 **Passing output:**
 ```
-✓ 1/7 Control files ... 51 controls found
+✓ 1/7 Control files ... 50 controls found
 ✓ 2/7 Registry ... all controls registered
 ...
 ✓ All checks passed (0 failures, 0 warnings)

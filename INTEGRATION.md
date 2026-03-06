@@ -8,7 +8,7 @@ How to integrate and use the Agentic SDLC framework from another agentic reposit
 
 The A-SDLC repository provides:
 
-1. **Framework Definition** (`asdlc.yaml`) — Complete manifest of all 6 stages and 51 controls
+1. **Framework Definition** (`asdlc.yaml`) — Complete manifest of all 6 stages and 50 controls
 2. **Workflow DAGs** — Machine-parseable execution sequences for agent orchestration
 3. **Control Definitions** — Individual control implementations with requirements and artifacts
 4. **Stage Context Bundles** — Pre-compiled stage guides with all dependencies
@@ -270,7 +270,7 @@ Use this when your agent detects a Stage 4 test failure or Stage 6 production is
 3. **Execute Path A (Quick Fix) or Path B (Full Re-entry):**
    ```python
    if path_decision == 'path_a':
-       # Re-execute minimum controls: QC-04, QC-05, SC-08, SC-09, GC-06, QC-06, SC-12, RC-05, SC-17
+       # Re-execute minimum controls: QC-04, QC-05, SC-08, SC-09, GC-03, QC-06, SC-12, RC-05, SC-17
        # Runs at Stage 3 (Coding) level
        execute_path_a(trigger_record)
 
@@ -340,7 +340,7 @@ a-sdlc/
 │   ├── rc/                            ← Risk Controls (9)
 │   ├── sc/                            ← Security Controls (20)
 │   ├── ac/                            ← AI Controls (6)
-│   └── gc/                            ← Governance Controls (6)
+│   └── gc/                            ← Governance Controls (5)
 │
 ├── stages/
 │   ├── 01-intent-ingestion/

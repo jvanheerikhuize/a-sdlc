@@ -35,7 +35,7 @@ inputs:
 - name: Implementation code
   description: Code produced by human developers, agents, or both during Stage 3.
 - name: Stage 3 control evidence
-  description: Evidence artefacts from QC-05, RC-04, SC-07, SC-08, SC-09, and GC-06.
+  description: Evidence artefacts from QC-05, RC-04, SC-07, SC-08, SC-09, and GC-03.
 outputs:
 - name: Approved pull request
   type: artefact
@@ -53,7 +53,7 @@ dependencies:
 - SC-07
 - SC-08
 - SC-09
-- GC-06
+- GC-03
 feedback_loops:
 - path: path_a
   required_in_path: true

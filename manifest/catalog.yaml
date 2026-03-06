@@ -165,7 +165,7 @@ tracks:
   - code: GC
     name: Governance Controls
     description: Maintain the audit trail
-    control_count: 6
+    control_count: 5
 
 # Regulatory mappings (references only; full mappings in control files)
 regulatory:

@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Writes code; logs decisions (RC-04); tags provenance (GC-06); scans output (SC-08); creates pull request (QC-04) |
+| AGT | Agent | Writes code; logs decisions (RC-04); tags provenance (GC-03); scans output (SC-08); creates pull request (QC-04) |
 | DEV | Developer | Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk tiers |
 | SA | Security Architect | Defines and maintains agent permission policy (SC-07); reviews violation logs; escalation target for SC-08 and SC-09 findings |
 | CO | Compliance Officer | Reviews code provenance records and audit artefacts during regulatory audits |
@@ -47,7 +47,7 @@ graph LR
   n-sc3d["Step 3.2-sc3d: Software Composition Analysis"]
   n-sc3e["Step 3.2-sc3e: Container & IaC Security Scanning"]
   n-rc3a["Step 3.2-rc3a: Decision Logging"]
-  n-gc3a["Step 3.2-gc3a: Code Provenance Tracking"]
+  n-gc3a["Step 3.2-gc3a: Agent Provenance Registry"]
   n-sc3b["Step 3.3: Agent Output Scan"]
   n-qc3a["Step 3.4: Pull Request Creation"]
   n-sc3a --> n-qc3b
@@ -69,7 +69,7 @@ graph LR
 
 The following steps may run in parallel:
 
-- Step 3.2: Implementation Loop, Step 3.2-sc3c: Secrets Scanning, Step 3.2-sc3d: Software Composition Analysis, Step 3.2-sc3e: Container & IaC Security Scanning, Step 3.2-rc3a: Decision Logging, Step 3.2-gc3a: Code Provenance Tracking
+- Step 3.2: Implementation Loop, Step 3.2-sc3c: Secrets Scanning, Step 3.2-sc3d: Software Composition Analysis, Step 3.2-sc3e: Container & IaC Security Scanning, Step 3.2-rc3a: Decision Logging, Step 3.2-gc3a: Agent Provenance Registry
 
 Maximum concurrent steps: **6**
 
@@ -112,7 +112,7 @@ Maximum concurrent steps: **6**
 | Actor | Action |
 |-------|--------|
 | AGT | Implement code against the approved Stage 2 design document |
-| AGT | Tag all agent-generated code with provenance metadata at point of generation (GC-06 → GC-03 registry) |
+| AGT | Tag all agent-generated code with provenance metadata at point of generation (GC-03 Agent Provenance Registry) |
 | AGT | Commit; QC-05 runs quality gates and SC-09 scans for secrets automatically |
 | AGT | Log all significant autonomous decisions to the decision log (RC-04): rationale, alternatives considered |
 | DEV | Review and triage any QC-05 violations or SC-09 blocked commits; resolve before re-committing |
@@ -125,7 +125,7 @@ Maximum concurrent steps: **6**
 | **Input** | Approved design document |
 | **Output** | Quality gate report (artifacts/outputs/quality-gate-report.yaml) · Secrets scan report (artifacts/outputs/secrets-scan-report.yaml) · Decision log (artifacts/outputs/decision-log.yaml) |
 | **On Failure** | Commit blocked; developer resolves violations and re-commits |
-| **Note** | This step is the main implementation loop. All four controls run continuously — QC-05 and SC-09 on every commit, GC-06 at the point of generation, RC-04 whenever a significant decision is made. Repeats on every commit. |
+| **Note** | This step is the main implementation loop. All four controls run continuously — QC-05 and SC-09 on every commit, GC-03 at the point of generation, RC-04 whenever a significant decision is made. Repeats on every commit. |
 
 
 
@@ -217,9 +217,9 @@ Maximum concurrent steps: **6**
 
 
 
-### Step 3.2-gc3a — Code Provenance Tracking
+### Step 3.2-gc3a — Agent Provenance Registry
 
-**Control:** [`GC-06`](../../controls/gc/GC-06.yaml) · **Delegation:** Fully automated
+**Control:** [`GC-03`](../../controls/gc/GC-03.yaml) · **Delegation:** Fully automated
 
 
 #### Actors and Actions
@@ -363,11 +363,11 @@ Maximum concurrent steps: **6**
 - **Note:** Logged throughout; reviewed by Tech Lead
 
 
-### GC-06 — Code Provenance Tracking
+### GC-03 — Agent Provenance Registry
 
 - **Track:** GC
 - **Delegation:** `fully_automated`
-- **File:** [`controls/gc/GC-06.yaml`](../../controls/gc/GC-06.yaml)
+- **File:** [`controls/gc/GC-03.yaml`](../../controls/gc/GC-03.yaml)
 - **Note:** All code tagged at point of generation
 
 
@@ -402,10 +402,10 @@ This stage produces the following artifacts:
 - [`artifacts/outputs/RC-04-decision-log.yaml`](artifacts/outputs/RC-04-decision-log.yaml)
 - [`artifacts/outputs/SC-10-sca-report.yaml`](artifacts/outputs/SC-10-sca-report.yaml)
 - [`artifacts/outputs/SC-11-container-iac-security-report.yaml`](artifacts/outputs/SC-11-container-iac-security-report.yaml)
-- [`artifacts/outputs/GC-06-code-provenance-record.yaml`](artifacts/outputs/GC-06-code-provenance-record.yaml)
+- [`artifacts/outputs/GC-03-code-provenance-record.yaml`](artifacts/outputs/GC-03-code-provenance-record.yaml)
 
 ---
 
 
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC

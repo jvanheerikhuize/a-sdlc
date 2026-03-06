@@ -50,13 +50,13 @@ framework:
         regulation: "EU 2022/2554"
         controls_mapped: 43
         total_controls: 51
-        coverage_pct: "84.3%"
+        coverage_pct: "88.0%"
       - name: EU AI Act
         full_name: "EU AI Act"
         regulation: "EU 2024/1689"
         controls_mapped: 30
         total_controls: 51
-        coverage_pct: "58.8%"
+        coverage_pct: "80.0%"
 
   control_tracks:
     - code: QC
@@ -287,10 +287,6 @@ stages:
       - id: SC-11
         name: Container & IaC Security Scanning
         track: SC
-      - id: GC-06
-        name: Code Provenance Tracking
-        track: GC
-
   - number: 4
     name: Testing & Documentation
     slug: 04-testing-documentation

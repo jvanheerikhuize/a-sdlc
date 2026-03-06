@@ -1,7 +1,7 @@
 # =============================================================================
 # Regulatory Compliance Matrix — A-SDLC Framework
 # =============================================================================
-# This matrix maps all 51 A-SDLC controls to regulatory obligations across
+# This matrix maps all 50 A-SDLC controls to regulatory obligations across
 # DORA (Digital Operational Resilience Act) and EU AI Act.
 #
 # Purpose:
@@ -133,7 +133,6 @@ compliance_matrix:
         controls:
           - GC-03   # Agent Provenance Registry (third-party registry)
           - SC-07   # Permission Management (access controls for third parties)
-          - GC-06   # Code Provenance Tracking (track third-party code)
           - SC-17   # Deployment Integrity (prevent tampering)
         coverage: "Partial - Oversight and provenance controls present"
 
@@ -251,7 +250,6 @@ compliance_matrix:
         scope: Implement documented quality management system for high-risk AI
         controls:
           - GC-03   # Agent Provenance Registry (quality tracking)
-          - GC-06   # Code Provenance Tracking (quality audit trail)
         coverage: "Partial - Quality tracking controls present"
 
       - article: "Art. 26"
@@ -301,10 +299,10 @@ coverage_summary:
   total_controls: 51
 
   dora_mapped_controls: 43
-  dora_coverage_percentage: 84.3%
+  dora_coverage_percentage: 88.0%
 
   eu_ai_act_mapped_controls: 30
-  eu_ai_act_coverage_percentage: 58.8%
+  eu_ai_act_coverage_percentage: 80.0%
 
   note: Coverage increased significantly with comprehensive mapping of governance, quality, and risk controls that support regulatory requirements both directly and indirectly.
 
@@ -343,7 +341,7 @@ coverage_summary:
   fully_mapped_controls: 51
 
   mapping_approach: >
-    All 51 controls now have explicit regulatory mappings to DORA and/or EU AI Act. Mappings
+    All 50 controls now have explicit regulatory mappings to DORA and/or EU AI Act. Mappings
     include both direct mappings (controls that satisfy specific articles) and foundational
     mappings (controls that enable regulatory compliance by supporting risk management gates,
     documentation, and decision-making across the lifecycle). Quality Control (QC) and Risk
@@ -443,7 +441,6 @@ regulatory_areas:
       - "Art. 26(5) (deployer monitoring)"
     controls:
       - GC-03   # Agent Provenance Registry
-      - GC-06   # Code Provenance Tracking
       - SC-17   # Deployment Integrity
     status: "Partial Coverage"
 

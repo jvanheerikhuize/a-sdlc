@@ -63,7 +63,7 @@ tasks:
     name: Write or generate code
     stage: 3
     description: Produce code by human developers, AI agents, or both. Enforce quality and security scanning
-    controls: [SC-07, QC-05, SC-09, SC-10, SC-11, RC-04, GC-06, SC-08, QC-04]
+    controls: [SC-07, QC-05, SC-09, SC-10, SC-11, RC-04, GC-03, SC-08, QC-04]
     entry_file: context/stage-03-coding-and-implementation.md
 
   - id: review-pull-request
@@ -98,8 +98,8 @@ tasks:
     name: Log code provenance and authorship
     stage: 3
     description: Track whether code was human-written, AI-generated, or hybrid; maintain attribution
-    controls: [GC-06]
-    entry_file: controls/gc/GC-06.yaml
+    controls: [GC-03]
+    entry_file: controls/gc/GC-03.yaml
 
   # ===== Stage 4: Testing & Documentation =====
 
@@ -220,7 +220,7 @@ tasks:
     name: Execute Path A quick-fix flow
     stage: 0
     description: Re-execute minimum control set for easy, obvious, low-risk issues at Stage 3
-    controls: [QC-04, QC-05, SC-08, SC-09, GC-06, QC-06, SC-12, RC-05, SC-17]
+    controls: [QC-04, QC-05, SC-08, SC-09, GC-03, QC-06, SC-12, RC-05, SC-17]
     entry_file: feedbackloops/feedback-loops.yaml
     note: "Follow Steps FL.1 → FL.2A. If any deviation, upgrade to Path B immediately"
 

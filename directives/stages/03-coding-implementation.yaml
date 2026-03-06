@@ -113,5 +113,5 @@ categories:
       - id: PERM-02
         text: >-
           Tag all agent-generated code with provenance metadata at the point of
-          generation, per GC-06 (Code Provenance Tracking). Code without
+          generation, per GC-03 (Agent Provenance Registry). Code without
           provenance tags cannot be included in a pull request.

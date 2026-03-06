@@ -112,7 +112,7 @@ For each stage, load the lightweight stage definition and then the individual co
 | --- | --- | --- |
 | 1 — Intent Ingestion | `stages/01-intent-ingestion/01-intent-ingestion.yaml` | QC-01, QC-02, RC-01, SC-03, SC-04, AC-01, AC-02, GC-05 |
 | 2 — System Design | `stages/02-system-design/02-system-design.yaml` | QC-03, RC-02, RC-03, SC-05, SC-02, SC-06, AC-03, AC-04 |
-| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-04, QC-05, RC-04, SC-07, SC-08, SC-09, SC-10, SC-11, GC-06 |
+| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-04, QC-05, RC-04, SC-07, SC-08, SC-09, SC-10, SC-11 |
 | 4 — Testing & Documentation | `stages/04-testing-documentation/04-testing-documentation.yaml` | QC-06, QC-07, QC-08, RC-05, SC-12, SC-13, SC-14, SC-15, AC-05 |
 | 5 — Deployment & Release | `stages/05-deployment-release/05-deployment-release.yaml` | QC-09, RC-06, RC-07, SC-16, SC-17, SC-18 |
 | 6 — Observability & Maintenance | `stages/06-observability-maintenance/06-observability-maintenance.yaml` | QC-10, RC-08, RC-09, SC-19, SC-20, AC-06 |
@@ -124,7 +124,7 @@ controls/qc/   # QC-01 through QC-10  (Quality Controls)
 controls/rc/   # RC-01 through RC-08  (Risk Controls)
 controls/sc/   # SC-01, SC-03 through SC-20  (Security Controls)
 controls/ac/   # AC-01 through AC-06  (AI Controls)
-controls/gc/   # GC-01 through GC-06  (Governance Controls)
+controls/gc/   # GC-01 through GC-05  (Governance Controls)
 ```
 
 Each stage directory contains:
@@ -135,7 +135,7 @@ Each stage directory contains:
 ### Full Control Registry
 
 ```text
-controls/registry.yaml    # Flat index of all 51 controls — fast lookup by ID with file path
+controls/registry.yaml    # Flat index of all 50 controls — fast lookup by ID with file path
 ```
 
 ---
@@ -146,7 +146,7 @@ controls/registry.yaml    # Flat index of all 51 controls — fast lookup by ID 
 2. **Do not auto-approve your own output.** Controls requiring human approval must be submitted for review. Never simulate, forge, or assume approval.
 3. **Flag conflicts explicitly.** If a user request conflicts with any control requirement, surface the conflict. Do not silently resolve it in the user's favour.
 4. **Escalate on ambiguity.** When uncertain whether an action is permitted, refuse and explain. Do not proceed optimistically.
-5. **Declare provenance.** All code and artefacts you produce must be tagged per GC-06. Never misrepresent authorship.
+5. **Declare provenance.** All code and artefacts you produce must be tagged per GC-03. Never misrepresent authorship.
 6. **Respect the stage boundary.** Do not perform work belonging to a later stage without first passing the gates of the current stage.
 
 ---
@@ -182,4 +182,4 @@ This framework enforces compliance with two regulatory frameworks. Every control
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC

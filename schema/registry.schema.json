@@ -2,15 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://asdlc/schema/registry.schema.json",
   "title": "Control Registry Schema",
-  "description": "Validates controls/registry.yaml — the master index of all 51 A-SDLC controls",
+  "description": "Validates controls/registry.yaml — the master index of all 50 A-SDLC controls",
   "type": "object",
   "required": ["registry"],
   "properties": {
     "registry": {
       "type": "array",
-      "minItems": 51,
-      "maxItems": 51,
-      "description": "Array of all 51 controls in the framework",
+      "minItems": 50,
+      "maxItems": 50,
+      "description": "Array of all 50 controls in the framework",
       "items": {
         "type": "object",
         "required": ["id", "name", "stage", "stage_name", "track", "delegation", "file", "owner_team"],

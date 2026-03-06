@@ -173,15 +173,7 @@ controls:
         article: "9(2)"
         coverage: Strong
 
-  GC-06:
-    name: "Code Provenance Tracking"
-    mappings:
-      - framework: DORA
-        article: "8(5)"
-        coverage: Strong
-      - framework: EU AI Act
-        article: "72"
-        coverage: Partial
+  # GC-06 merged into GC-03 (Agent Provenance Registry)
 
   # Security Controls (Mostly Dual-Framework)
   SC-01:

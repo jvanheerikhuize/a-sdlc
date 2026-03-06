@@ -7,7 +7,7 @@
 > python3 scripts/generate-docs.py
 > ```
 
-This directory contains mapping of all 51 A-SDLC controls to requirements from two regulatory frameworks: **DORA** (Digital Operational Resilience Act, EU 2022/2554) and the **EU AI Act** (EU 2024/1689).
+This directory contains mapping of all 50 A-SDLC controls to requirements from two regulatory frameworks: **DORA** (Digital Operational Resilience Act, EU 2022/2554) and the **EU AI Act** (EU 2024/1689).
 
 ---
 
@@ -15,8 +15,8 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 
 | Framework | Effective | Total Articles | Mapped Controls | Coverage |
 |-----------|-----------|-----------------|-----------------|----------|
-| **DORA** | 2025-01-17 | 64 articles | 43 / 51 controls | **84.3%** |
-| **EU AI Act** | 2024-06-26 | 92 articles + annexes | 30 / 51 controls | **58.8%** |
+| **DORA** | 2025-01-17 | 64 articles | 44 / 50 controls | **88.0%** |
+| **EU AI Act** | 2024-06-26 | 92 articles + annexes | 40 / 50 controls | **80.0%** |
 
 ---
 
@@ -40,7 +40,7 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 | Change Management & Governance | Art. 9(4) (change management procedures) | Art. 9 (risk management system governanc | RC-02, RC-06, QC-04, QC-05, RC-04, GC-01 | Strong Coverage - Multiple approval and documentation gates |
 | Incident Detection & Reporting | Art. 10 (detection mechanisms), Art. 17  | Art. 73 (serious incident reporting - 10 | SC-19, SC-20, GC-01 | Strong Coverage |
 | Access & Permission Management | Art. 9(4) (access controls, authenticati |  | SC-07, SC-01 | Partial Coverage |
-| Supply Chain & Third-Party Risk | Art. 28 (third-party risk management) | Art. 17 (quality management, data manage | GC-03, GC-06, SC-17 | Partial Coverage |
+| Supply Chain & Third-Party Risk | Art. 28 (third-party risk management) | Art. 17 (quality management, data manage | GC-03, SC-17 | Partial Coverage |
 | Documentation & Record-Keeping | Art. 8(6) (documentation) | Art. 11 (technical documentation), Art.  | QC-08, GC-01, GC-02 | Strong Coverage |
 | Business Continuity & Recovery | Art. 11 (response and recovery) |  | RC-07, RC-08, QC-10 | Partial Coverage |
 | Human Oversight & Governance | Art. 9(4) (change management) | Art. 14 (human oversight) | SC-02, AC-03, RC-02, RC-06 | Partial Coverage |
@@ -59,7 +59,7 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 | Art. 19 | Reporting of major incidents | GC-01, SC-19 | Partial - Reporting infrastructure in place |
 | Art. 24 | General requirements for digital operational resilience testing | SC-12, SC-13, SC-16, QC-06, QC-07 | Strong - Comprehensive testing programme covering functional and security aspects |
 | Art. 25 | Testing of ICT tools and systems | SC-12, SC-13, SC-16, SC-10, SC-11, SC-14, QC-06 | Strong - Testing controls cover all key methodologies including supply chain |
-| Art. 28 | General principles of sound management of ICT third-party risk | GC-03, SC-07, GC-06, SC-17 | Partial - Oversight and provenance controls present |
+| Art. 28 | General principles of sound management of ICT third-party risk | GC-03, SC-07, SC-17 | Partial - Oversight and provenance controls present |
 | Art. 11 | Response and recovery | RC-07, QC-10, RC-08, QC-09 | Strong - Recovery, testing, and monitoring controls present |
 | Art. 10 | Detection | SC-19, SC-20, QC-10, RC-08 | Strong - Multiple detection and monitoring controls |
 ---
@@ -76,7 +76,7 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 | Art. 13 | Transparency and provision of information to deployers | AC-03 | Partial - Design review includes transparency |
 | Art. 14 | Human oversight | SC-02, AC-03 | Partial - Oversight mechanisms present |
 | Art. 15 | Accuracy, robustness and cybersecurity | AC-05, SC-03, SC-08, SC-17, QC-06, QC-07, SC-15 | Strong - Comprehensive accuracy, robustness, and security controls |
-| Art. 17 | Quality management system | GC-03, GC-06 | Partial - Quality tracking controls present |
+| Art. 17 | Quality management system | GC-03 | Partial - Quality tracking controls present |
 | Art. 26 | Obligations of deployers | GC-03, AC-06 | Partial - Deployer monitoring controls present |
 | Art. 72 | Post-market monitoring | AC-06 | Partial - Post-market surveillance control present |
 | Art. 73 | Reporting of serious incidents | AC-06, SC-19 | Partial - Incident detection controls present |
@@ -84,4 +84,4 @@ This directory contains mapping of all 51 A-SDLC controls to requirements from t
 | Annex IV | Technical documentation | QC-08, AC-03 | Partial - Documentation controls present |
 ---
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC

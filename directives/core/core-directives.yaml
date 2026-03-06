@@ -163,8 +163,8 @@ categories:
           Accurately declare which outputs are your own work versus sourced from
           external references, libraries, documentation, or other agents. Never
           misrepresent authorship, provenance, or the origin of any output. All
-          agent-generated code must be tagged per GC-06 (Code Provenance
-          Tracking).
+          agent-generated code must be tagged per GC-03 (Agent Provenance
+          Registry).
 
       - id: TRACE-02
         text: >-

@@ -68,7 +68,7 @@ For easy, obvious, low-risk issues with a clear root cause. Re-enters directly a
 | QC-05 | 0 | Automated quality checks apply to all fixes. |
 | SC-08 | 0 | Agent-generated fix must be scanned for malicious patterns. |
 | SC-09 | 0 | Fix must not introduce exposed credentials. |
-| GC-06 | 0 | Fix output must be attributed to the agent or developer that produced it. |
+| GC-03 | 0 | Fix output must be attributed to the agent or developer that produced it. |
 | QC-06 | 0 | Fix must be tested before deployment. |
 | SC-12 | 1 | Static security analysis is mandatory even for expedited paths. |
 | RC-05 | 0 | Residual risk must be assessed before deployment. |
@@ -178,7 +178,7 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 | QC-05 | 0 | Automated quality checks apply to all fixes. |
 | SC-08 | 0 | Agent-generated fix must be scanned for malicious patterns. |
 | SC-09 | 0 | Fix must not introduce exposed credentials. |
-| GC-06 | 0 | Fix output must be attributed to the agent or developer that produced it. |
+| GC-03 | 0 | Fix output must be attributed to the agent or developer that produced it. |
 | QC-06 | 0 | Fix must be tested before deployment. |
 | SC-12 | 1 | Static security analysis is mandatory even for expedited paths. |
 | RC-05 | 0 | Residual risk must be assessed before deployment. |
@@ -265,4 +265,4 @@ If any condition is not met, Path B is mandatory. Do not attempt a partial Path 
 
 ---
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC

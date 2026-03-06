@@ -9,7 +9,7 @@ All 152 YAML files in the repository are now validated by one of 13 schemas:
 | # | Schema | Validates | Purpose | Files |
 |---|--------|-----------|---------|-------|
 | **Core Schemas (Already existed)** | | | | |
-| 1 | [control.schema.json](control.schema.json) | `controls/[track]/[ID].yaml` | Individual control definitions | 51 controls |
+| 1 | [control.schema.json](control.schema.json) | `controls/[track]/[ID].yaml` | Individual control definitions | 50 controls |
 | 2 | [stage.schema.json](stage.schema.json) | `stages/NN-name/NN-name.yaml` | Stage workflow & execution | 6 stages |
 | 3 | [directive.schema.json](directive.schema.json) | `directives/**/[name].yaml` | Security directives (SC-01, SC-02) | 7 directives |
 | 4 | [feature-spec.schema.json](feature-spec.schema.json) | `stages/01-*/artifacts/outputs/FEAT-*.yaml` | Feature specifications | 47+ artifacts |
@@ -230,7 +230,7 @@ supporting_files:
 
 #### 7. **registry.schema.json** — Control Registry Schema
 
-**Validates:** `controls/registry.yaml` — the master index of all 51 controls
+**Validates:** `controls/registry.yaml` — the master index of all 50 controls
 
 **Top-level required:** `registry` (array, exactly 51 entries)
 
@@ -453,8 +453,8 @@ python3 scripts/validate.py
 
 Expected output (10 checks):
 ```
-✓ 1/10 Control files ... 51 controls found
-✓ 2/10 Registry ... 51 controls registered
+✓ 1/10 Control files ... 50 controls found
+✓ 2/10 Registry ... 50 controls registered
 ✓ 3/10 Stage files ... 6 stages validated
 ✓ 4/10 Directive files ... 7 directives validated
 ✓ 5/10 Control dependencies ... no cycles detected

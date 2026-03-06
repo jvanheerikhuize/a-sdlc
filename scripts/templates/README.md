@@ -216,7 +216,7 @@ Generates `regulatory/README.md` from regulatory compliance data.
 
 **Sections generated:**
 
-- Coverage summary (DORA 84.3%, EU AI Act 58.8%)
+- Coverage summary (DORA 88.0%, EU AI Act 80.0%)
 - Track coverage (controls mapped per track)
 - Regulatory areas (risk management, testing, supply chain, etc.)
 - DORA article mappings

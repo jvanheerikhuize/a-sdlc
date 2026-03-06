@@ -327,8 +327,8 @@ feedback_loops:
       - id: SC-09
         name: Secrets & Credentials Scanning
         rationale: Fix must not introduce exposed credentials.
-      - id: GC-06
-        name: Code Provenance Tracking
+      - id: GC-03
+        name: Agent Provenance Registry
         rationale: Fix output must be attributed to the agent or developer that produced it.
       - id: QC-06
         name: Functional & Non-Functional Testing
@@ -371,7 +371,7 @@ feedback_loops:
         - number: 2
           controls: [SC-02, QC-03, RC-02, SC-05, AC-03]
         - number: 3
-          controls: [SC-07, QC-05, RC-04, SC-08, SC-09, QC-04, GC-06]
+          controls: [SC-07, QC-05, RC-04, SC-08, SC-09, QC-04, GC-03]
         - number: 4
           controls: [SC-12, QC-06, SC-13, QC-07, AC-05, QC-08, RC-05]
           note: QC-07 and AC-05 applicable only if AI components are involved.

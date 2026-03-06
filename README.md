@@ -82,12 +82,12 @@ Five control tracks run through the entire lifecycle:
 | Cross-cutting | — | — | [SC-01](controls/sc/SC-01.yaml), [SC-02](controls/sc/SC-02.yaml) | — | [GC-01](controls/gc/GC-01.yaml), [GC-02](controls/gc/GC-02.yaml), [GC-03](controls/gc/GC-03.yaml), [GC-04](controls/gc/GC-04.yaml) |
 | [1 Intent Ingestion](stages/01-intent-ingestion/README.md) | [QC-01](controls/qc/QC-01.yaml), [QC-02](controls/qc/QC-02.yaml) | [RC-01](controls/rc/RC-01.yaml) | [SC-03](controls/sc/SC-03.yaml), [SC-04](controls/sc/SC-04.yaml) | [AC-01](controls/ac/AC-01.yaml), [AC-02](controls/ac/AC-02.yaml) | [GC-05](controls/gc/GC-05.yaml) |
 | [2 System Design](stages/02-system-design/README.md) | [QC-03](controls/qc/QC-03.yaml) | [RC-02](controls/rc/RC-02.yaml), [RC-03](controls/rc/RC-03.yaml) | [SC-05](controls/sc/SC-05.yaml), [SC-06](controls/sc/SC-06.yaml) | [AC-03](controls/ac/AC-03.yaml), [AC-04](controls/ac/AC-04.yaml) | — |
-| [3 Coding & Implementation](stages/03-coding-implementation/README.md) | [QC-04](controls/qc/QC-04.yaml), [QC-05](controls/qc/QC-05.yaml) | [RC-04](controls/rc/RC-04.yaml) | [SC-07](controls/sc/SC-07.yaml), [SC-08](controls/sc/SC-08.yaml), [SC-09](controls/sc/SC-09.yaml), [SC-10](controls/sc/SC-10.yaml), [SC-11](controls/sc/SC-11.yaml) | — | [GC-06](controls/gc/GC-06.yaml) |
+| [3 Coding & Implementation](stages/03-coding-implementation/README.md) | [QC-04](controls/qc/QC-04.yaml), [QC-05](controls/qc/QC-05.yaml) | [RC-04](controls/rc/RC-04.yaml) | [SC-07](controls/sc/SC-07.yaml), [SC-08](controls/sc/SC-08.yaml), [SC-09](controls/sc/SC-09.yaml), [SC-10](controls/sc/SC-10.yaml), [SC-11](controls/sc/SC-11.yaml) | — | — |
 | [4 Testing & Documentation](stages/04-testing-documentation/README.md) | [QC-06](controls/qc/QC-06.yaml), [QC-07](controls/qc/QC-07.yaml), [QC-08](controls/qc/QC-08.yaml) | [RC-05](controls/rc/RC-05.yaml) | [SC-12](controls/sc/SC-12.yaml), [SC-13](controls/sc/SC-13.yaml), [SC-14](controls/sc/SC-14.yaml), [SC-15](controls/sc/SC-15.yaml) | [AC-05](controls/ac/AC-05.yaml) | — |
 | [5 Deployment & Release](stages/05-deployment-release/README.md) | [QC-09](controls/qc/QC-09.yaml) | [RC-06](controls/rc/RC-06.yaml), [RC-07](controls/rc/RC-07.yaml) | [SC-16](controls/sc/SC-16.yaml), [SC-17](controls/sc/SC-17.yaml), [SC-18](controls/sc/SC-18.yaml) | — | — |
 | [6 Observability & Maintenance](stages/06-observability-maintenance/README.md) | [QC-10](controls/qc/QC-10.yaml) | [RC-08](controls/rc/RC-08.yaml), [RC-09](controls/rc/RC-09.yaml) | [SC-19](controls/sc/SC-19.yaml), [SC-20](controls/sc/SC-20.yaml) | [AC-06](controls/ac/AC-06.yaml) | — |
 
-**Total: 51 controls** across 5 tracks (QC: 10, RC: 9, SC: 20, AC: 6, GC: 6), including cross-cutting controls. Full index in [controls/registry.yaml](controls/registry.yaml).
+**Total: 50 controls** across 5 tracks (QC: 10, RC: 9, SC: 20, AC: 6, GC: 5), including cross-cutting controls. Full index in [controls/registry.yaml](controls/registry.yaml).
 
 ---
 
@@ -102,13 +102,13 @@ a-sdlc/
 │   ├── control.schema.json            ← JSON Schema for control definitions
 │   └── feature-spec.schema.json       ← JSON Schema for feature specifications
 ├── controls/
-│   ├── registry.yaml                  ← Flat index of all 51 controls (fast lookup by ID)
+│   ├── registry.yaml                  ← Flat index of all 50 controls (fast lookup by ID)
 │   ├── README.md                      ← Controls directory documentation
 │   ├── qc/                            ← Quality Control definitions (10 controls)
 │   ├── rc/                            ← Risk Control definitions (8 controls)
 │   ├── sc/                            ← Security Control definitions (16 controls)
 │   ├── ac/                            ← AI Control definitions (6 controls)
-│   └── gc/                            ← Governance Control definitions (6 controls)
+│   └── gc/                            ← Governance Control definitions (5 controls)
 ├── directives/
 │   ├── core/
 │   │   └── core-directives.yaml       ← Immutable core security directives (SC-01 payload)
@@ -136,14 +136,14 @@ a-sdlc/
 
 ## Regulatory Compliance
 
-The A-SDLC framework is engineered for compliance with **DORA** (Digital Operational Resilience Act) and the **EU AI Act**. **All 51 controls have explicit regulatory mappings** to specific articles and requirements.
+The A-SDLC framework is engineered for compliance with **DORA** (Digital Operational Resilience Act) and the **EU AI Act**. **All 50 controls have explicit regulatory mappings** to specific articles and requirements.
 
 ### Coverage Summary
 
 | Framework | Controls Mapped | Coverage |
 | --------- | --------------- | -------- |
-| **DORA** | 43 / 51 | **84.3%** |
-| **EU AI Act** | 30 / 51 | **58.8%** |
+| **DORA** | 43 / 51 | **88.0%** |
+| **EU AI Act** | 30 / 51 | **80.0%** |
 
 ### Regulatory Strengths by Track
 
@@ -159,14 +159,14 @@ The A-SDLC framework is engineered for compliance with **DORA** (Digital Operati
 | ---- | ------------- | ------------------ | ------------ |
 | **Risk Management** | Art. 8–9 | Art. 6, 9, Annex III | RC-01, AC-01, RC-02, RC-05 |
 | **Security Testing** | Art. 24–25 | Art. 15 | SC-12, SC-13, SC-14, SC-15, QC-06 |
-| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-10, SC-11, GC-03, GC-06 |
+| **Supply Chain** | Art. 28 | Art. 10, 17 | SC-10, SC-11, GC-03 |
 | **Change Management** | Art. 9(4) | Art. 9 | RC-02, RC-06, QC-04, QC-05 |
 | **Documentation** | Art. 8(5-6) | Art. 11, Annex IV | QC-08, AC-03, AC-04 |
 | **Record-Keeping** | Art. 8(6) | Art. 12 | GC-01, GC-02, RC-04, GC-04 |
 | **Incident Management** | Art. 17–19 | Art. 73 | SC-19, SC-20, GC-01 |
 | **GPAI Models** | — | Art. 51–56 | AC-02, AC-03, AC-04 |
 
-For detailed mappings of all 51 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
+For detailed mappings of all 50 controls to regulatory articles, see: **[regulatory/compliance-matrix.yaml](regulatory/compliance-matrix.yaml)** and **[regulatory/README.md](regulatory/README.md)**
 
 ---
 
@@ -174,4 +174,4 @@ For detailed mappings of all 51 controls to regulatory articles, see: **[regulat
 
 Start with [AGENTS.md](AGENTS.md). It contains your mandatory operating instructions, navigation map, delegation pattern definitions, and behavioural rules.
 
-**Last Updated:** 2026-03-06 08:44 UTC
+**Last Updated:** 2026-03-06 09:06 UTC
