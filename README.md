@@ -174,4 +174,4 @@ For detailed mappings of all 51 controls to regulatory articles, see: **[regulat
 
 Start with [AGENTS.md](AGENTS.md). It contains your mandatory operating instructions, navigation map, delegation pattern definitions, and behavioural rules.
 
-**Last Updated:** 2026-03-06 07:45 UTC
+**Last Updated:** 2026-03-06 08:21 UTC
