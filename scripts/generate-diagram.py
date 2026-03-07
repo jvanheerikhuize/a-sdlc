@@ -153,8 +153,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .tooltip .ctrl-id { color: #fff; font-weight: 600; }
   .tooltip .ctrl-name { color: var(--text-muted); }
 
-  svg a:hover rect { opacity: 1; filter: brightness(1.3); }
-  svg a:hover path { filter: brightness(1.3); }
 </style>
 </head>
 <body>
@@ -317,7 +315,6 @@ function buildDiagram() {
     // Stage link — wraps hex shape + number + name
     const stageLink = svgEl('a', { href: '../' + stage.readme, target: '_blank' });
     stageLink.style.cursor = 'pointer';
-
     // Hex shape
     stageLink.appendChild(svgEl('path', {
       d: hexPath(hx, hy, HEX_R),
@@ -334,13 +331,13 @@ function buildDiagram() {
       const mid = Math.ceil(words.length / 2);
       lines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')];
     }
-    const nameLineH = 17;
+    const nameLineH = 24;
     const nameBlockH = lines.length * nameLineH;
     const nameStartY = hy - 14 - ((lines.length - 1) * nameLineH) / 2;
 
     // Stage number (watermark) — fixed gap above the first name line
     stageLink.appendChild(svgText(stage.number, {
-      x: hx, y: nameStartY - 16, 'text-anchor': 'middle', fill: '#ffffff',
+      x: hx, y: nameStartY - 30, 'text-anchor': 'middle', fill: '#ffffff',
       'font-size': '36', 'font-weight': '800', opacity: '0.2',
     }));
 
@@ -348,7 +345,7 @@ function buildDiagram() {
       stageLink.appendChild(svgText(lines[li], {
         x: hx, y: nameStartY + li * nameLineH,
         'text-anchor': 'middle', fill: '#ffffff',
-        'font-size': '14', 'font-weight': '700', 'letter-spacing': '0.04em',
+        'font-size': '20', 'font-weight': '700', 'letter-spacing': '0.04em',
       }));
     }
 
@@ -360,6 +357,9 @@ function buildDiagram() {
     const stageBadgesH = stageRows * BADGE_H + (stageRows - 1) * BADGE_GAP_Y;
     const badgeCenterY = lastNameY + TITLE_BADGE_GAP + stageBadgesH / 2;
     drawBadges(g, stage.controls, hx, badgeCenterY, BADGES_PER_ROW);
+
+    // Bring hex group to front on hover (SVG z-order = DOM order)
+    g.addEventListener('mouseenter', () => g.parentNode.appendChild(g));
 
     svg.appendChild(g);
   }
