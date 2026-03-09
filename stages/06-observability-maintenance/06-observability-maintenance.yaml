@@ -10,24 +10,36 @@ description: Operate, monitor, and maintain the deployed system. Controls in thi
   Escalations from Stage 6 controls may trigger feedback loops back into earlier stages for remediation.
 
 roles:
-  - code: AGT
-    name: Agent
+  - code: SRE
+    name: Site Reliability Engineer
+    execution_mode: autonomous
     responsibilities: Executes continuous monitoring; detects anomalies; classifies incidents; prepares regulatory reports; triggers alerts
+    ref: roles/SRE.yaml
   - code: OPS
     name: Operations / SRE
+    execution_mode: gated
     responsibilities: Activates monitoring at handover; responds to SLO and health alerts; initiates feedback loops for code changes
+    ref: roles/OPS.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Responds to incident and anomaly escalations; approves DORA Art. 19 classification; investigates security events
+    ref: roles/SA.yaml
   - code: RO
     name: Risk Officer
+    execution_mode: gated
     responsibilities: Responds to risk escalations from RC-08; makes risk acceptance decisions; approves feedback loop triggers
+    ref: roles/RO.yaml
   - code: AGL
     name: AI Governance Lead
+    execution_mode: gated
     responsibilities: Reviews AI post-market surveillance results; files serious AI incident reports per Art. 73
+    ref: roles/AGL.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews all regulatory incident reports; ensures DORA and AI Act reporting obligations are met
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # Stage 6 is continuous operational monitoring. Initial handover activates monitoring (implicit S1).

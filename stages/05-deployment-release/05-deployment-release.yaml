@@ -10,24 +10,36 @@ description: Execute the approved deployment with formal CAB sign-off, verified 
   integrity checking. RC-06 CAB Approval is a mandatory human gate that cannot be delegated.
 
 roles:
-  - code: AGT
-    name: Agent
+  - code: RENG
+    name: Release Engineer
+    execution_mode: autonomous
     responsibilities: Compiles release readiness checklist; prepares CAB submission; validates rollback; runs infrastructure and integrity checks
+    ref: roles/RENG.yaml
   - code: REL
     name: Release Manager
+    execution_mode: gated
     responsibilities: Reviews and approves release readiness checklist and rollback plan; orchestrates deployment execution
+    ref: roles/REL.yaml
   - code: RO
     name: Risk Officer
+    execution_mode: gated
     responsibilities: Makes the formal CAB approval decision for high-risk changes
+    ref: roles/RO.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Reviews infrastructure security baseline deviations; investigates deployment integrity failures
+    ref: roles/SA.yaml
   - code: OPS
     name: Operations / SRE
+    execution_mode: gated
     responsibilities: Executes deployment pipeline; monitors smoke tests; manages hypercare window; confirms Stage 6 handover
+    ref: roles/OPS.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews approval records during regulatory audits
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # QC-09 compiles release package. RC-06 is the CAB approval gate (human-required).

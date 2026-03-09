@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Drafts system design; generates threat model; injects directives |
+| ARCH | Solution Architect | Drafts system design; generates threat model; injects directives |
 | LAD | Lead Architect | Validates and approves design completeness and standards compliance |
 | SA | Security Architect | Validates STRIDE threat model; signs and publishes directive payload |
 | RO | Risk Officer | Makes formal design approval decision; determines sign-off authority by risk tier |
@@ -410,4 +410,4 @@ The following directives are injected at the entry to this stage:
 
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

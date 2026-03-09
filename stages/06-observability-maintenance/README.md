@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Executes continuous monitoring; detects anomalies; classifies incidents; prepares regulatory reports; triggers alerts |
+| SRE | Site Reliability Engineer | Executes continuous monitoring; detects anomalies; classifies incidents; prepares regulatory reports; triggers alerts |
 | OPS | Operations / SRE | Activates monitoring at handover; responds to SLO and health alerts; initiates feedback loops for code changes |
 | SA | Security Architect | Responds to incident and anomaly escalations; approves DORA Art. 19 classification; investigates security events |
 | RO | Risk Officer | Responds to risk escalations from RC-08; makes risk acceptance decisions; approves feedback loop triggers |
@@ -351,4 +351,4 @@ For full feedback loop definitions, see [`feedbackloops/feedback-loops.yaml`](..
 ---
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

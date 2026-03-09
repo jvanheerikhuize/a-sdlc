@@ -12,25 +12,39 @@ description: Capture, validate, and enrich an incoming change request into a str
 roles:
   - code: REQ
     name: Requester
+    execution_mode: gated
     responsibilities: Submits the change request
-  - code: AGT
-    name: Agent
+    ref: roles/REQ.yaml
+  - code: IA
+    name: Intake Analyst
+    execution_mode: autonomous
     responsibilities: Screens, parses, drafts, classifies, and logs
+    ref: roles/IA.yaml
   - code: PO
     name: Product Owner
+    execution_mode: gated
     responsibilities: Approves specification; makes binding conflict decisions
+    ref: roles/PO.yaml
   - code: RO
     name: Risk Officer
+    execution_mode: gated
     responsibilities: Validates risk classification; may override agent-proposed tier
+    ref: roles/RO.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Reviews blocked or flagged requests; contacts requester
+    ref: roles/SA.yaml
   - code: AGL
     name: AI Governance Lead
+    execution_mode: gated
     responsibilities: Confirms EU AI Act tier (if AI component involved)
+    ref: roles/AGL.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews audit records during regulatory audits
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # Steps 1.3, 1.4, 1.5 (QC-02, RC-01, AC-01) run in parallel after QC-01 completes

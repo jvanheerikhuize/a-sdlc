@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Writes code; logs decisions (RC-04); tags provenance (GC-03); scans output (SC-08); creates pull request (QC-04) |
+| IMPL | Implementation Engineer | Writes code; logs decisions (RC-04); tags provenance (GC-03); scans output (SC-08); creates pull request (QC-04) |
 | DEV | Developer | Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk tiers |
 | SA | Security Architect | Defines and maintains agent permission policy (SC-07); reviews violation logs; escalation target for SC-08 and SC-09 findings |
 | CO | Compliance Officer | Reviews code provenance records and audit artefacts during regulatory audits |
@@ -408,4 +408,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

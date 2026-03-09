@@ -110,42 +110,101 @@ framework:
       description: Cannot be delegated. Human must decide. Agent must stop and escalate.
 
 roles:
+  # All roles are agentic-first. Every role has an agent_persona.
+  # execution_mode: autonomous (no approval gate) | gated (approval required)
+  # Full definitions: roles/[CODE].yaml  |  Registry: roles/registry.yaml
+  #
+  # Stage executor roles (autonomous — one per stage):
+  IA:
+    name: Intake Analyst
+    execution_mode: autonomous
+    description: Stage 1 executor. Converts raw change requests into feature specifications.
+    ref: roles/IA.yaml
+  ARCH:
+    name: Solution Architect
+    execution_mode: autonomous
+    description: Stage 2 executor. Translates specifications into system designs with threat models.
+    ref: roles/ARCH.yaml
+  IMPL:
+    name: Implementation Engineer
+    execution_mode: autonomous
+    description: Stage 3 executor. Writes secure, traceable code that faithfully implements the approved design.
+    ref: roles/IMPL.yaml
+  TENG:
+    name: Test Engineer
+    execution_mode: autonomous
+    description: Stage 4 executor. Runs tests and scans; assembles the go/no-go evidence package.
+    ref: roles/TENG.yaml
+  RENG:
+    name: Release Engineer
+    execution_mode: autonomous
+    description: Stage 5 executor. Validates deployment readiness, artefact integrity, and rollback plans.
+    ref: roles/RENG.yaml
+  SRE:
+    name: Site Reliability Engineer
+    execution_mode: autonomous
+    description: Stage 6 executor. Monitors production, classifies incidents, triggers feedback loops.
+    ref: roles/SRE.yaml
   REQ:
     name: Requester
+    execution_mode: gated
     description: Submits change requests; the originator of intent.
+    ref: roles/REQ.yaml
   AGT:
     name: Agent
-    description: Automated AI agent performing processing, drafting, analysis, generation, and logging tasks.
+    execution_mode: autonomous
+    description: Cross-cutting executor. Performs all automated work across all stages.
+    ref: roles/AGT.yaml
   PO:
     name: Product Owner
+    execution_mode: gated
     description: Business decision authority; approves specifications and resolves requirement conflicts.
+    ref: roles/PO.yaml
   RO:
     name: Risk Officer
-    description: Validates risk classifications; may override agent-proposed tiers with documented justification.
+    execution_mode: gated
+    description: Validates risk classifications; makes go/no-go and CAB approval decisions.
+    ref: roles/RO.yaml
   SA:
     name: Security Architect
-    description: Reviews security-flagged items; owns security control escalations and security directive authorship.
+    execution_mode: gated
+    description: Owns security posture; signs threat model; sole authority for security exceptions.
+    ref: roles/SA.yaml
   AGL:
     name: AI Governance Lead
-    description: Confirms EU AI Act risk tiers for changes involving AI components; owns AC-track controls.
+    execution_mode: gated
+    description: Confirms EU AI Act risk tiers for AI components; owns AC-track controls.
+    ref: roles/AGL.yaml
   LAD:
     name: Lead Architect
-    description: Owns architectural decisions; formal approval authority for system design at Stage 2.
+    execution_mode: gated
+    description: Owns architectural decisions; design completeness approval gate at Stage 2.
+    ref: roles/LAD.yaml
   DEV:
     name: Developer
-    description: Authors and reviews code at Stage 3; accountable for implementation quality and peer review.
+    execution_mode: gated
+    description: Authors and reviews code; pull request approval gate at Stage 3.
+    ref: roles/DEV.yaml
   QA:
     name: QA Engineer
-    description: Owns test coverage and quality sign-off at Stage 4.
+    execution_mode: gated
+    description: Owns test coverage; quality sign-off gate at Stage 4.
+    ref: roles/QA.yaml
   REL:
     name: Release Manager
-    description: Manages the deployment pipeline and CAB coordination at Stage 5.
+    execution_mode: gated
+    description: Manages deployment pipeline; release readiness and rollback approval at Stage 5.
+    ref: roles/REL.yaml
   OPS:
     name: Operations / SRE
-    description: Monitors production health; primary actor triggering feedback loops from Stage 6.
+    execution_mode: gated
+    description: Owns production; executes deployment, monitors health, triggers feedback loops.
+    ref: roles/OPS.yaml
   CO:
     name: Compliance Officer
-    description: Reviews audit records and traceability evidence during regulatory audits; no stage-execution role.
+    execution_mode: gated
+    description: Audit consumer; reviews artefacts for regulatory compliance across all stages.
+    ref: roles/CO.yaml
 
 cross_cutting:
   description: Controls and directives active across all six stages for every agent session.

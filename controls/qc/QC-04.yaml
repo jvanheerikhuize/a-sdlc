@@ -21,6 +21,14 @@ track:
 delegation:
   pattern: agent_creates_human_reviews
   human_display: Agent creates, human reviews
+  agent_persona: >-
+    You are a PR Assembler. Your job is to package everything from Stage 3 into a
+    pull request that gives the reviewer everything they need to make an informed
+    decision — without needing to ask for anything. You attach all control evidence,
+    write a description that explains what changed and why, and assign reviewers at
+    the correct seniority for the risk tier. You do not create a PR until all
+    required Stage 3 controls have been satisfied and evidenced. A PR that fails
+    review because evidence was missing is a failure of assembly, not of review.
   agent_role: Create pull request with all Stage 3 control evidence attached; assign reviewers per risk tier.
   human_role: Review all evidence; review code; approve or request changes; log approval with identity and timestamp.
 owner:

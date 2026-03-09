@@ -10,24 +10,36 @@ description: Translate the approved specification into a complete, approved syst
   before coding begins. No implementation may start without RC-02 (design approval) and SC-02 directive injection confirmation.
 
 roles:
-  - code: AGT
-    name: Agent
+  - code: ARCH
+    name: Solution Architect
+    execution_mode: autonomous
     responsibilities: Drafts system design; generates threat model; injects directives
+    ref: roles/ARCH.yaml
   - code: LAD
     name: Lead Architect
+    execution_mode: gated
     responsibilities: Validates and approves design completeness and standards compliance
+    ref: roles/LAD.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Validates STRIDE threat model; signs and publishes directive payload
+    ref: roles/SA.yaml
   - code: RO
     name: Risk Officer
+    execution_mode: gated
     responsibilities: Makes formal design approval decision; determines sign-off authority by risk tier
+    ref: roles/RO.yaml
   - code: AGL
     name: AI Governance Lead
+    execution_mode: gated
     responsibilities: Reviews and approves AI component design (if AI component involved)
+    ref: roles/AGL.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews design records during regulatory audits
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # Steps 2.2, 2.3, 2.4 (plus SC-06, RC-03) run in parallel after QC-03 draft completes

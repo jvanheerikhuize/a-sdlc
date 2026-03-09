@@ -10,18 +10,26 @@ description: Implement the approved design under continuous automated quality an
   human, agent, or co-authored — converges into a reviewed and approved pull request before Stage 4 begins.
 
 roles:
-  - code: AGT
-    name: Agent
+  - code: IMPL
+    name: Implementation Engineer
+    execution_mode: autonomous
     responsibilities: Writes code; logs decisions (RC-04); tags provenance (GC-03); scans output (SC-08); creates pull request (QC-04)
+    ref: roles/IMPL.yaml
   - code: DEV
     name: Developer
+    execution_mode: gated
     responsibilities: Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk tiers
+    ref: roles/DEV.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Defines and maintains agent permission policy (SC-07); reviews violation logs; escalation target for SC-08 and SC-09 findings
+    ref: roles/SA.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews code provenance records and audit artefacts during regulatory audits
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # SC-07 runs first (load permissions). Then QC-05, SC-09, SC-10, SC-11, RC-04, GC-03 run continuously in parallel per-commit.

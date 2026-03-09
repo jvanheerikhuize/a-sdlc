@@ -29,7 +29,7 @@ The following roles participate in this stage:
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
 | REQ | Requester | Submits the change request |
-| AGT | Agent | Screens, parses, drafts, classifies, and logs |
+| IA | Intake Analyst | Screens, parses, drafts, classifies, and logs |
 | PO | Product Owner | Approves specification; makes binding conflict decisions |
 | RO | Risk Officer | Validates risk classification; may override agent-proposed tier |
 | SA | Security Architect | Reviews blocked or flagged requests; contacts requester |
@@ -330,4 +330,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

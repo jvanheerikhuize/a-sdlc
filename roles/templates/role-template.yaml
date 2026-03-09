@@ -1,0 +1,82 @@
+# =============================================================================
+# Role Template — A-SDLC
+# =============================================================================
+# Use this template to define a new role in the A-SDLC framework.
+#
+# Steps to add a new role:
+#   1. Copy this file to roles/[CODE].yaml
+#   2. Fill in all required fields (marked with # REQUIRED)
+#   3. Add an entry to roles/registry.yaml
+#   4. Add the role to relevant stage YAML files (stages/NN-name/*.yaml)
+#   5. Update asdlc.yaml roles section
+#   6. If execution_mode is autonomous and stage-scoped, add it to active_in_stages in roles/AGT.yaml
+# =============================================================================
+
+# REQUIRED — 2–4 uppercase letters, unique across registry
+role_code: ""
+
+# REQUIRED — full display name
+name: ""
+
+# REQUIRED — autonomous | gated
+# autonomous: agent executes without an approval gate
+# gated:      agent executes, but designated approval points require sign-off
+execution_mode: ""
+
+# REQUIRED — one sentence describing what this role does in the framework
+description: ""
+
+# REQUIRED — the identity, mindset, and decision logic for an agent adopting
+# this role. Write in second person ("You are the X. Your job is to...").
+# This is the prompt an agent loads when acting in this role.
+agent_persona: >-
+  You are the [ROLE NAME]. [Describe the core identity in 1-2 sentences.]
+
+  [Describe how this role thinks, what it prioritises, and how it makes
+  decisions. Use active, declarative language. Avoid hedging.]
+
+  [Describe what this role does NOT do — what is out of scope and which
+  other roles own those decisions. This prevents boundary confusion.]
+
+# REQUIRED — list of stages where this role has responsibilities
+active_in_stages:
+  - number: 1            # stage number (1–6)
+    name: Intent Ingestion
+    responsibilities: "" # one-line description of what this role does in this stage
+
+# OPTIONAL — controls this role owns (authoritative list is in the control file)
+# Use owns_controls for specific IDs, owns_controls_track for a full track
+owns_controls: []
+# owns_controls_track: QC  # QC | RC | SC | AC | GC
+
+# OPTIONAL — controls that escalate to this role when they fail or need decision
+escalation_target_for: []
+
+# REQUIRED
+authority:
+  # REQUIRED — list of decisions this role can make / things it can approve
+  can_approve: []
+  # OPTIONAL — list of agent outputs or decisions this role can override
+  can_override: []
+  # REQUIRED — true if override decisions must be logged with written rationale
+  requires_documented_justification: false
+  # OPTIONAL — additional notes on authority boundaries
+  notes: ""
+
+# OPTIONAL — only needed for autonomous roles that execute across multiple stages
+# (i.e. AGT itself). For stage-scoped autonomous roles (IA, ARCH, IMPL, etc.),
+# use stage_directive and controls_executed instead.
+# stage_roles:
+#   - stage: 1
+#     code: IA
+#     file: roles/IA.yaml
+
+metadata:
+  # REQUIRED — increment on each meaningful change
+  version: "1.0"
+  # REQUIRED — date of last update (YYYY-MM-DD)
+  last_updated: ""
+  # REQUIRED — draft | approved | deprecated
+  status: draft
+  # OPTIONAL — who owns this role definition (usually the human accountable for the role)
+  owner: ""

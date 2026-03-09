@@ -85,20 +85,26 @@ All roles participating in A-SDLC stages are defined below. Each stage YAML spec
 
 | Code | Role | Description |
 |------|------|-------------|
+| IA | Intake Analyst | Stage 1 executor. Converts raw change requests into feature specifications. |
+| ARCH | Solution Architect | Stage 2 executor. Translates specifications into system designs with threat models. |
+| IMPL | Implementation Engineer | Stage 3 executor. Writes secure, traceable code that faithfully implements the approved design. |
+| TENG | Test Engineer | Stage 4 executor. Runs tests and scans; assembles the go/no-go evidence package. |
+| RENG | Release Engineer | Stage 5 executor. Validates deployment readiness, artefact integrity, and rollback plans. |
+| SRE | Site Reliability Engineer | Stage 6 executor. Monitors production, classifies incidents, triggers feedback loops. |
 | REQ | Requester | Submits change requests; the originator of intent. |
-| AGT | Agent | Automated AI agent performing processing, drafting, analysis, generation, and logging tasks. |
+| AGT | Agent | Cross-cutting executor. Performs all automated work across all stages. |
 | PO | Product Owner | Business decision authority; approves specifications and resolves requirement conflicts. |
-| RO | Risk Officer | Validates risk classifications; may override agent-proposed tiers with documented justification. |
-| SA | Security Architect | Reviews security-flagged items; owns security control escalations and security directive authorship. |
-| AGL | AI Governance Lead | Confirms EU AI Act risk tiers for changes involving AI components; owns AC-track controls. |
-| LAD | Lead Architect | Owns architectural decisions; formal approval authority for system design at Stage 2. |
-| DEV | Developer | Authors and reviews code at Stage 3; accountable for implementation quality and peer review. |
-| QA | QA Engineer | Owns test coverage and quality sign-off at Stage 4. |
-| REL | Release Manager | Manages the deployment pipeline and CAB coordination at Stage 5. |
-| OPS | Operations / SRE | Monitors production health; primary actor triggering feedback loops from Stage 6. |
-| CO | Compliance Officer | Reviews audit records and traceability evidence during regulatory audits; no stage-execution role. |
+| RO | Risk Officer | Validates risk classifications; makes go/no-go and CAB approval decisions. |
+| SA | Security Architect | Owns security posture; signs threat model; sole authority for security exceptions. |
+| AGL | AI Governance Lead | Confirms EU AI Act risk tiers for AI components; owns AC-track controls. |
+| LAD | Lead Architect | Owns architectural decisions; design completeness approval gate at Stage 2. |
+| DEV | Developer | Authors and reviews code; pull request approval gate at Stage 3. |
+| QA | QA Engineer | Owns test coverage; quality sign-off gate at Stage 4. |
+| REL | Release Manager | Manages deployment pipeline; release readiness and rollback approval at Stage 5. |
+| OPS | Operations / SRE | Owns production; executes deployment, monitors health, triggers feedback loops. |
+| CO | Compliance Officer | Audit consumer; reviews artefacts for regulatory compliance across all stages. |
 
-See also: [`roles.yaml`](../asdlc.yaml) (roles are now merged into `asdlc.yaml`).
+See also: [`roles/registry.yaml`](../roles/registry.yaml) for the complete role index and [`roles/README.md`](../roles/README.md) for full role documentation.
 
 ---
 
@@ -140,4 +146,4 @@ For full feedback loop definitions and decision logic, see [`../feedbackloops/fe
 
 ---
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

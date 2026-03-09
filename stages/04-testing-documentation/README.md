@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Executes test suites; runs scans; checks documentation completeness; calculates risk threshold; presents evidence |
+| TENG | Test Engineer | Executes test suites; runs scans; checks documentation completeness; calculates risk threshold; presents evidence |
 | QA | QA Engineer | Reviews functional and NFR test results; investigates failures; approves documentation completeness |
 | SA | Security Architect | Reviews SAST and DAST findings; triages CWE-mapped vulnerabilities; approves risk acceptance for security findings |
 | AGL | AI Governance Lead | Reviews AI output validation and bias test results; approves AI-specific risk acceptance |
@@ -407,4 +407,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

@@ -28,7 +28,7 @@ The following roles participate in this stage:
 
 | Role | Full Name | Responsibilities |
 |------|-----------|------------------|
-| AGT | Agent | Compiles release readiness checklist; prepares CAB submission; validates rollback; runs infrastructure and integrity checks |
+| RENG | Release Engineer | Compiles release readiness checklist; prepares CAB submission; validates rollback; runs infrastructure and integrity checks |
 | REL | Release Manager | Reviews and approves release readiness checklist and rollback plan; orchestrates deployment execution |
 | RO | Risk Officer | Makes the formal CAB approval decision for high-risk changes |
 | SA | Security Architect | Reviews infrastructure security baseline deviations; investigates deployment integrity failures |
@@ -336,4 +336,4 @@ This stage produces the following artifacts:
 
 
 
-**Last Updated:** 2026-03-07 20:31 UTC
+**Last Updated:** 2026-03-09 21:43 UTC

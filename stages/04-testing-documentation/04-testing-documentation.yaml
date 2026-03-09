@@ -11,24 +11,36 @@ description: Validate the implementation against all acceptance criteria, securi
   RC-05 result.
 
 roles:
-  - code: AGT
-    name: Agent
+  - code: TENG
+    name: Test Engineer
+    execution_mode: autonomous
     responsibilities: Executes test suites; runs scans; checks documentation completeness; calculates risk threshold; presents evidence
+    ref: roles/TENG.yaml
   - code: QA
     name: QA Engineer
+    execution_mode: gated
     responsibilities: Reviews functional and NFR test results; investigates failures; approves documentation completeness
+    ref: roles/QA.yaml
   - code: SA
     name: Security Architect
+    execution_mode: gated
     responsibilities: Reviews SAST and DAST findings; triages CWE-mapped vulnerabilities; approves risk acceptance for security findings
+    ref: roles/SA.yaml
   - code: AGL
     name: AI Governance Lead
+    execution_mode: gated
     responsibilities: Reviews AI output validation and bias test results; approves AI-specific risk acceptance
+    ref: roles/AGL.yaml
   - code: RO
     name: Risk Officer
+    execution_mode: gated
     responsibilities: Makes the formal go/no-go decision at RC-05; provides documented risk acceptance for conditional pass
+    ref: roles/RO.yaml
   - code: CO
     name: Compliance Officer
+    execution_mode: gated
     responsibilities: Reviews documentation artefacts and test evidence during regulatory audits
+    ref: roles/CO.yaml
 
 # Execution DAG: Machine-parseable sequencing (agents use this, not process.md)
 # SC-12 (SAST) runs first. Steps 4.2–4.6 (QC-06, SC-13, QC-07, AC-05, QC-08) run in parallel.

@@ -100,6 +100,12 @@ doc_generation:
       output: directives/README.md
       description: "Agent directive bundles, injection protocols, and immutability rules"
 
+    # Roles documentation
+    - source: roles/registry.yaml
+      template: roles-index
+      output: roles/README.md
+      description: "Role index: all autonomous and gated roles with responsibilities and file references"
+
 # Control registry (flat index for O(1) lookup)
 # Full definitions in: controls/[track]/[ID].yaml
 controls:

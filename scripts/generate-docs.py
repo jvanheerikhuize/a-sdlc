@@ -669,6 +669,56 @@ class DocGenerator:
         print(f"✓ Generated: {output_file}")
         return True
 
+    def generate_roles_index(self):
+        """Generate roles/README.md from roles/registry.yaml."""
+        registry_data = self._load_yaml("roles/registry.yaml")
+        if not registry_data:
+            return False
+
+        registry = registry_data.get("registry", [])
+
+        # AGT meta-role + 6 stage-specific autonomous roles
+        agt_entry = next((r for r in registry if r.get("code") == "AGT"), None)
+        autonomous_stage_roles = [r for r in registry
+                                   if r.get("execution_mode") == "autonomous"
+                                   and r.get("code") != "AGT"]
+        gated_roles = [r for r in registry if r.get("execution_mode") == "gated"]
+
+        # Control-level personas (hardcoded — sourced from README convention)
+        control_personas = [
+            {"control": "SC-03", "persona": "Security Screener"},
+            {"control": "QC-01", "persona": "Business Analyst"},
+            {"control": "QC-02", "persona": "Conflict Analyst"},
+            {"control": "RC-01", "persona": "Risk Assessor"},
+            {"control": "AC-01", "persona": "AI Governance Analyst"},
+            {"control": "QC-03", "persona": "Solution Architect (design drafting)"},
+            {"control": "SC-05", "persona": "Threat Modeler"},
+            {"control": "QC-04", "persona": "PR Assembler"},
+            {"control": "SC-08", "persona": "Security Scanner"},
+            {"control": "RC-05", "persona": "Evidence Compiler"},
+        ]
+
+        context = {
+            "total_roles": len(registry),
+            "agt": agt_entry,
+            "autonomous_stage_roles": autonomous_stage_roles,
+            "gated_roles": gated_roles,
+            "control_personas": control_personas,
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M UTC"),
+        }
+
+        content = render_template_safe(self.jinja_env, "roles-index.jinja2", context)
+        if content is None:
+            print("ERROR: Template not found: roles-index.jinja2")
+            return False
+
+        output_file = self.repo_root / "roles" / "README.md"
+        with open(output_file, "w") as f:
+            f.write(content)
+
+        print(f"✓ Generated: {output_file}")
+        return True
+
     def generate_all(self):
         """Generate all documentation targets."""
         targets = self.manifest.get("doc_generation", {}).get("targets", [])
@@ -705,6 +755,9 @@ class DocGenerator:
                     count += 1
             elif template == "directives-index":
                 if self.generate_directives_index():
+                    count += 1
+            elif template == "roles-index":
+                if self.generate_roles_index():
                     count += 1
             else:
                 print(f"⚠ Skipping (unsupported template): {output} ({template})")

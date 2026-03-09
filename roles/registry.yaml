@@ -1,0 +1,186 @@
+# =============================================================================
+# A-SDLC Role Registry
+# =============================================================================
+# Flat index of all 12 roles. All roles are agentic-first: every role has an
+# agent_persona that an AI agent adopts when executing that role.
+#
+# execution_mode:
+#   autonomous  — agent executes without an approval gate
+#   gated       — agent executes, but designated approval points require
+#                 explicit sign-off before the process advances
+#
+# To resolve a role from a control or stage:
+#   1. Find the role code in this registry
+#   2. Follow the `file` path to the full role definition
+#   3. Load agent_persona to adopt the role's identity and decision logic
+#
+# Total roles: 18
+# autonomous: 7 (AGT + 6 stage roles) | gated: 11
+# =============================================================================
+
+registry:
+
+  # ---------------------------------------------------------------------------
+  # Autonomous execution roles
+  # ---------------------------------------------------------------------------
+
+  - code: AGT
+    name: Agent
+    execution_mode: autonomous
+    description: Cross-cutting executor. Meta-role that dispatches to the correct stage role.
+    file: roles/AGT.yaml
+    core_directive: directives/core/core-directives.yaml
+    active_in_stages: [1, 2, 3, 4, 5, 6]
+    stage_roles:
+      - stage: 1
+        code: IA
+        file: roles/IA.yaml
+      - stage: 2
+        code: ARCH
+        file: roles/ARCH.yaml
+      - stage: 3
+        code: IMPL
+        file: roles/IMPL.yaml
+      - stage: 4
+        code: TENG
+        file: roles/TENG.yaml
+      - stage: 5
+        code: RENG
+        file: roles/RENG.yaml
+      - stage: 6
+        code: SRE
+        file: roles/SRE.yaml
+
+  - code: IA
+    name: Intake Analyst
+    execution_mode: autonomous
+    description: Stage 1 executor. Converts raw change requests into feature specifications.
+    file: roles/IA.yaml
+    stage_directive: directives/stages/01-intent-ingestion.yaml
+    active_in_stages: [1]
+
+  - code: ARCH
+    name: Solution Architect
+    execution_mode: autonomous
+    description: Stage 2 executor. Translates specifications into system designs with threat models.
+    file: roles/ARCH.yaml
+    stage_directive: directives/stages/02-system-design.yaml
+    active_in_stages: [2]
+
+  - code: IMPL
+    name: Implementation Engineer
+    execution_mode: autonomous
+    description: Stage 3 executor. Writes secure, traceable code that faithfully implements the approved design.
+    file: roles/IMPL.yaml
+    stage_directive: directives/stages/03-coding-implementation.yaml
+    active_in_stages: [3]
+
+  - code: TENG
+    name: Test Engineer
+    execution_mode: autonomous
+    description: Stage 4 executor. Runs tests and scans; assembles the go/no-go evidence package.
+    file: roles/TENG.yaml
+    stage_directive: directives/stages/04-testing-documentation.yaml
+    active_in_stages: [4]
+
+  - code: RENG
+    name: Release Engineer
+    execution_mode: autonomous
+    description: Stage 5 executor. Validates deployment readiness, artefact integrity, and rollback plans.
+    file: roles/RENG.yaml
+    stage_directive: directives/stages/05-deployment-release.yaml
+    active_in_stages: [5]
+
+  - code: SRE
+    name: Site Reliability Engineer
+    execution_mode: autonomous
+    description: Stage 6 executor. Monitors production, classifies incidents, triggers feedback loops.
+    file: roles/SRE.yaml
+    stage_directive: directives/stages/06-observability-maintenance.yaml
+    active_in_stages: [6]
+
+  # ---------------------------------------------------------------------------
+  # Gated execution roles
+  # ---------------------------------------------------------------------------
+
+  - code: REQ
+    name: Requester
+    execution_mode: gated
+    description: Originates intent. Submits the change request.
+    file: roles/REQ.yaml
+    active_in_stages: [1]
+
+  - code: PO
+    name: Product Owner
+    execution_mode: gated
+    description: Business decision authority. Approves specifications and resolves conflicts.
+    file: roles/PO.yaml
+    active_in_stages: [1]
+    owns_controls_track: QC
+
+  - code: RO
+    name: Risk Officer
+    execution_mode: gated
+    description: Validates risk classifications. Makes go/no-go and CAB approval decisions.
+    file: roles/RO.yaml
+    active_in_stages: [1, 2, 4, 5, 6]
+    owns_controls_track: RC
+
+  - code: SA
+    name: Security Architect
+    execution_mode: gated
+    description: Owns security posture. Signs threat model. Sole authority for security exceptions.
+    file: roles/SA.yaml
+    active_in_stages: [1, 2, 3, 4, 5, 6]
+    owns_controls_track: SC
+
+  - code: AGL
+    name: AI Governance Lead
+    execution_mode: gated
+    description: Confirms EU AI Act tiers. Owns AC-track controls. Files Art. 73 reports.
+    file: roles/AGL.yaml
+    active_in_stages: [1, 2, 4, 6]
+    owns_controls_track: AC
+
+  - code: LAD
+    name: Lead Architect
+    execution_mode: gated
+    description: Owns architectural decisions. Design completeness approval gate at Stage 2.
+    file: roles/LAD.yaml
+    active_in_stages: [2]
+
+  - code: DEV
+    name: Developer
+    execution_mode: gated
+    description: Authors and reviews code. Pull request approval gate at Stage 3.
+    file: roles/DEV.yaml
+    active_in_stages: [3]
+
+  - code: QA
+    name: QA Engineer
+    execution_mode: gated
+    description: Owns test coverage. Quality sign-off gate at Stage 4.
+    file: roles/QA.yaml
+    active_in_stages: [4]
+
+  - code: REL
+    name: Release Manager
+    execution_mode: gated
+    description: Manages deployment pipeline. Release readiness and rollback approval at Stage 5.
+    file: roles/REL.yaml
+    active_in_stages: [5]
+
+  - code: OPS
+    name: Operations / SRE
+    execution_mode: gated
+    description: Owns production. Executes deployment, monitors health, triggers feedback loops.
+    file: roles/OPS.yaml
+    active_in_stages: [5, 6]
+
+  - code: CO
+    name: Compliance Officer
+    execution_mode: gated
+    description: Audit consumer. Reviews all artefacts for regulatory compliance. No execution role.
+    file: roles/CO.yaml
+    active_in_stages: [1, 2, 3, 4, 5, 6]
+    owns_controls_track: GC

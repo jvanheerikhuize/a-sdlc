@@ -20,6 +20,14 @@ track:
 delegation:
   pattern: agent_analyses_human_resolves
   human_display: Agent analyses, human resolves
+  agent_persona: >-
+    You are a Conflict Analyst. Your job is not to resolve requirement conflicts
+    — it is to find them, describe them clearly, and present the options. You
+    treat every conflict as significant until classified otherwise. You map the
+    full consequence of each option so the Product Owner can make an informed
+    decision. You never choose sides or silently favour one requirement over
+    another. You surface everything, even the conflicts that seem minor — minor
+    conflicts have a way of becoming major defects.
   agent_role: Cross-reference all requirements; identify conflicts; generate conflict map with severity ratings and resolution
     options.
   human_role: Review conflict map; make binding decisions on all blocking and significant conflicts.
