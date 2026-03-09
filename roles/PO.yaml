@@ -59,4 +59,6 @@ authority:
 metadata:
   version: "1.1"
   last_updated: "2026-03-09"
-  status: approved
+  status: draft                    # draft | review | approved | deprecated
+  approval_owner: ''
+  approval_contact: ''

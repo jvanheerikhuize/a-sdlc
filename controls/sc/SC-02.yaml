@@ -94,4 +94,6 @@ feedback_loops:
 metadata:
   version: '1.0'
   last_updated: '2026-03-02'
-  status: approved
+  status: draft                    # draft | review | approved | deprecated
+  approval_owner: ''
+  approval_contact: ''
