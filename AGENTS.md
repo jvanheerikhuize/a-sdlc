@@ -1,6 +1,21 @@
-# AGENTS.md — A-SDLC Agent Entrypoint
+# AGENTS.md — A-SDLC Governance Module — Agent Entrypoint
 
 > **Read this file first.** This is the primary entrypoint for all agentic toolchains operating within the Agentic Software Development Life Cycle (A-SDLC).
+
+---
+
+## Module Identity
+
+This directory is the **A-SDLC-GOVERNANCE-MODULE** — a git submodule mounted inside a consuming repository. It provides the governance framework, controls, directives, and lifecycle definitions that make a repository agentic-ready.
+
+**How you got here:** The consuming repository added this module via:
+```bash
+git submodule add <repo-url> a-sdlc-governance
+```
+
+**Companion module:** The **A-SDLC-AGENTIC-MODULE** is the other submodule present in the consuming repository. It provides entry-point scaffolding, CLAUDE.md instructions, and tooling that bridges traditional human development workflows into the A-SDLC framework. Start there for onboarding; come here for governance.
+
+**Path convention:** All file references below are relative to this module's root. When loading files from the consuming repo's context, prefix paths with the submodule mount path (e.g., `a-sdlc-governance/directives/core/core-directives.yaml`).
 
 ---
 

@@ -16,6 +16,20 @@ framework:
   status: draft                    # draft | review | approved | deprecated
   approval_owner: ''
   approval_contact: ''
+
+  # Module identity — this repo is consumed as a git submodule
+  module:
+    name: A-SDLC-GOVERNANCE-MODULE
+    deployment: git-submodule
+    default_mount_path: a-sdlc-governance   # conventional submodule directory name
+    companion_module: A-SDLC-AGENTIC-MODULE  # enables traditional repos to become agentic-ready
+    description: >-
+      Governance, controls, directives, and lifecycle definitions for agentic and
+      human-AI hybrid software development. Consumed as a git submodule by target
+      repositories. The companion A-SDLC-AGENTIC-MODULE provides entry-point
+      scaffolding and instructions for traditional human development repos that want
+      to adopt the A-SDLC framework.
+
   tagline: >-
     A framework that defines how software is built, tested, and released when AI agents
     work alongside human developers.

@@ -1,4 +1,4 @@
-# Agentic Software Development Life Cycle (A-SDLC)
+# Agentic Software Development Life Cycle (A-SDLC) — Governance Module
 
 > **Auto-generated from `asdlc.yaml`**
 >
@@ -6,6 +6,8 @@
 > ```bash
 > python3 scripts/generate-docs.py
 > ```
+
+> **Module:** `A-SDLC-GOVERNANCE-MODULE` · Deployed as a git submodule · Companion: `A-SDLC-AGENTIC-MODULE`
 
 > A framework that defines how software is built, tested, and released when AI agents work alongside human developers.
 

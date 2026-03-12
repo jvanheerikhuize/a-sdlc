@@ -46,3 +46,6 @@ htmlcov/
 
 # Test results
 *.log
+
+# AI
+.claude
