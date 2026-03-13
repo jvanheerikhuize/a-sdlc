@@ -1,0 +1,106 @@
+# ============================================================
+# Stage 4: Testing & Documentation
+# Steps: stages/04-testing-documentation/steps/
+# Controls: controls/[track]/[ID].yaml
+# ============================================================
+
+number: 4
+name: Testing & Documentation
+description: Validate the implementation against all acceptance criteria, security requirements, and documentation standards.
+  RC-05 is the formal go/no-go gate for deployment. No change proceeds to Stage 5 without a passing or conditionally accepted
+  RC-05 result.
+roles:
+- code: TENG
+  name: Test Engineer
+  execution_mode: autonomous
+  responsibilities: Executes test suites; runs scans; checks documentation completeness; calculates risk threshold; presents
+    evidence
+  ref: roles/TENG.yaml
+- code: QA
+  name: QA Engineer
+  execution_mode: gated
+  responsibilities: Reviews functional and NFR test results; investigates failures; approves documentation completeness
+  ref: roles/QA.yaml
+- code: SA
+  name: Security Architect
+  execution_mode: gated
+  responsibilities: Reviews SAST and DAST findings; triages CWE-mapped vulnerabilities; approves risk acceptance for security
+    findings
+  ref: roles/SA.yaml
+- code: AGL
+  name: AI Governance Lead
+  execution_mode: gated
+  responsibilities: Reviews AI output validation and bias test results; approves AI-specific risk acceptance
+  ref: roles/AGL.yaml
+- code: RO
+  name: Risk Officer
+  execution_mode: gated
+  responsibilities: Makes the formal go/no-go decision at RC-05; provides documented risk acceptance for conditional pass
+  ref: roles/RO.yaml
+- code: CO
+  name: Compliance Officer
+  execution_mode: gated
+  responsibilities: Reviews documentation artefacts and test evidence during regulatory audits
+  ref: roles/CO.yaml
+steps_dir: steps/
+steps:
+- '4.1'
+- '4.2'
+- '4.3'
+- '4.4'
+- '4.5'
+- '4.6'
+- 4.2-api
+- 4.7-ai-adversarial
+- '4.8'
+parallelism:
+  max_concurrent: 7
+  groups:
+  - - '4.2'
+    - '4.3'
+    - '4.4'
+    - '4.5'
+    - '4.6'
+    - 4.2-api
+    - 4.7-ai-adversarial
+required_controls:
+- id: QC-06
+- id: QC-07
+  note: Applicable when the change involves an AI component
+- id: QC-08
+- id: SC-12
+- id: SC-13
+- id: SC-14
+  note: Test all exposed APIs against OWASP API Security Top 10
+- id: AC-05
+  note: Applicable when the change involves an AI component
+- id: SC-15
+  note: Applicable for high-risk or security-critical AI deployments
+- id: RC-05
+  note: Final go/no-go gate — depends on all other Stage 4 controls
+exit_criteria:
+- 'QC-06: All acceptance criteria from Stage 1 have passing tests'
+- 'QC-07: AI output validation passed within defined accuracy thresholds (or not-applicable)'
+- 'QC-08: Documentation completeness confirmed and approved'
+- 'SC-12: SAST passed — no critical or high-severity findings unresolved'
+- 'SC-13: DAST passed — no critical or high-severity findings unresolved'
+- 'SC-14: API security testing passed — no OWASP API Top 10 violations unresolved'
+- 'AC-05: Bias & fairness test passed within defined thresholds (or not-applicable)'
+- 'SC-15: Adversarial robustness testing completed (if applicable for high-risk AI)'
+- 'RC-05: Go/no-go decision is PASS or CONDITIONAL PASS with formal risk acceptance'
+next_stage: 5
+artifacts:
+  inputs:
+  - ../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml
+  - ../01-intent-ingestion/artifacts/outputs/AC-01-ai-tier-classification.yaml
+  - ../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml
+  outputs:
+  - artifacts/outputs/QC-06-test-results-report.yaml
+  - artifacts/outputs/SC-12-sast-scan-report.yaml
+  - artifacts/outputs/SC-13-dast-scan-report.yaml
+  - artifacts/outputs/QC-08-documentation-completeness-report.yaml
+  - artifacts/outputs/QC-07-ai-output-validation-report.yaml
+  - artifacts/outputs/AC-05-bias-fairness-report.yaml
+  - artifacts/outputs/RC-05-risk-threshold-evaluation.yaml
+  - artifacts/outputs/SC-14-api-security-report.yaml
+  - artifacts/outputs/SC-15-adversarial-robustness-report.yaml

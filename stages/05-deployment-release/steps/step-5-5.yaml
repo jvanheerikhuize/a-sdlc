@@ -1,0 +1,30 @@
+# Step 5.5: Deployment Integrity Verification
+# Stage 5 — Deployment & Release
+# Control: SC-17
+
+id: '5.5'
+title: Deployment Integrity Verification
+stage: 5
+control: SC-17
+description: Deployment integrity verification (immediately before deploy)
+delegation: Fully automated
+depends_on:
+- '5.3'
+- '5.4'
+- 5.4-secrets
+actors:
+- role: AGT
+  action: Compute cryptographic checksums of artefacts staged for production deployment
+- role: AGT
+  action: Compare against checksums of artefacts tested in Stage 4
+- role: AGT
+  action: 'Match: record verification and advance to Step 5.6'
+- role: AGT
+  action: 'Mismatch: block deployment immediately; notify SA; initiate security incident process'
+inputs:
+- Staged deployment artefacts + Stage 4 tested artefact checksums
+outputs:
+- Deployment integrity verification record (artifacts/outputs/deployment-integrity-record.yaml)
+on_failure: Deployment immediately blocked; security incident process initiated; SA investigates before any retry
+note: This check runs immediately before deployment execution. Any integrity failure halts the deployment and initiates a
+  security incident process.

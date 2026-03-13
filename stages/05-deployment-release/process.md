@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/05-deployment-release/05-deployment-release.yaml
+     Source: stages/05-deployment-release/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 5: Deployment & Release — Process
@@ -168,9 +168,9 @@ Deployment execution and Stage 6 handover
 
 ## References
 
-- Stage definition: `05-deployment-release.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/01-intent-ingestion/01-intent-ingestion.yaml + controls/ + directives/
+     Source: stages/01-intent-ingestion/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 1: Intent Ingestion — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/01-intent-ingestion/01-intent-ingestion.yaml` — stage definition and workflow DAG
+- `stages/01-intent-ingestion/stage.yaml` — stage definition (steps in: `stages/01-intent-ingestion/steps/`)
 - `controls/sc/SC-03.yaml` — control definition *(Must run first — screens for adversarial inputs before any agent processing)*
 - `controls/sc/SC-04.yaml` — control definition *(Applicable when the change processes personal data or involves profiling)*
 - `controls/qc/QC-01.yaml` — control definition
@@ -80,4 +80,4 @@
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

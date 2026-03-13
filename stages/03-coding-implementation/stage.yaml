@@ -1,0 +1,98 @@
+# ============================================================
+# Stage 3: Coding & Implementation
+# Steps: stages/03-coding-implementation/steps/
+# Controls: controls/[track]/[ID].yaml
+# ============================================================
+
+number: 3
+name: Coding & Implementation
+description: Implement the approved design under continuous automated quality and security controls. All implementation —
+  human, agent, or co-authored — converges into a reviewed and approved pull request before Stage 4 begins.
+roles:
+- code: IMPL
+  name: Implementation Engineer
+  execution_mode: autonomous
+  responsibilities: Writes code; logs decisions (RC-04); tags provenance (GC-03); scans output (SC-08); creates pull request
+    (QC-04)
+  ref: roles/IMPL.yaml
+- code: DEV
+  name: Developer
+  execution_mode: gated
+  responsibilities: Authors human-written code; reviews pull request; approves; escalation reviewer for high/critical risk
+    tiers
+  ref: roles/DEV.yaml
+- code: SA
+  name: Security Architect
+  execution_mode: gated
+  responsibilities: Defines and maintains agent permission policy (SC-07); reviews violation logs; escalation target for SC-08
+    and SC-09 findings
+  ref: roles/SA.yaml
+- code: CO
+  name: Compliance Officer
+  execution_mode: gated
+  responsibilities: Reviews code provenance records and audit artefacts during regulatory audits
+  ref: roles/CO.yaml
+steps_dir: steps/
+steps:
+- '3.1'
+- '3.2'
+- 3.2-sc3c
+- 3.2-sc3d
+- 3.2-sc3e
+- 3.2-rc3a
+- 3.2-gc3a
+- '3.3'
+- '3.4'
+parallelism:
+  max_concurrent: 6
+  groups:
+  - - '3.2'
+    - 3.2-sc3c
+    - 3.2-sc3d
+    - 3.2-sc3e
+    - 3.2-rc3a
+    - 3.2-gc3a
+required_controls:
+- id: QC-05
+  note: Runs continuously on every commit
+- id: SC-07
+  note: Enforced throughout the implementation session
+- id: SC-08
+  note: Runs on all agent-generated code before PR creation
+- id: SC-09
+  note: Runs on every commit
+- id: SC-10
+  note: Scans all third-party dependencies for known vulnerabilities
+- id: SC-11
+  note: Scans all container images and IaC manifests for security misconfigurations
+- id: RC-04
+  note: Logged throughout; reviewed by Tech Lead
+- id: GC-03
+  note: All code tagged at point of generation
+- id: QC-04
+  note: Final gate — aggregates all other Stage 3 evidence
+exit_criteria:
+- 'QC-05: All commits passed quality gates (no threshold violations)'
+- 'SC-07: Permission enforcement log shows no out-of-boundary access'
+- 'SC-08: Post-guardrail scan passed — no malicious patterns detected'
+- 'SC-09: Secrets scan passed on all commits — no credentials found'
+- 'SC-10: SCA scan passed — no critical/high vulnerabilities in dependencies without documented exception'
+- 'SC-11: Container/IaC scan passed — no critical security misconfigurations'
+- 'RC-04: Decision log complete and reviewed'
+- 'GC-03: Code provenance tags applied to all contributions'
+- 'QC-04: Pull request approved by required reviewers per risk tier'
+next_stage: 4
+artifacts:
+  inputs:
+  - ../02-system-design/artifacts/outputs/QC-03-design-document.yaml
+  - ../02-system-design/artifacts/outputs/SC-02-directive-injection-confirmation.yaml
+  outputs:
+  - artifacts/outputs/QC-04-pull-request-record.yaml
+  - artifacts/outputs/QC-05-quality-gate-report.yaml
+  - artifacts/outputs/SC-07-permission-enforcement-log.yaml
+  - artifacts/outputs/SC-08-post-guardrail-scan.yaml
+  - artifacts/outputs/SC-09-secrets-scan-report.yaml
+  - artifacts/outputs/RC-04-decision-log.yaml
+  - artifacts/outputs/SC-10-sca-report.yaml
+  - artifacts/outputs/SC-11-container-iac-security-report.yaml
+  - artifacts/outputs/GC-03-code-provenance-record.yaml

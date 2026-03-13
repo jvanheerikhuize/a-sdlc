@@ -1,0 +1,40 @@
+# Step 5.2: CAB Approval
+# Stage 5 — Deployment & Release
+# Control: RC-06
+
+id: '5.2'
+title: CAB Approval
+stage: 5
+control: RC-06
+description: CAB (Change Advisory Board) approval (human-required gate)
+delegation: Human required
+depends_on:
+- '5.1'
+actors:
+- role: AGT
+  action: Prepare change approval request with full release readiness package; schedule CAB slot if required
+- role: RO
+  action: Review the full evidence package and make the formal approval decision
+- role: RO
+  action: 'Approve: record identity, role, and timestamp; advance to Steps 5.3 and 5.4'
+- role: RO
+  action: 'Reject: document rejection reason; work may return to any required stage'
+inputs:
+- Release readiness checklist (Step 5.1 output) + Stage 1 risk classification
+outputs:
+- Change approval record (artifacts/outputs/change-approval-record.yaml)
+on_failure: Deployment blocked; rejection reason documented; escalate to determine required remediation
+tables:
+- title: Approval authority by risk tier
+  columns:
+  - Risk Tier
+  - Required Approval Authority
+  rows:
+  - - critical
+    - Change Advisory Board (full CAB)
+  - - high
+    - Change Advisory Board (full CAB)
+  - - medium
+    - Line management
+  - - low
+    - Pre-approved standard change procedure

@@ -1,0 +1,27 @@
+# Step 6.5: Runtime Anomaly Detection
+# Stage 6 — Observability & Maintenance
+# Control: SC-20
+
+id: '6.5'
+title: Runtime Anomaly Detection
+stage: 6
+control: SC-20
+description: Runtime anomaly detection (continuous, feeds into SC-19)
+delegation: Automated with human escalation
+depends_on:
+- '6.1'
+frequency: continuous
+actors:
+- role: AGT
+  action: Maintain statistical behavioural baselines for all system components
+- role: AGT
+  action: 'Detect deviations: AI model drift, adversarial inputs, abnormal resource patterns, unexpected call graphs'
+- role: AGT
+  action: Escalate anomalies exceeding defined thresholds to SC-19 (Step 6.4) incident process
+- role: SA
+  action: Investigate high-severity anomalies; determine whether anomaly is a security incident or requires code change
+inputs: []
+outputs:
+- Anomaly detection record (artifacts/outputs/anomaly-detection-record.yaml) — continuously updated
+on_failure: Feeds into SC-19 (Step 6.4); may trigger feedback loop if code change is needed
+note: Continuous runtime monitoring; feeds into SC-19 incident detection

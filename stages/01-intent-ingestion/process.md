@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/01-intent-ingestion/01-intent-ingestion.yaml
+     Source: stages/01-intent-ingestion/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 1: Intent Ingestion — Process
@@ -169,9 +169,9 @@ Write intent audit trail entry
 
 ## References
 
-- Stage definition: `01-intent-ingestion.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

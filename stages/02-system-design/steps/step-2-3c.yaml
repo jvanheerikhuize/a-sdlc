@@ -1,0 +1,24 @@
+# Step 2.3c: Zero-Trust Architecture Validation
+# Stage 2 — System Design
+# Control: SC-06
+
+id: 2.3c
+title: Zero-Trust Architecture Validation
+stage: 2
+control: SC-06
+description: Zero-trust architecture validation
+delegation: Fully automated
+depends_on:
+- '2.1'
+actors:
+- role: AGT
+  action: Validate design against zero-trust principles; verify all network segments require authentication
+- role: AGT
+  action: Check encryption of all data in motion and at rest; verify principle of least privilege
+- role: SA
+  action: Review validation results; approve or require mitigations
+inputs:
+- Draft design document
+outputs:
+- Zero-trust validation report (artifacts/outputs/zero-trust-validation.yaml)
+on_failure: Critical deviations from zero-trust architecture block Stage 2

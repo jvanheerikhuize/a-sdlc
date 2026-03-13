@@ -1,0 +1,29 @@
+# Step 6.3: Risk & Health Monitoring
+# Stage 6 — Observability & Maintenance
+# Control: RC-08
+
+id: '6.3'
+title: Risk & Health Monitoring
+stage: 6
+control: RC-08
+description: Risk and health monitoring (continuous)
+delegation: Automated with human escalation
+depends_on:
+- '6.1'
+frequency: continuous
+actors:
+- role: AGT
+  action: Monitor configuration drift against approved baseline
+- role: AGT
+  action: Cross-reference SBOM against vulnerability databases; alert on new CVEs affecting dependencies
+- role: AGT
+  action: Monitor application health indicators, capacity trends, certificate expiry, dependency health
+- role: RO
+  action: Respond to risk threshold escalations; make risk acceptance or remediation decisions
+- role: RO
+  action: Initiate feedback loop if risk requires a code or configuration change
+inputs: []
+outputs:
+- Risk & health monitoring record (artifacts/outputs/risk-health-monitoring-record.yaml) — continuously updated
+on_failure: RO reviews; may trigger Path A (Autofix), Path B (Quickfix → Stage 3), or Path B (Feature → Stage 1)
+note: Runs continuously throughout the operational lifetime

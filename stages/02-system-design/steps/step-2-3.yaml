@@ -1,0 +1,26 @@
+# Step 2.3: STRIDE Threat Modelling
+# Stage 2 — System Design
+# Control: SC-05
+
+id: '2.3'
+title: STRIDE Threat Modelling
+stage: 2
+control: SC-05
+description: Generate and validate STRIDE threat model
+delegation: Agent generates, SA validates
+depends_on:
+- '2.1'
+actors:
+- role: AGT
+  action: Identify all trust boundaries in the design
+- role: AGT
+  action: Generate STRIDE threat analysis across each trust boundary; propose mitigations for each threat
+- role: SA
+  action: Review threat model for completeness; validate proposed mitigations
+- role: SA
+  action: 'Accept: advance to Step 2.5 package. Reject: require design revision to address unmitigated threats'
+inputs:
+- Draft design document
+outputs:
+- STRIDE threat model (artifacts/outputs/stride-threat-model.yaml)
+on_failure: Unmitigated critical or high threats block Stage 2. Design must be revised

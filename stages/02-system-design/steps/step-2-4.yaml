@@ -1,0 +1,27 @@
+# Step 2.4: AI Component Design Review
+# Stage 2 — System Design
+# Control: AC-03
+
+id: '2.4'
+title: AI Component Design Review
+stage: 2
+control: AC-03
+description: AI component design review (conditional on ai_component)
+delegation: Agent assists, AGL approves
+depends_on:
+- '2.1'
+condition: Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document
+  as not_applicable and skip human confirmation.
+actors:
+- role: AGT
+  action: Analyse design for AI component involvement
+- role: AGT
+  action: Validate model selection, data pipeline design, explainability mechanisms, and human oversight provisions against
+    AI Act requirements
+- role: AGL
+  action: Review AI design validation; confirm or require revisions
+inputs:
+- Draft design document + AI tier classification from Stage 1
+outputs:
+- AI component design review (artifacts/outputs/ai-component-design-review.yaml)
+on_uncertainty: Default to most restrictive AI Act obligations pending AGL resolution

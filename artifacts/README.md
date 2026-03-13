@@ -94,4 +94,4 @@ Artifact templates define the required fields for each output. Templates live al
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

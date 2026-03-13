@@ -1,0 +1,24 @@
+# Step 2.2: Design Validation
+# Stage 2 — System Design
+# Control: QC-03
+
+id: '2.2'
+title: Design Validation
+stage: 2
+control: QC-03
+description: Validate design completeness and standards
+delegation: Agent validates, LAD approves
+depends_on:
+- '2.1'
+actors:
+- role: LAD
+  action: Review draft design; verify all requirements are mapped to architectural components
+- role: LAD
+  action: Confirm design follows organisational architectural patterns and technology standards
+- role: LAD
+  action: 'Approve: advance to Step 2.5 package. Reject: return to Step 2.1 with documented gaps'
+inputs:
+- Draft design document
+outputs:
+- 'Approved design document (artifacts/outputs/design-document.yaml — status: approved)'
+on_failure: Design returned to Step 2.1; LAD documents required changes

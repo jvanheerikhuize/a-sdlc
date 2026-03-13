@@ -1,0 +1,22 @@
+# Step 4.2-api: API Security Testing
+# Stage 4 — Testing & Documentation
+# Control: SC-14
+
+id: 4.2-api
+title: API Security Testing
+stage: 4
+control: SC-14
+description: API security testing (OWASP API Top 10)
+delegation: Fully automated
+depends_on:
+- '4.1'
+actors:
+- role: AGT
+  action: Execute OWASP API Security Top 10 test suite against all exposed APIs
+- role: SA
+  action: Review findings; remediate critical issues or provide risk acceptance
+inputs:
+- Deployed APIs
+outputs:
+- API security test report (artifacts/outputs/api-security-report.yaml)
+on_failure: Unresolved OWASP API Top 10 violations block Stage 4 exit

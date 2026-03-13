@@ -1,0 +1,26 @@
+# Step 2.3b: Privacy Impact Assessment
+# Stage 2 — System Design
+# Control: RC-03
+
+id: 2.3b
+title: Privacy Impact Assessment
+stage: 2
+control: RC-03
+description: Privacy Impact Assessment (conditional on processes_personal_data)
+delegation: Agent generates, LAD reviews
+depends_on:
+- '2.1'
+condition: Only applicable when the change processes personal data, involves profiling, or high-risk AI processing. If not
+  applicable, document as not_applicable.
+actors:
+- role: AGT
+  action: Identify all personal data processing activities in the design
+- role: AGT
+  action: 'Assess privacy risks across: lawfulness, necessity, minimization, retention, recipient access'
+- role: LAD
+  action: Review PIA; confirm privacy safeguards are adequate
+inputs:
+- Draft design document
+outputs:
+- Privacy Impact Assessment (artifacts/outputs/privacy-impact-assessment.yaml)
+on_failure: Unacceptable privacy risks block Stage 2; design must be revised

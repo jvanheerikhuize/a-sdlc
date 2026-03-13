@@ -6,35 +6,36 @@
 
 ## Module Identity
 
-This directory is the **A-SDLC-GOVERNANCE-MODULE** — a git submodule mounted inside a consuming repository. It provides the governance framework, controls, directives, and lifecycle definitions that make a repository agentic-ready.
+This directory is the **A-SDLC-GOVERNANCE-MODULE** — a git submodule mounted inside a consuming repository. It provides governance controls, directives, and lifecycle definitions that make a repository agentic-ready.
 
-**How you got here:** The consuming repository added this module via:
-```bash
-git submodule add <repo-url> a-sdlc-governance
-```
+**Companion module:** The **A-SDLC-AGENTIC-MODULE** provides entry-point scaffolding and CLAUDE.md instructions that bridge traditional human development into A-SDLC. Start there for onboarding; come here for governance.
 
-**Companion module:** The **A-SDLC-AGENTIC-MODULE** is the other submodule present in the consuming repository. It provides entry-point scaffolding, CLAUDE.md instructions, and tooling that bridges traditional human development workflows into the A-SDLC framework. Start there for onboarding; come here for governance.
-
-**Path convention:** All file references below are relative to this module's root. When loading files from the consuming repo's context, prefix paths with the submodule mount path (e.g., `a-sdlc-governance/directives/core/core-directives.yaml`).
+**Path convention:** All paths below are relative to this module's root.
 
 ---
 
-## What You Are Operating Within
+## Framework Hierarchy
 
-You are part of the **Agentic Software Development Life Cycle (A-SDLC)** — a framework that defines how software is built, tested, and released when AI agents work alongside human developers. The framework is:
+The A-SDLC is an acyclic process structured as follows:
 
-- **Solution, model, and toolchain agnostic** — it applies to you regardless of what you are.
-- **Backwards- and forwards-compatible** — it replaces the traditional SDLC entirely.
-- **Binding** — all controls in this framework apply to your work unless explicitly scoped otherwise.
+```
+ASDLC (acyclic lifecycle)
+├── Stages          — directed processes with ordered steps (stages/NN-name/stage.yaml)
+│   └── Steps       — atomic units of work (stages/NN-name/steps/step-N-N.yaml)
+│       └── Control — optional control triggered by the step (controls/[track]/[ID].yaml)
+│           ├── Input Artifacts   — consumed by the control
+│           └── Output Artifacts  — produced by the control (artifacts/registry.yaml)
+└── Feedback Loops  — re-entry paths for incidents and changes (feedbackloops/feedback-loops.yaml)
+
+Roles → execute Stages / Steps / Controls
+```
 
 ---
 
 ## Quick Navigation
 
-Use these entry points based on what you need:
-
 | I need to... | Load this |
-|-------------|-----------|
+|---|---|
 | Start a new session | This file + `directives/core/core-directives.yaml` |
 | Work on **Stage 1** (Intent Ingestion) | `context/stage-01-intent-ingestion.md` |
 | Work on **Stage 2** (System Design) | `context/stage-02-system-design.md` |
@@ -42,15 +43,15 @@ Use these entry points based on what you need:
 | Work on **Stage 4** (Testing & Documentation) | `context/stage-04-testing-and-documentation.md` |
 | Work on **Stage 5** (Deployment & Release) | `context/stage-05-deployment-and-release.md` |
 | Work on **Stage 6** (Observability & Maintenance) | `context/stage-06-observability-and-maintenance.md` |
-| Navigate by **task** | `tasks.yaml` |
 | Look up a **control** by ID | `controls/registry.yaml` → `controls/[track]/[ID].yaml` |
+| Look up an **artifact** | `artifacts/registry.yaml` |
 | Handle an **incident** or **re-entry** | `feedbackloops/feedback-loops.yaml` |
 
 ---
 
-## Your Mandatory Starting Point: Core Directives
+## Mandatory Starting Point: Core Directives
 
-Before performing any work, you MUST load and internalize the Core Directives (SC-01):
+Before any work, load and internalize the Core Directives (SC-01):
 
 ```
 directives/core/core-directives.yaml
@@ -72,7 +73,7 @@ Every control in this framework belongs to one of five tracks:
 | `AC` | AI Controls | Address EU AI Act requirements |
 | `GC` | Governance Controls | Maintain the audit trail across everything |
 
-Control IDs follow the format `[Track]-[Stage][Letter]` (e.g. `SC-02`, `QC-04`, `GC-01`).
+Control IDs follow the format `[Track]-[NN]` (e.g. `SC-02`, `QC-04`, `GC-01`).
 
 ---
 
@@ -123,14 +124,14 @@ feedbackloops/feedback-loops.yaml  # Re-entry paths for incidents and changes
 
 For each stage, load the lightweight stage definition and then the individual control files:
 
-| Stage | Stage definition | Controls |
-| --- | --- | --- |
-| 1 — Intent Ingestion | `stages/01-intent-ingestion/01-intent-ingestion.yaml` | QC-01, QC-02, RC-01, SC-03, SC-04, AC-01, AC-02, GC-05 |
-| 2 — System Design | `stages/02-system-design/02-system-design.yaml` | QC-03, RC-02, RC-03, SC-05, SC-02, SC-06, AC-03, AC-04 |
-| 3 — Coding & Implementation | `stages/03-coding-implementation/03-coding-implementation.yaml` | QC-04, QC-05, RC-04, SC-07, SC-08, SC-09, SC-10, SC-11 |
-| 4 — Testing & Documentation | `stages/04-testing-documentation/04-testing-documentation.yaml` | QC-06, QC-07, QC-08, RC-05, SC-12, SC-13, SC-14, SC-15, AC-05 |
-| 5 — Deployment & Release | `stages/05-deployment-release/05-deployment-release.yaml` | QC-09, RC-06, RC-07, SC-16, SC-17, SC-18 |
-| 6 — Observability & Maintenance | `stages/06-observability-maintenance/06-observability-maintenance.yaml` | QC-10, RC-08, RC-09, SC-19, SC-20, AC-06 |
+| Stage | Stage definition | Steps | Controls |
+| --- | --- | --- | --- |
+| 1 — Intent Ingestion | `stages/01-intent-ingestion/stage.yaml` | `stages/01-intent-ingestion/steps/` | QC-01, QC-02, RC-01, SC-03, SC-04, AC-01, AC-02, GC-05 |
+| 2 — System Design | `stages/02-system-design/stage.yaml` | `stages/02-system-design/steps/` | QC-03, RC-02, RC-03, SC-05, SC-06, AC-03, AC-04 |
+| 3 — Coding & Implementation | `stages/03-coding-implementation/stage.yaml` | `stages/03-coding-implementation/steps/` | QC-04, QC-05, RC-04, SC-07, SC-08, SC-09, SC-10, SC-11 |
+| 4 — Testing & Documentation | `stages/04-testing-documentation/stage.yaml` | `stages/04-testing-documentation/steps/` | QC-06, QC-07, QC-08, RC-05, SC-12, SC-13, AC-05, SC-14, SC-15 |
+| 5 — Deployment & Release | `stages/05-deployment-release/stage.yaml` | `stages/05-deployment-release/steps/` | QC-09, RC-06, RC-07, SC-16, SC-17, SC-18 |
+| 6 — Observability & Maintenance | `stages/06-observability-maintenance/stage.yaml` | `stages/06-observability-maintenance/steps/` | QC-10, RC-08, SC-19, SC-20, AC-06, RC-09 |
 
 Individual control definitions live in:
 
@@ -142,10 +143,13 @@ controls/ac/   # AC-01 through AC-06  (AI Controls)
 controls/gc/   # GC-01 through GC-05  (Governance Controls)
 ```
 
+Step files follow the naming convention `step-N-N.yaml` (e.g., `step-1-1.yaml`, `step-1-5b.yaml`, `step-3-2-sc3c.yaml`).
+
 Each stage directory contains:
 
-- `README.md` — human-readable description, key tasks, and controls table
-- `NN-stage-name.yaml` — lightweight stage definition: required control IDs and exit criteria
+- `stage.yaml` — required controls, exit criteria, steps list, roles
+- `steps/` — individual step YAML files (`step-N-N.yaml`)
+- `README.md` — human-readable overview
 
 ### Full Control Registry
 
@@ -179,12 +183,26 @@ If a Path A execution deviates from expected scope, upgrade to Path B immediatel
 
 ---
 
+## Artifacts
+
+All artifacts produced and consumed across the lifecycle are catalogued in:
+
+```
+artifacts/registry.yaml
+```
+
+Each artifact entry records: `id`, `type`, `produced_by` (stage/step/control), `consumed_by` (downstream stages/steps), `template` path, and `retention` policy.
+
+---
+
 ## Schema References
 
-| Schema | Path | Used By |
-|--------|------|---------|
-| Control definition | `schema/control.schema.json` | All `controls.yaml` files |
-| Feature specification | `schema/feature-spec.schema.json` | Stage 1 intent artefacts |
+| Schema | Path |
+|--------|------|
+| Stage definition | `schema/stage.schema.json` |
+| Step definition | `schema/step.schema.json` |
+| Control definition | `schema/control.schema.json` |
+| Feature specification | `schema/feature-spec.schema.json` |
 
 ---
 
@@ -197,4 +215,4 @@ This framework enforces compliance with two regulatory frameworks. Every control
 
 See `regulatory/compliance-matrix.yaml` for the consolidated coverage map.
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

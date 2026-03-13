@@ -1,0 +1,48 @@
+# Step 4.8: Risk Threshold Evaluation
+# Stage 4 — Testing & Documentation
+# Control: RC-05
+
+id: '4.8'
+title: Risk Threshold Evaluation
+stage: 4
+control: RC-05
+description: Risk threshold evaluation and go/no-go gate
+delegation: Agent calculates, RO decides
+depends_on:
+- '4.2'
+- '4.3'
+- '4.4'
+- '4.5'
+- '4.6'
+- 4.2-api
+- 4.7-ai-adversarial
+actors:
+- role: AGT
+  action: Aggregate all Stage 4 control results; calculate residual risk score
+- role: AGT
+  action: Present recommendation with supporting evidence from each control
+- role: RO
+  action: Review aggregated results; make formal go/no-go decision
+- role: RO
+  action: 'For conditional pass: provide documented risk acceptance signed with identity and timestamp'
+inputs:
+- All Stage 4 control outputs (steps 4.1-4.7)
+outputs:
+- Risk threshold evaluation (artifacts/outputs/risk-threshold-evaluation.yaml)
+on_failure: Work returns to Stage 3; specific failures documented; remediation required before retesting
+tables:
+- title: Go/No-Go Outcomes
+  columns:
+  - Outcome
+  - Meaning
+  - Next step
+  rows:
+  - - Pass
+    - Residual risk within appetite
+    - Proceed to Stage 5
+  - - Conditional pass
+    - Residual risk exceeds appetite but is formally accepted
+    - RO documents risk acceptance; proceed to Stage 5
+  - - Fail
+    - Residual risk exceeds appetite; cannot be accepted
+    - Return to Stage 3; document specific failures

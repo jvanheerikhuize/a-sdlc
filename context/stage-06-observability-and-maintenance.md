@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/06-observability-maintenance/06-observability-maintenance.yaml + controls/ + directives/
+     Source: stages/06-observability-maintenance/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 6: Observability & Maintenance — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/06-observability-maintenance/06-observability-maintenance.yaml` — stage definition and workflow DAG
+- `stages/06-observability-maintenance/stage.yaml` — stage definition (steps in: `stages/06-observability-maintenance/steps/`)
 - `controls/qc/QC-10.yaml` — control definition *(Continuous — runs throughout the operational lifetime)*
 - `controls/rc/RC-08.yaml` — control definition *(Continuous — runs throughout the operational lifetime)*
 - `controls/rc/RC-09.yaml` — control definition *(Applicable for AI component deployments — monitors third-party provider risk posture)*
@@ -77,4 +77,4 @@ See [`feedbackloops/feedback-loops.yaml`](../feedbackloops/feedback-loops.yaml) 
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

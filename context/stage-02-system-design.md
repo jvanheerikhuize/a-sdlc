@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/02-system-design/02-system-design.yaml + controls/ + directives/
+     Source: stages/02-system-design/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 2: System Design — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/02-system-design/02-system-design.yaml` — stage definition and workflow DAG
+- `stages/02-system-design/stage.yaml` — stage definition (steps in: `stages/02-system-design/steps/`)
 - `controls/qc/QC-03.yaml` — control definition
 - `controls/rc/RC-02.yaml` — control definition *(Human-required gate — cannot be delegated to an agent)*
 - `controls/rc/RC-03.yaml` — control definition *(Applicable when the change involves personal data, profiling, or high-risk AI systems)*
@@ -89,4 +89,4 @@
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

@@ -1,0 +1,22 @@
+# Step 3.2-sc3c: Secrets Scanning
+# Stage 3 — Coding & Implementation
+# Control: SC-09
+
+id: 3.2-sc3c
+title: Secrets Scanning
+stage: 3
+control: SC-09
+description: Secrets and credentials scanning (per-commit)
+delegation: Fully automated
+depends_on:
+- '3.1'
+actors:
+- role: AGT
+  action: Scan every commit for exposed secrets, API keys, and credentials
+- role: DEV
+  action: 'On secret detection: remove secret, rotate the credential, and re-commit'
+inputs:
+- Code commits
+outputs:
+- Secrets scan report (artifacts/outputs/secrets-scan-report.yaml)
+on_failure: Commit blocked; secrets must be removed before committing

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/04-testing-documentation/04-testing-documentation.yaml + controls/ + directives/
+     Source: stages/04-testing-documentation/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 4: Testing & Documentation — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/04-testing-documentation/04-testing-documentation.yaml` — stage definition and workflow DAG
+- `stages/04-testing-documentation/stage.yaml` — stage definition (steps in: `stages/04-testing-documentation/steps/`)
 - `controls/qc/QC-06.yaml` — control definition
 - `controls/qc/QC-07.yaml` — control definition *(Applicable when the change involves an AI component)*
 - `controls/qc/QC-08.yaml` — control definition
@@ -99,4 +99,4 @@ See [`feedbackloops/feedback-loops.yaml`](../feedbackloops/feedback-loops.yaml) 
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

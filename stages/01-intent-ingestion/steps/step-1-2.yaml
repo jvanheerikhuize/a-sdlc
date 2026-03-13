@@ -1,0 +1,24 @@
+# Step 1.2: Draft Feature Specification
+# Stage 1 — Intent Ingestion
+# Control: QC-01
+
+id: '1.2'
+title: Draft Feature Specification
+stage: 1
+control: QC-01
+description: Draft and validate feature specification
+delegation: Agent drafts → human approves
+depends_on:
+- '1.1'
+actors:
+- role: AGT
+  action: Parse screened change request; populate FEAT-XXXX specification template
+- role: AGT
+  action: Identify any gaps in acceptance criteria or non-functional requirements
+- role: AGT
+  action: Flag gaps inline in the draft for Product Owner review
+inputs:
+- Screened change request
+outputs:
+- Draft feature specification (artifacts/outputs/feature-spec.yaml)
+note: Product Owner approval is at Step 1.6; this step only produces the draft

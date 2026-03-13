@@ -1,0 +1,26 @@
+# Step 5.3: Rollback Plan Validation
+# Stage 5 — Deployment & Release
+# Control: RC-07
+
+id: '5.3'
+title: Rollback Plan Validation
+stage: 5
+control: RC-07
+description: Rollback plan validation
+delegation: Agent validates, REL approves
+depends_on:
+- '5.2'
+actors:
+- role: AGT
+  action: 'Validate rollback plan completeness: triggers, procedure steps, decision authority, time window'
+- role: AGT
+  action: Execute rollback procedure test in pre-production environment; record execution time
+- role: AGT
+  action: Report test results
+- role: REL
+  action: Review rollback test results; approve plan or require improvements before deployment
+inputs:
+- Rollback plan draft + pre-production environment access
+outputs:
+- Rollback plan validation report (artifacts/outputs/rollback-plan.yaml)
+on_failure: Deployment blocked if rollback cannot be validated in pre-production

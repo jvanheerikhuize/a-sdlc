@@ -1,0 +1,25 @@
+# Step 6.1: Activate Monitoring
+# Stage 6 — Observability & Maintenance
+# Control: none
+
+id: '6.1'
+title: Activate Monitoring
+stage: 6
+control: null
+description: System handover (handoff from Stage 5 - triggers all monitoring)
+delegation: Fully automated
+depends_on: []
+actors:
+- role: OPS
+  action: Confirm Stage 5 deployment integrity record is present and status is verified
+- role: AGT
+  action: Activate all monitoring profiles — SLO dashboards, health checks, SIEM rules, anomaly baselines
+- role: AGT
+  action: Confirm all monitoring channels are emitting data; alert on any silent channel
+- role: OPS
+  action: Confirm monitoring activation and enter hypercare window
+inputs:
+- Deployment integrity record (Stage 5 SC-17 output)
+outputs:
+- Monitoring activation confirmed; all Stage 6 controls enter continuous operation
+on_failure: If any monitoring channel fails to activate, do not leave Stage 5 hypercare. Resolve and retry

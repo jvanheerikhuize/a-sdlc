@@ -1,0 +1,88 @@
+# ============================================================
+# Stage 5: Deployment & Release
+# Steps: stages/05-deployment-release/steps/
+# Controls: controls/[track]/[ID].yaml
+# ============================================================
+
+number: 5
+name: Deployment & Release
+description: Execute the approved deployment with formal CAB sign-off, verified rollback procedures, and cryptographic artefact
+  integrity checking. RC-06 CAB Approval is a mandatory human gate that cannot be delegated.
+roles:
+- code: RENG
+  name: Release Engineer
+  execution_mode: autonomous
+  responsibilities: Compiles release readiness checklist; prepares CAB submission; validates rollback; runs infrastructure
+    and integrity checks
+  ref: roles/RENG.yaml
+- code: REL
+  name: Release Manager
+  execution_mode: gated
+  responsibilities: Reviews and approves release readiness checklist and rollback plan; orchestrates deployment execution
+  ref: roles/REL.yaml
+- code: RO
+  name: Risk Officer
+  execution_mode: gated
+  responsibilities: Makes the formal CAB approval decision for high-risk changes
+  ref: roles/RO.yaml
+- code: SA
+  name: Security Architect
+  execution_mode: gated
+  responsibilities: Reviews infrastructure security baseline deviations; investigates deployment integrity failures
+  ref: roles/SA.yaml
+- code: OPS
+  name: Operations / SRE
+  execution_mode: gated
+  responsibilities: Executes deployment pipeline; monitors smoke tests; manages hypercare window; confirms Stage 6 handover
+  ref: roles/OPS.yaml
+- code: CO
+  name: Compliance Officer
+  execution_mode: gated
+  responsibilities: Reviews approval records during regulatory audits
+  ref: roles/CO.yaml
+steps_dir: steps/
+steps:
+- '5.1'
+- '5.2'
+- '5.3'
+- '5.4'
+- 5.4-secrets
+- '5.5'
+- '5.6'
+parallelism:
+  max_concurrent: 3
+  groups:
+  - - '5.3'
+    - '5.4'
+    - 5.4-secrets
+required_controls:
+- id: QC-09
+- id: RC-06
+  note: Human-required gate — cannot be delegated to an agent
+- id: RC-07
+- id: SC-16
+- id: SC-17
+  note: Must run immediately before deployment execution
+- id: SC-18
+  note: Verify all secrets and keys are properly vaulted, rotated, and access-controlled
+- id: AC-04
+  note: Applicable when change involves AI models — verify deployed model version matches registry
+exit_criteria:
+- 'QC-09: Release readiness checklist completed — all prior controls evidenced'
+- 'RC-06: CAB approval granted by appropriate authority'
+- 'RC-07: Rollback plan validated and tested in pre-production'
+- 'SC-16: Infrastructure security baseline validated — no unresolved deviations'
+- 'SC-17: Deployment integrity verified — artefact checksums match tested build'
+- 'SC-18: All secrets/keys validated for proper vaulting, rotation, and access control'
+next_stage: 6
+artifacts:
+  inputs:
+  - ../04-testing-documentation/artifacts/outputs/RC-05-risk-threshold-evaluation.yaml
+  - ../03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml
+  outputs:
+  - artifacts/outputs/QC-09-release-readiness-checklist.yaml
+  - artifacts/outputs/RC-06-change-approval-record.yaml
+  - artifacts/outputs/RC-07-rollback-plan.yaml
+  - artifacts/outputs/SC-16-infrastructure-security-report.yaml
+  - artifacts/outputs/SC-17-deployment-integrity-record.yaml
+  - artifacts/outputs/SC-18-secrets-management-report.yaml

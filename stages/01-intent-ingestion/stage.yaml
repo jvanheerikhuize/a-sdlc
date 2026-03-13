@@ -1,0 +1,94 @@
+# ============================================================
+# Stage 1: Intent Ingestion
+# Steps: stages/01-intent-ingestion/steps/
+# Controls: controls/[track]/[ID].yaml
+# ============================================================
+
+number: 1
+name: Intent Ingestion
+description: Capture, validate, and enrich an incoming change request into a structured, approved feature specification. All
+  downstream stages depend on this specification as their source of truth. No design work begins until Stage 1 is complete.
+roles:
+- code: REQ
+  name: Requester
+  execution_mode: gated
+  responsibilities: Submits the change request
+  ref: roles/REQ.yaml
+- code: IA
+  name: Intake Analyst
+  execution_mode: autonomous
+  responsibilities: Screens, parses, drafts, classifies, and logs
+  ref: roles/IA.yaml
+- code: PO
+  name: Product Owner
+  execution_mode: gated
+  responsibilities: Approves specification; makes binding conflict decisions
+  ref: roles/PO.yaml
+- code: RO
+  name: Risk Officer
+  execution_mode: gated
+  responsibilities: Validates risk classification; may override agent-proposed tier
+  ref: roles/RO.yaml
+- code: SA
+  name: Security Architect
+  execution_mode: gated
+  responsibilities: Reviews blocked or flagged requests; contacts requester
+  ref: roles/SA.yaml
+- code: AGL
+  name: AI Governance Lead
+  execution_mode: gated
+  responsibilities: Confirms EU AI Act tier (if AI component involved)
+  ref: roles/AGL.yaml
+- code: CO
+  name: Compliance Officer
+  execution_mode: gated
+  responsibilities: Reviews audit records during regulatory audits
+  ref: roles/CO.yaml
+steps_dir: steps/
+steps:
+- '1.1'
+- '1.2'
+- '1.3'
+- '1.4'
+- '1.5'
+- 1.5b
+- '1.6'
+parallelism:
+  max_concurrent: 3
+  groups:
+  - - '1.3'
+    - '1.4'
+    - '1.5'
+required_controls:
+- id: SC-03
+  note: Must run first — screens for adversarial inputs before any agent processing
+- id: SC-04
+  note: Applicable when the change processes personal data or involves profiling
+- id: QC-01
+- id: QC-02
+- id: RC-01
+- id: AC-01
+  note: Applicable when the change involves an AI component
+- id: AC-02
+  note: Applicable when the change introduces or modifies use of a GPAI/foundation model
+- id: GC-05
+exit_criteria:
+- 'SC-03: Pre-guardrails passed — no injection patterns detected in incoming request'
+- 'SC-04: Data classification assigned (if applicable to change)'
+- 'QC-01: Feature specification approved by Product Owner'
+- 'QC-02: All blocking conflicts resolved; non-blocking conflicts documented'
+- 'RC-01: Risk classification tier assigned and logged'
+- 'AC-01: AI Act risk tier confirmed (or not-applicable documented)'
+- 'AC-02: GPAI obligation screening completed (if applicable)'
+- 'GC-05: Intent audit record written to immutable log'
+next_stage: 2
+artifacts:
+  inputs:
+  - artifacts/inputs/change-request.yaml
+  outputs:
+  - artifacts/outputs/QC-01-feature-spec.yaml
+  - artifacts/outputs/QC-02-conflict-resolution-record.yaml
+  - artifacts/outputs/RC-01-risk-classification.yaml
+  - artifacts/outputs/AC-01-ai-tier-classification.yaml
+  - artifacts/outputs/SC-04-data-classification-record.yaml
+  - artifacts/outputs/GC-05-intent-audit-record.yaml

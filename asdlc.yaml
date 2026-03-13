@@ -1,136 +1,118 @@
-# =============================================================================
+# ============================================================
 # A-SDLC Framework Manifest
-# =============================================================================
-# Machine-readable index of all stages, controls, and supporting artefacts.
-# Use this file to programmatically discover the full framework structure
-# without reading individual stage files.
-#
-# Schema: schema/control.schema.json
-# Agent entrypoint: AGENTS.md
-# =============================================================================
+# ============================================================
+# Lightweight index of stages, controls, and supporting files.
+# Stages:   stages/NN-name/stage.yaml
+# Steps:    stages/NN-name/steps/step-N-N.yaml
+# Controls: controls/[track]/[ID].yaml
+# Registry: controls/registry.yaml
+# Schema:   schema/framework.schema.json
+# ============================================================
 
 framework:
   name: Agentic Software Development Life Cycle
   abbreviation: A-SDLC
-  version: "1.0"
-  status: draft                    # draft | review | approved | deprecated
+  version: '1.0'
+  status: draft
   approval_owner: ''
   approval_contact: ''
-
-  # Module identity — this repo is consumed as a git submodule
   module:
     name: A-SDLC-GOVERNANCE-MODULE
     deployment: git-submodule
-    default_mount_path: a-sdlc-governance   # conventional submodule directory name
-    companion_module: A-SDLC-AGENTIC-MODULE  # enables traditional repos to become agentic-ready
-    description: >-
-      Governance, controls, directives, and lifecycle definitions for agentic and
-      human-AI hybrid software development. Consumed as a git submodule by target
-      repositories. The companion A-SDLC-AGENTIC-MODULE provides entry-point
-      scaffolding and instructions for traditional human development repos that want
-      to adopt the A-SDLC framework.
-
-  tagline: >-
-    A framework that defines how software is built, tested, and released when AI agents
-    work alongside human developers.
+    default_mount_path: a-sdlc-governance
+    companion_module: A-SDLC-AGENTIC-MODULE
+    description: Governance, controls, directives, and lifecycle definitions for agentic and human-AI hybrid software development.
+      Consumed as a git submodule by target repositories. The companion A-SDLC-AGENTIC-MODULE provides entry-point scaffolding
+      and instructions for traditional human development repos that want to adopt the A-SDLC framework.
+  tagline: A framework that defines how software is built, tested, and released when AI agents work alongside human developers.
   narrative:
-    what_is_it: >-
-      The Agentic SDLC is a paradigm shift where AI agents evolve from passive coding
-      assistants to autonomous owners of specific lifecycle phases. It moves the human role
-      from granular execution to high-level orchestration, decoupling output from headcount
-      and eliminating the "wait states" inherent in manual hand-offs.
+    what_is_it: The Agentic SDLC is a paradigm shift where AI agents evolve from passive coding assistants to autonomous owners
+      of specific lifecycle phases. It moves the human role from granular execution to high-level orchestration, decoupling
+      output from headcount and eliminating the "wait states" inherent in manual hand-offs.
     properties:
-      - Replaces the traditional SDLC — backwards- and forwards-compatible
-      - Is solution, model, and toolchain agnostic — works with any agent or stack
-      - Is usable by both humans and agents at every step and task
+    - Replaces the traditional SDLC — backwards- and forwards-compatible
+    - Is solution, model, and toolchain agnostic — works with any agent or stack
+    - Is usable by both humans and agents at every step and task
     value_propositions:
-      - benefit: Velocity
-        target: "20–30% faster delivery"
-        mechanism: Agents handle "in-between" work — environment setup, triage, PR descriptions
-      - benefit: Quality
-        target: "70% fewer production defects"
-        mechanism: Deep-context testing; programmatically enforced standards during coding
-      - benefit: Governance
-        target: Non-negotiable compliance
-        mechanism: Immutable Core Security Directives injected into every agent context
-      - benefit: Role Evolution
-        target: Developer → System Orchestrator
-        mechanism: Agents own repetitive tasks; engineers focus on architectural innovation
+    - benefit: Velocity
+      target: 20–30% faster delivery
+      mechanism: Agents handle "in-between" work — environment setup, triage, PR descriptions
+    - benefit: Quality
+      target: 70% fewer production defects
+      mechanism: Deep-context testing; programmatically enforced standards during coding
+    - benefit: Governance
+      target: Non-negotiable compliance
+      mechanism: Immutable Core Security Directives injected into every agent context
+    - benefit: Role Evolution
+      target: Developer → System Orchestrator
+      mechanism: Agents own repetitive tasks; engineers focus on architectural innovation
   regulatory_scope:
-    - DORA
-    - EU AI Act
+  - DORA
+  - EU AI Act
   regulatory_summary:
     frameworks:
-      - name: DORA
-        full_name: "Digital Operational Resilience Act"
-        regulation: "EU 2022/2554"
-        controls_mapped: 44
-        total_controls: 50
-        coverage_pct: "88.0%"
-      - name: EU AI Act
-        full_name: "EU AI Act"
-        regulation: "EU 2024/1689"
-        controls_mapped: 40
-        total_controls: 50
-        coverage_pct: "80.0%"
-
+    - name: DORA
+      full_name: Digital Operational Resilience Act
+      regulation: EU 2022/2554
+      controls_mapped: 44
+      total_controls: 50
+      coverage_pct: 88.0%
+    - name: EU AI Act
+      full_name: EU AI Act
+      regulation: EU 2024/1689
+      controls_mapped: 40
+      total_controls: 50
+      coverage_pct: 80.0%
   control_tracks:
-    - code: QC
-      name: Quality Controls
-      description: Ensure work meets standards
-    - code: RC
-      name: Risk Controls
-      description: Identify and manage what can go wrong
-    - code: SC
-      name: Security Controls
-      description: Protect against threats and vulnerabilities
-    - code: AC
-      name: AI Controls
-      description: Address EU AI Act requirements
-    - code: GC
-      name: Governance Controls
-      description: Maintain the audit trail across everything
-
+  - code: QC
+    name: Quality Controls
+    description: Ensure work meets standards
+  - code: RC
+    name: Risk Controls
+    description: Identify and manage what can go wrong
+  - code: SC
+    name: Security Controls
+    description: Protect against threats and vulnerabilities
+  - code: AC
+    name: AI Controls
+    description: Address EU AI Act requirements
+  - code: GC
+    name: Governance Controls
+    description: Maintain the audit trail across everything
   delegation_patterns:
-    - pattern: fully_automated
-      description: Agent executes; no human judgement required
-    - pattern: automated_policy_enforced
-      description: Agent executes via policy engine; no human intervention
-    - pattern: automated_with_human_escalation
-      description: Agent executes; human escalated on anomaly
-    - pattern: agent_drafts_human_approves
-      description: Agent produces draft; human validates before proceeding
-    - pattern: agent_analyses_human_resolves
-      description: Agent surfaces findings; human makes the decision
-    - pattern: agent_executes_human_reviews
-      description: Agent runs the process; human reviews results
-    - pattern: agent_classifies_human_validates
-      description: Agent classifies; human confirms classification
-    - pattern: agent_proposes_human_confirms
-      description: Agent proposes option; human confirms
-    - pattern: agent_calculates_human_decides
-      description: Agent computes outcome; human makes go/no-go
-    - pattern: agent_validates_human_approves
-      description: Agent checks completeness; human signs off
-    - pattern: agent_monitors_human_reports
-      description: Agent detects; human files the report
-    - pattern: agent_creates_human_reviews
-      description: Agent creates artefact; human reviews
-    - pattern: agent_logs_human_reviews
-      description: Agent writes log; human reviews it
-    - pattern: agent_compiles_human_approves
-      description: Agent compiles checklist; human approves
-    - pattern: agent_checks_human_approves
-      description: Agent verifies; human approves
-    - pattern: human_required
-      description: Cannot be delegated. Human must decide. Agent must stop and escalate.
-
+  - pattern: fully_automated
+    description: Agent executes; no human judgement required
+  - pattern: automated_policy_enforced
+    description: Agent executes via policy engine; no human intervention
+  - pattern: automated_with_human_escalation
+    description: Agent executes; human escalated on anomaly
+  - pattern: agent_drafts_human_approves
+    description: Agent produces draft; human validates before proceeding
+  - pattern: agent_analyses_human_resolves
+    description: Agent surfaces findings; human makes the decision
+  - pattern: agent_executes_human_reviews
+    description: Agent runs the process; human reviews results
+  - pattern: agent_classifies_human_validates
+    description: Agent classifies; human confirms classification
+  - pattern: agent_proposes_human_confirms
+    description: Agent proposes option; human confirms
+  - pattern: agent_calculates_human_decides
+    description: Agent computes outcome; human makes go/no-go
+  - pattern: agent_validates_human_approves
+    description: Agent checks completeness; human signs off
+  - pattern: agent_monitors_human_reports
+    description: Agent detects; human files the report
+  - pattern: agent_creates_human_reviews
+    description: Agent creates artefact; human reviews
+  - pattern: agent_logs_human_reviews
+    description: Agent writes log; human reviews it
+  - pattern: agent_compiles_human_approves
+    description: Agent compiles checklist; human approves
+  - pattern: agent_checks_human_approves
+    description: Agent verifies; human approves
+  - pattern: human_required
+    description: Cannot be delegated. Human must decide. Agent must stop and escalate.
 roles:
-  # All roles are agentic-first. Every role has an agent_persona.
-  # execution_mode: autonomous (no approval gate) | gated (approval required)
-  # Full definitions: roles/[CODE].yaml  |  Registry: roles/registry.yaml
-  #
-  # Stage executor roles (autonomous — one per stage):
   IA:
     name: Intake Analyst
     execution_mode: autonomous
@@ -221,7 +203,6 @@ roles:
     execution_mode: gated
     description: Audit consumer; reviews artefacts for regulatory compliance across all stages.
     ref: roles/CO.yaml
-
 cross_cutting:
   description: Controls and directives active across all six stages for every agent session.
   feedback_loops:
@@ -234,233 +215,74 @@ cross_cutting:
     core: directives/core/core-directives.yaml
     stages: directives/stages/
   controls:
-    - id: SC-01
-      name: Core Directive Injection
-      track: SC
-    - id: SC-02
-      name: Stage Directive Injection
-      track: SC
-    - id: GC-01
-      name: Audit Trail & Compliance Reporting
-      track: GC
-    - id: GC-02
-      name: End-to-End Traceability
-      track: GC
-    - id: GC-03
-      name: Agent Provenance Registry
-      track: GC
-    - id: GC-04
-      name: Compliance Evidence Automation
-      track: GC
-
+  - id: SC-01
+    name: Core Directive Injection
+    track: SC
+  - id: SC-02
+    name: Stage Directive Injection
+    track: SC
+  - id: GC-01
+    name: Audit Trail & Compliance Reporting
+    track: GC
+  - id: GC-02
+    name: End-to-End Traceability
+    track: GC
+  - id: GC-03
+    name: Agent Provenance Registry
+    track: GC
+  - id: GC-04
+    name: Compliance Evidence Automation
+    track: GC
 stages:
-  - number: 1
-    name: Intent Ingestion
-    slug: 01-intent-ingestion
-    directory: stages/01-intent-ingestion
-    stage_file: stages/01-intent-ingestion/01-intent-ingestion.yaml
-    readme: stages/01-intent-ingestion/README.md
-    artifacts_dir: stages/01-intent-ingestion/artifacts/
-    description: >-
-      High-level business goals are captured, disambiguated, and transformed
-      into structured technical requirements. Establishes the source of truth
-      for all subsequent agentic actions.
-    controls:
-      - id: QC-01
-        name: Specification Validation
-        track: QC
-      - id: QC-02
-        name: Coherence & Conflict Resolution
-        track: QC
-      - id: RC-01
-        name: Risk Classification
-        track: RC
-      - id: SC-03
-        name: Pre-Guardrails
-        track: SC
-      - id: SC-04
-        name: Data Classification & Sensitivity Screening
-        track: SC
-      - id: AC-01
-        name: AI Risk Tier Classification
-        track: AC
-      - id: AC-02
-        name: GPAI & Foundation Model Obligation Screening
-        track: AC
-      - id: GC-05
-        name: Intent Traceability
-        track: GC
-
-  - number: 2
-    name: System Design
-    slug: 02-system-design
-    directory: stages/02-system-design
-    stage_file: stages/02-system-design/02-system-design.yaml
-    readme: stages/02-system-design/README.md
-    description: >-
-      Validated intent is translated into architecture and technical
-      specifications. Threat modelling and stage directive injection
-      occur here before any coding begins.
-    controls:
-      - id: QC-03
-        name: Design Completeness & Standards
-        track: QC
-      - id: RC-02
-        name: Design Approval
-        track: RC
-      - id: RC-03
-        name: Privacy Impact Assessment Gate
-        track: RC
-      - id: SC-05
-        name: Threat Model Validation
-        track: SC
-      - id: SC-02
-        name: Directive Injection
-        track: SC
-      - id: SC-06
-        name: Zero-Trust Architecture Validation
-        track: SC
-      - id: AC-03
-        name: AI Component Design Review
-        track: AC
-      - id: AC-04
-        name: AI Model Governance & Version Control
-        track: AC
-
-  - number: 3
-    name: Coding & Implementation
-    slug: 03-coding-implementation
-    directory: stages/03-coding-implementation
-    stage_file: stages/03-coding-implementation/03-coding-implementation.yaml
-    readme: stages/03-coding-implementation/README.md
-    description: >-
-      Code is produced by human developers, AI agents, or both. The most
-      control-dense stage: enforces quality, controls agent permissions, scans
-      for security issues, tracks provenance, and converges into a reviewed PR.
-    controls:
-      - id: QC-04
-        name: Pull Request Creation & Review
-        track: QC
-      - id: QC-05
-        name: Code Quality Standards
-        track: QC
-      - id: RC-04
-        name: Decision Log
-        track: RC
-      - id: SC-07
-        name: Permission Management
-        track: SC
-      - id: SC-08
-        name: Post-Guardrails
-        track: SC
-      - id: SC-09
-        name: Secrets & Credentials Scanning
-        track: SC
-      - id: SC-10
-        name: Software Composition Analysis & SBOM Generation
-        track: SC
-      - id: SC-11
-        name: Container & IaC Security Scanning
-        track: SC
-  - number: 4
-    name: Testing & Documentation
-    slug: 04-testing-documentation
-    directory: stages/04-testing-documentation
-    stage_file: stages/04-testing-documentation/04-testing-documentation.yaml
-    readme: stages/04-testing-documentation/README.md
-    description: >-
-      The verification gate. Answers "does it work correctly?" and "is it safe
-      to release?" Culminates in a risk threshold evaluation that opens or
-      blocks the door to deployment.
-    controls:
-      - id: QC-06
-        name: Functional & Non-Functional Testing
-        track: QC
-      - id: QC-07
-        name: AI Output Validation
-        track: QC
-      - id: QC-08
-        name: Documentation Completeness
-        track: QC
-      - id: RC-05
-        name: Risk Threshold Evaluation
-        track: RC
-      - id: SC-12
-        name: SAST
-        track: SC
-      - id: SC-13
-        name: DAST
-        track: SC
-      - id: SC-14
-        name: API Security Testing
-        track: SC
-      - id: SC-15
-        name: Adversarial AI Robustness Testing
-        track: SC
-      - id: AC-05
-        name: Bias & Fairness Testing
-        track: AC
-
-  - number: 5
-    name: Deployment & Release
-    slug: 05-deployment-release
-    directory: stages/05-deployment-release
-    stage_file: stages/05-deployment-release/05-deployment-release.yaml
-    readme: stages/05-deployment-release/README.md
-    description: >-
-      Promotion to production. Carries the strongest governance requirements.
-      Ensures everything prior is complete, the deployment is trustworthy, and
-      there is a verified rollback path.
-    controls:
-      - id: QC-09
-        name: Release Readiness Checklist
-        track: QC
-      - id: RC-06
-        name: CAB Approval
-        track: RC
-      - id: RC-07
-        name: Rollback Plan Validation
-        track: RC
-      - id: SC-16
-        name: Infrastructure Security
-        track: SC
-      - id: SC-17
-        name: Deployment Integrity
-        track: SC
-      - id: SC-18
-        name: Secrets & Key Management Lifecycle
-        track: SC
-
-  - number: 6
-    name: Observability & Maintenance
-    slug: 06-observability-maintenance
-    directory: stages/06-observability-maintenance
-    stage_file: stages/06-observability-maintenance/06-observability-maintenance.yaml
-    readme: stages/06-observability-maintenance/README.md
-    description: >-
-      The only stage that never ends. Continuous monitoring of operational
-      health, security posture, risk evolution, and AI behaviour. Feeds back
-      into the lifecycle through defined re-entry paths.
-    controls:
-      - id: QC-10
-        name: SLA/SLO Monitoring
-        track: QC
-      - id: RC-08
-        name: Risk & Health Monitoring
-        track: RC
-      - id: RC-09
-        name: Third-Party Continuous Risk Monitoring
-        track: RC
-      - id: SC-19
-        name: Incident Scanning & Detection
-        track: SC
-      - id: SC-20
-        name: Runtime Anomaly Detection
-        track: SC
-      - id: AC-06
-        name: AI Post-Market Surveillance
-        track: AC
-
+- number: 1
+  name: Intent Ingestion
+  slug: 01-intent-ingestion
+  directory: stages/01-intent-ingestion
+  stage_file: stages/01-intent-ingestion/stage.yaml
+  readme: stages/01-intent-ingestion/README.md
+  artifacts_dir: stages/01-intent-ingestion/artifacts/
+  description: High-level business goals are captured, disambiguated, and transformed into structured technical requirements.
+    Establishes the source of truth for all subsequent agentic actions.
+- number: 2
+  name: System Design
+  slug: 02-system-design
+  directory: stages/02-system-design
+  stage_file: stages/02-system-design/stage.yaml
+  readme: stages/02-system-design/README.md
+  description: Validated intent is translated into architecture and technical specifications. Threat modelling and stage directive
+    injection occur here before any coding begins.
+- number: 3
+  name: Coding & Implementation
+  slug: 03-coding-implementation
+  directory: stages/03-coding-implementation
+  stage_file: stages/03-coding-implementation/stage.yaml
+  readme: stages/03-coding-implementation/README.md
+  description: 'Code is produced by human developers, AI agents, or both. The most control-dense stage: enforces quality,
+    controls agent permissions, scans for security issues, tracks provenance, and converges into a reviewed PR.'
+- number: 4
+  name: Testing & Documentation
+  slug: 04-testing-documentation
+  directory: stages/04-testing-documentation
+  stage_file: stages/04-testing-documentation/stage.yaml
+  readme: stages/04-testing-documentation/README.md
+  description: The verification gate. Answers "does it work correctly?" and "is it safe to release?" Culminates in a risk
+    threshold evaluation that opens or blocks the door to deployment.
+- number: 5
+  name: Deployment & Release
+  slug: 05-deployment-release
+  directory: stages/05-deployment-release
+  stage_file: stages/05-deployment-release/stage.yaml
+  readme: stages/05-deployment-release/README.md
+  description: Promotion to production. Carries the strongest governance requirements. Ensures everything prior is complete,
+    the deployment is trustworthy, and there is a verified rollback path.
+- number: 6
+  name: Observability & Maintenance
+  slug: 06-observability-maintenance
+  directory: stages/06-observability-maintenance
+  stage_file: stages/06-observability-maintenance/stage.yaml
+  readme: stages/06-observability-maintenance/README.md
+  description: The only stage that never ends. Continuous monitoring of operational health, security posture, risk evolution,
+    and AI behaviour. Feeds back into the lifecycle through defined re-entry paths.
 supporting_files:
   schema:
     control_definition: schema/control.schema.json

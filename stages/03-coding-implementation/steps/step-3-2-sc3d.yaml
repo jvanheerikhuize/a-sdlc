@@ -1,0 +1,22 @@
+# Step 3.2-sc3d: Software Composition Analysis
+# Stage 3 — Coding & Implementation
+# Control: SC-10
+
+id: 3.2-sc3d
+title: Software Composition Analysis
+stage: 3
+control: SC-10
+description: Software Composition Analysis and SBOM generation
+delegation: Fully automated
+depends_on:
+- '3.1'
+actors:
+- role: AGT
+  action: Generate SBOM; scan all third-party dependencies for known CVEs
+- role: SA
+  action: Review critical/high findings; document risk acceptance if needed
+inputs:
+- Dependency manifests (package.json, requirements.txt, etc.)
+outputs:
+- SCA report with SBOM (artifacts/outputs/sca-report.yaml)
+on_failure: Critical or unaccepted dependencies block progression

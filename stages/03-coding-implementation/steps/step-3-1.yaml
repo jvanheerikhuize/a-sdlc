@@ -1,0 +1,26 @@
+# Step 3.1: Verify Prerequisites & Load Permissions
+# Stage 3 — Coding & Implementation
+# Control: SC-07
+
+id: '3.1'
+title: Verify Prerequisites & Load Permissions
+stage: 3
+control: SC-07
+description: Verify prerequisites and load permissions
+delegation: Fully automated
+depends_on: []
+actors:
+- role: AGT
+  action: Verify that SC-02 directive injection confirmation exists and covers Stage 3 directives
+- role: AGT
+  action: Load agent trust tier and permission policy from SC-07
+- role: AGT
+  action: Confirm that directives/stages/03-coding-implementation.yaml has been acknowledged
+- role: SA
+  action: Confirms permission policy is up to date for the agent trust tier
+inputs:
+- Directive injection confirmation (Stage 2 SC-02 output)
+outputs:
+- Permission enforcement log started (artifacts/outputs/permission-enforcement-log.yaml)
+on_failure: Stage 3 cannot begin. Missing directive confirmation or invalid permission policy must be resolved before any
+  coding starts

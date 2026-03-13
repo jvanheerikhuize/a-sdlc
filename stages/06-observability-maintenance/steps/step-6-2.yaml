@@ -1,0 +1,27 @@
+# Step 6.2: SLA/SLO Monitoring
+# Stage 6 — Observability & Maintenance
+# Control: QC-10
+
+id: '6.2'
+title: SLA/SLO Monitoring
+stage: 6
+control: QC-10
+description: SLA/SLO monitoring (continuous)
+delegation: Agent monitors, OPS responds
+depends_on:
+- '6.1'
+frequency: continuous
+actors:
+- role: AGT
+  action: 'Continuously measure all defined SLIs against SLOs: availability, latency, error rate, throughput'
+- role: AGT
+  action: Compute error budget consumption rate; alert when burn rate exceeds defined thresholds
+- role: OPS
+  action: Respond to burn rate alerts; make decisions on service degradation
+- role: OPS
+  action: Initiate feedback loop if SLO degradation requires a code change
+inputs: []
+outputs:
+- SLO monitoring record (artifacts/outputs/slo-monitoring-record.yaml) — continuously updated
+on_failure: Immediate escalation to OPS; may trigger Path B (Quickfix → Stage 3) feedback loop
+note: Runs continuously throughout the operational lifetime

@@ -1,0 +1,24 @@
+# Step 4.3: DAST
+# Stage 4 — Testing & Documentation
+# Control: SC-13
+
+id: '4.3'
+title: DAST
+stage: 4
+control: SC-13
+description: DAST (dynamic application security testing)
+delegation: Fully automated
+depends_on:
+- '4.1'
+actors:
+- role: AGT
+  action: Execute runtime security test suite against deployed test environment
+- role: AGT
+  action: Test injection attacks, authentication flaws, session management, TLS, OWASP Top 10 categories
+- role: SA
+  action: Review findings; remediate or formally accept residual risk per severity policy
+inputs:
+- Application deployed to test environment
+outputs:
+- DAST scan report (artifacts/outputs/dast-scan-report.yaml)
+on_failure: Critical or high runtime findings block Stage 4 exit

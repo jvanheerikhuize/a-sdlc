@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/03-coding-implementation/03-coding-implementation.yaml + controls/ + directives/
+     Source: stages/03-coding-implementation/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 3: Coding & Implementation — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/03-coding-implementation/03-coding-implementation.yaml` — stage definition and workflow DAG
+- `stages/03-coding-implementation/stage.yaml` — stage definition (steps in: `stages/03-coding-implementation/steps/`)
 - `controls/qc/QC-05.yaml` — control definition *(Runs continuously on every commit)*
 - `controls/sc/SC-07.yaml` — control definition *(Enforced throughout the implementation session)*
 - `controls/sc/SC-08.yaml` — control definition *(Runs on all agent-generated code before PR creation)*
@@ -89,4 +89,4 @@
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

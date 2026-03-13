@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdlc/schema/step.schema.json",
+  "title": "A-SDLC Step Definition",
+  "description": "Schema for individual step files at stages/NN-name/steps/step-N-N.yaml. Steps are the atomic units of work within a stage — they trigger a control (optional), consume input artifacts, and produce output artifacts. Steps are executed by roles.",
+  "type": "object",
+  "required": ["id", "title", "stage", "delegation", "depends_on", "actors"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[1-6]\\.[0-9]+(b|[a-z]|-[a-z0-9-]+)?$",
+      "description": "Step identifier matching the step number (e.g., '1.1', '1.5b', '3.2-sc3c', '4.7-ai-adversarial'). Must match the filename stem after 'step-' with dots replaced by hyphens."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Human-readable step title."
+    },
+    "stage": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 6,
+      "description": "Stage number this step belongs to."
+    },
+    "control": {
+      "type": ["string", "null"],
+      "pattern": "^(QC|RC|SC|AC|GC)-\\d{2}$",
+      "description": "Control ID triggered by this step. Null for procedural/handover steps."
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "Brief description of what happens in this step."
+    },
+    "delegation": {
+      "type": "string",
+      "description": "Human-readable delegation pattern describing who does what (e.g., 'Fully automated', 'Agent drafts → human approves')."
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[1-6]\\.[0-9]+(b|[a-z]|-[a-z0-9-]+)?$"
+      },
+      "description": "Step IDs this step depends on. Empty array means this step has no prerequisites within the stage."
+    },
+    "condition": {
+      "type": ["string", "null"],
+      "description": "Conditionality text. Null or absent if the step is unconditional."
+    },
+    "frequency": {
+      "type": "string",
+      "enum": ["per_change", "per_release", "continuous", "scheduled", "on_demand", "event_triggered", "per_stage_entry", "per_session", "per_model_change"],
+      "description": "Execution frequency. Defaults to per_change. Stage 6 steps often use 'continuous'."
+    },
+    "actors": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered list of role-action pairs defining who does what in this step.",
+      "items": {
+        "type": "object",
+        "required": ["role", "action"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string",
+            "pattern": "^[A-Z]{2,4}$",
+            "description": "Role code (AGT, DEV, QA, SA, PO, RO, AGL, etc.)."
+          },
+          "action": {
+            "type": "string",
+            "minLength": 5,
+            "description": "Action this actor takes in this step."
+          }
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Input descriptions or artifact references consumed by this step."
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Output descriptions or artifact references produced by this step."
+    },
+    "on_failure": {
+      "type": ["string", "null"],
+      "description": "What happens if this step fails or is blocked."
+    },
+    "on_uncertainty": {
+      "type": ["string", "null"],
+      "description": "What happens if the step result is uncertain or ambiguous."
+    },
+    "on_changes_requested": {
+      "type": ["string", "null"],
+      "description": "What happens if changes are requested during a review step."
+    },
+    "note": {
+      "type": ["string", "null"],
+      "description": "Additional note or clarification for this step."
+    },
+    "tables": {
+      "type": "array",
+      "description": "Supplementary reference tables (e.g., approval authority by risk tier).",
+      "items": {
+        "type": "object",
+        "required": ["title", "columns", "rows"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "columns": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

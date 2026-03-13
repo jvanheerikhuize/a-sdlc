@@ -1,0 +1,25 @@
+# Step 1.5b: Data Classification Screening
+# Stage 1 — Intent Ingestion
+# Control: SC-04
+
+id: 1.5b
+title: Data Classification Screening
+stage: 1
+control: SC-04
+description: Data classification screening (conditional on processes_personal_data)
+delegation: Agent classifies, SA reviews
+depends_on:
+- '1.1'
+condition: Only applicable when the change processes personal data or involves profiling. If not applicable, document as not_applicable.
+actors:
+- role: AGT
+  action: Identify all personal data elements and processing activities
+- role: AGT
+  action: Classify each element per GDPR categories; flag any high-risk processing
+- role: SA
+  action: Review classification; confirm compliance with data handling policy
+inputs:
+- Draft feature specification
+outputs:
+- Data classification record (artifacts/outputs/data-classification-record.yaml)
+note: Runs in parallel with other checks after Step 1.1

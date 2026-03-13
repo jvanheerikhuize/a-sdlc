@@ -1,0 +1,23 @@
+# Step 4.1: SAST
+# Stage 4 — Testing & Documentation
+# Control: SC-12
+
+id: '4.1'
+title: SAST
+stage: 4
+control: SC-12
+description: SAST (static application security testing)
+delegation: Fully automated
+depends_on: []
+actors:
+- role: AGT
+  action: Execute static analysis scan across the full codebase; apply heightened scrutiny to agent-generated code
+- role: AGT
+  action: Map all findings to CWE categories; assign severity ratings
+- role: SA
+  action: Review findings; triage critical and high findings; remediate or document risk acceptance
+inputs:
+- Merged source code from Stage 3
+outputs:
+- SAST scan report (artifacts/outputs/sast-scan-report.yaml)
+on_failure: Critical or high findings block Stage 4 exit until remediated or formally accepted by SA

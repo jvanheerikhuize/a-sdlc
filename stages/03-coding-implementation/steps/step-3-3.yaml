@@ -1,0 +1,31 @@
+# Step 3.3: Agent Output Scan
+# Stage 3 — Coding & Implementation
+# Control: SC-08
+
+id: '3.3'
+title: Agent Output Scan
+stage: 3
+control: SC-08
+description: Post-guardrails scan on agent-generated code
+delegation: Fully automated
+depends_on:
+- '3.2'
+- 3.2-sc3c
+- 3.2-sc3d
+- 3.2-sc3e
+- 3.2-rc3a
+- 3.2-gc3a
+actors:
+- role: AGT
+  action: Trigger SC-08 scan across all agent-generated code in the branch
+- role: AGT
+  action: 'Report findings: file, line, category, severity'
+- role: SA
+  action: Review any flagged findings; determine resolution
+- role: AGT
+  action: Block PR creation if any critical or high findings remain unresolved
+inputs:
+- All agent-generated code on the branch
+outputs:
+- Post-guardrail scan result (artifacts/outputs/post-guardrail-scan.yaml)
+on_failure: PR creation is blocked (Step 3.4 cannot begin); SA reviews and remediates findings

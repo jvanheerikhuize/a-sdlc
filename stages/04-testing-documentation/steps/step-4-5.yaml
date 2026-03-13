@@ -1,0 +1,25 @@
+# Step 4.5: Bias & Fairness Testing
+# Stage 4 — Testing & Documentation
+# Control: AC-05
+
+id: '4.5'
+title: Bias & Fairness Testing
+stage: 4
+control: AC-05
+description: Bias and fairness testing (conditional on ai_component)
+delegation: Agent executes, AGL reviews
+depends_on:
+- '4.1'
+condition: Only applicable when the change involves an AI component. If not applicable, document as not_applicable.
+actors:
+- role: AGT
+  action: Execute bias test suite across protected characteristic groups (age, gender, ethnicity, disability)
+- role: AGT
+  action: Measure disparate impact for each group; compare against defined thresholds
+- role: AGL
+  action: Review bias test results; determine if disparate impact is within acceptable thresholds
+inputs:
+- AI component deployed to test environment
+outputs:
+- Bias & fairness report (artifacts/outputs/bias-fairness-report.yaml)
+on_failure: Discriminatory outcomes exceeding defined thresholds block deployment; design or training data must be revised

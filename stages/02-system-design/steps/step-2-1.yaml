@@ -1,0 +1,25 @@
+# Step 2.1: Draft System Design
+# Stage 2 — System Design
+# Control: QC-03
+
+id: '2.1'
+title: Draft System Design
+stage: 2
+control: QC-03
+description: Draft system design
+delegation: Agent drafts
+depends_on: []
+actors:
+- role: AGT
+  action: Parse approved feature specification; translate requirements into architecture
+- role: AGT
+  action: Produce component diagram, integration map, data flow diagram, and technology decisions
+- role: AGT
+  action: Map every requirement to a specific architectural component; flag any unmapped requirements
+- role: AGT
+  action: Validate design coverage against organisational patterns; flag gaps and standards deviations
+inputs:
+- Approved feature specification (FEAT-XXXX)
+outputs:
+- Draft design document (artifacts/outputs/design-document.yaml)
+note: Lead Architect review is at Step 2.2; this step only produces the draft

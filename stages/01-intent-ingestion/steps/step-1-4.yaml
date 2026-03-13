@@ -1,0 +1,24 @@
+# Step 1.4: Risk Classification
+# Stage 1 — Intent Ingestion
+# Control: RC-01
+
+id: '1.4'
+title: Risk Classification
+stage: 1
+control: RC-01
+description: Classify risk tier
+delegation: Agent classifies, human validates
+depends_on:
+- '1.2'
+actors:
+- role: AGT
+  action: Apply risk classification criteria across 6 dimensions
+- role: AGT
+  action: Propose tier (low / medium / high / critical) and governance intensity
+- role: RO
+  action: Review proposed tier and rationale; validate or override with documented justification
+inputs:
+- Draft feature specification
+outputs:
+- Risk classification record (artifacts/outputs/risk-classification.yaml)
+on_failure: Escalate to Risk Officer for manual assessment; classification must resolve before Step 1.6

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/02-system-design/02-system-design.yaml
+     Source: stages/02-system-design/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 2: System Design — Process
@@ -207,9 +207,9 @@ Stage directive injection confirmation
 
 ## References
 
-- Stage definition: `02-system-design.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

@@ -408,7 +408,7 @@ check_stage_files() {
     local stage_files=()
     while IFS= read -r -d '' f; do
         stage_files+=("$f")
-    done < <(find "$STAGES_DIR" -mindepth 2 -maxdepth 2 -name "0[1-6]-*.yaml" -print0 | sort -z)
+    done < <(find "$STAGES_DIR" -mindepth 2 -maxdepth 2 -name "stage.yaml" -print0 | sort -z)
 
     if [[ ${#stage_files[@]} -eq 0 ]]; then
         fail "No stage YAML files found in stages/*/"
@@ -743,7 +743,7 @@ check_feedback_loops() {
 # ── section 7: stage directory structure ──────────────────────────────────────
 
 check_stage_structure() {
-    section "7/7  Stage directory structure — README + process.md presence"
+    section "7/8  Stage directory structure — README + process.md presence"
 
     for stage_num in 1 2 3 4 5 6; do
         local stage_dir=""
@@ -789,6 +789,101 @@ check_stage_structure() {
     section_end
 }
 
+# ── section 8: step files ─────────────────────────────────────────────────────
+
+check_step_files() {
+    section "8/8  Step files — presence, control references, and DAG integrity"
+
+    local total_steps=0
+    local total_stages=0
+
+    for stage_num in 1 2 3 4 5 6; do
+        local stage_dir=""
+        while IFS= read -r -d '' d; do
+            stage_dir="$d"
+            break
+        done < <(find "$STAGES_DIR" -mindepth 1 -maxdepth 1 -type d \
+                      -name "0${stage_num}-*" -print0 | sort -z)
+
+        [[ -z "$stage_dir" ]] && continue
+        local dir_name
+        dir_name="$(basename "$stage_dir")"
+
+        local stage_yaml="$stage_dir/stage.yaml"
+        if [[ ! -f "$stage_yaml" ]]; then
+            fail "Stage $stage_num ($dir_name): stage.yaml not found"
+            continue
+        fi
+
+        local stage_json
+        stage_json="$(yaml2json "$stage_yaml")"
+
+        local steps_dir="$stage_dir/steps"
+        if [[ ! -d "$steps_dir" ]]; then
+            fail "Stage $stage_num ($dir_name): steps/ directory not found"
+            continue
+        fi
+
+        local n_steps
+        n_steps="$(printf '%s' "$stage_json" | jq '(.steps // []) | length')"
+        if [[ "$n_steps" -eq 0 ]]; then
+            fail "Stage $stage_num ($dir_name): no steps listed in stage.yaml"
+            continue
+        fi
+
+        local stage_step_ids=()
+        for ((si=0; si<n_steps; si++)); do
+            local step_id
+            step_id="$(printf '%s' "$stage_json" | jq -r --argjson i "$si" '.steps[$i]')"
+            stage_step_ids+=("$step_id")
+
+            local safe_id
+            safe_id="$(echo "$step_id" | tr '.' '-')"
+            local step_file="$steps_dir/step-${safe_id}.yaml"
+
+            if [[ ! -f "$step_file" ]]; then
+                fail "Stage $stage_num: step file missing — steps/step-${safe_id}.yaml"
+                continue
+            fi
+
+            local step_json
+            step_json="$(yaml2json "$step_file")"
+
+            # Verify id field matches filename
+            local file_id
+            file_id="$(printf '%s' "$step_json" | jq -r '.id // ""')"
+            if [[ "$file_id" != "$step_id" ]]; then
+                fail "Stage $stage_num: step-${safe_id}.yaml has id='$file_id', expected '$step_id'"
+            else
+                ok "Stage $stage_num: step $step_id — file exists and id matches"
+            fi
+
+            # Verify control reference (if not null)
+            local step_ctrl
+            step_ctrl="$(printf '%s' "$step_json" | jq -r '.control // ""')"
+            if [[ -n "$step_ctrl" && "$step_ctrl" != "null" ]]; then
+                local ctrl_valid=false
+                for rid in "${REGISTRY_IDS[@]+"${REGISTRY_IDS[@]}"}"; do
+                    if [[ "$rid" == "$step_ctrl" ]]; then ctrl_valid=true; break; fi
+                done
+                if [[ "$ctrl_valid" == true ]]; then
+                    ok "Stage $stage_num: step $step_id — control $step_ctrl in registry"
+                else
+                    fail "Stage $stage_num: step $step_id — control $step_ctrl not in registry"
+                fi
+            fi
+
+            total_steps=$(( total_steps + 1 ))
+        done
+
+        ok "Stage $stage_num ($dir_name): $n_steps steps listed in stage.yaml"
+        total_stages=$(( total_stages + 1 ))
+    done
+
+    ok "Checked $total_steps steps across $total_stages stages"
+    section_end
+}
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 # Header
@@ -818,6 +913,7 @@ if [[ "$OPT_NO_XREF" == false ]]; then
 fi
 
 check_stage_structure
+check_step_files
 
 # ── summary ───────────────────────────────────────────────────────────────────
 

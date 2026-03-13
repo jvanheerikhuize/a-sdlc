@@ -1,0 +1,26 @@
+# Step 4.2: Functional & Non-Functional Testing
+# Stage 4 — Testing & Documentation
+# Control: QC-06
+
+id: '4.2'
+title: Functional & Non-Functional Testing
+stage: 4
+control: QC-06
+description: Functional and non-functional testing
+delegation: Agent executes, QA reviews
+depends_on:
+- '4.1'
+actors:
+- role: AGT
+  action: Execute functional tests mapped to every Stage 1 acceptance criterion
+- role: AGT
+  action: Execute regression, negative, boundary, performance, load, stress, accessibility, and resilience tests
+- role: AGT
+  action: Produce pass/fail report with each result traced to its originating acceptance criterion
+- role: QA
+  action: Review test results; investigate failures; determine if failures block release or require Stage 3 return
+inputs:
+- Merged code + Stage 1 feature specification (acceptance criteria)
+outputs:
+- Test results report (artifacts/outputs/test-results-report.yaml)
+on_failure: Failing acceptance criteria block Stage 4 exit; work returns to Stage 3 for remediation

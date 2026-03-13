@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/06-observability-maintenance/06-observability-maintenance.yaml
+     Source: stages/06-observability-maintenance/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 6: Observability & Maintenance — Process
@@ -159,9 +159,9 @@ AI post-market surveillance (continuous, conditional on ai_component)
 
 ## References
 
-- Stage definition: `06-observability-maintenance.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

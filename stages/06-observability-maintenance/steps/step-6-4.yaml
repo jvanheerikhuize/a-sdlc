@@ -1,0 +1,41 @@
+# Step 6.4: Incident Scanning & Detection
+# Stage 6 — Observability & Maintenance
+# Control: SC-19
+
+id: '6.4'
+title: Incident Scanning & Detection
+stage: 6
+control: SC-19
+description: Incident scanning and detection (continuous, DORA Art. 17-19 reporting)
+delegation: Automated with human escalation
+depends_on:
+- '6.1'
+- '6.5'
+frequency: continuous
+actors:
+- role: AGT
+  action: Monitor SIEM continuously using MITRE ATT&CK detection patterns
+- role: AGT
+  action: Detect and classify all security events per DORA Art. 18 taxonomy
+- role: AGT
+  action: 'For major incidents: start reporting timelines and prepare initial notification'
+- role: SA
+  action: Validate incident classification; approve escalation decisions
+- role: CO
+  action: Approve and submit regulatory incident reports per DORA Art. 19 timelines
+inputs: []
+outputs:
+- Incident detection record (artifacts/outputs/incident-detection-record.yaml) — continuously updated
+note: Continuous security monitoring with regulatory reporting obligations
+tables:
+- title: DORA Art. 19 reporting timelines on major incident declaration
+  columns:
+  - Report
+  - Deadline
+  rows:
+  - - Initial notification
+    - Within 4 hours
+  - - Intermediate report
+    - Within 72 hours
+  - - Final report
+    - Within 1 month of resolution

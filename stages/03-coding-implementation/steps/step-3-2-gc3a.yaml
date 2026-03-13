@@ -1,0 +1,22 @@
+# Step 3.2-gc3a: Agent Provenance Registry
+# Stage 3 — Coding & Implementation
+# Control: GC-03
+
+id: 3.2-gc3a
+title: Agent Provenance Registry
+stage: 3
+control: GC-03
+description: Code provenance tracking (per-commit)
+delegation: Fully automated
+depends_on:
+- '3.1'
+actors:
+- role: AGT
+  action: Tag all agent-generated code with provenance metadata (author, model, date, commitment) at point of generation
+- role: AGT
+  action: Register tags in GC-03 provenance registry
+inputs:
+- Generated code
+outputs:
+- Provenance registry entries
+note: Runs continuously throughout implementation; all code must be tagged

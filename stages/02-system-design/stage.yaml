@@ -1,0 +1,101 @@
+# ============================================================
+# Stage 2: System Design
+# Steps: stages/02-system-design/steps/
+# Controls: controls/[track]/[ID].yaml
+# ============================================================
+
+number: 2
+name: System Design
+description: Translate the approved specification into a complete, approved system design. Security directives are injected
+  before coding begins. No implementation may start without RC-02 (design approval) and SC-02 directive injection confirmation.
+roles:
+- code: ARCH
+  name: Solution Architect
+  execution_mode: autonomous
+  responsibilities: Drafts system design; generates threat model; injects directives
+  ref: roles/ARCH.yaml
+- code: LAD
+  name: Lead Architect
+  execution_mode: gated
+  responsibilities: Validates and approves design completeness and standards compliance
+  ref: roles/LAD.yaml
+- code: SA
+  name: Security Architect
+  execution_mode: gated
+  responsibilities: Validates STRIDE threat model; signs and publishes directive payload
+  ref: roles/SA.yaml
+- code: RO
+  name: Risk Officer
+  execution_mode: gated
+  responsibilities: Makes formal design approval decision; determines sign-off authority by risk tier
+  ref: roles/RO.yaml
+- code: AGL
+  name: AI Governance Lead
+  execution_mode: gated
+  responsibilities: Reviews and approves AI component design (if AI component involved)
+  ref: roles/AGL.yaml
+- code: CO
+  name: Compliance Officer
+  execution_mode: gated
+  responsibilities: Reviews design records during regulatory audits
+  ref: roles/CO.yaml
+steps_dir: steps/
+steps:
+- '2.1'
+- '2.2'
+- '2.3'
+- '2.4'
+- 2.3b
+- 2.3c
+- '2.5'
+- '2.6'
+- '2.7'
+parallelism:
+  max_concurrent: 5
+  groups:
+  - - '2.2'
+    - '2.3'
+    - '2.4'
+    - 2.3b
+    - 2.3c
+required_controls:
+- id: QC-03
+- id: RC-02
+  note: Human-required gate — cannot be delegated to an agent
+- id: RC-03
+  note: Applicable when the change involves personal data, profiling, or high-risk AI systems
+- id: SC-05
+- id: SC-06
+  note: Validate zero-trust architecture principles in design
+- id: SC-02
+  note: Directive injection must be confirmed before Stage 3 begins
+- id: AC-03
+  note: Applicable when the change involves an AI component
+- id: AC-04
+  note: Applicable when the change involves AI models — register in model registry
+exit_criteria:
+- 'QC-03: Design validated and approved by Lead Architect'
+- 'RC-02: Design approval granted and logged'
+- 'RC-03: Privacy Impact Assessment completed (if applicable)'
+- 'SC-05: STRIDE threat model validated and all critical threats mitigated'
+- 'SC-06: Zero-trust architecture principles validated'
+- 'SC-02: Stage 2 and Stage 3 directive bundles injected and acknowledged by agent'
+- 'AC-03: AI component design review approved (or not-applicable documented)'
+- 'AC-04: AI model registry entry created with version pinning (if applicable)'
+next_stage: 3
+artifacts:
+  inputs:
+  - ../01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml
+  - ../01-intent-ingestion/artifacts/outputs/RC-01-risk-classification.yaml
+  outputs:
+  - artifacts/outputs/QC-03-design-document.yaml
+  - artifacts/outputs/SC-05-stride-threat-model.yaml
+  - artifacts/outputs/RC-02-design-approval-decision.yaml
+  - artifacts/outputs/SC-02-directive-injection-confirmation.yaml
+  - artifacts/outputs/AC-03-ai-component-design-review.yaml
+  - artifacts/outputs/RC-03-privacy-impact-assessment.yaml
+  - artifacts/outputs/SC-06-zero-trust-validation.yaml
+  - artifacts/outputs/AC-04-ai-model-governance-record.yaml
+directives:
+- directives/stages/02-system-design.yaml
+- directives/stages/03-coding-implementation.yaml

@@ -1,0 +1,24 @@
+# Step 5.4: Infrastructure Security Baseline
+# Stage 5 — Deployment & Release
+# Control: SC-16
+
+id: '5.4'
+title: Infrastructure Security Baseline
+stage: 5
+control: SC-16
+description: Infrastructure security baseline validation
+delegation: Fully automated
+depends_on:
+- '5.2'
+actors:
+- role: AGT
+  action: Scan production environment configuration against approved security baseline
+- role: AGT
+  action: 'Check: patching status, access control configurations, network segmentation, IaC compliance, configuration drift'
+- role: SA
+  action: Review any deviations; resolve before deployment or provide documented risk acceptance
+inputs:
+- Production environment + approved security baseline configuration
+outputs:
+- Infrastructure security baseline report (artifacts/outputs/infrastructure-security-report.yaml)
+on_failure: Deviations block deployment until resolved or formally accepted by SA

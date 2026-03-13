@@ -1,0 +1,44 @@
+# Step 2.5: Design Approval
+# Stage 2 — System Design
+# Control: RC-02
+
+id: '2.5'
+title: Design Approval
+stage: 2
+control: RC-02
+description: Design approval (human-required gate)
+delegation: Human required
+depends_on:
+- '2.2'
+- '2.3'
+- '2.4'
+- 2.3b
+- 2.3c
+actors:
+- role: AGT
+  action: 'Assemble approval package: design document, threat model, AI review (if applicable), risk tier'
+- role: RO
+  action: Review approval package; make formal approval decision
+- role: RO
+  action: 'Approve: record decision with identity and timestamp; advance to Step 2.6'
+- role: RO
+  action: 'Reject: return to Step 2.1 with documented reasons; no coding may begin'
+inputs:
+- Approved design doc + STRIDE threat model + AI review + Stage 1 risk classification
+outputs:
+- Design approval decision (artifacts/outputs/design-approval-decision.yaml)
+on_failure: Return to Step 2.1; document reason; revise design and restart parallel steps
+tables:
+- title: Sign-off authority by risk tier
+  columns:
+  - Risk Tier
+  - Required Authority
+  rows:
+  - - critical
+    - Senior Architecture Board
+  - - high
+    - Senior Architecture Board
+  - - medium
+    - Lead Architect
+  - - low
+    - Lead Architect (may be pre-approved)

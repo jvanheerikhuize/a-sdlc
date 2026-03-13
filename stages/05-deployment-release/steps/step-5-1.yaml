@@ -1,0 +1,27 @@
+# Step 5.1: Release Readiness Checklist
+# Stage 5 — Deployment & Release
+# Control: QC-09
+
+id: '5.1'
+title: Release Readiness Checklist
+stage: 5
+control: QC-09
+description: Release readiness checklist
+delegation: Agent compiles, REL approves
+depends_on: []
+actors:
+- role: AGT
+  action: Query audit trail (GC-01) to confirm all prior stage controls were executed and passed
+- role: AGT
+  action: Confirm Stage 4 RC-05 result is pass or approved conditional pass
+- role: AGT
+  action: Verify documentation is current and release package is complete
+- role: AGT
+  action: Flag any gaps in control evidence
+- role: REL
+  action: Review completed checklist; approve release package or require resolution of gaps
+inputs:
+- Audit trail (GC-01) + Stage 4 risk threshold evaluation (RC-05 output)
+outputs:
+- Release readiness checklist (artifacts/outputs/release-readiness-checklist.yaml)
+on_failure: Gaps in prior control evidence block the release; must be resolved before seeking CAB approval

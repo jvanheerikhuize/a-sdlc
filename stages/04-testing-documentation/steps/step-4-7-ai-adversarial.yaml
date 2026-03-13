@@ -1,0 +1,23 @@
+# Step 4.7-ai-adversarial: Adversarial AI Robustness Testing
+# Stage 4 — Testing & Documentation
+# Control: SC-15
+
+id: 4.7-ai-adversarial
+title: Adversarial AI Robustness Testing
+stage: 4
+control: SC-15
+description: Adversarial AI robustness testing (conditional on high-risk AI)
+delegation: Fully automated
+depends_on:
+- '4.1'
+condition: Only applicable for high-risk or security-critical AI deployments. If not applicable, document as not_applicable.
+actors:
+- role: AGT
+  action: Generate adversarial test inputs to probe AI model robustness
+- role: SA
+  action: Review results; assess susceptibility to adversarial attack
+inputs:
+- AI model + adversarial test suite
+outputs:
+- Adversarial robustness report (artifacts/outputs/adversarial-robustness-report.yaml)
+note: Conditional on high-risk AI deployments

@@ -1,0 +1,25 @@
+# Step 4.4: AI Output Validation
+# Stage 4 — Testing & Documentation
+# Control: QC-07
+
+id: '4.4'
+title: AI Output Validation
+stage: 4
+control: QC-07
+description: AI output validation (conditional on ai_component)
+delegation: Agent executes, AGL reviews
+depends_on:
+- '4.1'
+condition: Only applicable when the change involves an AI component. If not applicable, document as not_applicable.
+actors:
+- role: AGT
+  action: Execute hallucination detection tests; measure accuracy against defined thresholds
+- role: AGT
+  action: Run output consistency tests across equivalent inputs; execute boundary condition tests
+- role: AGL
+  action: Review AI validation results; determine whether accuracy thresholds are acceptable for release
+inputs:
+- AI component deployed to test environment + AI tier classification from Stage 1
+outputs:
+- AI output validation report (artifacts/outputs/ai-output-validation-report.yaml)
+on_failure: AI systems failing accuracy thresholds cannot proceed to Stage 5

@@ -1,0 +1,32 @@
+# Step 6.6: AI Post-Market Surveillance
+# Stage 6 — Observability & Maintenance
+# Control: AC-06
+
+id: '6.6'
+title: AI Post-Market Surveillance
+stage: 6
+control: AC-06
+description: AI post-market surveillance (continuous, conditional on ai_component)
+delegation: Agent monitors, AGL reports
+depends_on:
+- '6.1'
+condition: Only applicable when the deployed system includes AI components.
+frequency: continuous
+actors:
+- role: AGT
+  action: Continuously track AI performance metrics against Stage 4 QC-07 baselines
+- role: AGT
+  action: Execute scheduled bias re-testing at defined intervals
+- role: AGT
+  action: Maintain incident log for any serious AI incidents
+- role: AGT
+  action: Keep AI Act technical documentation current
+- role: AGL
+  action: Review surveillance reports; make decisions on retraining or rollback
+- role: AGL
+  action: File serious AI incident reports to relevant authorities per Art. 73
+inputs: []
+outputs:
+- AI post-market surveillance report (artifacts/outputs/ai-surveillance-report.yaml) — periodic
+on_failure: AGL reviews; may trigger feedback loop for retraining (Stage 1 Feature path) or rollback
+note: Continuous monitoring of AI systems; compliance with EU AI Act Art. 73 reporting

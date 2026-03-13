@@ -1,0 +1,22 @@
+# Step 3.2-sc3e: Container & IaC Security Scanning
+# Stage 3 — Coding & Implementation
+# Control: SC-11
+
+id: 3.2-sc3e
+title: Container & IaC Security Scanning
+stage: 3
+control: SC-11
+description: Container and IaC security scanning
+delegation: Fully automated
+depends_on:
+- '3.1'
+actors:
+- role: AGT
+  action: Scan all container images and IaC manifests (Terraform, CloudFormation, etc.) for misconfigurations
+- role: SA
+  action: Triage findings; remediate or document risk acceptance
+inputs:
+- Container images and IaC manifests
+outputs:
+- Container and IaC security report (artifacts/outputs/container-iac-security-report.yaml)
+on_failure: Critical misconfigurations block progression

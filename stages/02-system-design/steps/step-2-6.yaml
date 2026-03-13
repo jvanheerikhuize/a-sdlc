@@ -1,0 +1,26 @@
+# Step 2.6: AI Model Governance and Version Control
+# Stage 2 — System Design
+# Control: AC-04
+
+id: '2.6'
+title: AI Model Governance and Version Control
+stage: 2
+control: AC-04
+description: AI model governance and version control (conditional on ai_component)
+delegation: Agent registers, AGL approves
+depends_on:
+- '2.5'
+condition: Only applicable when the change introduces or modifies use of a GPAI or foundation model. If not applicable, document
+  as not_applicable.
+actors:
+- role: AGT
+  action: Register all models in the model registry with versioning metadata
+- role: AGT
+  action: Record model lineage, data sources, training dates, and performance baselines
+- role: AGL
+  action: Approve model registry entries and version pinning
+inputs:
+- Approved design document + AI component design review
+outputs:
+- AI model governance record (artifacts/outputs/ai-model-governance-record.yaml)
+note: Runs after design approval (RC-02)

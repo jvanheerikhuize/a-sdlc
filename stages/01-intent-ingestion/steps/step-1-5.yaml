@@ -1,0 +1,26 @@
+# Step 1.5: AI Tier Classification (conditional)
+# Stage 1 — Intent Ingestion
+# Control: AC-01
+
+id: '1.5'
+title: AI Tier Classification (conditional)
+stage: 1
+control: AC-01
+description: Classify AI Act risk tier (conditional on ai_component)
+delegation: Agent proposes, human confirms
+depends_on:
+- '1.2'
+condition: Only applicable when the change introduces, modifies, or interacts with AI components. If not applicable, document
+  as not_applicable and skip human confirmation.
+actors:
+- role: AGT
+  action: Analyse specification for AI component involvement
+- role: AGT
+  action: Propose EU AI Act risk tier with rationale referencing Art. 6 and Annex III
+- role: AGL
+  action: Review proposed tier and rationale; confirm or override with documented justification
+inputs:
+- Draft feature specification
+outputs:
+- AI tier classification (artifacts/outputs/ai-tier-classification.yaml)
+on_uncertainty: Default to highest applicable tier pending AGL resolution

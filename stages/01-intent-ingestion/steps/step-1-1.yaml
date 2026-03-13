@@ -1,0 +1,23 @@
+# Step 1.1: Screen Incoming Request
+# Stage 1 — Intent Ingestion
+# Control: SC-03
+
+id: '1.1'
+title: Screen Incoming Request
+stage: 1
+control: SC-03
+description: Screen incoming request for adversarial patterns
+delegation: Fully automated
+depends_on: []
+actors:
+- role: AGT
+  action: Scan raw change request for prompt injection patterns, adversarial framing, and manipulation attempts
+- role: AGT
+  action: 'Pass: forward to Step 1.2. Block: log attempt; notify SA'
+- role: SA
+  action: Review blocked request; contact requester for resubmission
+inputs:
+- Change Request (CR-XXXX)
+outputs:
+- Screened request (pass) or blocked log entry
+on_failure: SA reviews flagged request; requester must resubmit a clean change request

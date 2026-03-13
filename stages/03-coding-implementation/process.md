@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/03-coding-implementation/03-coding-implementation.yaml
+     Source: stages/03-coding-implementation/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 3: Coding & Implementation — Process
@@ -205,9 +205,9 @@ Pull request creation and review (final gate)
 
 ## References
 
-- Stage definition: `03-coding-implementation.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

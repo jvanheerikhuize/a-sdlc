@@ -1,0 +1,620 @@
+# ============================================================
+# Artifact Registry — A-SDLC
+# All artifacts produced and consumed across the lifecycle.
+# Source of truth for artifact flow: stage → step → control → artifact.
+# ============================================================
+
+version: "1.0"
+description: >
+  Catalog of all artifacts produced and consumed by the A-SDLC lifecycle.
+  Each artifact is produced by a specific stage/step/control and may be
+  consumed as input by downstream stages.
+
+# ---------------------------------------------------------------------------
+# Input Artifacts (external inputs to the lifecycle)
+# ---------------------------------------------------------------------------
+inputs:
+  - id: change-request
+    name: Change Request
+    type: input
+    description: External change request submitted by the Requester.
+    consumed_by:
+      - stage: 1
+        step: "1.1"
+    schema: schema/feature-spec.schema.json
+    template: stages/01-intent-ingestion/artifacts/inputs/change-request.yaml
+
+# ---------------------------------------------------------------------------
+# Output Artifacts (produced within the lifecycle)
+# ---------------------------------------------------------------------------
+outputs:
+
+  # Stage 1: Intent Ingestion
+  - id: QC-01-feature-spec
+    name: Feature Specification
+    type: spec
+    description: Approved, structured feature specification that all downstream stages use as source of truth.
+    produced_by:
+      stage: 1
+      step: "1.2"
+      control: QC-01
+    consumed_by:
+      - stage: 2
+        step: "2.1"
+      - stage: 4
+        step: "4.1"
+    template: stages/01-intent-ingestion/artifacts/outputs/QC-01-feature-spec.yaml
+    schema: schema/feature-spec.schema.json
+    retention: 7_years
+
+  - id: QC-02-conflict-resolution-record
+    name: Conflict Resolution Record
+    type: record
+    description: Record of identified conflicts and their resolution status (blocking or non-blocking).
+    produced_by:
+      stage: 1
+      step: "1.3"
+      control: QC-02
+    consumed_by: []
+    template: stages/01-intent-ingestion/artifacts/outputs/QC-02-conflict-resolution-record.yaml
+    retention: per_release
+
+  - id: RC-01-risk-classification
+    name: Risk Classification
+    type: record
+    description: Risk tier assignment (Critical / High / Medium / Low) for the change request.
+    produced_by:
+      stage: 1
+      step: "1.4"
+      control: RC-01
+    consumed_by:
+      - stage: 2
+        step: "2.5"
+    template: stages/01-intent-ingestion/artifacts/outputs/RC-01-risk-classification.yaml
+    retention: 7_years
+
+  - id: AC-01-ai-tier-classification
+    name: AI Act Tier Classification
+    type: record
+    description: EU AI Act risk tier confirmation for any AI components in the change.
+    produced_by:
+      stage: 1
+      step: "1.5"
+      control: AC-01
+    consumed_by:
+      - stage: 4
+        step: "4.7-ai-adversarial"
+    template: stages/01-intent-ingestion/artifacts/outputs/AC-01-ai-tier-classification.yaml
+    retention: 7_years
+
+  - id: SC-04-data-classification-record
+    name: Data Classification Record
+    type: record
+    description: Data sensitivity classification for changes that process personal data or involve profiling.
+    produced_by:
+      stage: 1
+      step: 1.5b
+      control: SC-04
+    consumed_by: []
+    condition: Applicable when the change processes personal data
+    template: stages/01-intent-ingestion/artifacts/outputs/SC-04-data-classification-record.yaml
+    retention: 7_years
+
+  - id: GC-05-intent-audit-record
+    name: Intent Audit Record
+    type: log
+    description: Immutable audit log entry recording the approved intent and classification decisions.
+    produced_by:
+      stage: 1
+      step: "1.6"
+      control: GC-05
+    consumed_by: []
+    template: stages/01-intent-ingestion/artifacts/outputs/GC-05-intent-audit-record.yaml
+    retention: 7_years
+
+  # Stage 2: System Design
+  - id: QC-03-design-document
+    name: Design Document
+    type: spec
+    description: Reviewed and approved technical design document for the change.
+    produced_by:
+      stage: 2
+      step: "2.2"
+      control: QC-03
+    consumed_by:
+      - stage: 3
+        step: "3.1"
+    template: stages/02-system-design/artifacts/outputs/QC-03-design-document.yaml
+    retention: per_release
+
+  - id: SC-05-stride-threat-model
+    name: STRIDE Threat Model
+    type: report
+    description: Threat model identifying and mitigating security threats using the STRIDE methodology.
+    produced_by:
+      stage: 2
+      step: "2.3"
+      control: SC-05
+    consumed_by: []
+    template: stages/02-system-design/artifacts/outputs/SC-05-stride-threat-model.yaml
+    retention: per_release
+
+  - id: RC-02-design-approval-decision
+    name: Design Approval Decision
+    type: record
+    description: Formal approval decision for the design document, with sign-off authority by risk tier.
+    produced_by:
+      stage: 2
+      step: "2.5"
+      control: RC-02
+    consumed_by: []
+    template: stages/02-system-design/artifacts/outputs/RC-02-design-approval-decision.yaml
+    retention: 7_years
+
+  - id: SC-02-directive-injection-confirmation
+    name: Directive Injection Confirmation
+    type: record
+    description: Confirmation that all applicable stage directives have been injected into the agent context.
+    produced_by:
+      stage: 2
+      step: "2.7"
+      control: SC-02
+    consumed_by:
+      - stage: 3
+        step: "3.1"
+    template: stages/02-system-design/artifacts/outputs/SC-02-directive-injection-confirmation.yaml
+    retention: per_release
+
+  - id: AC-03-ai-component-design-review
+    name: AI Component Design Review
+    type: record
+    description: Design review record for AI components, confirming EU AI Act and explainability obligations.
+    produced_by:
+      stage: 2
+      step: "2.4"
+      control: AC-03
+    consumed_by: []
+    condition: Applicable when the change includes an AI component
+    template: stages/02-system-design/artifacts/outputs/AC-03-ai-component-design-review.yaml
+    retention: 7_years
+
+  - id: RC-03-privacy-impact-assessment
+    name: Privacy Impact Assessment
+    type: report
+    description: DPIA/PIA assessing privacy risks for changes involving personal data processing.
+    produced_by:
+      stage: 2
+      step: 2.3b
+      control: RC-03
+    consumed_by: []
+    condition: Applicable when the change involves personal data processing
+    template: stages/02-system-design/artifacts/outputs/RC-03-privacy-impact-assessment.yaml
+    retention: 7_years
+
+  - id: SC-06-zero-trust-validation
+    name: Zero-Trust Architecture Validation
+    type: report
+    description: Validation that the design conforms to zero-trust network architecture principles.
+    produced_by:
+      stage: 2
+      step: 2.3c
+      control: SC-06
+    consumed_by: []
+    template: stages/02-system-design/artifacts/outputs/SC-06-zero-trust-validation.yaml
+    retention: per_release
+
+  - id: AC-04-ai-model-governance-record
+    name: AI Model Governance Record
+    type: record
+    description: Governance record for GPAI/foundation model usage, covering obligations and restrictions.
+    produced_by:
+      stage: 2
+      step: "2.6"
+      control: AC-04
+    consumed_by: []
+    condition: Applicable when the change introduces or modifies a GPAI/foundation model
+    template: stages/02-system-design/artifacts/outputs/AC-04-ai-model-governance-record.yaml
+    retention: 7_years
+
+  # Stage 3: Coding & Implementation
+  - id: QC-04-pull-request-record
+    name: Pull Request Record
+    type: record
+    description: Approved pull request with required reviews completed and quality gate results attached.
+    produced_by:
+      stage: 3
+      step: "3.4"
+      control: QC-04
+    consumed_by:
+      - stage: 4
+        step: "4.1"
+      - stage: 5
+        step: "5.1"
+    template: stages/03-coding-implementation/artifacts/outputs/QC-04-pull-request-record.yaml
+    retention: per_release
+
+  - id: QC-05-quality-gate-report
+    name: Quality Gate Report
+    type: report
+    description: Continuous quality gate results for each commit (linting, type checks, test coverage).
+    produced_by:
+      stage: 3
+      step: "3.2"
+      control: QC-05
+    consumed_by: []
+    frequency: per_change
+    template: stages/03-coding-implementation/artifacts/outputs/QC-05-quality-gate-report.yaml
+    retention: per_release
+
+  - id: SC-07-permission-enforcement-log
+    name: Permission Enforcement Log
+    type: log
+    description: Log confirming that agent permission policy is enforced throughout Stage 3.
+    produced_by:
+      stage: 3
+      step: "3.1"
+      control: SC-07
+    consumed_by: []
+    frequency: continuous
+    template: stages/03-coding-implementation/artifacts/outputs/SC-07-permission-enforcement-log.yaml
+    retention: per_release
+
+  - id: SC-08-post-guardrail-scan
+    name: Post-Guardrail Scan
+    type: report
+    description: Output guardrail scan result confirming no policy violations in agent-generated code.
+    produced_by:
+      stage: 3
+      step: "3.3"
+      control: SC-08
+    consumed_by: []
+    template: stages/03-coding-implementation/artifacts/outputs/SC-08-post-guardrail-scan.yaml
+    retention: per_release
+
+  - id: SC-09-secrets-scan-report
+    name: Secrets Scan Report
+    type: report
+    description: Per-commit scan confirming no secrets, credentials, or keys are committed to the repository.
+    produced_by:
+      stage: 3
+      step: 3.2-sc3c
+      control: SC-09
+    consumed_by: []
+    frequency: per_change
+    template: stages/03-coding-implementation/artifacts/outputs/SC-09-secrets-scan-report.yaml
+    retention: per_release
+
+  - id: RC-04-decision-log
+    name: Decision Log
+    type: log
+    description: Record of all significant decisions, deviations, and trade-offs made during implementation.
+    produced_by:
+      stage: 3
+      step: 3.2-rc3a
+      control: RC-04
+    consumed_by: []
+    frequency: continuous
+    template: stages/03-coding-implementation/artifacts/outputs/RC-04-decision-log.yaml
+    retention: 7_years
+
+  - id: SC-10-sca-report
+    name: Software Composition Analysis (SCA) Report
+    type: report
+    description: SCA scan with SBOM confirming dependency licenses, vulnerabilities, and provenance.
+    produced_by:
+      stage: 3
+      step: 3.2-sc3d
+      control: SC-10
+    consumed_by: []
+    frequency: per_change
+    template: stages/03-coding-implementation/artifacts/outputs/SC-10-sca-report.yaml
+    retention: per_release
+
+  - id: SC-11-container-iac-security-report
+    name: Container & IaC Security Report
+    type: report
+    description: Security scan of container images and Infrastructure-as-Code for misconfigurations.
+    produced_by:
+      stage: 3
+      step: 3.2-sc3e
+      control: SC-11
+    consumed_by: []
+    frequency: per_change
+    template: stages/03-coding-implementation/artifacts/outputs/SC-11-container-iac-security-report.yaml
+    retention: per_release
+
+  - id: GC-03-code-provenance-record
+    name: Code Provenance Record
+    type: record
+    description: Registry entries tagging all code with authorship (human/agent) and verification status.
+    produced_by:
+      stage: 3
+      step: 3.2-gc3a
+      control: GC-03
+    consumed_by: []
+    frequency: continuous
+    template: stages/03-coding-implementation/artifacts/outputs/GC-03-code-provenance-record.yaml
+    retention: 7_years
+
+  # Stage 4: Testing & Documentation
+  - id: QC-06-test-results-report
+    name: Test Results Report
+    type: report
+    description: Full test suite results including unit, integration, and coverage metrics.
+    produced_by:
+      stage: 4
+      step: "4.2"
+      control: QC-06
+    consumed_by: []
+    template: stages/04-testing-documentation/artifacts/outputs/QC-06-test-results-report.yaml
+    retention: per_release
+
+  - id: SC-12-sast-scan-report
+    name: SAST Scan Report
+    type: report
+    description: Static Application Security Testing results for the full codebase.
+    produced_by:
+      stage: 4
+      step: "4.1"
+      control: SC-12
+    consumed_by: []
+    template: stages/04-testing-documentation/artifacts/outputs/SC-12-sast-scan-report.yaml
+    retention: per_release
+
+  - id: SC-13-dast-scan-report
+    name: DAST Scan Report
+    type: report
+    description: Dynamic Application Security Testing results against a running instance.
+    produced_by:
+      stage: 4
+      step: "4.3"
+      control: SC-13
+    consumed_by: []
+    template: stages/04-testing-documentation/artifacts/outputs/SC-13-dast-scan-report.yaml
+    retention: per_release
+
+  - id: QC-08-documentation-completeness-report
+    name: Documentation Completeness Report
+    type: report
+    description: Assessment confirming all required documentation artifacts are present and complete.
+    produced_by:
+      stage: 4
+      step: "4.5"
+      control: QC-08
+    consumed_by: []
+    template: stages/04-testing-documentation/artifacts/outputs/QC-08-documentation-completeness-report.yaml
+    retention: per_release
+
+  - id: QC-07-ai-output-validation-report
+    name: AI Output Validation Report
+    type: report
+    description: Validation of AI-generated outputs for accuracy, bias, and specification alignment.
+    produced_by:
+      stage: 4
+      step: "4.4"
+      control: QC-07
+    consumed_by: []
+    condition: Applicable when the change includes an AI component
+    template: stages/04-testing-documentation/artifacts/outputs/QC-07-ai-output-validation-report.yaml
+    retention: per_release
+
+  - id: AC-05-bias-fairness-report
+    name: Bias & Fairness Report
+    type: report
+    description: Bias and fairness evaluation of AI model outputs per EU AI Act Art. 9 obligations.
+    produced_by:
+      stage: 4
+      step: "4.6"
+      control: AC-05
+    consumed_by: []
+    condition: Applicable when the change includes a high-risk AI component
+    template: stages/04-testing-documentation/artifacts/outputs/AC-05-bias-fairness-report.yaml
+    retention: 7_years
+
+  - id: RC-05-risk-threshold-evaluation
+    name: Risk Threshold Evaluation
+    type: record
+    description: Go/no-go evaluation confirming all risk thresholds are met before release approval.
+    produced_by:
+      stage: 4
+      step: "4.8"
+      control: RC-05
+    consumed_by:
+      - stage: 5
+        step: "5.2"
+    template: stages/04-testing-documentation/artifacts/outputs/RC-05-risk-threshold-evaluation.yaml
+    retention: 7_years
+
+  - id: SC-14-api-security-report
+    name: API Security Report
+    type: report
+    description: API security test results against OWASP API Top 10 for all exposed endpoints.
+    produced_by:
+      stage: 4
+      step: 4.2-api
+      control: SC-14
+    consumed_by: []
+    condition: Applicable when the change exposes or modifies API endpoints
+    template: stages/04-testing-documentation/artifacts/outputs/SC-14-api-security-report.yaml
+    retention: per_release
+
+  - id: SC-15-adversarial-robustness-report
+    name: Adversarial Robustness Report
+    type: report
+    description: Adversarial testing results for AI model robustness against prompt injection and evasion attacks.
+    produced_by:
+      stage: 4
+      step: 4.7-ai-adversarial
+      control: SC-15
+    consumed_by: []
+    condition: Applicable when the change includes a high-risk AI component
+    template: stages/04-testing-documentation/artifacts/outputs/SC-15-adversarial-robustness-report.yaml
+    retention: per_release
+
+  # Stage 5: Deployment & Release
+  - id: QC-09-release-readiness-checklist
+    name: Release Readiness Checklist
+    type: record
+    description: Checklist confirming all exit criteria from Stages 1–4 are satisfied before deployment.
+    produced_by:
+      stage: 5
+      step: "5.1"
+      control: QC-09
+    consumed_by: []
+    template: stages/05-deployment-release/artifacts/outputs/QC-09-release-readiness-checklist.yaml
+    retention: per_release
+
+  - id: RC-06-change-approval-record
+    name: Change Approval Record
+    type: record
+    description: Formal change approval decision with sign-off authority documented by risk tier.
+    produced_by:
+      stage: 5
+      step: "5.2"
+      control: RC-06
+    consumed_by: []
+    template: stages/05-deployment-release/artifacts/outputs/RC-06-change-approval-record.yaml
+    retention: 7_years
+
+  - id: RC-07-rollback-plan
+    name: Rollback Plan
+    type: record
+    description: Validated rollback plan with tested procedures for reverting the deployment.
+    produced_by:
+      stage: 5
+      step: "5.3"
+      control: RC-07
+    consumed_by: []
+    template: stages/05-deployment-release/artifacts/outputs/RC-07-rollback-plan.yaml
+    retention: per_release
+
+  - id: SC-16-infrastructure-security-report
+    name: Infrastructure Security Report
+    type: report
+    description: Security baseline scan of target infrastructure before deployment.
+    produced_by:
+      stage: 5
+      step: "5.4"
+      control: SC-16
+    consumed_by: []
+    template: stages/05-deployment-release/artifacts/outputs/SC-16-infrastructure-security-report.yaml
+    retention: per_release
+
+  - id: SC-17-deployment-integrity-record
+    name: Deployment Integrity Record
+    type: record
+    description: Verification record confirming deployment artifact integrity (hash, signature, provenance).
+    produced_by:
+      stage: 5
+      step: "5.5"
+      control: SC-17
+    consumed_by:
+      - stage: 6
+        step: "6.1"
+    template: stages/05-deployment-release/artifacts/outputs/SC-17-deployment-integrity-record.yaml
+    retention: 7_years
+
+  - id: SC-18-secrets-management-report
+    name: Secrets Management Report
+    type: report
+    description: Validation that all secrets are vaulted and access-controlled prior to deployment.
+    produced_by:
+      stage: 5
+      step: 5.4-secrets
+      control: SC-18
+    consumed_by: []
+    template: stages/05-deployment-release/artifacts/outputs/SC-18-secrets-management-report.yaml
+    retention: per_release
+
+  # Stage 6: Observability & Maintenance
+  - id: QC-10-slo-monitoring-record
+    name: SLO Monitoring Record
+    type: log
+    description: Continuously updated record of SLO/SLA compliance and burn rate metrics.
+    produced_by:
+      stage: 6
+      step: "6.2"
+      control: QC-10
+    consumed_by: []
+    frequency: continuous
+    template: stages/06-observability-maintenance/artifacts/outputs/QC-10-slo-monitoring-record.yaml
+    retention: 1_year
+
+  - id: RC-08-risk-health-monitoring-record
+    name: Risk & Health Monitoring Record
+    type: log
+    description: Continuously updated risk health metrics and monitoring results.
+    produced_by:
+      stage: 6
+      step: "6.3"
+      control: RC-08
+    consumed_by: []
+    frequency: continuous
+    template: stages/06-observability-maintenance/artifacts/outputs/RC-08-risk-health-monitoring-record.yaml
+    retention: 1_year
+
+  - id: SC-19-incident-detection-record
+    name: Incident Detection Record
+    type: log
+    description: Security incident detection log with DORA Art. 19 regulatory reporting timelines.
+    produced_by:
+      stage: 6
+      step: "6.4"
+      control: SC-19
+    consumed_by: []
+    frequency: continuous
+    template: stages/06-observability-maintenance/artifacts/outputs/SC-19-incident-detection-record.yaml
+    retention: 7_years
+
+  - id: SC-20-anomaly-detection-record
+    name: Anomaly Detection Record
+    type: log
+    description: Runtime anomaly detection results; feeds into SC-19 incident detection.
+    produced_by:
+      stage: 6
+      step: "6.5"
+      control: SC-20
+    consumed_by: []
+    frequency: continuous
+    template: stages/06-observability-maintenance/artifacts/outputs/SC-20-anomaly-detection-record.yaml
+    retention: 1_year
+
+  - id: AC-06-ai-surveillance-report
+    name: AI Post-Market Surveillance Report
+    type: report
+    description: Periodic AI system monitoring report per EU AI Act Art. 73 post-market surveillance obligations.
+    produced_by:
+      stage: 6
+      step: "6.6"
+      control: AC-06
+    consumed_by: []
+    frequency: scheduled
+    condition: Applicable when the deployed system includes a high-risk AI component
+    template: stages/06-observability-maintenance/artifacts/outputs/AC-06-ai-surveillance-report.yaml
+    retention: 10_years
+
+  - id: RC-09-third-party-risk-monitoring
+    name: Third-Party Risk Monitoring Record
+    type: log
+    description: Continuous monitoring record of external dependencies and third-party providers.
+    produced_by:
+      stage: 6
+      step: 6.3-3rd-party
+      control: RC-09
+    consumed_by: []
+    frequency: continuous
+    template: stages/06-observability-maintenance/artifacts/outputs/RC-09-third-party-risk-monitoring.yaml
+    retention: 1_year
+
+# ---------------------------------------------------------------------------
+# Feedback Loop Artifacts
+# ---------------------------------------------------------------------------
+feedback_loop_artifacts:
+  - id: feedback-loop-activation-record
+    name: Feedback Loop Activation Record
+    type: record
+    description: Record of feedback loop activation, trigger condition, path taken, and re-entry stage.
+    produced_by:
+      control: RC-08
+    template: feedbackloops/artifacts/feedback-loop-activation-record.yaml
+    retention: 7_years

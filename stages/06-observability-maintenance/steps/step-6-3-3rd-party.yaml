@@ -1,0 +1,25 @@
+# Step 6.3-3rd-party: Third-Party Risk Monitoring
+# Stage 6 — Observability & Maintenance
+# Control: RC-09
+
+id: 6.3-3rd-party
+title: Third-Party Risk Monitoring
+stage: 6
+control: RC-09
+description: Third-party continuous risk monitoring (continuous)
+delegation: Fully automated
+depends_on:
+- '6.1'
+condition: Applicable for AI component deployments — monitors third-party provider risk posture
+frequency: continuous
+actors:
+- role: AGT
+  action: Monitor third-party providers (cloud vendors, SaaS platforms) for compliance and security events
+- role: AGT
+  action: Track provider security posture, incident reports, and compliance changes
+- role: RO
+  action: Escalate if provider risk exceeds acceptable thresholds
+inputs: []
+outputs:
+- Third-party risk monitoring record (artifacts/outputs/third-party-risk-monitoring.yaml)
+note: Continuous monitoring of external dependencies and providers

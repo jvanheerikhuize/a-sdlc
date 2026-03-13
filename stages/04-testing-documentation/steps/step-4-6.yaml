@@ -1,0 +1,26 @@
+# Step 4.6: Documentation Completeness
+# Stage 4 — Testing & Documentation
+# Control: QC-08
+
+id: '4.6'
+title: Documentation Completeness
+stage: 4
+control: QC-08
+description: Documentation completeness
+delegation: Agent checks, human approves
+depends_on:
+- '4.1'
+actors:
+- role: AGT
+  action: 'Verify all required documentation exists and is current: runbooks, API docs, ADRs, Stage 3 decision log'
+- role: AGT
+  action: 'For AI components: verify AI Act technical documentation (Annex IV) is complete'
+- role: AGT
+  action: Flag any gaps or outdated documentation
+- role: QA
+  action: Review documentation completeness report; approve or require documentation updates
+inputs:
+- All documentation artefacts from the change
+outputs:
+- Documentation completeness report (artifacts/outputs/documentation-completeness-report.yaml)
+on_failure: Missing or outdated documentation blocks Stage 4 exit until resolved

@@ -1,0 +1,22 @@
+# Step 3.2-rc3a: Decision Logging
+# Stage 3 — Coding & Implementation
+# Control: RC-04
+
+id: 3.2-rc3a
+title: Decision Logging
+stage: 3
+control: RC-04
+description: Decision log (logged throughout)
+delegation: Agent logs, DEV reviews
+depends_on:
+- '3.1'
+actors:
+- role: AGT
+  action: 'Log all significant autonomous decisions: rationale, alternatives considered, decision owner'
+- role: DEV
+  action: Review decision log; flag any gaps or unexplained decisions
+inputs:
+- Implementation activities
+outputs:
+- Decision log (artifacts/outputs/decision-log.yaml)
+on_failure: Unresolved decision log gaps block Stage 3 exit

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/04-testing-documentation/04-testing-documentation.yaml
+     Source: stages/04-testing-documentation/stage.yaml
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 4: Testing & Documentation — Process
@@ -208,9 +208,9 @@ Risk threshold evaluation and go/no-go gate
 
 ## References
 
-- Stage definition: `04-testing-documentation.yaml`
+- Stage definition: 
 - Controls: See `required_controls` in stage YAML.
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

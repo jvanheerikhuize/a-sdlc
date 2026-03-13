@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED FILE — do not edit directly.
-     Source: stages/05-deployment-release/05-deployment-release.yaml + controls/ + directives/
+     Source: stages/05-deployment-release/stage.yaml + controls/ + directives/
      Regenerate: bash scripts/generate-docs.sh -->
 
 # Stage 5: Deployment & Release — Context Bundle
@@ -11,7 +11,7 @@
 
 ## Files to Load at Stage Entry
 
-- `stages/05-deployment-release/05-deployment-release.yaml` — stage definition and workflow DAG
+- `stages/05-deployment-release/stage.yaml` — stage definition (steps in: `stages/05-deployment-release/steps/`)
 - `controls/qc/QC-09.yaml` — control definition
 - `controls/rc/RC-06.yaml` — control definition *(Human-required gate — cannot be delegated to an agent)*
 - `controls/rc/RC-07.yaml` — control definition
@@ -77,4 +77,4 @@
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

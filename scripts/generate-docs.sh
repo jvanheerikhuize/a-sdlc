@@ -90,6 +90,34 @@ yaml_to_json() {
 # Timestamp
 NOW="$(date -u +"%Y-%m-%d %H:%M UTC")"
 
+# Load all step files for a stage as a JSON array, ordered by stage.yaml steps list.
+# Args: $1 = absolute path to stage directory (e.g. "$REPO/stages/01-intent-ingestion")
+load_stage_steps_json() {
+  local stage_dir="$1"
+  local stage_yaml="$stage_dir/stage.yaml"
+  if [[ ! -f "$stage_yaml" ]]; then echo '[]'; return; fi
+  local stage_json
+  stage_json="$(yaml_to_json "$stage_yaml")"
+  local n
+  n="$(echo "$stage_json" | jq '.steps | length // 0' 2>/dev/null || echo 0)"
+  if [[ "$n" -eq 0 ]]; then echo '[]'; return; fi
+  local arr='['
+  local first=true
+  local i
+  for ((i=0; i<n; i++)); do
+    local step_id safe_id step_file
+    step_id="$(echo "$stage_json" | jq -r --argjson i "$i" '.steps[$i]')"
+    safe_id="$(echo "$step_id" | tr '.' '-')"
+    step_file="$stage_dir/steps/step-${safe_id}.yaml"
+    [[ -f "$step_file" ]] || continue
+    local sj
+    sj="$(yaml_to_json "$step_file")"
+    if [[ "$first" == "true" ]]; then arr+="$sj"; first=false; else arr+=",$sj"; fi
+  done
+  arr+=']'
+  echo "$arr"
+}
+
 # ---------------------------------------------------------------------------
 # gen_framework_overview — writes README.md
 # ---------------------------------------------------------------------------
@@ -391,15 +419,17 @@ gen_agents_md() {
   fl_def="$(echo "$asdlc_json" | jq -r '.cross_cutting.feedback_loops.definition')"
   always_load_block+="${fl_def}  # Re-entry paths for incidents and changes"
 
-  # Stage-specific files table
+  # Stage-specific files table (controls read from registry.yaml by stage number)
+  local reg_json_agents
+  reg_json_agents="$(yaml_to_json "$REPO/controls/registry.yaml")"
   local stage_files_table
-  stage_files_table="| Stage | Stage definition | Controls |"$'\n'
-  stage_files_table+="| --- | --- | --- |"$'\n'
-  while IFS=$'\t' read -r num name sf; do
+  stage_files_table="| Stage | Stage definition | Steps | Controls |"$'\n'
+  stage_files_table+="| --- | --- | --- | --- |"$'\n'
+  while IFS=$'\t' read -r num name sf slug; do
     local ctrl_list
-    ctrl_list="$(echo "$asdlc_json" | jq -r --argjson n "$num" '.stages[] | select(.number==$n) | .controls[].id' | tr '\n' ',' | sed 's/,$//' | sed 's/,/, /g')"
-    stage_files_table+="| ${num} — ${name} | \`${sf}\` | ${ctrl_list} |"$'\n'
-  done < <(echo "$asdlc_json" | jq -r '.stages[] | [(.number|tostring), .name, .stage_file] | @tsv')
+    ctrl_list="$(echo "$reg_json_agents" | jq -r --argjson n "$num" '[.registry[] | select(.stage==$n) | .id] | join(", ")')"
+    stage_files_table+="| ${num} — ${name} | \`${sf}\` | \`stages/${slug}/steps/\` | ${ctrl_list} |"$'\n'
+  done < <(echo "$asdlc_json" | jq -r '.stages[] | [(.number|tostring), .name, .stage_file, .slug] | @tsv')
 
   # Feedback loops list
   local fl_json
@@ -418,35 +448,36 @@ gen_agents_md() {
 
 ## Module Identity
 
-This directory is the **A-SDLC-GOVERNANCE-MODULE** — a git submodule mounted inside a consuming repository. It provides the governance framework, controls, directives, and lifecycle definitions that make a repository agentic-ready.
+This directory is the **A-SDLC-GOVERNANCE-MODULE** — a git submodule mounted inside a consuming repository. It provides governance controls, directives, and lifecycle definitions that make a repository agentic-ready.
 
-**How you got here:** The consuming repository added this module via:
-\`\`\`bash
-git submodule add <repo-url> a-sdlc-governance
-\`\`\`
+**Companion module:** The **A-SDLC-AGENTIC-MODULE** provides entry-point scaffolding and CLAUDE.md instructions that bridge traditional human development into A-SDLC. Start there for onboarding; come here for governance.
 
-**Companion module:** The **A-SDLC-AGENTIC-MODULE** is the other submodule present in the consuming repository. It provides entry-point scaffolding, CLAUDE.md instructions, and tooling that bridges traditional human development workflows into the A-SDLC framework. Start there for onboarding; come here for governance.
-
-**Path convention:** All file references below are relative to this module's root. When loading files from the consuming repo's context, prefix paths with the submodule mount path (e.g., \`a-sdlc-governance/directives/core/core-directives.yaml\`).
+**Path convention:** All paths below are relative to this module's root.
 
 ---
 
-## What You Are Operating Within
+## Framework Hierarchy
 
-You are part of the **Agentic Software Development Life Cycle (A-SDLC)** — a framework that defines how software is built, tested, and released when AI agents work alongside human developers. The framework is:
+The A-SDLC is an acyclic process structured as follows:
 
-- **Solution, model, and toolchain agnostic** — it applies to you regardless of what you are.
-- **Backwards- and forwards-compatible** — it replaces the traditional SDLC entirely.
-- **Binding** — all controls in this framework apply to your work unless explicitly scoped otherwise.
+\`\`\`
+ASDLC (acyclic lifecycle)
+├── Stages          — directed processes with ordered steps (stages/NN-name/stage.yaml)
+│   └── Steps       — atomic units of work (stages/NN-name/steps/step-N-N.yaml)
+│       └── Control — optional control triggered by the step (controls/[track]/[ID].yaml)
+│           ├── Input Artifacts   — consumed by the control
+│           └── Output Artifacts  — produced by the control (artifacts/registry.yaml)
+└── Feedback Loops  — re-entry paths for incidents and changes (feedbackloops/feedback-loops.yaml)
+
+Roles → execute Stages / Steps / Controls
+\`\`\`
 
 ---
 
 ## Quick Navigation
 
-Use these entry points based on what you need:
-
 | I need to... | Load this |
-|-------------|-----------|
+|---|---|
 | Start a new session | This file + \`directives/core/core-directives.yaml\` |
 | Work on **Stage 1** (Intent Ingestion) | \`context/stage-01-intent-ingestion.md\` |
 | Work on **Stage 2** (System Design) | \`context/stage-02-system-design.md\` |
@@ -454,15 +485,15 @@ Use these entry points based on what you need:
 | Work on **Stage 4** (Testing & Documentation) | \`context/stage-04-testing-and-documentation.md\` |
 | Work on **Stage 5** (Deployment & Release) | \`context/stage-05-deployment-and-release.md\` |
 | Work on **Stage 6** (Observability & Maintenance) | \`context/stage-06-observability-and-maintenance.md\` |
-| Navigate by **task** | \`tasks.yaml\` |
 | Look up a **control** by ID | \`controls/registry.yaml\` → \`controls/[track]/[ID].yaml\` |
+| Look up an **artifact** | \`artifacts/registry.yaml\` |
 | Handle an **incident** or **re-entry** | \`feedbackloops/feedback-loops.yaml\` |
 
 ---
 
-## Your Mandatory Starting Point: Core Directives
+## Mandatory Starting Point: Core Directives
 
-Before performing any work, you MUST load and internalize the Core Directives (SC-01):
+Before any work, load and internalize the Core Directives (SC-01):
 
 \`\`\`
 ${core_directive_path}
@@ -479,7 +510,7 @@ Every control in this framework belongs to one of five tracks:
 | Code | Track | Purpose |
 |------|-------|---------|
 ${track_rows}
-Control IDs follow the format \`[Track]-[Stage][Letter]\` (e.g. \`SC-02\`, \`QC-04\`, \`GC-01\`).
+Control IDs follow the format \`[Track]-[NN]\` (e.g. \`SC-02\`, \`QC-04\`, \`GC-01\`).
 
 ---
 
@@ -519,10 +550,13 @@ controls/ac/   # AC-01 through AC-06  (AI Controls)
 controls/gc/   # GC-01 through GC-05  (Governance Controls)
 \`\`\`
 
+Step files follow the naming convention \`step-N-N.yaml\` (e.g., \`step-1-1.yaml\`, \`step-1-5b.yaml\`, \`step-3-2-sc3c.yaml\`).
+
 Each stage directory contains:
 
-- \`README.md\` — human-readable description, key tasks, and controls table
-- \`NN-stage-name.yaml\` — lightweight stage definition: required control IDs and exit criteria
+- \`stage.yaml\` — required controls, exit criteria, steps list, roles
+- \`steps/\` — individual step YAML files (\`step-N-N.yaml\`)
+- \`README.md\` — human-readable overview
 
 ### Full Control Registry
 
@@ -552,12 +586,26 @@ If a Path A execution deviates from expected scope, upgrade to Path B immediatel
 
 ---
 
+## Artifacts
+
+All artifacts produced and consumed across the lifecycle are catalogued in:
+
+\`\`\`
+artifacts/registry.yaml
+\`\`\`
+
+Each artifact entry records: \`id\`, \`type\`, \`produced_by\` (stage/step/control), \`consumed_by\` (downstream stages/steps), \`template\` path, and \`retention\` policy.
+
+---
+
 ## Schema References
 
-| Schema | Path | Used By |
-|--------|------|---------|
-| Control definition | \`schema/control.schema.json\` | All \`controls.yaml\` files |
-| Feature specification | \`schema/feature-spec.schema.json\` | Stage 1 intent artefacts |
+| Schema | Path |
+|--------|------|
+| Stage definition | \`schema/stage.schema.json\` |
+| Step definition | \`schema/step.schema.json\` |
+| Control definition | \`schema/control.schema.json\` |
+| Feature specification | \`schema/feature-spec.schema.json\` |
 
 ---
 
@@ -580,7 +628,7 @@ HEREDOC
 # gen_stage_readme STAGE_YAML_PATH — writes stage README.md
 # ---------------------------------------------------------------------------
 gen_stage_readme() {
-  local stage_yaml_path="$1"  # relative path like stages/01-intent-ingestion/01-intent-ingestion.yaml
+  local stage_yaml_path="$1"  # relative path like stages/01-intent-ingestion/stage.yaml
   local stage_file="$REPO/$stage_yaml_path"
   local stage_dir
   stage_dir="$(dirname "$stage_file")"
@@ -606,46 +654,53 @@ gen_stage_readme() {
     roles_rows+="| ${code} | ${name} | ${resps} |"$'\n'
   done < <(echo "$stage_json" | jq -r '.roles[] | [.code, .name, .responsibilities] | @tsv')
 
-  # --- Workflow diagram (mermaid) ---
+  # --- Load step files ---
+  local steps_json
+  steps_json="$(load_stage_steps_json "$stage_dir")"
   local wf_nodes_count
-  wf_nodes_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  wf_nodes_count="$(echo "$steps_json" | jq 'length')"
+
+  # --- Workflow diagram (mermaid) ---
   local workflow_diagram=""
   if [[ "$wf_nodes_count" -gt 0 ]]; then
     workflow_diagram='```mermaid'$'\n'
     workflow_diagram+='graph LR'$'\n'
-    while IFS=$'\t' read -r node_id step title; do
-      workflow_diagram+="  ${node_id}[\"Step ${step}: ${title}\"]"$'\n'
-    done < <(echo "$stage_json" | jq -r '.workflow.nodes[] | [.id, (.step_number // "N/A"), (.title // "")] | @tsv')
-    while IFS=$'\t' read -r node_id dep; do
-      workflow_diagram+="  ${dep} --> ${node_id}"$'\n'
-    done < <(echo "$stage_json" | jq -r '.workflow.nodes[] | . as $n | (.depends_on // [])[] | [$n.id, .] | @tsv')
+    while IFS=$'\t' read -r step_id title; do
+      local safe_id
+      safe_id="s$(echo "$step_id" | tr '.-' '__')"
+      workflow_diagram+="  ${safe_id}[\"Step ${step_id}: ${title}\"]"$'\n'
+    done < <(echo "$steps_json" | jq -r '.[] | [.id, (.title // "")] | @tsv')
+    while IFS=$'\t' read -r step_id dep; do
+      local safe_id dep_safe
+      safe_id="s$(echo "$step_id" | tr '.-' '__')"
+      dep_safe="s$(echo "$dep" | tr '.-' '__')"
+      workflow_diagram+="  ${dep_safe} --> ${safe_id}"$'\n'
+    done < <(echo "$steps_json" | jq -r '.[] | . as $n | (.depends_on // [])[] | [$n.id, .] | @tsv')
     workflow_diagram+='```'
   else
     workflow_diagram="(No workflow DAG defined)"
   fi
 
-  # --- Parallelism groups ---
+  # --- Parallelism groups (now at top level of stage.yaml) ---
   local parallelism_md=""
   local has_parallelism
-  has_parallelism="$(echo "$stage_json" | jq '.workflow.parallelism.groups | length > 0')"
+  has_parallelism="$(echo "$stage_json" | jq '.parallelism.groups | length > 0')"
   local max_concurrent=""
   if [[ "$has_parallelism" == "true" ]]; then
-    max_concurrent="$(echo "$stage_json" | jq -r '.workflow.parallelism.max_concurrent // ""')"
-    # For each group, find node step_number + title
+    max_concurrent="$(echo "$stage_json" | jq -r '.parallelism.max_concurrent // ""')"
     local group_count
-    group_count="$(echo "$stage_json" | jq '.workflow.parallelism.groups | length')"
+    group_count="$(echo "$stage_json" | jq '.parallelism.groups | length')"
     for ((gi=0; gi<group_count; gi++)); do
       local group_items=""
-      while IFS= read -r node_id; do
-        local step_num node_title
-        step_num="$(echo "$stage_json" | jq -r --arg id "$node_id" '.workflow.nodes[] | select(.id==$id) | .step_number // "N/A"')"
-        node_title="$(echo "$stage_json" | jq -r --arg id "$node_id" '.workflow.nodes[] | select(.id==$id) | .title // ""')"
+      while IFS= read -r step_id; do
+        local node_title
+        node_title="$(echo "$steps_json" | jq -r --arg id "$step_id" '.[] | select(.id==$id) | .title // ""')"
         if [[ -z "$group_items" ]]; then
-          group_items="Step ${step_num}: ${node_title}"
+          group_items="Step ${step_id}: ${node_title}"
         else
-          group_items+=", Step ${step_num}: ${node_title}"
+          group_items+=", Step ${step_id}: ${node_title}"
         fi
-      done < <(echo "$stage_json" | jq -r --argjson gi "$gi" '.workflow.parallelism.groups[$gi][]')
+      done < <(echo "$stage_json" | jq -r --argjson gi "$gi" '.parallelism.groups[$gi][]')
       parallelism_md+="- ${group_items}"$'\n'
     done
   fi
@@ -653,13 +708,13 @@ gen_stage_readme() {
   # --- Step-by-step process ---
   local steps_md=""
   local node_count
-  node_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  node_count="$(echo "$steps_json" | jq 'length')"
   for ((ni=0; ni<node_count; ni++)); do
     local node_json
-    node_json="$(echo "$stage_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+    node_json="$(echo "$steps_json" | jq --argjson ni "$ni" '.[$ni]')"
 
     local step_num step_title step_control step_deleg step_condition
-    step_num="$(echo "$node_json" | jq -r '.step_number // "N/A"')"
+    step_num="$(echo "$node_json" | jq -r '.id // "N/A"')"
     step_title="$(echo "$node_json" | jq -r '.title // ""')"
     step_control="$(echo "$node_json" | jq -r '.control // ""')"
     step_deleg="$(echo "$node_json" | jq -r '.delegation // ""')"
@@ -701,8 +756,8 @@ gen_stage_readme() {
 
     # Inputs / Outputs / On-Failure etc.
     local node_input node_output node_on_failure node_on_uncertainty node_on_changes node_note
-    node_input="$(echo "$node_json" | jq -r '.input // ""')"
-    node_output="$(echo "$node_json" | jq -r '.output // ""')"
+    node_input="$(echo "$node_json" | jq -r '(.inputs // []) | join(" · ")')"
+    node_output="$(echo "$node_json" | jq -r '(.outputs // []) | join(" · ")')"
     node_on_failure="$(echo "$node_json" | jq -r '.on_failure // ""')"
     node_on_uncertainty="$(echo "$node_json" | jq -r '.on_uncertainty // ""')"
     node_on_changes="$(echo "$node_json" | jq -r '.on_changes_requested // ""')"
@@ -952,7 +1007,7 @@ gen_stages_overview() {
       next_label="— (continuous)"
     fi
     # Count required_controls from stage yaml
-    local stage_yaml="$REPO/stages/${slug}/${slug}.yaml"
+    local stage_yaml="$REPO/stages/${slug}/stage.yaml"
     local ctrl_count=0
     if [[ -f "$stage_yaml" ]]; then
       local syj
@@ -2108,7 +2163,7 @@ HEREDOC
 # gen_process_md — writes stages/NN-name/process.md
 # ---------------------------------------------------------------------------
 gen_process_md() {
-  local stage_yaml_path="$1"  # relative: stages/01-intent-ingestion/01-intent-ingestion.yaml
+  local stage_yaml_path="$1"  # relative: stages/01-intent-ingestion/stage.yaml
   local stage_file="$REPO/$stage_yaml_path"
   local stage_dir
   stage_dir="$(dirname "$stage_file")"
@@ -2138,23 +2193,25 @@ gen_process_md() {
     roles_rows+="| ${code} | ${rname} | ${mode_cap} | ${resp} |"$'\n'
   done < <(echo "$stage_json" | jq -r '.roles[] | [.code, .name, .execution_mode, .responsibilities] | @tsv')
 
-  # --- Process steps from workflow.nodes ---
+  # --- Process steps (loaded from steps/ directory) ---
+  local proc_steps_json
+  proc_steps_json="$(load_stage_steps_json "$stage_dir")"
   local steps_md=""
   local node_count
-  node_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  node_count="$(echo "$proc_steps_json" | jq 'length')"
   for ((ni=0; ni<node_count; ni++)); do
     local node_json
-    node_json="$(echo "$stage_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+    node_json="$(echo "$proc_steps_json" | jq --argjson ni "$ni" '.[$ni]')"
 
     local step_num step_title step_control step_deleg step_desc step_condition step_input step_output
-    step_num="$(echo "$node_json"    | jq -r '.step_number // "N/A"')"
-    step_title="$(echo "$node_json"  | jq -r '.title       // ""')"
-    step_control="$(echo "$node_json"| jq -r '.control     // ""')"
-    step_deleg="$(echo "$node_json"  | jq -r '.delegation  // ""')"
-    step_desc="$(echo "$node_json"   | jq -r '.description // ""')"
+    step_num="$(echo "$node_json"    | jq -r '.id           // "N/A"')"
+    step_title="$(echo "$node_json"  | jq -r '.title        // ""')"
+    step_control="$(echo "$node_json"| jq -r '.control      // ""')"
+    step_deleg="$(echo "$node_json"  | jq -r '.delegation   // ""')"
+    step_desc="$(echo "$node_json"   | jq -r '.description  // ""')"
     step_condition="$(echo "$node_json" | jq -r '.condition // ""')"
-    step_input="$(echo "$node_json"  | jq -r '.input       // ""')"
-    step_output="$(echo "$node_json" | jq -r '.output      // ""')"
+    step_input="$(echo "$node_json"  | jq -r '(.inputs  // []) | join(" · ")')"
+    step_output="$(echo "$node_json" | jq -r '(.outputs // []) | join(" · ")')"
 
     steps_md+=$'\n'
     steps_md+="### Step ${step_num} — ${step_title}"$'\n'$'\n'
@@ -2238,7 +2295,7 @@ HEREDOC
 
 ## References
 
-- Stage definition: \`${slug}.yaml\`
+- Stage definition: `stage.yaml`
 - Controls: See \`required_controls\` in stage YAML.
 
 ---
@@ -2724,6 +2781,8 @@ HEREDOC
 gen_stage_context_bundle() {
   local stage_yaml_path="$1"
   local stage_file="$REPO/$stage_yaml_path"
+  local stage_dir
+  stage_dir="$(dirname "$stage_file")"
 
   local stage_json reg_json
   stage_json="$(yaml_to_json "$stage_file")"
@@ -2755,7 +2814,7 @@ gen_stage_context_bundle() {
 
   # Quick-load file list
   local quickload_md=""
-  quickload_md+="- \`${stage_yaml_path}\` — stage definition and workflow DAG"$'\n'
+  quickload_md+="- \`${stage_yaml_path}\` — stage definition (steps in: \`$(dirname "$stage_yaml_path")/steps/\`)"$'\n'
   while IFS=$'\t' read -r ctrl_id ctrl_note; do
     local ctrl_track_lower
     ctrl_track_lower="$(echo "$ctrl_id" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
@@ -2768,19 +2827,21 @@ gen_stage_context_bundle() {
       quickload_md+="- \`${directive}\` — stage directive payload"$'\n'
   done < <(echo "$stage_json" | jq -r '(.directives // [])[]')
 
-  # Workflow table
+  # Workflow table (loaded from steps/ directory)
+  local ctx_steps_json
+  ctx_steps_json="$(load_stage_steps_json "$stage_dir")"
   local workflow_rows=""
   local node_count
-  node_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  node_count="$(echo "$ctx_steps_json" | jq 'length')"
   for ((ni=0; ni<node_count; ni++)); do
     local node_json
-    node_json="$(echo "$stage_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+    node_json="$(echo "$ctx_steps_json" | jq --argjson ni "$ni" '.[$ni]')"
     local step_num step_title step_ctrl step_deleg step_cond
-    step_num="$(echo "$node_json"   | jq -r '.step_number // "N/A"')"
-    step_title="$(echo "$node_json" | jq -r '.title       // ""')"
-    step_ctrl="$(echo "$node_json"  | jq -r '.control     // "—"')"
-    step_deleg="$(echo "$node_json" | jq -r '.delegation  // ""')"
-    step_cond="$(echo "$node_json"  | jq -r '.condition   // ""')"
+    step_num="$(echo "$node_json"   | jq -r '.id           // "N/A"')"
+    step_title="$(echo "$node_json" | jq -r '.title        // ""')"
+    step_ctrl="$(echo "$node_json"  | jq -r '.control      // "—"')"
+    step_deleg="$(echo "$node_json" | jq -r '.delegation   // ""')"
+    step_cond="$(echo "$node_json"  | jq -r '.condition    // ""')"
     local cond_flag=""
     [[ -n "$step_cond" && "$step_cond" != "null" ]] && cond_flag=" *(conditional)*"
     workflow_rows+="| ${step_num} | ${step_title}${cond_flag} | \`${step_ctrl}\` | ${step_deleg} |"$'\n'
@@ -2909,20 +2970,24 @@ gen_role_control_matrix() {
   tmpfile="$(mktemp)"
 
   for slug in \
-      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
-      "stages/02-system-design/02-system-design.yaml" \
-      "stages/03-coding-implementation/03-coding-implementation.yaml" \
-      "stages/04-testing-documentation/04-testing-documentation.yaml" \
-      "stages/05-deployment-release/05-deployment-release.yaml" \
-      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+      "stages/01-intent-ingestion/stage.yaml" \
+      "stages/02-system-design/stage.yaml" \
+      "stages/03-coding-implementation/stage.yaml" \
+      "stages/04-testing-documentation/stage.yaml" \
+      "stages/05-deployment-release/stage.yaml" \
+      "stages/06-observability-maintenance/stage.yaml"; do
     [[ ! -f "$REPO/$slug" ]] && continue
-    local stage_json stage_num stage_name
+    local stage_json stage_num stage_name stage_dir_abs
     stage_json="$(yaml_to_json "$REPO/$slug")"
     stage_num="$(echo "$stage_json"  | jq -r '.number')"
     stage_name="$(echo "$stage_json" | jq -r '.name')"
+    stage_dir_abs="$(dirname "$REPO/$slug")"
 
-    echo "$stage_json" | jq -r --arg stg "$stage_num" --arg sname "$stage_name" '
-      .workflow.nodes[] |
+    local steps_matrix_json
+    steps_matrix_json="$(load_stage_steps_json "$stage_dir_abs")"
+
+    echo "$steps_matrix_json" | jq -r --arg stg "$stage_num" --arg sname "$stage_name" '
+      .[] |
       select(.control != null and .control != "") |
       {ctrl: .control, stg: $stg, sname: $sname, deleg: (.delegation // ""),
        roles: [(.actors // [])[] | .role]} |
@@ -2996,12 +3061,12 @@ gen_artifact_catalog() {
   local total_count=0
 
   for slug in \
-      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
-      "stages/02-system-design/02-system-design.yaml" \
-      "stages/03-coding-implementation/03-coding-implementation.yaml" \
-      "stages/04-testing-documentation/04-testing-documentation.yaml" \
-      "stages/05-deployment-release/05-deployment-release.yaml" \
-      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+      "stages/01-intent-ingestion/stage.yaml" \
+      "stages/02-system-design/stage.yaml" \
+      "stages/03-coding-implementation/stage.yaml" \
+      "stages/04-testing-documentation/stage.yaml" \
+      "stages/05-deployment-release/stage.yaml" \
+      "stages/06-observability-maintenance/stage.yaml"; do
     [[ ! -f "$REPO/$slug" ]] && continue
     local stage_json stage_num stage_name stage_dir
     stage_json="$(yaml_to_json "$REPO/$slug")"
@@ -3118,12 +3183,12 @@ generate_all() {
   # 3–8. Stage READMEs + process.md files
   section "2/5  Stage READMEs + process.md"
   for slug in \
-      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
-      "stages/02-system-design/02-system-design.yaml" \
-      "stages/03-coding-implementation/03-coding-implementation.yaml" \
-      "stages/04-testing-documentation/04-testing-documentation.yaml" \
-      "stages/05-deployment-release/05-deployment-release.yaml" \
-      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+      "stages/01-intent-ingestion/stage.yaml" \
+      "stages/02-system-design/stage.yaml" \
+      "stages/03-coding-implementation/stage.yaml" \
+      "stages/04-testing-documentation/stage.yaml" \
+      "stages/05-deployment-release/stage.yaml" \
+      "stages/06-observability-maintenance/stage.yaml"; do
     if [[ -f "$REPO/$slug" ]]; then
       gen_stage_readme "$slug" && count=$((count + 1)) || true
     else
@@ -3131,12 +3196,12 @@ generate_all() {
     fi
   done
   for slug in \
-      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
-      "stages/02-system-design/02-system-design.yaml" \
-      "stages/03-coding-implementation/03-coding-implementation.yaml" \
-      "stages/04-testing-documentation/04-testing-documentation.yaml" \
-      "stages/05-deployment-release/05-deployment-release.yaml" \
-      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+      "stages/01-intent-ingestion/stage.yaml" \
+      "stages/02-system-design/stage.yaml" \
+      "stages/03-coding-implementation/stage.yaml" \
+      "stages/04-testing-documentation/stage.yaml" \
+      "stages/05-deployment-release/stage.yaml" \
+      "stages/06-observability-maintenance/stage.yaml"; do
     if [[ -f "$REPO/$slug" ]]; then
       gen_process_md "$slug" && count=$((count + 1)) || true
     else
@@ -3166,12 +3231,12 @@ generate_all() {
   # 18–25. Context bundles + role matrix + artifact catalog
   section "5/5  Context bundles + role matrix + artifact catalog"
   for slug in \
-      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
-      "stages/02-system-design/02-system-design.yaml" \
-      "stages/03-coding-implementation/03-coding-implementation.yaml" \
-      "stages/04-testing-documentation/04-testing-documentation.yaml" \
-      "stages/05-deployment-release/05-deployment-release.yaml" \
-      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+      "stages/01-intent-ingestion/stage.yaml" \
+      "stages/02-system-design/stage.yaml" \
+      "stages/03-coding-implementation/stage.yaml" \
+      "stages/04-testing-documentation/stage.yaml" \
+      "stages/05-deployment-release/stage.yaml" \
+      "stages/06-observability-maintenance/stage.yaml"; do
     if [[ -f "$REPO/$slug" ]]; then
       gen_stage_context_bundle "$slug" && count=$((count + 1)) || true
     fi

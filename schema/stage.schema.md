@@ -6,7 +6,7 @@
 
 **File:** `schema/stage.schema.json` · **Type:** `object`
 
-Schema for per-stage definition files (stages/NN-name/NN-name.yaml). Lists required controls, exit criteria, and artifact paths for one lifecycle stage.
+Schema for per-stage definition files (stages/NN-name/stage.yaml). Lists required controls, exit criteria, steps directory, and artifact paths for one lifecycle stage. Steps are defined in stages/NN-name/steps/step-N-N.yaml files.
 
 ## Required Fields
 
@@ -15,7 +15,6 @@ Schema for per-stage definition files (stages/NN-name/NN-name.yaml). Lists requi
 - `description`
 - `required_controls`
 - `exit_criteria`
-- `workflow`
 - `roles`
 
 ## Properties
@@ -28,7 +27,11 @@ Schema for per-stage definition files (stages/NN-name/NN-name.yaml). Lists requi
 | `required_controls` | array | Control IDs that must execute within this stage. |
 | `exit_criteria` | array | Conditions that must be true before the stage is considered complete. |
 | `next_stage` | integer | null | Stage number that follows this one. Null for Stage 6 (no bounded exit). |
-| `workflow` | object | Execution DAG: nodes (control execution steps) and parallelism metadata. |
+| `steps_dir` | string | Relative path to the steps directory (always 'steps/'). |
+| `steps` | array | Ordered list of step IDs for this stage. Each step has a file at steps/step-N-N.yaml. |
+| `parallelism` | object | Parallelism metadata for this stage's steps. |
+| `escalation_paths` | array | Escalation paths (Stage 6 only). source_step uses step IDs. |
+| `workflow` | object | DEPRECATED — workflow.nodes have been extracted to steps/step-N-N.yaml files. Kept for backward compatibility only. |
 | `roles` | array | Stage-specific role definitions with responsibilities. |
 | `feedback_loop_summary` | array | Feedback loop triggers and re-entry stages (Stage 6 only). |
 | `artifacts` | object | Paths to input and output artifact templates, relative to the stage directory. |
@@ -50,4 +53,4 @@ print('valid')
 
 ---
 
-**Last Updated:** 2026-03-13 12:43 UTC
+**Last Updated:** 2026-03-13 14:19 UTC

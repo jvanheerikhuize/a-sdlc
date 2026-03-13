@@ -1,0 +1,24 @@
+# Step 2.7: Stage Directive Injection
+# Stage 2 — System Design
+# Control: SC-02
+
+id: '2.7'
+title: Stage Directive Injection
+stage: 2
+control: SC-02
+description: Stage directive injection confirmation
+delegation: Fully automated
+depends_on:
+- '2.5'
+- '2.6'
+actors:
+- role: AGT
+  action: Receive signed Stage 2 and Stage 3 directive payloads; load into agent context
+- role: AGT
+  action: Acknowledge receipt of both payloads with confirmation
+inputs:
+- directives/stages/02-system-design.yaml
+- directives/stages/03-coding-implementation.yaml
+outputs:
+- Directive injection confirmation (artifacts/outputs/directive-injection-confirmation.yaml)
+on_failure: Stage 2 completion is blocked; Stage 3 cannot begin until injection is confirmed

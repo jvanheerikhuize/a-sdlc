@@ -1,0 +1,50 @@
+# Step 3.4: Pull Request Creation
+# Stage 3 — Coding & Implementation
+# Control: QC-04
+
+id: '3.4'
+title: Pull Request Creation
+stage: 3
+control: QC-04
+description: Pull request creation and review (final gate)
+delegation: Agent creates, humans review
+depends_on:
+- '3.3'
+actors:
+- role: AGT
+  action: 'Assemble evidence package: all Stage 3 control outputs'
+- role: AGT
+  action: Create pull request from feature branch to target branch
+- role: AGT
+  action: Attach all evidence artefacts to the PR
+- role: AGT
+  action: Assign reviewers per risk tier from Stage 1 RC-01
+- role: DEV
+  action: Review code changes against the approved design document
+- role: DEV
+  action: Review all Stage 3 evidence artefacts (quality gate report, decision log, scan results)
+- role: DEV
+  action: Request changes or approve; all requested changes must be resolved before re-review
+- role: DEV
+  action: 'Approve: record identity and timestamp; PR is eligible for merge'
+- role: AGT
+  action: Update pull request record with approval details
+inputs:
+- All Stage 3 control outputs + approved design document
+outputs:
+- 'Pull request record (artifacts/outputs/pull-request-record.yaml) — status: approved'
+on_failure: If PR cannot be created or is rejected, return to Step 3.2 for remediation
+tables:
+- title: Reviewer assignment by risk tier
+  columns:
+  - Risk Tier
+  - Required Reviewers
+  rows:
+  - - critical
+    - Lead Architect + Security Architect (minimum 2)
+  - - high
+    - Lead Architect + 1 peer developer (minimum 2)
+  - - medium
+    - 2 peer developers
+  - - low
+    - 1 peer developer
