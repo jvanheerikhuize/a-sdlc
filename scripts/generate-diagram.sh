@@ -19,6 +19,21 @@
 
 set -euo pipefail
 
+# ── color support ─────────────────────────────────────────────────────────────
+
+if [[ -t 1 ]]; then
+    C_RED='\033[0;31m'
+    C_GREEN='\033[0;32m'
+    C_YELLOW='\033[0;33m'
+    C_BLUE='\033[0;34m'
+    C_CYAN='\033[0;36m'
+    C_BOLD='\033[1m'
+    C_DIM='\033[2m'
+    C_RESET='\033[0m'
+else
+    C_RED='' C_GREEN='' C_YELLOW='' C_BLUE='' C_CYAN='' C_BOLD='' C_DIM='' C_RESET=''
+fi
+
 # ---------------------------------------------------------------------------
 # Repo root auto-discovery
 # ---------------------------------------------------------------------------
@@ -37,8 +52,8 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     *)
-      echo "Unknown argument: $1" >&2
-      echo "Usage: $0 [-o|--output PATH]" >&2
+      printf "${C_RED}ERROR:${C_RESET} Unknown argument: %s\n" "$1" >&2
+      printf "       Usage: %s [-o|--output PATH]\n" "$0" >&2
       exit 1
       ;;
   esac
@@ -50,6 +65,15 @@ done
 yaml_to_json() {
   python3 -c "import yaml,json,sys; print(json.dumps(yaml.safe_load(sys.stdin) or {}))" < "$1"
 }
+
+# ---------------------------------------------------------------------------
+# Header
+# ---------------------------------------------------------------------------
+printf "\n${C_BOLD}╔%s╗${C_RESET}\n" "$(printf '═%.0s' {1..60})"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "A-SDLC Framework Diagram Generator"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "$(date '+%Y-%m-%d %H:%M:%S')"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "Output: $OUTPUT"
+printf "${C_BOLD}╚%s╝${C_RESET}\n" "$(printf '═%.0s' {1..60})"
 
 # ---------------------------------------------------------------------------
 # Load YAML sources
@@ -529,7 +553,12 @@ with open(output_path, 'w') as f:
     f.write('\n')
 PYEOF
 
-echo "Diagram generated: ${OUTPUT}"
-echo "  Stages:         ${STAGE_COUNT}"
-echo "  Controls:       ${CONTROL_COUNT}"
-echo "  Feedback loops: ${LOOP_COUNT}"
+printf "\n${C_BOLD}%s${C_RESET}\n" "$(printf '═%.0s' {1..62})"
+printf "${C_BOLD}  GENERATION SUMMARY${C_RESET}\n"
+printf "${C_BOLD}%s${C_RESET}\n" "$(printf '─%.0s' {1..62})"
+printf "  ${C_GREEN}✓${C_RESET}  Diagram generated\n"
+printf "  ${C_DIM}Stages        :${C_RESET}  %s\n" "${STAGE_COUNT}"
+printf "  ${C_DIM}Controls      :${C_RESET}  %s\n" "${CONTROL_COUNT}"
+printf "  ${C_DIM}Feedback loops:${C_RESET}  %s\n" "${LOOP_COUNT}"
+printf "  ${C_DIM}Output        :${C_RESET}  %s\n" "${OUTPUT}"
+printf "${C_BOLD}%s${C_RESET}\n\n" "$(printf '═%.0s' {1..62})"

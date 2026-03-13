@@ -14,6 +14,47 @@
 
 set -euo pipefail
 
+# ── color support ─────────────────────────────────────────────────────────────
+
+if [[ -t 1 ]]; then
+    C_RED='\033[0;31m'
+    C_GREEN='\033[0;32m'
+    C_YELLOW='\033[0;33m'
+    C_BLUE='\033[0;34m'
+    C_CYAN='\033[0;36m'
+    C_BOLD='\033[1m'
+    C_DIM='\033[2m'
+    C_RESET='\033[0m'
+else
+    C_RED='' C_GREEN='' C_YELLOW='' C_BLUE='' C_CYAN='' C_BOLD='' C_DIM='' C_RESET=''
+fi
+
+# ── output helpers ────────────────────────────────────────────────────────────
+
+CURRENT_SECTION=""
+GENERATED=0
+SKIPPED=0
+
+section() {
+    CURRENT_SECTION="$1"
+    printf "\n${C_BOLD}${C_BLUE}┌─ %s${C_RESET}\n" "$1"
+    printf "${C_BLUE}│${C_RESET}\n"
+}
+
+section_end() {
+    printf "${C_BLUE}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
+}
+
+ok() {
+    GENERATED=$(( GENERATED + 1 ))
+    printf "${C_BLUE}│${C_RESET}  ${C_GREEN}✓${C_RESET}  Generated: %s\n" "$1"
+}
+
+warn() {
+    SKIPPED=$(( SKIPPED + 1 ))
+    printf "${C_BLUE}│${C_RESET}  ${C_YELLOW}⚠${C_RESET}  ${C_YELLOW}%s${C_RESET}\n" "$1"
+}
+
 # ---------------------------------------------------------------------------
 # Bootstrap: find REPO root (directory containing asdlc.yaml)
 # ---------------------------------------------------------------------------
@@ -28,7 +69,7 @@ while [[ "$candidate" != "/" ]]; do
   candidate="$(dirname "$candidate")"
 done
 if [[ -z "$REPO" ]]; then
-  echo "ERROR: Could not find asdlc.yaml in any parent directory of $SCRIPT_DIR" >&2
+  printf "${C_RED}ERROR:${C_RESET} Could not find asdlc.yaml in any parent directory of %s\n" "$SCRIPT_DIR" >&2
   exit 1
 fi
 
@@ -48,9 +89,6 @@ yaml_to_json() {
 
 # Timestamp
 NOW="$(date -u +"%Y-%m-%d %H:%M UTC")"
-
-# Print a success line (mimics Python's "✓ Generated: ...")
-ok() { echo "✓ Generated: $1"; }
 
 # ---------------------------------------------------------------------------
 # gen_framework_overview — writes README.md
@@ -1949,45 +1987,1136 @@ HEREDOC
 }
 
 # ---------------------------------------------------------------------------
+# gen_tasks_index — writes tasks/README.md
+# ---------------------------------------------------------------------------
+gen_tasks_index() {
+  local out_dir="$REPO/tasks"
+  mkdir -p "$out_dir"
+  local out="$out_dir/README.md"
+
+  local tasks_json asdlc_json
+  tasks_json="$(yaml_to_json "$REPO/tasks.yaml")"
+  asdlc_json="$(yaml_to_json "$REPO/asdlc.yaml")"
+
+  local version description
+  version="$(echo "$tasks_json"     | jq -r '.version')"
+  description="$(echo "$tasks_json" | jq -r '.description')"
+
+  local total_tasks
+  total_tasks="$(echo "$tasks_json" | jq '.tasks | length')"
+
+  # --- Quick-reference table (all tasks, sorted by stage then id) ---
+  local ref_rows=""
+  while IFS=$'\t' read -r stage task_id task_name entry_file; do
+    local stage_label
+    [[ "$stage" == "0" ]] && stage_label="Cross-cutting" || stage_label="Stage ${stage}"
+    ref_rows+="| ${stage_label} | \`${task_id}\` | ${task_name} | \`${entry_file}\` |"$'\n'
+  done < <(echo "$tasks_json" | jq -r '.tasks | sort_by(.stage, .id)[] | [(.stage|tostring), .id, .name, .entry_file] | @tsv')
+
+  # --- Per-stage sections ---
+  # Build ordered stage list: 1..6 then 0
+  local stage_sections=""
+  for stage_num in 1 2 3 4 5 6 0; do
+    # Get stage name from asdlc.yaml (stage 0 = cross-cutting)
+    local stage_heading
+    if [[ "$stage_num" == "0" ]]; then
+      stage_heading="Cross-Cutting Tasks"
+    else
+      local stage_name
+      stage_name="$(echo "$asdlc_json" | jq -r --argjson n "$stage_num" '.stages[] | select(.number == $n) | .name')"
+      stage_heading="Stage ${stage_num}: ${stage_name}"
+    fi
+
+    # Count tasks for this stage
+    local stage_task_count
+    stage_task_count="$(echo "$tasks_json" | jq --argjson s "$stage_num" '[.tasks[] | select(.stage == $s)] | length')"
+    [[ "$stage_task_count" -eq 0 ]] && continue
+
+    stage_sections+=$'\n'
+    stage_sections+="## ${stage_heading}"$'\n'$'\n'
+
+    # Iterate tasks in this stage
+    local task_count_total
+    task_count_total="$(echo "$tasks_json" | jq '.tasks | length')"
+    for ((ti=0; ti<task_count_total; ti++)); do
+      local task_json
+      task_json="$(echo "$tasks_json" | jq --argjson ti "$ti" '.tasks[$ti]')"
+
+      local t_stage
+      t_stage="$(echo "$task_json" | jq -r '.stage')"
+      [[ "$t_stage" != "$stage_num" ]] && continue
+
+      local t_id t_name t_desc t_entry t_note
+      t_id="$(echo "$task_json"    | jq -r '.id')"
+      t_name="$(echo "$task_json"  | jq -r '.name')"
+      t_desc="$(echo "$task_json"  | jq -r '.description')"
+      t_entry="$(echo "$task_json" | jq -r '.entry_file')"
+      t_note="$(echo "$task_json"  | jq -r '.note // ""')"
+
+      # Controls list
+      local t_controls
+      t_controls="$(echo "$task_json" | jq -r '[.controls[]] | if length > 0 then join(", ") else "none" end')"
+
+      stage_sections+="### \`${t_id}\` — ${t_name}"$'\n'$'\n'
+      stage_sections+="${t_desc}"$'\n'$'\n'
+      stage_sections+="| Field | Value |"$'\n'
+      stage_sections+="|-------|-------|"$'\n'
+      stage_sections+="| **Controls** | \`${t_controls}\` |"$'\n'
+      stage_sections+="| **Entry file** | \`${t_entry}\` |"$'\n'
+      if [[ -n "$t_note" && "$t_note" != "null" ]]; then
+        stage_sections+="| **Note** | ${t_note} |"$'\n'
+      fi
+      stage_sections+=$'\n'
+    done
+  done
+
+  # --- Write file ---
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: tasks.yaml
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Task Navigation Index
+
+**Version:** ${version}
+**Tasks:** ${total_tasks} tasks across 6 stages + cross-cutting
+
+${description}
+
+## How to Use
+
+1. Identify the task you need to perform (e.g., *"write code"*, *"run SAST"*)
+2. Find the matching task ID in the quick-reference table below
+3. Load the **Entry file** — it provides workflow, controls, actors, and exit criteria
+4. For any specific control listed, load: \`controls/[track]/[CONTROL-ID].yaml\`
+
+## Quick Reference
+
+| Stage | Task ID | Name | Entry File |
+|-------|---------|------|------------|
+${ref_rows}
+${stage_sections}
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
+# gen_process_md — writes stages/NN-name/process.md
+# ---------------------------------------------------------------------------
+gen_process_md() {
+  local stage_yaml_path="$1"  # relative: stages/01-intent-ingestion/01-intent-ingestion.yaml
+  local stage_file="$REPO/$stage_yaml_path"
+  local stage_dir
+  stage_dir="$(dirname "$stage_file")"
+  local out="$stage_dir/process.md"
+
+  local stage_json
+  stage_json="$(yaml_to_json "$stage_file")"
+
+  local stage_number stage_name stage_desc
+  stage_number="$(echo "$stage_json" | jq -r '.number')"
+  stage_name="$(echo "$stage_json" | jq -r '.name')"
+  stage_desc="$(echo "$stage_json" | jq -r '.description')"
+
+  local stage_number_padded slug
+  stage_number_padded="$(printf "%02d" "$stage_number")"
+  slug="$(basename "$(dirname "$stage_yaml_path")")"
+
+  # --- Roles table ---
+  local roles_rows=""
+  while IFS=$'\t' read -r code rname mode resp; do
+    local mode_cap
+    case "$mode" in
+      autonomous) mode_cap="Autonomous" ;;
+      gated)      mode_cap="Gated"      ;;
+      *)          mode_cap="$mode"      ;;
+    esac
+    roles_rows+="| ${code} | ${rname} | ${mode_cap} | ${resp} |"$'\n'
+  done < <(echo "$stage_json" | jq -r '.roles[] | [.code, .name, .execution_mode, .responsibilities] | @tsv')
+
+  # --- Process steps from workflow.nodes ---
+  local steps_md=""
+  local node_count
+  node_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  for ((ni=0; ni<node_count; ni++)); do
+    local node_json
+    node_json="$(echo "$stage_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+
+    local step_num step_title step_control step_deleg step_desc step_condition step_input step_output
+    step_num="$(echo "$node_json"    | jq -r '.step_number // "N/A"')"
+    step_title="$(echo "$node_json"  | jq -r '.title       // ""')"
+    step_control="$(echo "$node_json"| jq -r '.control     // ""')"
+    step_deleg="$(echo "$node_json"  | jq -r '.delegation  // ""')"
+    step_desc="$(echo "$node_json"   | jq -r '.description // ""')"
+    step_condition="$(echo "$node_json" | jq -r '.condition // ""')"
+    step_input="$(echo "$node_json"  | jq -r '.input       // ""')"
+    step_output="$(echo "$node_json" | jq -r '.output      // ""')"
+
+    steps_md+=$'\n'
+    steps_md+="### Step ${step_num} — ${step_title}"$'\n'$'\n'
+
+    if [[ -n "$step_control" && "$step_control" != "null" ]]; then
+      local ctrl_track
+      ctrl_track="$(echo "$step_control" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
+      steps_md+="**Control:** [\`${step_control}\`](../../controls/${ctrl_track}/${step_control}.yaml)"
+    else
+      steps_md+="**Control:** none (procedural)"
+    fi
+    [[ -n "$step_deleg" && "$step_deleg" != "null" ]] && steps_md+=" · **Delegation:** ${step_deleg}"
+    steps_md+=$'\n'$'\n'
+
+    if [[ -n "$step_condition" && "$step_condition" != "null" ]]; then
+      steps_md+="> **Conditional:** ${step_condition}"$'\n'$'\n'
+    fi
+
+    [[ -n "$step_desc" && "$step_desc" != "null" ]] && steps_md+="${step_desc}"$'\n'$'\n'
+
+    local actors_count
+    actors_count="$(echo "$node_json" | jq '.actors | length')"
+    if [[ "$actors_count" -gt 0 ]]; then
+      steps_md+="| Actor | Action |"$'\n'
+      steps_md+="|-------|--------|"$'\n'
+      while IFS=$'\t' read -r role action; do
+        steps_md+="| \`${role}\` | ${action} |"$'\n'
+      done < <(echo "$node_json" | jq -r '.actors[] | [.role, .action] | @tsv')
+      steps_md+=$'\n'
+    fi
+
+    [[ -n "$step_input"  && "$step_input"  != "null" ]] && steps_md+="**Input:** ${step_input}"$'\n'$'\n'
+    [[ -n "$step_output" && "$step_output" != "null" ]] && steps_md+="**Output:** ${step_output}"$'\n'$'\n'
+  done
+
+  # --- Exit criteria ---
+  local exit_md=""
+  while IFS= read -r criterion; do
+    exit_md+="- ${criterion}"$'\n'
+  done < <(echo "$stage_json" | jq -r '.exit_criteria[]')
+
+  # --- Output artifacts ---
+  local out_artifacts=""
+  while IFS= read -r artifact; do
+    out_artifacts+="- \`${artifact}\`"$'\n'
+  done < <(echo "$stage_json" | jq -r '.artifacts.outputs[]? // empty')
+
+  # --- Write file ---
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: ${stage_yaml_path}
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Stage ${stage_number}: ${stage_name} — Process
+
+**Stage:** ${stage_number_padded}-${stage_name}
+**Purpose:** ${stage_desc}
+
+## Roles
+
+| Code | Name | Mode | Responsibilities |
+|------|------|------|------------------|
+${roles_rows}
+## Process Steps
+${steps_md}
+## Exit Criteria
+
+${exit_md}
+HEREDOC
+
+  if [[ -n "$out_artifacts" ]]; then
+    cat >> "$out" << HEREDOC
+
+## Output Artifacts
+
+${out_artifacts}
+HEREDOC
+  fi
+
+  cat >> "$out" << HEREDOC
+
+## References
+
+- Stage definition: \`${slug}.yaml\`
+- Controls: See \`required_controls\` in stage YAML.
+
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
+# gen_feedback_process_md — writes feedbackloops/process.md
+# ---------------------------------------------------------------------------
+gen_feedback_process_md() {
+  local src="$REPO/feedbackloops/feedback-loops.yaml"
+  local out="$REPO/feedbackloops/process.md"
+
+  local fl_json
+  fl_json="$(yaml_to_json "$src")"
+
+  # --- Regulatory basis ---
+  local reg_rows=""
+  while IFS=$'\t' read -r article obligation; do
+    reg_rows+="| DORA | ${article} | ${obligation} |"$'\n'
+  done < <(echo "$fl_json" | jq -r '[.feedback_loops[].regulatory_mapping.dora[]?] | unique_by(.article) | .[] | [.article, .obligation] | @tsv')
+
+  # --- Roles table ---
+  local roles_rows=""
+  while IFS=$'\t' read -r code rname resp; do
+    roles_rows+="| ${code} | ${rname} | ${resp} |"$'\n'
+  done < <(echo "$fl_json" | jq -r '.roles[] | [.role_code, .role_name, .responsibilities] | @tsv')
+
+  # --- Process steps from workflow.nodes ---
+  local steps_md=""
+  local node_count
+  node_count="$(echo "$fl_json" | jq '.workflow.nodes | length')"
+  for ((ni=0; ni<node_count; ni++)); do
+    local node_json
+    node_json="$(echo "$fl_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+
+    local step_num step_title step_deleg step_desc step_condition step_input step_output
+    step_num="$(echo "$node_json"    | jq -r '.step_number // "N/A"')"
+    step_title="$(echo "$node_json"  | jq -r '.title       // ""')"
+    step_deleg="$(echo "$node_json"  | jq -r '.delegation  // ""')"
+    step_desc="$(echo "$node_json"   | jq -r '.description // ""')"
+    step_condition="$(echo "$node_json" | jq -r '.condition // ""')"
+    step_input="$(echo "$node_json"  | jq -r '.input       // ""')"
+    step_output="$(echo "$node_json" | jq -r '.output      // ""')"
+
+    steps_md+=$'\n'
+    steps_md+="### Step ${step_num} — ${step_title}"$'\n'$'\n'
+
+    [[ -n "$step_deleg" && "$step_deleg" != "null" ]] && steps_md+="**Delegation:** ${step_deleg}"$'\n'$'\n'
+
+    if [[ -n "$step_condition" && "$step_condition" != "null" ]]; then
+      steps_md+="> **Conditional:** ${step_condition}"$'\n'$'\n'
+    fi
+
+    [[ -n "$step_desc" && "$step_desc" != "null" ]] && steps_md+="${step_desc}"$'\n'$'\n'
+
+    local actors_count
+    actors_count="$(echo "$node_json" | jq '.actors | length')"
+    if [[ "$actors_count" -gt 0 ]]; then
+      steps_md+="| Actor | Action |"$'\n'
+      steps_md+="|-------|--------|"$'\n'
+      while IFS=$'\t' read -r role action; do
+        steps_md+="| \`${role}\` | ${action} |"$'\n'
+      done < <(echo "$node_json" | jq -r '.actors[] | [.role, .action] | @tsv')
+      steps_md+=$'\n'
+    fi
+
+    [[ -n "$step_input"  && "$step_input"  != "null" ]] && steps_md+="**Input:** ${step_input}"$'\n'$'\n'
+    [[ -n "$step_output" && "$step_output" != "null" ]] && steps_md+="**Output:** ${step_output}"$'\n'$'\n'
+
+    local retention
+    retention="$(echo "$node_json" | jq -r '.retention // ""')"
+    [[ -n "$retention" && "$retention" != "null" ]] && steps_md+="**Retention:** ${retention}"$'\n'$'\n'
+  done
+
+  # --- Path A eligibility (Stage 6 triggers) ---
+  local path_a_elig_s6=""
+  while IFS= read -r cond; do
+    path_a_elig_s6+="- ${cond}"$'\n'
+  done < <(echo "$fl_json" | jq -r '.feedback_loops[] | select(.id == "path_a") | .trigger_sources[] | select(.stage == 6) | .eligibility[]?')
+
+  # --- Path A eligibility (Stage 4 triggers) ---
+  local path_a_elig_s4=""
+  while IFS= read -r cond; do
+    path_a_elig_s4+="- ${cond}"$'\n'
+  done < <(echo "$fl_json" | jq -r '.feedback_loops[] | select(.id == "path_a") | .trigger_sources[] | select(.stage == 4) | .eligibility[]?')
+
+  # --- Path A minimum controls ---
+  local path_a_controls=""
+  while IFS=$'\t' read -r ctrl_id ctrl_name rationale; do
+    path_a_controls+="- **${ctrl_id}: ${ctrl_name}** — ${rationale}"$'\n'
+  done < <(echo "$fl_json" | jq -r '.feedback_loops[] | select(.id == "path_a") | .minimum_controls[] | [.id, .name, .rationale] | @tsv')
+
+  # --- Write file ---
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: feedbackloops/feedback-loops.yaml
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Feedback Loops — Process
+
+**Module:** A-SDLC Feedback Loops
+**Purpose:** Define the re-entry paths by which issues detected in Stage 4 (Testing & Documentation) or Stage 6 (Observability & Maintenance) flow back into the lifecycle. Every activation requires a formal path classification decision before re-entry begins.
+
+## Regulatory Basis
+
+| Regulation | Article | Obligation |
+|------------|---------|------------|
+${reg_rows}
+## Roles
+
+| Code | Name | Responsibilities |
+|------|------|------------------|
+${roles_rows}
+## Process Steps
+${steps_md}
+## Path A Eligibility
+
+### Stage 6 Triggers (ALL must be met)
+
+${path_a_elig_s6}
+### Stage 4 Triggers (ALL must be met)
+
+${path_a_elig_s4}
+## Path A: Minimum Controls
+
+${path_a_controls}
+## Autofix Templates
+
+Pre-approved autofix templates for Path A (Stage 6 triggers) are stored in \`feedbackloops/autofix-templates/\`. Each template defines the exact issue signature, fix scope, and minimum control set. Path A eligibility requires an exact template match — no partial matches are permitted.
+
+## References
+
+- Feedback loop definitions: \`feedback-loops.yaml\`
+- Autofix templates: \`autofix-templates/\`
+- Activation record template: \`artifacts/outputs/feedback-loop-activation-record.yaml\`
+
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
+# gen_control_docs — writes controls/[track]/[ID].md for every control
+# ---------------------------------------------------------------------------
+gen_control_docs() {
+  local reg_json
+  reg_json="$(yaml_to_json "$REPO/controls/registry.yaml")"
+
+  local ctrl_count=0
+
+  while IFS=$'\t' read -r ctrl_id ctrl_file; do
+    [[ -z "$ctrl_file" || "$ctrl_file" == "null" ]] && continue
+    [[ ! -f "$REPO/$ctrl_file" ]] && continue
+
+    local ctrl_json
+    ctrl_json="$(yaml_to_json "$REPO/$ctrl_file")"
+
+    local name description moscow_score
+    name="$(echo "$ctrl_json"         | jq -r '.name          // ""')"
+    description="$(echo "$ctrl_json"  | jq -r '.description   // ""')"
+    moscow_score="$(echo "$ctrl_json" | jq -r '.moscow_score  // ""')"
+
+    local track_code track_name
+    track_code="$(echo "$ctrl_json" | jq -r '.track.code // ""')"
+    track_name="$(echo "$ctrl_json" | jq -r '.track.name // ""')"
+
+    local ctrl_track_lower
+    ctrl_track_lower="$(echo "$track_code" | tr '[:upper:]' '[:lower:]')"
+    local out="$REPO/controls/${ctrl_track_lower}/${ctrl_id}.md"
+
+    # Required stages
+    local stages_rows=""
+    while IFS=$'\t' read -r stg_num stg_name mandatory note; do
+      local m_str; [[ "$mandatory" == "true" ]] && m_str="Mandatory" || m_str="Conditional"
+      stages_rows+="| ${stg_num} | ${stg_name} | ${m_str} |"
+      [[ -n "$note" && "$note" != "null" ]] && stages_rows+=" *${note}*"
+      stages_rows+=$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.required_in_stages[] | [(.number|tostring), .name, (.mandatory|tostring), (.note // "")] | @tsv')
+
+    # Delegation
+    local deleg_display deleg_agent_role deleg_human_role
+    deleg_display="$(echo "$ctrl_json"    | jq -r '.delegation.human_display // ""')"
+    deleg_agent_role="$(echo "$ctrl_json" | jq -r '.delegation.agent_role    // ""')"
+    deleg_human_role="$(echo "$ctrl_json" | jq -r '.delegation.human_role    // ""')"
+
+    # Inputs
+    local inputs_rows=""
+    while IFS=$'\t' read -r in_name in_src in_desc; do
+      inputs_rows+="| ${in_name} | ${in_src} | ${in_desc} |"$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.inputs[]? | [.name, (.source_control // ""), (.description // "")] | @tsv')
+
+    # Outputs
+    local outputs_rows=""
+    while IFS=$'\t' read -r out_name out_type out_desc out_ret; do
+      outputs_rows+="| ${out_name} | ${out_type} | ${out_desc} | ${out_ret} |"$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.outputs[]? | [.name, (.type // ""), (.description // ""), (.retention // "")] | @tsv')
+
+    # Automation
+    local auto_freq auto_sla auto_tooling
+    auto_freq="$(echo "$ctrl_json"    | jq -r '.automation.frequency // ""')"
+    auto_sla="$(echo "$ctrl_json"     | jq -r 'if .automation.sla_minutes then (.automation.sla_minutes|tostring) + " min" else "—" end')"
+    auto_tooling="$(echo "$ctrl_json" | jq -r '[.automation.tooling[]?] | if length > 0 then join(", ") else "—" end')"
+
+    # Failure behaviour
+    local fail_action fail_target fail_desc
+    fail_action="$(echo "$ctrl_json" | jq -r '.failure_behaviour.action            // ""')"
+    fail_target="$(echo "$ctrl_json" | jq -r '.failure_behaviour.escalation_target // ""')"
+    fail_desc="$(echo "$ctrl_json"   | jq -r '.failure_behaviour.description       // ""')"
+
+    # Dependencies
+    local deps_md=""
+    while IFS= read -r dep_id; do
+      [[ -n "$dep_id" && "$dep_id" != "null" ]] && deps_md+="- \`${dep_id}\`"$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.dependencies[]? // empty')
+    [[ -z "$deps_md" ]] && deps_md="None"
+
+    # Regulatory mapping
+    local reg_rows=""
+    while IFS=$'\t' read -r article obligation; do
+      reg_rows+="| DORA | ${article} | ${obligation} |"$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.regulatory_mapping.dora[]? | [.article, .obligation] | @tsv')
+    while IFS=$'\t' read -r article req; do
+      reg_rows+="| EU AI Act | ${article} | ${req} |"$'\n'
+    done < <(echo "$ctrl_json" | jq -r '.regulatory_mapping.eu_ai_act[]? | [.article, .requirement] | @tsv')
+
+    # Owner / metadata
+    local owner_team owner_role meta_version meta_status meta_updated
+    owner_team="$(echo "$ctrl_json"   | jq -r '.owner.team           // ""')"
+    owner_role="$(echo "$ctrl_json"   | jq -r '.owner.role           // ""')"
+    meta_version="$(echo "$ctrl_json" | jq -r '.metadata.version     // ""')"
+    meta_status="$(echo "$ctrl_json"  | jq -r '.metadata.status      // ""')"
+    meta_updated="$(echo "$ctrl_json" | jq -r '.metadata.last_updated // ""')"
+
+    local moscow_label
+    case "$moscow_score" in
+      must)   moscow_label="MUST (mandatory)"    ;;
+      should) moscow_label="SHOULD (recommended)" ;;
+      could)  moscow_label="COULD (optional)"    ;;
+      wont)   moscow_label="WON'T (out of scope)" ;;
+      *)      moscow_label="$moscow_score"        ;;
+    esac
+
+    {
+      cat << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: ${ctrl_file}
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# ${ctrl_id}: ${name}
+
+**Track:** ${track_name} (\`${track_code}\`) · **Priority:** ${moscow_label} · **Status:** ${meta_status}
+
+${description}
+
+## Required In Stages
+
+| Stage | Name | Applicability |
+|-------|------|---------------|
+${stages_rows}
+## Delegation
+
+| Field | Value |
+|-------|-------|
+| **Pattern** | ${deleg_display} |
+| **Agent does** | ${deleg_agent_role} |
+| **Human does** | ${deleg_human_role} |
+HEREDOC
+
+      if [[ -n "$inputs_rows" ]]; then
+        cat << HEREDOC
+
+## Inputs
+
+| Artifact | Source Control | Description |
+|----------|---------------|-------------|
+${inputs_rows}
+HEREDOC
+      fi
+
+      if [[ -n "$outputs_rows" ]]; then
+        cat << HEREDOC
+
+## Outputs
+
+| Artifact | Type | Description | Retention |
+|----------|------|-------------|-----------|
+${outputs_rows}
+HEREDOC
+      fi
+
+      cat << HEREDOC
+
+## Automation
+
+| Field | Value |
+|-------|-------|
+| **Frequency** | ${auto_freq} |
+| **SLA** | ${auto_sla} |
+| **Tooling** | ${auto_tooling} |
+
+## Failure Behaviour
+
+| Field | Value |
+|-------|-------|
+| **On failure** | ${fail_action} |
+| **Escalate to** | ${fail_target} |
+
+${fail_desc}
+
+## Dependencies
+
+${deps_md}
+HEREDOC
+
+      if [[ -n "$reg_rows" ]]; then
+        cat << HEREDOC
+
+## Regulatory Mapping
+
+| Regulation | Article | Obligation |
+|------------|---------|------------|
+${reg_rows}
+HEREDOC
+      fi
+
+      cat << HEREDOC
+
+## Ownership
+
+**Owner team:** ${owner_team} · **Owner role:** ${owner_role}
+
+---
+
+*Control version ${meta_version} — last updated ${meta_updated}*
+*Regenerated: ${NOW}*
+HEREDOC
+    } > "$out"
+
+    ctrl_count=$((ctrl_count + 1))
+  done < <(echo "$reg_json" | jq -r '.registry[] | [.id, .file] | @tsv')
+
+  echo "✓ Generated: ${ctrl_count} control docs (controls/[track]/[ID].md)"
+}
+
+# ---------------------------------------------------------------------------
+# gen_schema_docs — writes schema/[name].md for every JSON schema file
+# ---------------------------------------------------------------------------
+gen_schema_docs() {
+  local schema_dir="$REPO/schema"
+  local count=0
+
+  while IFS= read -r schema_file; do
+    local basename_no_ext
+    basename_no_ext="$(basename "$schema_file" .json)"
+    local out="${schema_dir}/${basename_no_ext}.md"
+
+    local schema_json
+    schema_json="$(cat "$schema_file")"
+
+    local title description
+    title="$(echo "$schema_json"       | jq -r '.title       // ""')"
+    description="$(echo "$schema_json" | jq -r '.description // ""')"
+    [[ -z "$title" ]] && title="$basename_no_ext"
+
+    # Top-level type
+    local schema_type
+    schema_type="$(echo "$schema_json" | jq -r '.type // "object"')"
+
+    # Required fields
+    local required_md=""
+    while IFS= read -r req_field; do
+      required_md+="- \`${req_field}\`"$'\n'
+    done < <(echo "$schema_json" | jq -r '.required[]? // empty')
+    [[ -z "$required_md" ]] && required_md="None specified"
+
+    # Top-level properties
+    local props_rows=""
+    while IFS=$'\t' read -r prop_name prop_type prop_desc; do
+      props_rows+="| \`${prop_name}\` | ${prop_type} | ${prop_desc} |"$'\n'
+    done < <(echo "$schema_json" | jq -r '
+      .properties // {} | to_entries[] |
+      [
+        .key,
+        (.value.type | if . then (if type == "array" then join(" | ") else . end)
+                       else (.value["$ref"] // "object") end),
+        (.value.description // "")
+      ] | @tsv
+    ')
+
+    # $defs / definitions
+    local defs_md=""
+    while IFS= read -r def_name; do
+      defs_md+="- \`${def_name}\`"$'\n'
+    done < <(echo "$schema_json" | jq -r '(."$defs" // .definitions // {}) | keys[]' 2>/dev/null || true)
+
+    # Enum values at top level (for simple constraint schemas)
+    local enum_md=""
+    while IFS= read -r val; do
+      enum_md+="- \`${val}\`"$'\n'
+    done < <(echo "$schema_json" | jq -r '.enum[]? // empty' 2>/dev/null || true)
+
+    {
+      cat << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: schema/${basename_no_ext}.json
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Schema: ${title}
+
+**File:** \`schema/${basename_no_ext}.json\` · **Type:** \`${schema_type}\`
+
+${description}
+
+## Required Fields
+
+${required_md}
+HEREDOC
+
+      if [[ -n "$props_rows" ]]; then
+        cat << HEREDOC
+## Properties
+
+| Field | Type | Description |
+|-------|------|-------------|
+${props_rows}
+HEREDOC
+      fi
+
+      if [[ -n "$enum_md" ]]; then
+        cat << HEREDOC
+## Allowed Values
+
+${enum_md}
+HEREDOC
+      fi
+
+      if [[ -n "$defs_md" ]]; then
+        cat << HEREDOC
+## Shared Definitions (\`\$defs\`)
+
+${defs_md}
+HEREDOC
+      fi
+
+      cat << HEREDOC
+## Validation
+
+Validate a file against this schema:
+
+\`\`\`bash
+python3 -c "
+import json, jsonschema, yaml, sys
+schema = json.load(open('schema/${basename_no_ext}.json'))
+data   = yaml.safe_load(open(sys.argv[1]))
+jsonschema.validate(data, schema)
+print('valid')
+" your-file.yaml
+\`\`\`
+
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+    } > "$out"
+
+    count=$((count + 1))
+  done < <(find "$schema_dir" -name "*.json" | sort)
+
+  echo "✓ Generated: ${count} schema docs (schema/[name].md)"
+}
+
+# ---------------------------------------------------------------------------
+# gen_stage_context_bundle — writes context/stage-NN-name.md for one stage
+# ---------------------------------------------------------------------------
+gen_stage_context_bundle() {
+  local stage_yaml_path="$1"
+  local stage_file="$REPO/$stage_yaml_path"
+
+  local stage_json reg_json
+  stage_json="$(yaml_to_json "$stage_file")"
+  reg_json="$(yaml_to_json "$REPO/controls/registry.yaml")"
+
+  local stage_num stage_name stage_desc
+  stage_num="$(echo "$stage_json"  | jq -r '.number')"
+  stage_name="$(echo "$stage_json" | jq -r '.name')"
+  stage_desc="$(echo "$stage_json" | jq -r '.description')"
+
+  local stage_num_padded
+  stage_num_padded="$(printf "%02d" "$stage_num")"
+
+  # Map stage number → context file name (matches tasks.yaml references)
+  local ctx_name
+  case "$stage_num" in
+    1) ctx_name="stage-01-intent-ingestion"            ;;
+    2) ctx_name="stage-02-system-design"               ;;
+    3) ctx_name="stage-03-coding-and-implementation"   ;;
+    4) ctx_name="stage-04-testing-and-documentation"   ;;
+    5) ctx_name="stage-05-deployment-and-release"      ;;
+    6) ctx_name="stage-06-observability-and-maintenance" ;;
+    *) ctx_name="stage-0${stage_num}-unknown"          ;;
+  esac
+
+  local out_dir="$REPO/context"
+  mkdir -p "$out_dir"
+  local out="${out_dir}/${ctx_name}.md"
+
+  # Quick-load file list
+  local quickload_md=""
+  quickload_md+="- \`${stage_yaml_path}\` — stage definition and workflow DAG"$'\n'
+  while IFS=$'\t' read -r ctrl_id ctrl_note; do
+    local ctrl_track_lower
+    ctrl_track_lower="$(echo "$ctrl_id" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
+    quickload_md+="- \`controls/${ctrl_track_lower}/${ctrl_id}.yaml\` — control definition"
+    [[ -n "$ctrl_note" && "$ctrl_note" != "null" ]] && quickload_md+=" *(${ctrl_note})*"
+    quickload_md+=$'\n'
+  done < <(echo "$stage_json" | jq -r '.required_controls[] | [.id, (.note // "")] | @tsv')
+  while IFS= read -r directive; do
+    [[ -n "$directive" && "$directive" != "null" ]] && \
+      quickload_md+="- \`${directive}\` — stage directive payload"$'\n'
+  done < <(echo "$stage_json" | jq -r '(.directives // [])[]')
+
+  # Workflow table
+  local workflow_rows=""
+  local node_count
+  node_count="$(echo "$stage_json" | jq '.workflow.nodes | length')"
+  for ((ni=0; ni<node_count; ni++)); do
+    local node_json
+    node_json="$(echo "$stage_json" | jq --argjson ni "$ni" '.workflow.nodes[$ni]')"
+    local step_num step_title step_ctrl step_deleg step_cond
+    step_num="$(echo "$node_json"   | jq -r '.step_number // "N/A"')"
+    step_title="$(echo "$node_json" | jq -r '.title       // ""')"
+    step_ctrl="$(echo "$node_json"  | jq -r '.control     // "—"')"
+    step_deleg="$(echo "$node_json" | jq -r '.delegation  // ""')"
+    step_cond="$(echo "$node_json"  | jq -r '.condition   // ""')"
+    local cond_flag=""
+    [[ -n "$step_cond" && "$step_cond" != "null" ]] && cond_flag=" *(conditional)*"
+    workflow_rows+="| ${step_num} | ${step_title}${cond_flag} | \`${step_ctrl}\` | ${step_deleg} |"$'\n'
+  done
+
+  # Required controls table
+  local ctrl_rows=""
+  while IFS=$'\t' read -r ctrl_id ctrl_note; do
+    local ctrl_track_lower ctrl_name
+    ctrl_track_lower="$(echo "$ctrl_id" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
+    ctrl_name="$(echo "$reg_json" | jq -r --arg id "$ctrl_id" '.registry[] | select(.id == $id) | .name // ""')"
+    local note_cell=""
+    [[ -n "$ctrl_note" && "$ctrl_note" != "null" ]] && note_cell="${ctrl_note}"
+    ctrl_rows+="| [\`${ctrl_id}\`](../controls/${ctrl_track_lower}/${ctrl_id}.yaml) | ${ctrl_name} | ${note_cell} |"$'\n'
+  done < <(echo "$stage_json" | jq -r '.required_controls[] | [.id, (.note // "")] | @tsv')
+
+  # Exit criteria
+  local exit_md=""
+  while IFS= read -r criterion; do
+    exit_md+="- [ ] ${criterion}"$'\n'
+  done < <(echo "$stage_json" | jq -r '.exit_criteria[]')
+
+  # Input / output artifacts
+  local in_artifacts=""
+  while IFS= read -r a; do
+    in_artifacts+="- \`${a}\`"$'\n'
+  done < <(echo "$stage_json" | jq -r '.artifacts.inputs[]?  // empty')
+  [[ -z "$in_artifacts"  ]] && in_artifacts="*None (first stage)*"
+
+  local out_artifacts=""
+  while IFS= read -r a; do
+    out_artifacts+="- \`${a}\`"$'\n'
+  done < <(echo "$stage_json" | jq -r '.artifacts.outputs[]? // empty')
+
+  # Directives
+  local directives_md=""
+  while IFS= read -r d; do
+    [[ -n "$d" && "$d" != "null" ]] && directives_md+="- \`${d}\`"$'\n'
+  done < <(echo "$stage_json" | jq -r '(.directives // [])[]')
+  [[ -z "$directives_md" ]] && directives_md="*None specified*"
+
+  # Feedback loop: is this stage a trigger source?
+  local fl_json
+  fl_json="$(yaml_to_json "$REPO/feedbackloops/feedback-loops.yaml")"
+  local fl_trigger_md=""
+  local is_fl_source
+  is_fl_source="$(echo "$fl_json" | jq -r --argjson stg "$stage_num" '
+    [.feedback_loops[].trigger_sources[] | select(.stage == $stg)] | length > 0
+  ')"
+  if [[ "$is_fl_source" == "true" ]]; then
+    fl_trigger_md="Failures in this stage may trigger a feedback loop. Execute Step FL.1 to classify:"$'\n'
+    while IFS=$'\t' read -r ctrl_id; do
+      fl_trigger_md+="- \`${ctrl_id}\` — failure triggers FL.1 path classification"$'\n'
+    done < <(echo "$fl_json" | jq -r --argjson stg "$stage_num" '
+      [.feedback_loops[].trigger_sources[] | select(.stage == $stg) | (.source_controls // [])[]] | unique[]
+    ')
+    fl_trigger_md+=$'\n'
+    fl_trigger_md+="See [\`feedbackloops/feedback-loops.yaml\`](../feedbackloops/feedback-loops.yaml) and [\`feedbackloops/process.md\`](../feedbackloops/process.md)."
+  else
+    fl_trigger_md="*This stage is not a direct feedback loop trigger source.*"
+  fi
+
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: ${stage_yaml_path} + controls/ + directives/
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Stage ${stage_num}: ${stage_name} — Context Bundle
+
+> **Agent load file** — load this at Stage ${stage_num} entry for full context.
+
+**Stage:** ${stage_num_padded}-${stage_name}
+**Purpose:** ${stage_desc}
+
+## Files to Load at Stage Entry
+
+${quickload_md}
+## Workflow Execution Order
+
+| Step | Title | Control | Delegation |
+|------|-------|---------|------------|
+${workflow_rows}
+## Required Controls
+
+| Control | Name | Notes |
+|---------|------|-------|
+${ctrl_rows}
+## Exit Criteria Checklist
+
+${exit_md}
+## Input Artifacts
+
+${in_artifacts}
+## Output Artifacts
+
+${out_artifacts}
+## Directives Injected at Stage Entry
+
+${directives_md}
+
+## Feedback Loop Triggers
+
+${fl_trigger_md}
+
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
+# gen_role_control_matrix — writes documentation/role-control-mapping.md
+# ---------------------------------------------------------------------------
+gen_role_control_matrix() {
+  local out_dir="$REPO/documentation"
+  mkdir -p "$out_dir"
+  local out="$out_dir/role-control-mapping.md"
+
+  local reg_json
+  reg_json="$(yaml_to_json "$REPO/controls/registry.yaml")"
+
+  # Collect (role, control, stage_num, stage_name, delegation) tuples from all stage workflows
+  local tmpfile
+  tmpfile="$(mktemp)"
+
+  for slug in \
+      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
+      "stages/02-system-design/02-system-design.yaml" \
+      "stages/03-coding-implementation/03-coding-implementation.yaml" \
+      "stages/04-testing-documentation/04-testing-documentation.yaml" \
+      "stages/05-deployment-release/05-deployment-release.yaml" \
+      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+    [[ ! -f "$REPO/$slug" ]] && continue
+    local stage_json stage_num stage_name
+    stage_json="$(yaml_to_json "$REPO/$slug")"
+    stage_num="$(echo "$stage_json"  | jq -r '.number')"
+    stage_name="$(echo "$stage_json" | jq -r '.name')"
+
+    echo "$stage_json" | jq -r --arg stg "$stage_num" --arg sname "$stage_name" '
+      .workflow.nodes[] |
+      select(.control != null and .control != "") |
+      {ctrl: .control, stg: $stg, sname: $sname, deleg: (.delegation // ""),
+       roles: [(.actors // [])[] | .role]} |
+      .roles[] as $r |
+      [$r, .ctrl, .stg, .sname, .deleg] |
+      @tsv
+    ' >> "$tmpfile"
+  done
+
+  local total_pairs
+  total_pairs="$(wc -l < "$tmpfile" | tr -d ' ')"
+
+  # Build per-role sections
+  local role_sections=""
+  while IFS= read -r role; do
+    [[ -z "$role" ]] && continue
+
+    local role_rows=""
+    local prev_key=""
+    while IFS=$'\t' read -r r ctrl stg sname deleg; do
+      local key="${stg}:${ctrl}"
+      [[ "$key" == "$prev_key" ]] && continue   # deduplicate same control+stage
+      prev_key="$key"
+      local ctrl_name ctrl_track_lower
+      ctrl_name="$(echo "$reg_json" | jq -r --arg id "$ctrl" '.registry[] | select(.id == $id) | .name // ""')"
+      ctrl_track_lower="$(echo "$ctrl" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
+      role_rows+="| [\`${ctrl}\`](../controls/${ctrl_track_lower}/${ctrl}.yaml) | ${ctrl_name} | Stage ${stg}: ${sname} | ${deleg} |"$'\n'
+    done < <(awk -F'\t' -v r="$role" '$1 == r' "$tmpfile" | sort -t$'\t' -k3n -k2)
+
+    if [[ -n "$role_rows" ]]; then
+      role_sections+=$'\n'
+      role_sections+="### \`${role}\`"$'\n'$'\n'
+      role_sections+="| Control | Name | Stage | Delegation |"$'\n'
+      role_sections+="|---------|------|-------|------------|"$'\n'
+      role_sections+="${role_rows}"$'\n'
+    fi
+  done < <(cut -f1 "$tmpfile" | sort -u)
+
+  rm -f "$tmpfile"
+
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: stages/*/[stage].yaml workflow nodes
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Role-Control Responsibility Matrix
+
+Maps each actor role to the controls they execute or approve, derived from workflow node actor definitions across all 6 lifecycle stages.
+
+**Total role-control assignments:** ${total_pairs}
+
+## By Role
+${role_sections}
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
+# gen_artifact_catalog — writes artifacts/README.md
+# ---------------------------------------------------------------------------
+gen_artifact_catalog() {
+  local out_dir="$REPO/artifacts"
+  mkdir -p "$out_dir"
+  local out="$out_dir/README.md"
+
+  local artifact_sections=""
+  local total_count=0
+
+  for slug in \
+      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
+      "stages/02-system-design/02-system-design.yaml" \
+      "stages/03-coding-implementation/03-coding-implementation.yaml" \
+      "stages/04-testing-documentation/04-testing-documentation.yaml" \
+      "stages/05-deployment-release/05-deployment-release.yaml" \
+      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+    [[ ! -f "$REPO/$slug" ]] && continue
+    local stage_json stage_num stage_name stage_dir
+    stage_json="$(yaml_to_json "$REPO/$slug")"
+    stage_num="$(echo "$stage_json"  | jq -r '.number')"
+    stage_name="$(echo "$stage_json" | jq -r '.name')"
+    stage_dir="$(dirname "$REPO/$slug")"
+
+    artifact_sections+=$'\n'
+    artifact_sections+="## Stage ${stage_num}: ${stage_name}"$'\n'$'\n'
+    artifact_sections+="| Artifact | Template | Control |"$'\n'
+    artifact_sections+="|----------|----------|---------|"$'\n'
+
+    while IFS= read -r artifact_rel; do
+      local artifact_name exists_str ctrl_id ctrl_ref
+      artifact_name="$(basename "$artifact_rel")"
+      [[ -f "${stage_dir}/${artifact_rel}" ]] && exists_str="✓" || exists_str="missing"
+      # Extract control ID from filename prefix (e.g. QC-01-feature-spec.yaml → QC-01)
+      ctrl_id="$(echo "$artifact_name" | sed -n 's/^\([A-Z][A-Z]-[0-9][0-9]\)-.*/\1/p')"
+      if [[ -n "$ctrl_id" ]]; then
+        local ctrl_track_lower
+        ctrl_track_lower="$(echo "$ctrl_id" | cut -c1-2 | tr '[:upper:]' '[:lower:]')"
+        ctrl_ref="[\`${ctrl_id}\`](../controls/${ctrl_track_lower}/${ctrl_id}.yaml)"
+      else
+        ctrl_ref="—"
+      fi
+      artifact_sections+="| \`${artifact_name}\` | ${exists_str} | ${ctrl_ref} |"$'\n'
+      total_count=$((total_count + 1))
+    done < <(echo "$stage_json" | jq -r '.artifacts.outputs[]? // empty')
+  done
+
+  # Feedback loop artifacts
+  local fl_json
+  fl_json="$(yaml_to_json "$REPO/feedbackloops/feedback-loops.yaml")"
+  artifact_sections+=$'\n'
+  artifact_sections+="## Feedback Loops"$'\n'$'\n'
+  artifact_sections+="| Artifact | Template | Notes |"$'\n'
+  artifact_sections+="|----------|----------|-------|"$'\n'
+  while IFS= read -r artifact; do
+    local artifact_name
+    artifact_name="$(basename "$artifact")"
+    local exists_str
+    [[ -f "$REPO/feedbackloops/${artifact}" ]] && exists_str="✓" || exists_str="missing"
+    artifact_sections+="| \`${artifact_name}\` | ${exists_str} | Feedback loop activation |"$'\n'
+    total_count=$((total_count + 1))
+  done < <(echo "$fl_json" | jq -r '.artifacts.outputs[]? // empty')
+
+  cat > "$out" << HEREDOC
+<!-- AUTO-GENERATED FILE — do not edit directly.
+     Source: stages/*/[stage].yaml + feedbackloops/feedback-loops.yaml
+     Regenerate: bash scripts/generate-docs.sh -->
+
+# Artifact Catalog
+
+Index of all output artifact templates produced across the A-SDLC lifecycle.
+
+**Total artifacts:** ${total_count}
+
+Artifact templates define the required fields for each output. Templates live alongside their producing stage in \`stages/NN-name/artifacts/outputs/\`. A ✓ means the template file exists in the repository.
+
+${artifact_sections}
+
+---
+
+**Last Updated:** ${NOW}
+HEREDOC
+
+  ok "$out"
+}
+
+# ---------------------------------------------------------------------------
 # list_targets
 # ---------------------------------------------------------------------------
 list_targets() {
   local cat_json
   cat_json="$(yaml_to_json "$REPO/manifest/catalog.yaml")"
 
-  echo ""
-  echo "A-SDLC Documentation Generation Targets:"
-  echo ""
+  printf "\n${C_BOLD}╔%s╗${C_RESET}\n" "$(printf '═%.0s' {1..60})"
+  printf "${C_BOLD}║  %-58s║${C_RESET}\n" "A-SDLC Documentation Generation Targets"
+  printf "${C_BOLD}╚%s╝${C_RESET}\n" "$(printf '═%.0s' {1..60})"
 
+  printf "\n${C_BOLD}${C_BLUE}┌─ Targets${C_RESET}\n"
+  printf "${C_BLUE}│${C_RESET}\n"
   local i=1
   while IFS=$'\t' read -r template source output desc; do
-    printf "%2d. [%s]\n" "$i" "$template"
-    printf "    From:   %s\n" "$source"
-    printf "    To:     %s\n" "$output"
-    printf "    About:  %s\n\n" "$desc"
+    printf "${C_BLUE}│${C_RESET}  ${C_BOLD}%2d.${C_RESET} [%s]\n" "$i" "$template"
+    printf "${C_BLUE}│${C_RESET}      ${C_DIM}From:${C_RESET}   %s\n" "$source"
+    printf "${C_BLUE}│${C_RESET}      ${C_DIM}To:${C_RESET}     %s\n" "$output"
+    printf "${C_BLUE}│${C_RESET}      ${C_DIM}About:${C_RESET}  %s\n" "$desc"
+    printf "${C_BLUE}│${C_RESET}\n"
     ((i++))
   done < <(echo "$cat_json" | jq -r '.doc_generation.targets[] | [.template, .source, .output, .description] | @tsv')
+  printf "${C_BLUE}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
 }
 
 # ---------------------------------------------------------------------------
 # generate_all
 # ---------------------------------------------------------------------------
 generate_all() {
-  echo ""
-  echo "=== A-SDLC Documentation Generator ==="
-  echo ""
-  echo "Generating documentation targets..."
-  echo ""
+  # Header
+  printf "\n${C_BOLD}╔%s╗${C_RESET}\n" "$(printf '═%.0s' {1..60})"
+  printf "${C_BOLD}║  %-58s║${C_RESET}\n" "A-SDLC Documentation Generator"
+  printf "${C_BOLD}║  %-58s║${C_RESET}\n" "$(date '+%Y-%m-%d %H:%M:%S')"
+  printf "${C_BOLD}║  %-58s║${C_RESET}\n" "Repo: $REPO"
+  printf "${C_BOLD}╚%s╝${C_RESET}\n" "$(printf '═%.0s' {1..60})"
 
   local count=0
 
-  # 1. Framework overview (README.md)
+  # 1–2. Framework docs
+  section "1/5  Framework docs"
   gen_framework_overview && count=$((count + 1)) || true
-
-  # 2. AGENTS.md
   gen_agents_md && count=$((count + 1)) || true
+  section_end
 
-  # 3–8. Stage READMEs
+  # 3–8. Stage READMEs + process.md files
+  section "2/5  Stage READMEs + process.md"
   for slug in \
       "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
       "stages/02-system-design/02-system-design.yaml" \
@@ -1998,31 +3127,70 @@ generate_all() {
     if [[ -f "$REPO/$slug" ]]; then
       gen_stage_readme "$slug" && count=$((count + 1)) || true
     else
-      echo "⚠ Skipping (file not found): $slug"
+      warn "Skipping (file not found): $slug"
     fi
   done
+  for slug in \
+      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
+      "stages/02-system-design/02-system-design.yaml" \
+      "stages/03-coding-implementation/03-coding-implementation.yaml" \
+      "stages/04-testing-documentation/04-testing-documentation.yaml" \
+      "stages/05-deployment-release/05-deployment-release.yaml" \
+      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+    if [[ -f "$REPO/$slug" ]]; then
+      gen_process_md "$slug" && count=$((count + 1)) || true
+    else
+      warn "Skipping (file not found): $slug"
+    fi
+  done
+  gen_feedback_process_md && count=$((count + 1)) || true
+  section_end
 
-  # 9. Stages overview
+  # 9–15. Index docs
+  section "3/5  Index + overview docs"
   gen_stages_overview && count=$((count + 1)) || true
-
-  # 10. Controls index
   gen_controls_index && count=$((count + 1)) || true
-
-  # 11. Regulatory index
   gen_regulatory_index && count=$((count + 1)) || true
-
-  # 12. Feedback loops guide
   gen_feedback_loops_guide && count=$((count + 1)) || true
-
-  # 13. Directives index
   gen_directives_index && count=$((count + 1)) || true
-
-  # 14. Roles index
   gen_roles_index && count=$((count + 1)) || true
+  gen_tasks_index && count=$((count + 1)) || true
+  section_end
 
-  echo ""
-  echo "Generated ${count} documentation files"
-  echo ""
+  # 16–17. Per-item docs
+  section "4/5  Per-control + schema docs"
+  gen_control_docs || true
+  gen_schema_docs || true
+  section_end
+
+  # 18–25. Context bundles + role matrix + artifact catalog
+  section "5/5  Context bundles + role matrix + artifact catalog"
+  for slug in \
+      "stages/01-intent-ingestion/01-intent-ingestion.yaml" \
+      "stages/02-system-design/02-system-design.yaml" \
+      "stages/03-coding-implementation/03-coding-implementation.yaml" \
+      "stages/04-testing-documentation/04-testing-documentation.yaml" \
+      "stages/05-deployment-release/05-deployment-release.yaml" \
+      "stages/06-observability-maintenance/06-observability-maintenance.yaml"; do
+    if [[ -f "$REPO/$slug" ]]; then
+      gen_stage_context_bundle "$slug" && count=$((count + 1)) || true
+    fi
+  done
+  gen_role_control_matrix && count=$((count + 1)) || true
+  gen_artifact_catalog && count=$((count + 1)) || true
+  section_end
+
+  # Summary
+  printf "\n${C_BOLD}%s${C_RESET}\n" "$(printf '═%.0s' {1..62})"
+  printf "${C_BOLD}  GENERATION SUMMARY${C_RESET}\n"
+  printf "${C_BOLD}%s${C_RESET}\n" "$(printf '─%.0s' {1..62})"
+  printf "  ${C_GREEN}✓ Generated :${C_RESET}  %d files\n" "$count"
+  if [[ "$SKIPPED" -gt 0 ]]; then
+    printf "  ${C_YELLOW}⚠ Skipped   :${C_RESET}  ${C_BOLD}${C_YELLOW}%d${C_RESET}\n" "$SKIPPED"
+  else
+    printf "  ${C_GREEN}⚠ Skipped   :${C_RESET}  %d\n" "$SKIPPED"
+  fi
+  printf "${C_BOLD}%s${C_RESET}\n\n" "$(printf '═%.0s' {1..62})"
 }
 
 # ---------------------------------------------------------------------------
@@ -2052,8 +3220,8 @@ USAGE
     generate_all
     ;;
   *)
-    echo "Unknown argument: $1" >&2
-    echo "Run 'bash scripts/generate-docs.sh --help' for usage." >&2
+    printf "${C_RED}ERROR:${C_RESET} Unknown argument: %s\n" "$1" >&2
+    printf "       Run 'bash scripts/generate-docs.sh --help' for usage.\n" >&2
     exit 1
     ;;
 esac
