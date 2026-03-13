@@ -25,8 +25,7 @@
 # =============================================================================
 
 doc_generation:
-  templates_dir: scripts/templates/
-  generator_script: scripts/generate-docs.py
+  generator_script: scripts/generate-docs.sh
   targets:
     # Root documentation
     - source: asdlc.yaml
