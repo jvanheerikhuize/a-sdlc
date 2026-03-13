@@ -84,4 +84,4 @@ This directory contains mapping of all 50 A-SDLC controls to requirements from t
 | Annex IV | Technical documentation | QC-08, AC-03 | Partial - Documentation controls present |
 ---
 
-**Last Updated:** 2026-03-13 10:33 UTC
+**Last Updated:** 2026-03-13 12:43 UTC

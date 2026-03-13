@@ -20,16 +20,31 @@
 
 set -euo pipefail
 
+# ── color support ─────────────────────────────────────────────────────────────
+
+if [[ -t 1 ]]; then
+    C_RED='\033[0;31m'
+    C_GREEN='\033[0;32m'
+    C_YELLOW='\033[0;33m'
+    C_BLUE='\033[0;34m'
+    C_CYAN='\033[0;36m'
+    C_BOLD='\033[1m'
+    C_DIM='\033[2m'
+    C_RESET='\033[0m'
+else
+    C_RED='' C_GREEN='' C_YELLOW='' C_BLUE='' C_CYAN='' C_BOLD='' C_DIM='' C_RESET=''
+fi
+
 # ── dependency check ──────────────────────────────────────────────────────────
 
 if ! command -v jq &>/dev/null; then
-    echo "ERROR: jq is not installed. Please install jq and retry." >&2
+    printf "${C_RED}ERROR:${C_RESET} jq is not installed. Please install jq and retry.\n" >&2
     exit 2
 fi
 
 if ! python3 -c "import yaml" &>/dev/null 2>&1; then
-    echo "ERROR: pyyaml not installed." >&2
-    echo "       Run: pip install -r scripts/requirements.txt" >&2
+    printf "${C_RED}ERROR:${C_RESET} pyyaml not installed.\n" >&2
+    printf "       Run: pip install -r scripts/requirements.txt\n" >&2
     exit 2
 fi
 
@@ -57,7 +72,7 @@ find_repo_root() {
         fi
         dir="$(dirname "$dir")"
     done
-    echo "ERROR: Cannot find repo root (no asdlc.yaml found in parent directories)" >&2
+    printf "${C_RED}ERROR:${C_RESET} Cannot find repo root (no asdlc.yaml found in parent directories)\n" >&2
     exit 2
 }
 
@@ -87,8 +102,8 @@ for arg in "$@"; do
             exit 0
             ;;
         *)
-            echo "ERROR: Unknown argument: $arg" >&2
-            echo "       Run with --help for usage." >&2
+            printf "${C_RED}ERROR:${C_RESET} Unknown argument: %s\n" "$arg" >&2
+            printf "       Run with --help for usage.\n" >&2
             exit 2
             ;;
     esac
@@ -100,32 +115,48 @@ PASSED=0
 FAILED=0
 WARNINGS=0
 
+# Collect all failures and warnings for the final remediation report
+FAIL_MESSAGES=()
+WARN_MESSAGES=()
+# Also track which section each failure came from
+FAIL_SECTIONS=()
+WARN_SECTIONS=()
+
+CURRENT_SECTION=""
+
 section() {
-    printf "\n%s\n" "$(printf '─%.0s' {1..60})"
-    printf "  %s\n" "$1"
-    printf "%s\n"   "$(printf '─%.0s' {1..60})"
+    CURRENT_SECTION="$1"
+    printf "\n${C_BOLD}${C_BLUE}┌─ %s${C_RESET}\n" "$1"
+    printf "${C_BLUE}│${C_RESET}\n"
+}
+
+section_end() {
+    printf "${C_BLUE}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
 }
 
 ok() {
     PASSED=$(( PASSED + 1 ))
     if [[ "$OPT_QUIET" == false ]]; then
-        printf "  \u2713  %s\n" "$1"
+        printf "${C_BLUE}│${C_RESET}  ${C_GREEN}✓${C_RESET}  %s\n" "$1"
     fi
 }
 
 fail() {
     FAILED=$(( FAILED + 1 ))
-    printf "  \u2717  %s\n" "$1"
+    FAIL_MESSAGES+=("$1")
+    FAIL_SECTIONS+=("$CURRENT_SECTION")
+    printf "${C_BLUE}│${C_RESET}  ${C_RED}✗${C_RESET}  ${C_RED}%s${C_RESET}\n" "$1"
 }
 
 warn() {
     WARNINGS=$(( WARNINGS + 1 ))
-    printf "  \u26a0  %s\n" "$1"
+    WARN_MESSAGES+=("$1")
+    WARN_SECTIONS+=("$CURRENT_SECTION")
+    printf "${C_BLUE}│${C_RESET}  ${C_YELLOW}⚠${C_RESET}  ${C_YELLOW}%s${C_RESET}\n" "$1"
 }
 
 # Compute path relative to REPO for display
 rel() {
-    # Strip leading REPO/ prefix if present
     local p="$1"
     if [[ "$p" == "$REPO/"* ]]; then
         echo "${p#$REPO/}"
@@ -134,12 +165,110 @@ rel() {
     fi
 }
 
+# ── remediation lookup ────────────────────────────────────────────────────────
+# Maps a failure/warning message to a human-readable remediation hint.
+
+remediation_for() {
+    local msg="$1"
+    local hint=""
+
+    if [[ "$msg" == *"id '"*"' does not match filename"* ]]; then
+        local stem; stem="$(echo "$msg" | grep -oP "filename '\K[^']+")"
+        hint="Edit the file and set  id: ${stem}  to match the filename (stem without .yaml)."
+
+    elif [[ "$msg" == *"does not match pattern [Track]-NN"* ]]; then
+        hint="Rename the file or update 'id:' to follow the format QC-01, SC-12, etc."
+
+    elif [[ "$msg" == *"process.md not found"* ]]; then
+        local path; path="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing file:  touch ${path}"
+
+    elif [[ "$msg" == *"process.md missing"* ]]; then
+        hint="Create a process.md in the indicated stage or feedbackloops directory."
+
+    elif [[ "$msg" == *"README.md missing"* ]]; then
+        hint="Create a README.md in the indicated directory describing its purpose."
+
+    elif [[ "$msg" == *"control file not found"* ]]; then
+        local fp; fp="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing control file at: ${fp}  or remove the entry from controls/registry.yaml."
+
+    elif [[ "$msg" == *"missing from registry"* ]]; then
+        local cid; cid="$(echo "$msg" | grep -oP 'Control \K[^ ]+')"
+        hint="Add  ${cid}  to controls/registry.yaml with its 'file:' path."
+
+    elif [[ "$msg" == *"has no matching file in controls/"* ]]; then
+        local rid; rid="$(echo "$msg" | grep -oP 'Registry entry \K[^ ]+')"
+        hint="Create the control file for  ${rid}  or remove the entry from registry.yaml."
+
+    elif [[ "$msg" == *"Duplicate ID in registry"* ]]; then
+        local dup; dup="$(echo "$msg" | grep -oP 'registry: \K.+')"
+        hint="Remove the duplicate entry for  ${dup}  from controls/registry.yaml."
+
+    elif [[ "$msg" == *"directive_payload not found"* ]]; then
+        local dp; dp="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing directive file at: ${dp}  or correct the path in registry.yaml."
+
+    elif [[ "$msg" == *"directive not found"* ]]; then
+        local dp; dp="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing directive file at: ${dp}  or correct the path in the stage YAML."
+
+    elif [[ "$msg" == *"required control"*"not found in registry"* ]]; then
+        local cid; cid="$(echo "$msg" | grep -oP 'required control \K[^ ]+')"
+        hint="Add  ${cid}  to controls/registry.yaml, or remove the reference from the stage YAML."
+
+    elif [[ "$msg" == *"dependency"*"not found in registry"* ]]; then
+        local dep; dep="$(echo "$msg" | grep -oP 'dependency \K[^ ]+')"
+        hint="Add  ${dep}  to controls/registry.yaml, or remove it from the 'dependencies:' list."
+
+    elif [[ "$msg" == *"Circular dependency"* ]]; then
+        hint="Remove or reorder the dependency to break the cycle. Use a DAG visualizer to identify the loop."
+
+    elif [[ "$msg" == *"artifact ref not found"* ]]; then
+        local ap; ap="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing artifact file at:  feedbackloops/${ap}"
+
+    elif [[ "$msg" == *"artifact template not found"* ]]; then
+        local ap; ap="$(echo "$msg" | grep -oP '— \K.+')"
+        hint="Create the missing artifact template (can be an empty YAML stub):  touch <stage-dir>/${ap}"
+
+    elif [[ "$msg" == *"artifacts/outputs/ directory missing"* || "$msg" == *"no artifacts/outputs/"* ]]; then
+        hint="Run:  mkdir -p <stage-dir>/artifacts/outputs/"
+
+    elif [[ "$msg" == *"Feedback loop"*"not in registry"* ]]; then
+        local cid; cid="$(echo "$msg" | grep -oP 'control \K[^ ]+')"
+        hint="Add  ${cid}  to controls/registry.yaml, or correct the ID in feedback-loops.yaml."
+
+    elif [[ "$msg" == *"no resolvable control IDs in minimum_controls"* ]]; then
+        hint="Add valid control IDs (e.g. QC-01) to the 'minimum_controls:' list in feedback-loops.yaml."
+
+    elif [[ "$msg" == *"autofix-templates/"* ]]; then
+        hint="Run:  mkdir -p feedbackloops/autofix-templates/"
+
+    elif [[ "$msg" == *"No control files found"* ]]; then
+        hint="Ensure controls/ has subdirectories (qc/, sc/, etc.) each containing [ID].yaml files."
+
+    elif [[ "$msg" == *"No stage YAML files found"* ]]; then
+        hint="Ensure stages/ has subdirectories like 01-intent-ingestion/ each with a matching YAML."
+
+    elif [[ "$msg" == *"No directive files found"* ]]; then
+        hint="Ensure directives/core/ and directives/stages/ contain *.yaml files."
+
+    elif [[ "$msg" == *"Stage"*"directory not found"* ]]; then
+        hint="Create the missing stage directory under stages/ named  0N-<stage-slug>/."
+
+    else
+        hint="Inspect the file path in the message above and correct the structural issue."
+    fi
+
+    echo "$hint"
+}
+
 # ── section 1: control files ──────────────────────────────────────────────────
 
 check_control_files() {
     section "1/7  Control files — schema + filename alignment"
 
-    # Collect all YAML files in controls/*/ (one level deep)
     local control_files=()
     while IFS= read -r -d '' f; do
         control_files+=("$f")
@@ -148,6 +277,7 @@ check_control_files() {
     if [[ ${#control_files[@]} -eq 0 ]]; then
         fail "No control files found in controls/*/"
         FOUND_CONTROL_IDS=()
+        section_end
         return
     fi
 
@@ -173,8 +303,8 @@ check_control_files() {
 
     ok "Found ${#found_ids[@]} control files"
 
-    # Export to caller via global
     FOUND_CONTROL_IDS=("${found_ids[@]+"${found_ids[@]}"}")
+    section_end
 }
 
 # ── section 2: registry ───────────────────────────────────────────────────────
@@ -185,6 +315,7 @@ check_registry() {
     if [[ ! -f "$REGISTRY_FILE" ]]; then
         fail "controls/registry.yaml not found"
         REGISTRY_IDS=()
+        section_end
         return
     fi
 
@@ -202,7 +333,6 @@ check_registry() {
         entry="$(printf '%s' "$json" | jq --argjson idx "$i" '.registry[$idx]')"
         eid="$(printf '%s' "$entry" | jq -r '.id // ""')"
 
-        # Duplicate check
         local is_dup=false
         for sid in "${seen_ids[@]+"${seen_ids[@]}"}"; do
             if [[ "$sid" == "$eid" ]]; then is_dup=true; break; fi
@@ -213,7 +343,6 @@ check_registry() {
         seen_ids+=("$eid")
         registry_ids+=("$eid")
 
-        # Control file exists
         file_path="$(printf '%s' "$entry" | jq -r '.file // ""')"
         if [[ -n "$file_path" && -f "$REPO/$file_path" ]]; then
             ok "$eid: control file exists"
@@ -221,7 +350,6 @@ check_registry() {
             fail "$eid: control file not found — $file_path"
         fi
 
-        # Single directive_payload (optional)
         dp="$(printf '%s' "$entry" | jq -r '.directive_payload // ""')"
         if [[ -n "$dp" ]]; then
             if [[ -f "$REPO/$dp" ]]; then
@@ -231,7 +359,6 @@ check_registry() {
             fi
         fi
 
-        # Array directive_payloads (optional)
         local n_dps
         n_dps="$(printf '%s' "$entry" | jq '(.directive_payloads // []) | length')"
         for (( j=0; j<n_dps; j++ )); do
@@ -245,7 +372,6 @@ check_registry() {
         done
     done
 
-    # Every control file → in registry
     for cid in "${FOUND_CONTROL_IDS[@]+"${FOUND_CONTROL_IDS[@]}"}"; do
         local in_reg=false
         for rid in "${registry_ids[@]+"${registry_ids[@]}"}"; do
@@ -258,7 +384,6 @@ check_registry() {
         fi
     done
 
-    # Every registry entry → control file exists
     for rid in "${registry_ids[@]+"${registry_ids[@]}"}"; do
         local in_found=false
         for cid in "${FOUND_CONTROL_IDS[@]+"${FOUND_CONTROL_IDS[@]}"}"; do
@@ -272,6 +397,7 @@ check_registry() {
     ok "Registry: ${#registry_ids[@]} entries"
 
     REGISTRY_IDS=("${registry_ids[@]+"${registry_ids[@]}"}")
+    section_end
 }
 
 # ── section 3: stage files ────────────────────────────────────────────────────
@@ -279,7 +405,6 @@ check_registry() {
 check_stage_files() {
     section "3/7  Stage files — schema + control + artifact references"
 
-    # Collect stage YAML files matching 0[1-6]-*.yaml inside stages/*/
     local stage_files=()
     while IFS= read -r -d '' f; do
         stage_files+=("$f")
@@ -287,6 +412,7 @@ check_stage_files() {
 
     if [[ ${#stage_files[@]} -eq 0 ]]; then
         fail "No stage YAML files found in stages/*/"
+        section_end
         return
     fi
 
@@ -295,7 +421,6 @@ check_stage_files() {
         json="$(yaml2json "$path")"
         stage_dir="$(dirname "$path")"
 
-        # process.md: use data.process field or default "process.md"
         local proc_ref proc_path
         proc_ref="$(printf '%s' "$json" | jq -r '.process // "process.md"')"
         proc_path="$stage_dir/$proc_ref"
@@ -305,13 +430,11 @@ check_stage_files() {
             fail "$(rel "$path"): process.md not found — $(rel "$proc_path")"
         fi
 
-        # required_controls — each entry may be a string or object with .id
         local n_ctrls
         n_ctrls="$(printf '%s' "$json" | jq '(.required_controls // []) | length')"
         for (( i=0; i<n_ctrls; i++ )); do
             local ctrl_json cid
             ctrl_json="$(printf '%s' "$json" | jq --argjson idx "$i" '.required_controls[$idx]')"
-            # If it's an object with .id, use that; otherwise treat as string
             cid="$(printf '%s' "$ctrl_json" | jq -r 'if type == "object" then .id else . end')"
 
             local in_reg=false
@@ -325,7 +448,6 @@ check_stage_files() {
             fi
         done
 
-        # Artifact paths — resolve relative to stage directory
         for section_name in inputs outputs; do
             local n_artifacts
             n_artifacts="$(printf '%s' "$json" | jq --arg s "$section_name" '(.artifacts[$s] // []) | length')"
@@ -341,7 +463,6 @@ check_stage_files() {
             done
         done
 
-        # Directive paths — relative to REPO root
         local n_directives
         n_directives="$(printf '%s' "$json" | jq '(.directives // []) | length')"
         for (( i=0; i<n_directives; i++ )); do
@@ -356,12 +477,13 @@ check_stage_files() {
     done
 
     ok "Checked ${#stage_files[@]} stage files"
+    section_end
 }
 
 # ── section 4: directive files ────────────────────────────────────────────────
 
 check_directive_files() {
-    section "4/7  Directive files — schema validation"
+    section "4/7  Directive files — parse validation"
 
     local directive_files=()
     while IFS= read -r -d '' f; do
@@ -371,11 +493,10 @@ check_directive_files() {
 
     if [[ ${#directive_files[@]} -eq 0 ]]; then
         fail "No directive files found in directives/"
+        section_end
         return
     fi
 
-    # JSON Schema validation is dropped in this bash port.
-    # We confirm each file is valid YAML (parseable) and exists.
     for path in "${directive_files[@]}"; do
         if yaml2json "$path" &>/dev/null; then
             ok "$(rel "$path") — parseable YAML"
@@ -385,6 +506,7 @@ check_directive_files() {
     done
 
     ok "Checked ${#directive_files[@]} directive files"
+    section_end
 }
 
 # ── section 5: control dependency chains ─────────────────────────────────────
@@ -392,10 +514,8 @@ check_directive_files() {
 check_control_dependencies() {
     section "5/7  Control dependency chains"
 
-    # Build arrays: GRAPH_NODES and GRAPH_DEPS_<idx> for cycle detection
-    # We use a flat representation: node_ids array + deps_<i> arrays
     local node_ids=()
-    declare -A node_deps  # node_deps[cid]="dep1 dep2 ..."  (space-separated)
+    declare -A node_deps
 
     local control_files=()
     while IFS= read -r -d '' f; do
@@ -417,7 +537,6 @@ check_control_dependencies() {
             local dep
             dep="$(printf '%s' "$json" | jq -r --argjson idx "$i" '.dependencies[$idx]')"
 
-            # Check dep exists in registry
             local in_reg=false
             for rid in "${REGISTRY_IDS[@]+"${REGISTRY_IDS[@]}"}"; do
                 if [[ "$rid" == "$dep" ]]; then in_reg=true; break; fi
@@ -433,60 +552,39 @@ check_control_dependencies() {
         node_deps["$cid"]="${deps_str% }"
     done
 
-    # Cycle detection: iterative DFS using bash arrays as stacks
-    # visited: space-separated string of visited node IDs
-    # rec_stack: the current recursion path
-
     local cycle_found=false
-
-    # visited_set: nodes fully processed across all DFS trees (global across trees)
     declare -A visited_set=()
 
-    # Iterative DFS with ENTER/EXIT state markers to simulate the recursion stack.
-    # has_cycle_dfs sets cycle_found=true (outer variable) if a back-edge is found.
     has_cycle_dfs() {
         local start="$1"
-
-        # rec_set tracks nodes currently on the active recursion path for this tree
         declare -A rec_set=()
-
-        # Each entry on node_stack/state_stack is a paired (node, ENTER|EXIT) frame
         local -a node_stack=("$start")
         local -a state_stack=("ENTER")
 
         while [[ ${#node_stack[@]} -gt 0 ]]; do
             local current="${node_stack[-1]}"
             local state="${state_stack[-1]}"
-            # Pop both stacks together
             unset 'node_stack[-1]'
             unset 'state_stack[-1]'
 
             if [[ "$state" == "EXIT" ]]; then
-                # Backtracking past this node — remove from active recursion path
                 unset 'rec_set[$current]'
                 continue
             fi
 
-            # ENTER processing
             if [[ -n "${visited_set[$current]+x}" ]]; then
-                # Already fully explored in a prior DFS tree — safe to skip.
-                # (If it were in rec_set we would have caught it before pushing.)
                 continue
             fi
 
-            # Mark node as visited globally and as on the current recursion path
             visited_set["$current"]=1
             rec_set["$current"]=1
 
-            # Push the paired EXIT frame first so it runs after all children
             node_stack+=("$current")
             state_stack+=("EXIT")
 
-            # Push children as ENTER frames
             local deps="${node_deps[$current]:-}"
             for dep in $deps; do
                 if [[ -n "${rec_set[$dep]+x}" ]]; then
-                    # Back-edge detected → cycle
                     cycle_found=true
                     return 0
                 fi
@@ -510,18 +608,13 @@ check_control_dependencies() {
     done
 
     ok "No circular dependencies detected"
+    section_end
 }
 
 # ── section 6: feedback loops ─────────────────────────────────────────────────
 
-# Recursively extract control IDs (matching CONTROL_ID_PATTERN) from a JSON
-# value. Mirrors the Python extract_control_ids() function.
-# Usage: extract_control_ids_from_json <json_string>
-# Outputs one ID per line.
 extract_control_ids_from_json() {
     local json_value="$1"
-    # Use Python for the recursive extraction — it's the cleanest approach
-    # for heterogeneous nested structures (arrays of objects, dicts of arrays).
     python3 - "$json_value" <<'PYEOF'
 import sys, json, re
 
@@ -554,10 +647,10 @@ check_feedback_loops() {
 
     if [[ ! -f "$FEEDBACK_FILE" ]]; then
         fail "Feedback loops file not found: $(rel "$FEEDBACK_FILE")"
+        section_end
         return
     fi
 
-    # Required structural files
     for required_file in process.md README.md; do
         local p="$FEEDBACK_DIR/$required_file"
         if [[ -f "$p" ]]; then
@@ -567,7 +660,6 @@ check_feedback_loops() {
         fi
     done
 
-    # Artifact outputs directory
     local artifacts_out="$FEEDBACK_DIR/artifacts/outputs"
     if [[ -d "$artifacts_out" ]]; then
         local n_templates
@@ -577,7 +669,6 @@ check_feedback_loops() {
         fail "feedbackloops/artifacts/outputs/ directory missing"
     fi
 
-    # Autofix templates directory (warn only if missing)
     local autofix_dir="$FEEDBACK_DIR/autofix-templates"
     if [[ -d "$autofix_dir" ]]; then
         local n_autofix
@@ -590,7 +681,6 @@ check_feedback_loops() {
     local json
     json="$(yaml2json "$FEEDBACK_FILE")"
 
-    # process ref declared in the YAML header
     local process_ref
     process_ref="$(printf '%s' "$json" | jq -r '.process // ""')"
     if [[ -n "$process_ref" ]]; then
@@ -602,7 +692,6 @@ check_feedback_loops() {
         fi
     fi
 
-    # Artifact output refs declared in the YAML header
     local n_art_outputs
     n_art_outputs="$(printf '%s' "$json" | jq '(.artifacts.outputs // []) | length')"
     for (( i=0; i<n_art_outputs; i++ )); do
@@ -616,7 +705,6 @@ check_feedback_loops() {
         fi
     done
 
-    # feedback_loops array — validate minimum_controls control IDs
     local n_loops
     n_loops="$(printf '%s' "$json" | jq '(.feedback_loops // []) | length')"
     for (( i=0; i<n_loops; i++ )); do
@@ -649,6 +737,7 @@ check_feedback_loops() {
     done
 
     ok "Checked $n_loops feedback loop paths"
+    section_end
 }
 
 # ── section 7: stage directory structure ──────────────────────────────────────
@@ -657,7 +746,6 @@ check_stage_structure() {
     section "7/7  Stage directory structure — README + process.md presence"
 
     for stage_num in 1 2 3 4 5 6; do
-        # Find the stage directory matching 0N-*
         local stage_dir=""
         while IFS= read -r -d '' d; do
             stage_dir="$d"
@@ -697,56 +785,150 @@ check_stage_structure() {
             warn "Stage $stage_num ($dir_name): no artifacts/outputs/ directory"
         fi
     done
+
+    section_end
 }
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
-printf "%s\n" "$(printf '=%.0s' {1..60})"
-printf "  A-SDLC Framework Self-Audit\n"
-printf "  Repository: %s\n" "$REPO"
-printf "%s\n" "$(printf '=%.0s' {1..60})"
+# Header
+printf "\n${C_BOLD}╔%s╗${C_RESET}\n" "$(printf '═%.0s' {1..60})"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "A-SDLC Framework Self-Audit"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "$(date '+%Y-%m-%d %H:%M:%S')"
+printf "${C_BOLD}║  %-58s║${C_RESET}\n" "Repo: $(rel "$REPO" 2>/dev/null || echo "$REPO")"
+printf "${C_BOLD}╚%s╝${C_RESET}\n" "$(printf '═%.0s' {1..60})"
 
 if [[ "$OPT_NO_SCHEMA" == true ]]; then
-    printf "\n  NOTE: --no-schema is a no-op in this bash port.\n"
-    printf "        JSON Schema validation is not available here.\n"
-    printf "        Use scripts/validate.py for full schema validation.\n\n"
+    printf "\n  ${C_DIM}NOTE: --no-schema is a no-op in this bash port.${C_RESET}\n"
+    printf "  ${C_DIM}      JSON Schema validation requires scripts/validate.py.${C_RESET}\n"
 fi
 
 # Globals used to pass data between sections
 FOUND_CONTROL_IDS=()
 REGISTRY_IDS=()
 
-# Section 1 & 2 always run (required for xref)
 check_control_files
 check_registry
-
-# Section 3 & 4: schema-related sections (always run in bash port — schema
-# validation itself is dropped, but file existence / reference checks remain)
-check_directive_files
 check_stage_files
+check_directive_files
 
-# Section 5 & 6: cross-reference checks (skippable via --no-xref)
 if [[ "$OPT_NO_XREF" == false ]]; then
     check_control_dependencies
     check_feedback_loops
 fi
 
-# Section 7 always runs
 check_stage_structure
 
-printf "\n%s\n" "$(printf '=%.0s' {1..60})"
-printf "  Passed   : %d\n" "$PASSED"
-printf "  Failed   : %d\n" "$FAILED"
-printf "  Warnings : %d\n" "$WARNINGS"
-printf "%s\n" "$(printf '=%.0s' {1..60})"
+# ── summary ───────────────────────────────────────────────────────────────────
+
+printf "\n${C_BOLD}%s${C_RESET}\n" "$(printf '═%.0s' {1..62})"
+printf "${C_BOLD}  AUDIT SUMMARY${C_RESET}\n"
+printf "${C_BOLD}%s${C_RESET}\n" "$(printf '─%.0s' {1..62})"
+printf "  ${C_GREEN}✓ Passed   :${C_RESET}  %d\n" "$PASSED"
+if [[ "$FAILED" -gt 0 ]]; then
+    printf "  ${C_RED}✗ Failed   :${C_RESET}  ${C_BOLD}${C_RED}%d${C_RESET}\n" "$FAILED"
+else
+    printf "  ${C_GREEN}✗ Failed   :${C_RESET}  %d\n" "$FAILED"
+fi
+if [[ "$WARNINGS" -gt 0 ]]; then
+    printf "  ${C_YELLOW}⚠ Warnings :${C_RESET}  ${C_BOLD}${C_YELLOW}%d${C_RESET}\n" "$WARNINGS"
+else
+    printf "  ${C_GREEN}⚠ Warnings :${C_RESET}  %d\n" "$WARNINGS"
+fi
+printf "${C_BOLD}%s${C_RESET}\n" "$(printf '═%.0s' {1..62})"
+
+# ── remediation report ────────────────────────────────────────────────────────
+
+hint=""  # used in report loops (not inside a function, so 'local' not valid)
 
 if [[ "$FAILED" -gt 0 ]]; then
-    printf "\n  AUDIT FAILED — resolve failures before committing.\n\n"
+    printf "\n${C_BOLD}${C_RED}┌─ FAILURES  (%d)%s${C_RESET}\n" "$FAILED" "$(printf '─%.0s' {1..44})"
+    for (( i=0; i<${#FAIL_MESSAGES[@]}; i++ )); do
+        local_msg="${FAIL_MESSAGES[$i]}"
+        local_sec="${FAIL_SECTIONS[$i]}"
+        hint="$(remediation_for "$local_msg")"
+        printf "${C_RED}│${C_RESET}\n"
+        printf "${C_RED}│${C_RESET}  ${C_RED}✗${C_RESET}  %s\n" "$local_msg"
+        printf "${C_RED}│${C_RESET}     ${C_DIM}Section: %s${C_RESET}\n" "$local_sec"
+        printf "${C_RED}│${C_RESET}     ${C_CYAN}Fix:${C_RESET} %s\n" "$hint"
+    done
+    printf "${C_RED}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
+fi
+
+if [[ "$WARNINGS" -gt 0 ]]; then
+    printf "\n${C_BOLD}${C_YELLOW}┌─ WARNINGS  (%d)%s${C_RESET}\n" "$WARNINGS" "$(printf '─%.0s' {1..44})"
+    for (( i=0; i<${#WARN_MESSAGES[@]}; i++ )); do
+        local_msg="${WARN_MESSAGES[$i]}"
+        local_sec="${WARN_SECTIONS[$i]}"
+        hint="$(remediation_for "$local_msg")"
+        printf "${C_YELLOW}│${C_RESET}\n"
+        printf "${C_YELLOW}│${C_RESET}  ${C_YELLOW}⚠${C_RESET}  %s\n" "$local_msg"
+        printf "${C_YELLOW}│${C_RESET}     ${C_DIM}Section: %s${C_RESET}\n" "$local_sec"
+        printf "${C_YELLOW}│${C_RESET}     ${C_CYAN}Fix:${C_RESET} %s\n" "$hint"
+    done
+    printf "${C_YELLOW}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
+fi
+
+# ── agent auto-fix prompt ─────────────────────────────────────────────────────
+
+if [[ "$FAILED" -gt 0 || "$WARNINGS" -gt 0 ]]; then
+    printf "\n${C_BOLD}${C_CYAN}┌─ AGENT AUTO-FIX PROMPT%s${C_RESET}\n" "$(printf '─%.0s' {1..37})"
+    printf "${C_CYAN}│${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}  Copy the prompt below and paste it to an agent:\n"
+    printf "${C_CYAN}│${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}  ${C_DIM}─────────────────────────────────────────────────────────${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}  You are maintaining the A-SDLC governance framework.\n"
+    printf "${C_CYAN}│${C_RESET}  Run  bash scripts/validate.sh  and fix ALL failures\n"
+    printf "${C_CYAN}│${C_RESET}  and warnings listed in the output.\n"
+    printf "${C_CYAN}│${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}  Current issues to resolve:\n"
+    printf "${C_CYAN}│${C_RESET}\n"
+
+    if [[ "$FAILED" -gt 0 ]]; then
+        printf "${C_CYAN}│${C_RESET}  FAILURES (%d):\n" "$FAILED"
+        for (( i=0; i<${#FAIL_MESSAGES[@]}; i++ )); do
+            local_msg="${FAIL_MESSAGES[$i]}"
+            hint="$(remediation_for "$local_msg")"
+            printf "${C_CYAN}│${C_RESET}    %d. %s\n" "$(( i + 1 ))" "$local_msg"
+            printf "${C_CYAN}│${C_RESET}       Suggested fix: %s\n" "$hint"
+        done
+        printf "${C_CYAN}│${C_RESET}\n"
+    fi
+
+    if [[ "$WARNINGS" -gt 0 ]]; then
+        printf "${C_CYAN}│${C_RESET}  WARNINGS (%d):\n" "$WARNINGS"
+        for (( i=0; i<${#WARN_MESSAGES[@]}; i++ )); do
+            local_msg="${WARN_MESSAGES[$i]}"
+            hint="$(remediation_for "$local_msg")"
+            printf "${C_CYAN}│${C_RESET}    %d. %s\n" "$(( i + 1 ))" "$local_msg"
+            printf "${C_CYAN}│${C_RESET}       Suggested fix: %s\n" "$hint"
+        done
+        printf "${C_CYAN}│${C_RESET}\n"
+    fi
+
+    printf "${C_CYAN}│${C_RESET}  Rules:\n"
+    printf "${C_CYAN}│${C_RESET}  - Fix failures first (they block the audit).\n"
+    printf "${C_CYAN}│${C_RESET}  - Address warnings after (they indicate missing structure).\n"
+    printf "${C_CYAN}│${C_RESET}  - After fixing, re-run  bash scripts/validate.sh  to confirm\n"
+    printf "${C_CYAN}│${C_RESET}    zero failures and zero warnings.\n"
+    printf "${C_CYAN}│${C_RESET}  - Do not modify AGENTS.md, README.md, or context/*.md directly;\n"
+    printf "${C_CYAN}│${C_RESET}    those are generated — run  bash scripts/generate-docs.sh  instead.\n"
+    printf "${C_CYAN}│${C_RESET}  - Keep control IDs in the format [Track]-NN (e.g. QC-01, SC-12).\n"
+    printf "${C_CYAN}│${C_RESET}\n"
+    printf "${C_CYAN}│${C_RESET}  ${C_DIM}─────────────────────────────────────────────────────────${C_RESET}\n"
+    printf "${C_CYAN}└%s${C_RESET}\n" "$(printf '─%.0s' {1..59})"
+fi
+
+# ── exit status ───────────────────────────────────────────────────────────────
+
+if [[ "$FAILED" -gt 0 ]]; then
+    printf "\n${C_BOLD}${C_RED}  AUDIT FAILED${C_RESET} — resolve %d failure(s) before committing.\n\n" "$FAILED"
     exit 1
 elif [[ "$WARNINGS" -gt 0 ]]; then
-    printf "\n  AUDIT PASSED with warnings.\n\n"
+    printf "\n${C_BOLD}${C_YELLOW}  AUDIT PASSED${C_RESET} with %d warning(s).\n\n" "$WARNINGS"
     exit 0
 else
-    printf "\n  AUDIT PASSED.\n\n"
+    printf "\n${C_BOLD}${C_GREEN}  AUDIT PASSED${C_RESET} — all checks clean.\n\n"
     exit 0
 fi
